@@ -2,8 +2,6 @@ import type { Product } from '../types';
 
 export const DEFAULT_PRODUCT_IMAGE = '/vara-logo.svg';
 
-export const HERO_PRODUCT_IDS = ['product-11', 'product-12', 'product-14'];
-
 const catalogPhotography: Record<string, { name: string; images: string[] }> = {
   'product-11': { name: 'Beauty of Joseon Ginseng Essence Water', images: ['joseon-ginseng-150ml', 'joseon-ginseng-150ml-box'] },
   'product-12': { name: 'COSRX Advanced Snail 96 Mucin Power Essence', images: ['cosrx-snail-96-100ml', 'cosrx-snail-96-100ml-front'] },

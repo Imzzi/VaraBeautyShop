@@ -3,14 +3,12 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
 import { PRODUCTS } from './src/data/products';
-import { DEFAULT_PRODUCT_IMAGE, getProductCover, HERO_PRODUCT_IDS } from './src/lib/productImages';
+import { DEFAULT_PRODUCT_IMAGE, getProductCover } from './src/lib/productImages';
 
 const productPreloads = Object.fromEntries(PRODUCTS
   .map((product) => [product.id, getProductCover(product)] as const)
   .filter(([, image]) => image !== DEFAULT_PRODUCT_IMAGE));
-const preloadData = JSON.stringify({
-  hero: productPreloads[HERO_PRODUCT_IDS[0]], products: productPreloads,
-}).replace(/</g, '\\u003c');
+const preloadData = JSON.stringify(productPreloads).replace(/</g, '\\u003c');
 
 export default defineConfig(() => {
   return {
@@ -24,8 +22,7 @@ export default defineConfig(() => {
     ? location.hash.slice(1) : location.pathname;
   const match = /^\\/product\\/([a-z0-9_-]+)(?:[/?]|$)/i.exec(route);
   const images = ${preloadData};
-  let src = match && Object.hasOwn(images.products, match[1]) ? images.products[match[1]] : null;
-  if (route === '/' && !location.hash) src = images.hero;
+  const src = match && Object.hasOwn(images, match[1]) ? images[match[1]] : null;
   if (!src) return;
   const preload = document.createElement('link');
   preload.rel = 'preload';

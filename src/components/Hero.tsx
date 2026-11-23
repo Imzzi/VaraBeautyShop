@@ -1,15 +1,11 @@
 import { Modal } from './Modal';
 import { HERO_IMAGE_SIZES, HERO_IMAGE_WIDTHS, responsiveImageSrcSet } from '../lib/productImages';
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, Link2, X, User, Sparkles, Calculator } from 'lucide-react';
-import { Product, CarouselSlide } from '../types';
-import { ProductImage } from './ProductImage';
-import { getProductCover, DEFAULT_PRODUCT_IMAGE, HERO_PRODUCT_IDS } from '../lib/productImages';
-import { getLocalHeroSlides } from '../data/heroSlides';
+import { ArrowLeft, Calculator, Link2, Sparkles, User, X } from 'lucide-react';
+import type { CarouselSlide } from '../types';
+import { getLocalHeroSlides, HERO_SLIDES_STORAGE_KEY } from '../data/heroSlides';
 
 interface HeroProps {
-  products: Product[];
-  onViewProduct: (product: Product) => void;
   onOpenAccount: () => void;
   onExploreClick?: () => void;
   onQuizClick?: () => void;
@@ -18,8 +14,6 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({
-  products,
-  onViewProduct,
   onOpenAccount,
   onExploreClick,
   onQuizClick,
@@ -27,43 +21,39 @@ export const Hero: React.FC<HeroProps> = ({
   onCalculatePrice
 }) => {
   const [calculatorInputUrl, setCalculatorInputUrl] = useState('');
-  // Slides dynamic state from storage and listeners
-  const [slides, setSlides] = useState<CarouselSlide[]>(() => getLocalHeroSlides());
-
-  useEffect(() => {
-    const handleSlidesChange = () => {
-      setSlides(getLocalHeroSlides());
-    };
-    window.addEventListener('vara-hero-slides-change', handleSlidesChange);
-    return () => window.removeEventListener('vara-hero-slides-change', handleSlidesChange);
-  }, []);
-
-  // Carousel slide state
+  const [slides, setSlides] = useState(getLocalHeroSlides);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [campaignOpen, setCampaignOpen] = useState(false);
-
-  // Modals state
+  const [isHovered, setIsHovered] = useState(false);
+  const [hasFocus, setHasFocus] = useState(false);
   const [directLinkModalOpen, setDirectLinkModalOpen] = useState(false);
   const [productUrl, setProductUrl] = useState('');
 
-  const activeSlides = slides.length > 0 ? slides : getLocalHeroSlides();
-
-  // Ensure current index is within bounds when slides count changes
   useEffect(() => {
-    if (currentSlideIndex >= activeSlides.length) {
+    const refreshSlides = () => {
+      setSlides(getLocalHeroSlides());
       setCurrentSlideIndex(0);
-    }
-  }, [activeSlides.length, currentSlideIndex]);
+    };
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === HERO_SLIDES_STORAGE_KEY || event.key === null) refreshSlides();
+    };
+    window.addEventListener('vara-hero-slides-change', refreshSlides);
+    window.addEventListener('storage', handleStorage);
+    return () => {
+      window.removeEventListener('vara-hero-slides-change', refreshSlides);
+      window.removeEventListener('storage', handleStorage);
+    };
+  }, []);
 
-  const handleNextSlide = () => {
-    setCurrentSlideIndex(prev => (prev + 1) % activeSlides.length);
-  };
+  useEffect(() => {
+    if (slides.length <= 1 || isHovered || hasFocus ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const interval = window.setInterval(() => {
+      setCurrentSlideIndex((index) => (index + 1) % slides.length);
+    }, 5500);
+    return () => window.clearInterval(interval);
+  }, [slides.length, isHovered, hasFocus]);
 
-  const handlePrevSlide = () => {
-    setCurrentSlideIndex(prev => (prev - 1 + activeSlides.length) % activeSlides.length);
-  };
-
-  const currentSlide = activeSlides[currentSlideIndex] || activeSlides[0];
+  const currentSlide = slides[currentSlideIndex] || slides[0];
 
   const handleSlideCta = (slide: CarouselSlide) => {
     if (slide.actionType === 'custom_url' && slide.linkUrl) {
@@ -98,49 +88,83 @@ export const Hero: React.FC<HeroProps> = ({
     onCalculatePrice?.(productUrl.trim());
   };
 
-  const featured = HERO_PRODUCT_IDS
-    .map((id) => products.find((product) => product.id === id))
-    .filter((product): product is Product => Boolean(product && getProductCover(product) !== DEFAULT_PRODUCT_IMAGE));
-
   return (
     <section className="vara-home" aria-labelledby="vara-home-title">
       <div className="vara-container vara-home-inner">
-        <div className="vara-hero">
-          <div className="vara-hero-copy">
-            <p className="vara-hero-kicker">فروشگاه مراقبت پوست ورا</p>
-            <h1 id="vara-home-title">روتین پوست،<br /><span>به انتخاب شما.</span></h1>
-            <p>محصولات مراقبت پوست را بر اساس نیاز پوستتان پیدا کنید. ترکیبات، حجم و روش مصرف را کنار هم ببینید و روتین خودتان را بسازید.</p>
-            <div className="vara-hero-actions">
-              <button type="button" onClick={onExploreClick} className="vara-button vara-button-primary">دیدن محصولات</button>
-              <button type="button" onClick={onQuizClick} className="vara-button">راهنمای انتخاب روتین</button>
-            </div>
-          </div>
-          <div className="vara-hero-stage">
-            {featured.length > 0 ? (
-              <div className="vara-hero-products">
-                {featured.map((product, index) => (
-                  <a href={`/product/${encodeURIComponent(product.id)}`} className="vara-hero-product" key={product.id}
-                    onClick={(event) => {
-                      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                      event.preventDefault();
-                      onViewProduct(product);
-                    }}>
-                    <ProductImage
-                      src={getProductCover(product)}
-                      alt={product.nameFa}
-                      width={560}
-                      height={560}
-                      fetchPriority={index === 0 ? 'high' : 'auto'}
-                      referrerPolicy="no-referrer"
-                      decoding="async"
-                    />
-                    <bdi>{product.brand}</bdi>
-                  </a>
-                ))}
+        <div
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onFocus={() => setHasFocus(true)}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setHasFocus(false);
+          }}
+          className="w-full relative rounded-2xl overflow-hidden border border-[#F0E1E4] h-[400px] sm:h-[440px] lg:h-[470px] bg-[#F9F1F0] flex flex-col justify-between shadow-shop-card"
+        >
+          {/* Slide Content Layout */}
+          <div className="relative z-10 w-full flex-1 flex items-center justify-between p-6 sm:p-10 lg:p-14 overflow-hidden">
+
+            {/* Background Campaign Imagery */}
+            <img
+              src={currentSlide.imageSrc}
+              srcSet={responsiveImageSrcSet(currentSlide.imageSrc, HERO_IMAGE_WIDTHS)}
+              sizes={HERO_IMAGE_SIZES}
+              alt={currentSlide.imageAlt}
+              className="absolute inset-0 w-full h-full object-cover object-center z-0 transition-transform duration-700"
+              referrerPolicy="no-referrer"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
+
+            {/* Warm Blush Scrim */}
+            <div className="absolute inset-0 bg-gradient-to-l from-[#FDFBF9]/96 via-[#FDFBF9]/88 to-transparent pointer-events-none z-1" />
+
+            {/* Editorial Copy Column (Right in RTL) */}
+            <div className="relative z-10 w-full md:max-w-[54%] text-right space-y-4 flex flex-col justify-center">
+
+              {/* Boutique Eyebrow */}
+              <div className="flex items-center gap-2.5 justify-start">
+                <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.14em] text-[#8C3B58] uppercase font-jakarta bg-[#F4E4E8] border border-[#D48C9E]/40 px-2.5 py-1 rounded">
+                  {currentSlide.eyebrow || 'CLINICAL FORMULATIONS'}
+                </span>
+                {currentSlide.actionType === 'ai_advisor' && (
+                  <span className="text-[10px] font-semibold bg-[#8C3B58] text-white px-2.5 py-1 rounded">
+                    هوش مصنوعی ورا
+                  </span>
+                )}
               </div>
-            ) : <img className="vara-hero-mark" src="/vara-logo.svg" alt="ورا" width={300} height={101} />}
+
+              {/* Balanced Persian Headline */}
+              <div className="space-y-1.5">
+                <h1 id="vara-home-title" className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#23191E] leading-[1.25] tracking-tight">
+                  {currentSlide.titlePart1}
+                </h1>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#8C3B58] tracking-tight leading-tight">
+                  {currentSlide.titlePart2}
+                </div>
+              </div>
+
+              {/* Subtitle Description */}
+              <p className="text-xs sm:text-sm text-[#5E434D] leading-relaxed max-w-md line-clamp-2">
+                {currentSlide.subtitle}
+              </p>
+
+              <div className="pt-2 flex">
+                <button
+                  type="button"
+                  onClick={() => handleSlideCta(currentSlide)}
+                  className="px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-[#8C3B58] hover:bg-[#732E47] text-white shadow-shop-violet transition-all duration-150 flex items-center gap-2.5 cursor-pointer group active:scale-98"
+                >
+                  <span>{currentSlide.ctaText}</span>
+                  <ArrowLeft className="w-4 h-4 text-white group-hover:-translate-x-1 transition-transform" />
+                </button>
+              </div>
+
+            </div>
+
           </div>
         </div>
+
 
         {/* ========================================================= */}
         {/* STREAMLINED QUICK TOOLS & UAE LINK PRICE CALCULATOR BAR   */}
@@ -239,24 +263,6 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
         </div>
-        <details className="vara-campaigns" open={campaignOpen} onToggle={(event) => setCampaignOpen(event.currentTarget.open)}>
-          <summary>تازه‌های ورا</summary>
-          {campaignOpen && <div className="vara-campaign">
-            {currentSlide && <>
-              <img src={currentSlide.imageSrc} srcSet={responsiveImageSrcSet(currentSlide.imageSrc, HERO_IMAGE_WIDTHS)}
-                sizes={HERO_IMAGE_SIZES} alt={currentSlide.imageAlt} loading="lazy" referrerPolicy="no-referrer" />
-              <div>
-                <h2>{currentSlide.titlePart1} {currentSlide.titlePart2}</h2>
-                <p>{currentSlide.subtitle}</p>
-                <button type="button" className="vara-button vara-button-primary" onClick={() => handleSlideCta(currentSlide)}>{currentSlide.ctaText}</button>
-                {activeSlides.length > 1 && <div className="vara-campaign-nav">
-                  <button type="button" className="vara-button" onClick={handlePrevSlide} aria-label="خبر قبلی"><ChevronRight size={18} /></button>
-                  <button type="button" className="vara-button" onClick={handleNextSlide} aria-label="خبر بعدی"><ChevronLeft size={18} /></button>
-                </div>}
-              </div>
-            </>}
-          </div>}
-        </details>
       </div>
 
       {directLinkModalOpen && (

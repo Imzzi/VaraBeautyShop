@@ -55,28 +55,12 @@ export function getLocalHeroSlides(): CarouselSlide[] {
   try {
     const saved = localStorage.getItem(HERO_SLIDES_STORAGE_KEY);
     if (saved) {
-      const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        const aiSlide = DEFAULT_HERO_SLIDES.find(s => s.id === 'vara-ai-advisor') || DEFAULT_HERO_SLIDES[1];
-        const aiIndex = parsed.findIndex((s: CarouselSlide) => s.actionType === 'ai_advisor' || s.id === 'vara-ai-advisor');
-        if (aiIndex >= 0) {
-          // Keep slide updated with current rich AI copy
-          parsed[aiIndex] = {
-            ...parsed[aiIndex],
-            ...aiSlide
-          };
-          localStorage.setItem(HERO_SLIDES_STORAGE_KEY, JSON.stringify(parsed));
-          return parsed;
-        } else {
-          const updated = [...parsed];
-          if (updated.length >= 2) {
-            updated[1] = aiSlide;
-          } else {
-            updated.push(aiSlide);
-          }
-          localStorage.setItem(HERO_SLIDES_STORAGE_KEY, JSON.stringify(updated));
-          return updated;
-        }
+      const parsed: unknown = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((slide) =>
+        slide && typeof slide.id === 'string' && typeof slide.titlePart1 === 'string' &&
+        typeof slide.imageSrc === 'string'
+      )) {
+        return parsed;
       }
     }
   } catch (err) {

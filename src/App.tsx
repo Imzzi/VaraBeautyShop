@@ -1066,8 +1066,6 @@ export default function App() {
               <>
                 {/* 1. Hero Section */}
                 <Hero
-                  products={productsList}
-                  onViewProduct={handleViewProductDetails}
                   onOpenAccount={() => navigateToSection('profile')}
                   onExploreClick={() => navigateToSection('shop')}
                   onQuizClick={() => setQuizModalOpen(true)}
