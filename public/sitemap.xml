@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<!--
+  Vara Beauty (ورا بیوتی) Sitemap
+  Automated SEO Discovery & Performance
+  NOTE: Admin CMS Dashboard (/admin, /cms), Profile, and API endpoints are strictly EXCLUDED for security & crawl budget optimization.
+-->
+  <url>
+    <loc>https://varabeauty.ir/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/calculator</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?category=cleanser</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?category=anti-aging</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?category=hydration</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?category=sensitive-skin</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?category=acne-blemishes</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?category=sunscreen</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?category=brightening</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?category=hair-body</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Abib</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Arencia</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Augustinus%20Bader</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Anua</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Av%C3%A8ne</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=SK-II</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=SKIN1004</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=SkinCeuticals</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=AXIS-Y</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Elemis</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Embryolisse</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Origins</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Eucerin</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=ACM</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Isntree</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=ISDIN</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Illiyoon</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Innisfree</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=APLB</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Bath%20%26%20Body%20Works</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Brighten%20Bloom</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Biodance</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Bioderma</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Bio-Oil</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Beauty%20of%20Joseon</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Paula%E2%80%99s%20Choice</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=PanOxyl</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Purito</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Peter%20Thomas%20Roth</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/shop?brand=Pixi</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-1</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>سرم بازسازی‌کننده لایلاک و آرگان خالص</image:title>
+        <image:caption>Lilac &amp; Moroccan Argan Youth Elixir</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>سرم بازسازی‌کننده لایلاک و آرگان خالص</image:title>
+        <image:caption>Lilac &amp; Moroccan Argan Youth Elixir</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1617897903246-719242758050?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>سرم بازسازی‌کننده لایلاک و آرگان خالص</image:title>
+        <image:caption>Lilac &amp; Moroccan Argan Youth Elixir</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-2</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>روغن اکسیر صحرا و گل لادن</image:title>
+        <image:caption>Sahara Botanica &amp; Nasturtium Radiance Oil</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>روغن اکسیر صحرا و گل لادن</image:title>
+        <image:caption>Sahara Botanica &amp; Nasturtium Radiance Oil</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1526947425960-945c6e72858f?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>روغن اکسیر صحرا و گل لادن</image:title>
+        <image:caption>Sahara Botanica &amp; Nasturtium Radiance Oil</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-3</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>تونر پاک‌کننده شکوفه یاس و بابونه کوهی</image:title>
+        <image:caption>Jasmine &amp; Chamomile Botanical Hydrating Toner</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1576426863848-c21f53c60b19?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>تونر پاک‌کننده شکوفه یاس و بابونه کوهی</image:title>
+        <image:caption>Jasmine &amp; Chamomile Botanical Hydrating Toner</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1547887537-6158d64c35b3?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>تونر پاک‌کننده شکوفه یاس و بابونه کوهی</image:title>
+        <image:caption>Jasmine &amp; Chamomile Botanical Hydrating Toner</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-4</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>کرم آبرسان عمقی شیره کاکتوس و هیالورونیک</image:title>
+        <image:caption>Desert Cactus Nectar Deep Hydration Cream</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>کرم آبرسان عمقی شیره کاکتوس و هیالورونیک</image:title>
+        <image:caption>Desert Cactus Nectar Deep Hydration Cream</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>کرم آبرسان عمقی شیره کاکتوس و هیالورونیک</image:title>
+        <image:caption>Desert Cactus Nectar Deep Hydration Cream</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-5</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ماسک شبانه ترمیم‌کننده اسید لاکتیک نیشکر</image:title>
+        <image:caption>Sugarcane Lactic Sleeping Glow Mask</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ماسک شبانه ترمیم‌کننده اسید لاکتیک نیشکر</image:title>
+        <image:caption>Sugarcane Lactic Sleeping Glow Mask</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ماسک شبانه ترمیم‌کننده اسید لاکتیک نیشکر</image:title>
+        <image:caption>Sugarcane Lactic Sleeping Glow Mask</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-6</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1629198688000-71f23e745b6e?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>بالسام مغذی و ترمیم‌کننده لب لایلاک و رز</image:title>
+        <image:caption>Lilac Rose Nourishing Lip Elixir Balm</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>بالسام مغذی و ترمیم‌کننده لب لایلاک و رز</image:title>
+        <image:caption>Lilac Rose Nourishing Lip Elixir Balm</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>بالسام مغذی و ترمیم‌کننده لب لایلاک و رز</image:title>
+        <image:caption>Lilac Rose Nourishing Lip Elixir Balm</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-7</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>سرم دور چشم ضد پف و تیرگی قهوه سبز و لایلاک</image:title>
+        <image:caption>Green Coffee &amp; Lilac Awakening Eye Serum</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>سرم دور چشم ضد پف و تیرگی قهوه سبز و لایلاک</image:title>
+        <image:caption>Green Coffee &amp; Lilac Awakening Eye Serum</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>سرم دور چشم ضد پف و تیرگی قهوه سبز و لایلاک</image:title>
+        <image:caption>Green Coffee &amp; Lilac Awakening Eye Serum</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-8</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1571781926291-c477ebfd024b?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ژل شوینده ملایم روزانه عصاره اسطوخودوس و لایلاک</image:title>
+        <image:caption>Lavender &amp; Lilac Soothing Gentle Cleanser</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1556228722-d0b71941656b?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ژل شوینده ملایم روزانه عصاره اسطوخودوس و لایلاک</image:title>
+        <image:caption>Lavender &amp; Lilac Soothing Gentle Cleanser</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ژل شوینده ملایم روزانه عصاره اسطوخودوس و لایلاک</image:title>
+        <image:caption>Lavender &amp; Lilac Soothing Gentle Cleanser</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-9</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>فلوئید ضدآفتاب مینرال بی‌رنگ SPF 50+ چای سفید و لایلاک</image:title>
+        <image:caption>White Tea &amp; Lilac Invisible Mineral Sunscreen SPF 50+</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>فلوئید ضدآفتاب مینرال بی‌رنگ SPF 50+ چای سفید و لایلاک</image:title>
+        <image:caption>White Tea &amp; Lilac Invisible Mineral Sunscreen SPF 50+</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1571781926291-c477ebfd024b?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>فلوئید ضدآفتاب مینرال بی‌رنگ SPF 50+ چای سفید و لایلاک</image:title>
+        <image:caption>White Tea &amp; Lilac Invisible Mineral Sunscreen SPF 50+</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-10</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>روغن اکسیر مو و بدن گل مغربی و رزماری وحشی</image:title>
+        <image:caption>Evening Primrose &amp; Rosemary Botanical Hair &amp; Body Nectar</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1526947425960-945c6e72858f?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>روغن اکسیر مو و بدن گل مغربی و رزماری وحشی</image:title>
+        <image:caption>Evening Primrose &amp; Rosemary Botanical Hair &amp; Body Nectar</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-11</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>اسنس جینسینگ و برنج روشن‌کننده بیوتی آف جوسان</image:title>
+        <image:caption>Beauty of Joseon Ginseng Essence Water</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1617897903246-719242758050?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>اسنس جینسینگ و برنج روشن‌کننده بیوتی آف جوسان</image:title>
+        <image:caption>Beauty of Joseon Ginseng Essence Water</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1547887537-6158d64c35b3?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>اسنس جینسینگ و برنج روشن‌کننده بیوتی آف جوسان</image:title>
+        <image:caption>Beauty of Joseon Ginseng Essence Water</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-12</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>اسنس حلزون پیشرفته ۹۶٪ کوزارکس</image:title>
+        <image:caption>COSRX Advanced Snail 96 Mucin Power Essence</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>اسنس حلزون پیشرفته ۹۶٪ کوزارکس</image:title>
+        <image:caption>COSRX Advanced Snail 96 Mucin Power Essence</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1556228722-d0b71941656b?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>اسنس حلزون پیشرفته ۹۶٪ کوزارکس</image:title>
+        <image:caption>COSRX Advanced Snail 96 Mucin Power Essence</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-13</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>بالم ترمیم‌کننده سیکاپلاست B5+ لاروش پوزای</image:title>
+        <image:caption>La Roche-Posay Cicaplast Baume B5+ Ultra-Repairing</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1571781926291-c477ebfd024b?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>بالم ترمیم‌کننده سیکاپلاست B5+ لاروش پوزای</image:title>
+        <image:caption>La Roche-Posay Cicaplast Baume B5+ Ultra-Repairing</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>بالم ترمیم‌کننده سیکاپلاست B5+ لاروش پوزای</image:title>
+        <image:caption>La Roche-Posay Cicaplast Baume B5+ Ultra-Repairing</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-14</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>سرم نیاسینامید ۱۰٪ + زینک ۱٪ دی اوردینری</image:title>
+        <image:caption>The Ordinary Niacinamide 10% + Zinc 1%</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>سرم نیاسینامید ۱۰٪ + زینک ۱٪ دی اوردینری</image:title>
+        <image:caption>The Ordinary Niacinamide 10% + Zinc 1%</image:caption>
+      </image:image>
+  </url>
+  <url>
+    <loc>https://varabeauty.ir/product/product-15</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ماساژور سنگ گواشا و رولر جید طبیعی</image:title>
+        <image:caption>Natural Green Jade Roller &amp; Gua Sha Sculpting Set</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ماساژور سنگ گواشا و رولر جید طبیعی</image:title>
+        <image:caption>Natural Green Jade Roller &amp; Gua Sha Sculpting Set</image:caption>
+      </image:image>
+      <image:image>
+        <image:loc>https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&amp;w=800&amp;auto=format&amp;fit=crop</image:loc>
+        <image:title>ماساژور سنگ گواشا و رولر جید طبیعی</image:title>
+        <image:caption>Natural Green Jade Roller &amp; Gua Sha Sculpting Set</image:caption>
+      </image:image>
+  </url>
+</urlset>

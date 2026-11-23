@@ -1,0 +1,6 @@
+{
+  "name": "Vara Beauty - ورا بیوتی",
+  "description": "فروشگاه تخصصی مراقبت پوست با سیستم ثبت‌نام، ورود کاربران، پایگاه داده SQLite و Turso (سازگار با Vercel و VPS) و مدیریت سفارش‌ها - Luxury Skincare with Turso & SQLite DB",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

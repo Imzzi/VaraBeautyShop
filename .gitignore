@@ -1,0 +1,22 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Prevent AI Studio chat image attachments from ever being committed or pushed to GitHub
+public/assets/aistudio/
+public/assets/
+assets/
+.aistudio/
+**/assets/aistudio/**
+
+
+# Local database artifacts
+/data/*.db*
+/data/*.sqlite*
+
+/dist-server/

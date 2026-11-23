@@ -1,0 +1,30 @@
+# robots.txt for Vara Beauty (https://varabeauty.ir)
+# Allow legitimate search engine crawlers while protecting private admin and API paths
+
+User-agent: *
+Allow: /
+Allow: /shop
+Allow: /product/
+Allow: /calculator
+
+# Exclude Admin CMS Dashboard & Private User Endpoints
+Disallow: /admin
+Disallow: /admin/
+Disallow: /cms
+Disallow: /cms/
+Disallow: /wp-admin/
+Disallow: /administrator/
+Disallow: /vara-admin-panel
+Disallow: /vara-admin-panel/
+Disallow: /profile
+Disallow: /account
+Disallow: /checkout
+Disallow: /api/
+
+# Block bot crawling of internal transaction query params
+Disallow: /*?orderSuccess=*
+Disallow: /*?orderFailed=*
+Disallow: /*?token=*
+
+# Sitemap location
+Sitemap: https://varabeauty.ir/sitemap.xml
