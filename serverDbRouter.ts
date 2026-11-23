@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { issueChallenge, useChallenge } from './serverChallenges';
 import { OAuth2Client } from 'google-auth-library';
 import { GOOGLE_CLIENT_ID } from './src/utils/googleAuth';
+import { isPendingOnlineCheckout } from './src/utils/checkoutReturn';
 import { 
   ProductsDb,
   CatalogWriteError,
@@ -521,10 +522,27 @@ dbRouter.get('/orders/user', requireUserOrAdminAuth, async (req: express.Request
 
     const visible = req.isAdmin
       ? await OrdersDb.getByUser(emailToQuery, phoneToQuery, userIdToQuery)
-      : await OrdersDb.getByVerifiedUser(userIdToQuery!);
+      : (await OrdersDb.getByVerifiedUser(userIdToQuery!)).filter((order) => !isPendingOnlineCheckout(order));
     return res.json({ success: true, orders: visible.map(orderResponse) });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Restore the persisted checkout for the customer or guest session that created it.
+dbRouter.get('/orders/checkout/:orderIdentifier', async (req, res) => {
+  res.setHeader('Cache-Control', 'private, no-store');
+  const identifier = req.params.orderIdentifier;
+  if (!/^[A-Za-z0-9_-]{3,80}$/.test(identifier)) return res.sendStatus(400);
+
+  try {
+    const order = await OrdersDb.getById(identifier) ?? await OrdersDb.getByOrderNumber(identifier);
+    if (!order || order.paymentMethod !== 'online_gateway' || !canAccessCheckout(req, order)) {
+      return res.status(404).json({ success: false });
+    }
+    return res.json({ success: true, order: orderResponse(order) });
+  } catch {
+    return res.status(503).json({ success: false });
   }
 });
 

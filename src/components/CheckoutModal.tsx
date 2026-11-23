@@ -11,6 +11,7 @@ import { formatToman } from '../utils/currency';
 import { getLocalShippingSettings, subscribeToShippingSettings, ShippingSettings } from '../lib/shippingSettings';
 import { PolicyReaderModal } from './LegalPoliciesPage';
 import { PolicyDocumentType } from '../data/policies';
+import { checkoutPaymentPath } from '../utils/checkoutReturn';
 
 export type CheckoutDeliveryDraft = Partial<
   Pick<OrderCustomer, 'name' | 'phone' | 'province' | 'city' | 'address' | 'postalCode' | 'notes'> & {
@@ -23,6 +24,7 @@ interface CheckoutModalProps {
   initialDeliveryDraft: CheckoutDeliveryDraft | null;
   initialOrder?: Order | null;
   onOrderPersisted: (order: Order) => void;
+  onGatewayDeparture: (orderId: string) => void;
   onClose: (draft: CheckoutDeliveryDraft | null) => void;
   items: CartItem[];
   discountAmount: number;
@@ -35,6 +37,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   initialDeliveryDraft,
   initialOrder,
   onOrderPersisted,
+  onGatewayDeparture,
   onClose,
   items,
   discountAmount,
@@ -46,7 +49,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [submissionError, setSubmissionError] = useState('');
 
   // Profile updates can fill untouched fields without overwriting a shopper's edits.
-  const [deliveryDraft, setDeliveryDraft] = useState<CheckoutDeliveryDraft>(() => initialDeliveryDraft ?? {});
+  const [deliveryDraft, setDeliveryDraft] = useState<CheckoutDeliveryDraft>(() => initialOrder
+    ? { ...initialOrder.customer, shippingMethod: initialOrder.shippingMethod }
+    : initialDeliveryDraft ?? {});
   const customerName = deliveryDraft.name ?? user?.displayName ?? '';
   const phone = deliveryDraft.phone ?? user?.phoneNumber ?? '';
   const province = deliveryDraft.province ?? (user?.province || 'تهران');
@@ -128,13 +133,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     return sum + itemPrice * item.quantity;
   }, 0);
   const postExpressFee = shippingSettings.postExpressFee ?? 50000;
-  
-  let shippingFee = 0;
-  if (shippingMethod === 'post_express') {
-    shippingFee = postExpressFee;
-  } else if (shippingMethod === 'courier_tehran') {
-    shippingFee = 0;
-  }
+  const shippingFee = completedOrder?.shippingFee ?? (shippingMethod === 'post_express' ? postExpressFee : 0);
 
   const total = Math.round(Math.max(0, subtotal - discountAmount + shippingFee));
   const displayTotal = completedOrder ? completedOrder.totalAmount : total;
@@ -344,8 +343,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             body: JSON.stringify({ orderId: savedOrder.id }),
           });
           const payData = await payRes.json();
+          if (payRes.ok && payData.success && payData.settled === true) {
+            onGatewayDeparture(savedOrder.id);
+            window.location.replace(checkoutPaymentPath(savedOrder.id));
+            return;
+          }
           if (payRes.ok && payData.success && payData.paymentUrl) {
-            onClearCart();
+            onGatewayDeparture(savedOrder.id);
             // Redirect to Online Payment Gateway (keep isSubmitting true while browser navigates)
             try {
               if (window.top && window.top !== window) {
@@ -357,16 +361,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               window.location.href = payData.paymentUrl;
             }
             return;
-          } else {
-            setSubmissionError('سفارش ثبت شد، اما اتصال به درگاه برقرار نشد. دوباره به درگاه بروید.');
-            setIsSubmitting(false);
-            return;
           }
         } catch {
-          setSubmissionError('سفارش ثبت شد، اما اتصال به درگاه برقرار نشد. دوباره به درگاه بروید.');
-          setIsSubmitting(false);
-          return;
+          // Leave checkout open when the gateway cannot be reached.
         }
+        setSubmissionError('اتصال به درگاه برقرار نشد. دوباره برای پرداخت تلاش کنید.');
+        setIsSubmitting(false);
+        return;
       }
 
       setCompletedOrder(savedOrder);
@@ -375,7 +376,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       setIsSubmitting(false);
     } catch (err: any) {
       console.warn('Failed to submit order to database:', err);
-      setSubmissionError('سفارش ثبت نشد. اطلاعات واردشده حفظ شده است. دوباره تلاش کنید.');
+      setSubmissionError('ادامهٔ تسویه‌حساب انجام نشد. اطلاعات واردشده حفظ شده است. دوباره تلاش کنید.');
       setIsSubmitting(false);
     }
   };
@@ -631,7 +632,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
 
             <div className="vara-status justify-between" role="status">
-              <span>{completedOrder ? <>سفارش ثبت‌شده <bdi>{completedOrder.orderNumber}</bdi></> : shippingMethod === 'post_express' ? `با هزینه پست ${formatPrice(shippingFee)} تومان` : 'هزینه پیک جداگانه هنگام تحویل پرداخت می‌شود.'}</span>
+              <span>{completedOrder ? 'پرداخت هنوز تأیید نشده است.' : shippingMethod === 'post_express' ? `با هزینه پست ${formatPrice(shippingFee)} تومان` : 'هزینه پیک جداگانه هنگام تحویل پرداخت می‌شود.'}</span>
               <strong>{formatPrice(displayTotal)} تومان</strong>
             </div>
 

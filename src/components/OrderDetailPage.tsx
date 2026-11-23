@@ -6,6 +6,7 @@ import {
   User, MapPin, Phone, CreditCard, ShoppingBag, AlertCircle, Copy, Check
 } from 'lucide-react';
 import { formatToman } from '../utils/currency';
+import { checkoutPaymentPath, isPendingOnlineCheckout } from '../utils/checkoutReturn';
 
 interface OrderDetailItem {
   productId: string;
@@ -193,6 +194,17 @@ export const OrderDetailPage: React.FC<OrderDetailPageProps> = ({
 
   const isPaid = order.paymentStatus === 'paid';
   const isFailed = order.paymentStatus === 'failed' || order.status === 'cancelled';
+
+  if (isPendingOnlineCheckout(order)) {
+    return (
+      <div className="max-w-2xl mx-auto my-12 px-4 font-vazir text-center">
+        <div className="bg-white rounded-2xl border border-[#F0E1E4] p-8 space-y-4">
+          <h1 className="text-xl font-bold text-[#23191E]">پرداخت هنوز تأیید نشده است</h1>
+          <a className="vara-button inline-flex" href={checkoutPaymentPath(order.id)}>ادامهٔ پرداخت</a>
+        </div>
+      </div>
+    );
+  }
 
   const statusSteps = [
     { id: 'pending', label: 'ثبت و تایید سفارش' },

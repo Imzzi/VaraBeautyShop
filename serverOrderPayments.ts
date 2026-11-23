@@ -6,6 +6,7 @@ import { ResendEmailService } from './serverEmail';
 import { NextPayService } from './serverNextPay';
 import { ZarinpalService } from './serverZarinpal';
 import type { Order } from './src/types';
+import { checkoutPaymentPath } from './src/utils/checkoutReturn';
 
 type Attempt = NonNullable<Order['paymentAttempt']>;
 type Provider = Attempt['provider'];
@@ -106,6 +107,9 @@ export function registerOrderPaymentRoutes(app: Express) {
         const orderId = typeof req.body?.orderId === 'string' ? req.body.orderId : '';
         const order = orderId && await OrdersDb.getById(orderId);
         if (!order || !canAccessCheckout(req, order)) return res.status(404).json({ success: false });
+        if (order.paymentMethod === 'online_gateway' && order.paymentStatus === 'paid') {
+          return res.json({ success: true, settled: true });
+        }
         const merchantBinding = getMerchantBinding(provider);
         if (!merchantBinding) return res.status(503).json({ success: false });
         if (order.status !== 'pending' || order.paymentStatus !== 'pending_verification' ||
@@ -172,8 +176,10 @@ export function registerOrderPaymentRoutes(app: Express) {
         const order = await OrdersDb.getByPaymentTransaction(provider, id);
         if (!order) return res.status(404).send('Payment reference not found.');
         // Callback parameters never set paid or failed. Reconcile with the configured provider.
-        const paid = await settle(order, provider, id);
-        return res.redirect(303, `/order/${encodeURIComponent(order.orderNumber)}?${paid ? 'orderSuccess=true' : 'orderPending=true'}`);
+        const paid = await settle(order, provider, id).catch(() => null);
+        return res.redirect(303, paid
+          ? `/order/${encodeURIComponent(order.orderNumber)}?orderSuccess=true`
+          : checkoutPaymentPath(order.id));
       } catch {
         return res.status(503).send('Payment verification temporarily unavailable.');
       }

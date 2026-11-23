@@ -40,6 +40,10 @@ import { POLICY_DOCUMENTS } from './data/policies';
 import { PRODUCTS as defaultProducts } from './data/products';
 import { Product, ProductSize, ProductVariant, CartItem, Order, UserProfile, ShopFilterPreset } from './types';
 import { getAdminPath, isAdminRoute } from './utils/adminRouteConfig';
+import {
+  CHECKOUT_PAYMENT_PATH, cartSignature, checkoutPaymentPath, forgetPaymentCart,
+  getPaymentReturnIdentifier, isPendingOnlineCheckout, readPaymentCart, rememberPaymentCart,
+} from './utils/checkoutReturn';
 import { 
   subscribeToProducts,
   fetchProductsFromDb,
@@ -47,8 +51,25 @@ import {
   type CatalogSnapshot, 
   getUserProfileFromDb, 
   subscribeToUserProfile,
+  getCustomerAuthHeaders,
   getLocalUserSession
 } from './lib/db';
+
+const CART_STORAGE_KEY = 'vara_cart_items_v3';
+
+function readStoredCart(): CartItem[] | undefined {
+  try {
+    const items = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) ?? 'null');
+    if (Array.isArray(items)) {
+      return items.filter((item) => item?.product?.id && typeof item.quantity === 'number' && item.quantity > 0);
+    }
+  } catch {}
+}
+
+type PaymentReturn =
+  | { state: 'loading' }
+  | { state: 'ready'; order: Order }
+  | { state: 'error'; message: string };
 
 function getProductRouteId() {
   if (typeof window === 'undefined') return '';
@@ -62,11 +83,12 @@ function getProductRouteId() {
   }
 }
 
-function ModalLoading({ label, onClose }: { label: string; onClose: () => void }) {
+function ModalLoading({ label, onClose, onRetry }: { label: string; onClose: () => void; onRetry?: () => void }) {
   return (
     <Modal label={label} onClose={onClose} className="fixed inset-0 z-[65] bg-black/25 flex items-end sm:items-center justify-center">
       <div className="w-full sm:w-96 bg-white p-5 rounded-t-xl sm:rounded-xl flex items-center justify-between gap-4" onClick={(event) => event.stopPropagation()}>
         <span className="text-sm text-[#785E67]" role="status">{label}</span>
+        {onRetry && <button type="button" className="text-sm font-bold text-[#8C3B58]" onClick={onRetry}>تلاش دوباره</button>}
         <button type="button" className="text-sm font-bold text-[#8C3B58]" onClick={onClose}>بستن</button>
       </div>
     </Modal>
@@ -158,7 +180,7 @@ export default function App() {
       if (path.startsWith('/product/') || hash.startsWith('#/product/')) {
         return 'product-detail';
       }
-      if (path === '/shop' || hash === '#/shop' || hash === '#shop') {
+      if (path === CHECKOUT_PAYMENT_PATH || path === '/shop' || hash === '#/shop' || hash === '#shop') {
         return 'shop';
       }
     }
@@ -212,7 +234,7 @@ export default function App() {
         setSelectedProduct(productsList.find((product) => product.id === id) ?? null);
         setProductLoadError('');
         setActiveSection('product-detail');
-      } else if (path === '/shop' || hash === '#/shop' || hash === '#shop') {
+      } else if (path === CHECKOUT_PAYMENT_PATH || path === '/shop' || hash === '#/shop' || hash === '#shop') {
         setActiveSection('shop');
       } else if (path === '/' && !hash) {
         setActiveSection('home');
@@ -288,26 +310,7 @@ export default function App() {
   };
 
   // Cart State: Default empty for all customers & robust cross-tab sync
-  const CART_STORAGE_KEY = 'vara_cart_items_v3';
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem(CART_STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            const valid = parsed.filter(
-              (it) => it && it.product && it.product.id && typeof it.quantity === 'number' && it.quantity > 0
-            );
-            if (valid.length > 0) return valid;
-          }
-        }
-      } catch (err) {
-        console.warn('[Cart Persistence Error]:', err);
-      }
-    }
-    return [];
-  });
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => readStoredCart() ?? []);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const openCart = () => {
     loadCartDrawer().catch(() => {});
@@ -340,35 +343,6 @@ export default function App() {
     };
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
-
-  // Listen for payment return callback parameters (e.g. from Zarinpal redirect)
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const params = new URLSearchParams(window.location.search);
-    const path = window.location.pathname;
-
-    if (path.startsWith('/order/')) {
-      const orderId = decodeURIComponent(path.substring('/order/'.length).split('/')[0].split('?')[0]);
-      if (orderId) {
-        setSelectedOrderIdentifier(orderId);
-        setActiveSection('order-detail');
-      }
-    }
-
-    if (params.get('orderSuccess') === 'true') {
-      const orderNum = params.get('orderNumber') || '';
-      const refId = params.get('refId') || '';
-      setCartItems([]);
-      try {
-        localStorage.removeItem(CART_STORAGE_KEY);
-        localStorage.removeItem('vara_cart_items_v2');
-      } catch {}
-      showToast(`پرداخت شما با موفقیت تایید شد. شماره سفارش: ${orderNum}${refId ? ` (کد پیگیری: ${refId})` : ''}`);
-    } else if (params.get('orderFailed') === 'true') {
-      const reason = params.get('reason') || '';
-      showToast(reason === 'cancelled' ? 'تراکنش پرداخت توسط شما لغو شد.' : 'پرداخت در درگاه بانکی ناموفق بود.');
-    }
   }, []);
 
   // Wishlist State with local storage persistence
@@ -425,6 +399,9 @@ export default function App() {
     fields: CheckoutDeliveryDraft;
   } | null>(null);
   const [checkoutAttempt, setCheckoutAttempt] = useState<{ order: Order; items: CartItem[]; userId?: string } | null>(null);
+  const [paymentReturn, setPaymentReturn] = useState<PaymentReturn | null>(null);
+  const [paymentReturnRetry, retryPaymentReturn] = useState(0);
+  const resumedOrder = paymentReturn?.state === 'ready' ? paymentReturn.order : null;
   const checkoutOrder = checkoutAttempt?.items === cartItems && checkoutAttempt?.userId === user?.uid
     ? checkoutAttempt.order : null;
   const cartIsEmpty = cartItems.length === 0;
@@ -435,6 +412,100 @@ export default function App() {
   const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [advisorTab, setAdvisorTab] = useState<'chat' | 'scan' | null>(null);
   const [advisorOpen, setAdvisorOpen] = useState(false);
+
+  useEffect(() => {
+    let controller: AbortController | undefined;
+
+    const restorePayment = async () => {
+      controller?.abort();
+      const identifier = getPaymentReturnIdentifier();
+      if (!identifier) {
+        setPaymentReturn(null);
+        return;
+      }
+
+      const request = new AbortController();
+      controller = request;
+      const isCurrent = () => !request.signal.aborted && getPaymentReturnIdentifier() === identifier;
+      setCheckoutModalOpen(false);
+      setCartDrawerOpen(false);
+      setPaymentReturn({ state: 'loading' });
+      try {
+        const response = await fetch(`/api/db/orders/checkout/${encodeURIComponent(identifier)}`, {
+          headers: getCustomerAuthHeaders(),
+          cache: 'no-store',
+          signal: request.signal,
+        });
+        if (!isCurrent()) return;
+        if (response.status === 404 || response.status === 400) {
+          const snapshot = readPaymentCart();
+          if (snapshot?.orderId === identifier && snapshot.userId === user?.uid) {
+            forgetPaymentCart(identifier);
+            setCheckoutAttempt(null);
+          }
+          setPaymentReturn({ state: 'error', message: 'این پرداخت در نشست فعلی پیدا نشد. با همان حساب یا مرورگر دوباره تلاش کنید.' });
+          return;
+        }
+        if (!response.ok) throw new Error('Checkout lookup failed');
+        const { order }: { order: Order } = await response.json();
+        if (!isCurrent()) return;
+
+        if (order.paymentStatus === 'paid') {
+          const snapshot = readPaymentCart();
+          const storedCart = readStoredCart();
+          if (snapshot?.orderId === order.id) {
+            forgetPaymentCart(order.id);
+            setCartItems((current) => {
+              const latest = storedCart ?? current;
+              return cartSignature(latest) === snapshot.signature ? [] : latest;
+            });
+          } else if (storedCart) {
+            // A cached page may still have the old cart after another page handled the return.
+            setCartItems(storedCart);
+          }
+          setCheckoutAttempt(null);
+          setCheckoutDeliveryDraft(null);
+          setSelectedOrderIdentifier(order.orderNumber);
+          setActiveSection('order-detail');
+          window.history.replaceState(null, '', `/order/${encodeURIComponent(order.orderNumber)}`);
+          setPaymentReturn(null);
+          return;
+        }
+        if (!isPendingOnlineCheckout(order)) {
+          forgetPaymentCart(order.id);
+          setCheckoutAttempt(null);
+          window.history.replaceState(null, '', `/order/${encodeURIComponent(order.orderNumber)}`);
+          setSelectedOrderIdentifier(order.orderNumber);
+          setActiveSection('order-detail');
+          setPaymentReturn(null);
+          return;
+        }
+        window.history.replaceState(null, '', checkoutPaymentPath(order.id));
+        setActiveSection('shop');
+        setPaymentReturn({ state: 'ready', order });
+      } catch {
+        if (isCurrent()) setPaymentReturn({ state: 'error', message: 'دریافت وضعیت پرداخت انجام نشد. دوباره تلاش کنید.' });
+      }
+    };
+
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) void restorePayment();
+    };
+    window.addEventListener('pageshow', handlePageShow);
+    window.addEventListener('popstate', restorePayment);
+    void restorePayment();
+    return () => {
+      controller?.abort();
+      window.removeEventListener('pageshow', handlePageShow);
+      window.removeEventListener('popstate', restorePayment);
+    };
+  }, [paymentReturnRetry, user?.uid]);
+
+  const closePaymentReturn = () => {
+    window.history.replaceState(null, '', '/shop');
+    setActiveSection('shop');
+    setPaymentReturn(null);
+  };
 
   useEffect(() => {
     if (activeSection === 'admin') {
@@ -565,6 +636,12 @@ export default function App() {
   };
 
   const handleProceedToCheckout = async (discount: number) => {
+    const savedPayment = readPaymentCart();
+    if (savedPayment && savedPayment.userId === user?.uid && savedPayment.signature === cartSignature(cartItems)) {
+      window.history.pushState(null, '', checkoutPaymentPath(savedPayment.orderId));
+      retryPaymentReturn((attempt) => attempt + 1);
+      return;
+    }
     const catalogItems = cartItems.filter(({ product }) => product && !/^(gift-card|dubai)-/.test(product.id));
     if (!checkoutOrder && catalogItems.length) {
       const fresh = await fetchProductsFromDb().catch(() => {
@@ -1086,17 +1163,31 @@ export default function App() {
       )}
 
       {/* Checkout & Pre-Invoice Modal */}
-      {checkoutModalOpen && (
-        <Suspense fallback={<ModalLoading label="در حال بارگذاری تسویه حساب..." onClose={() => setCheckoutModalOpen(false)} />}>
+      {(paymentReturn?.state === 'loading' || paymentReturn?.state === 'error') && (
+        <ModalLoading
+          label={paymentReturn.state === 'error' ? paymentReturn.message : 'در حال بررسی وضعیت پرداخت...'}
+          onClose={closePaymentReturn}
+          onRetry={paymentReturn.state === 'error' ? () => retryPaymentReturn((attempt) => attempt + 1) : undefined}
+        />
+      )}
+      {(checkoutModalOpen || resumedOrder) && (
+        <Suspense fallback={<ModalLoading label="در حال بارگذاری تسویه حساب..." onClose={resumedOrder ? closePaymentReturn : () => setCheckoutModalOpen(false)} />}>
           <CheckoutModal
-            key={user?.uid ?? 'guest'}
-            isOpen={checkoutModalOpen}
+            key={resumedOrder?.id ?? user?.uid ?? 'guest'}
+            isOpen
             initialDeliveryDraft={initialCheckoutDeliveryDraft}
-            initialOrder={checkoutOrder}
+            initialOrder={resumedOrder ?? checkoutOrder}
             onOrderPersisted={(order) => setCheckoutAttempt({ order, items: cartItems, userId: user?.uid })}
+            onGatewayDeparture={(orderId) => {
+              if (!resumedOrder) rememberPaymentCart(orderId, cartItems, user?.uid);
+              window.history.replaceState(null, '', checkoutPaymentPath(orderId));
+            }}
             onClose={(draft) => {
-              setCheckoutDeliveryDraft(!cartIsEmpty && draft ? { userId: user?.uid, fields: draft } : null);
-              setCheckoutModalOpen(false);
+              if (resumedOrder) closePaymentReturn();
+              else {
+                setCheckoutDeliveryDraft(!cartIsEmpty && draft ? { userId: user?.uid, fields: draft } : null);
+                setCheckoutModalOpen(false);
+              }
             }}
             items={cartItems}
             discountAmount={appliedDiscount}

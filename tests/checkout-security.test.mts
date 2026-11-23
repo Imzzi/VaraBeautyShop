@@ -101,13 +101,20 @@ test('checkout, ownership, provider binding, idempotent settlement, and receipts
   assert.equal((await send('/api/db/orders/lookup/' + orderA.orderNumber, undefined, other)).status, 404);
   assert.equal((await send('/api/db/orders/lookup/' + orderA.orderNumber, undefined, owner)).status, 200);
   assert.deepEqual((await (await send('/api/db/orders/user', undefined, other)).json()).orders, []);
+  const resumeA = '/api/db/orders/checkout/' + orderA.id;
+  const resumeB = '/api/db/orders/checkout/' + orderB.id;
+  assert.equal((await send(resumeA, undefined, other)).status, 404);
+  assert.equal((await send(resumeB)).status, 404);
+  assert.equal((await send(resumeB, undefined, guest)).status, 200);
+  assert.deepEqual((await (await send('/api/db/orders/user', undefined, owner)).json()).orders, []);
 
   const requestA = ctx.mock.method(ZarinpalService, 'requestPayment', async () => ({
     success: true, authority: 'fixture-a', paymentUrl: 'https://sandbox.zarinpal.com/pg/StartPay/fixture-a',
   }));
+  let gatewayPaid = false;
   const verifyA = ctx.mock.method(ZarinpalService, 'verifyPayment', async ({ amountToman }) => {
     assert.equal(amountToman, orderA.totalAmount);
-    return { success: true, refId: 'fixture-receipt-a' };
+    return gatewayPaid ? { success: true, refId: 'fixture-receipt-a' } : { success: false };
   });
   const email = ctx.mock.method(ResendEmailService, 'sendOrderConfirmation', async () => ({ success: true }));
   const startA = () => send('/api/payment/zarinpal/request', { orderId: orderA.id }, owner);
@@ -118,9 +125,28 @@ test('checkout, ownership, provider binding, idempotent settlement, and receipts
   assert.equal((await send('/api/payment/zarinpal/verify', { orderId: orderB.id, authority: 'fixture-a' }, guest)).status, 409);
   assert.equal(verifyA.mock.callCount(), 0);
   const cb = '/api/payment/zarinpal/callback?Authority=fixture-a';
+  const cancelled = await send(cb + '&Status=NOK');
+  assert.equal(cancelled.status, 303);
+  assert.equal(cancelled.headers.get('location'), '/checkout/payment?order=' + orderA.id);
+  const resumed = await send(resumeA, undefined, owner);
+  assert.match(resumed.headers.get('cache-control')!, /private, no-store/);
+  const { order: draft } = await resumed.json();
+  assert.equal(draft.id, orderA.id);
+  assert.equal(draft.paymentStatus, 'pending_verification');
+  assert.equal(draft.totalAmount, orderA.totalAmount);
+  assert.equal(Object.hasOwn(draft, 'paymentAttempt'), false);
+  assert.equal(email.mock.callCount(), 0);
+  assert.equal((await startA()).status, 200);
+  assert.equal(requestA.mock.callCount(), 1);
+
+  gatewayPaid = true;
   const callbacks = await Promise.all([send(cb), send(cb)]);
-  assert.ok(callbacks.every(res => res.status === 303));
+  assert.ok(callbacks.every(res => res.status === 303 &&
+    res.headers.get('location') === '/order/' + orderA.orderNumber + '?orderSuccess=true'));
   assert.equal((await db.OrdersDb.getById(orderA.id)).paymentStatus, 'paid');
+  assert.equal((await (await send(resumeA, undefined, owner)).json()).order.paymentStatus, 'paid');
+  assert.equal((await (await send('/api/db/orders/user', undefined, owner)).json()).orders[0].id, orderA.id);
+  assert.deepEqual(await (await startA()).json(), { success: true, settled: true });
   assert.equal(email.mock.callCount(), 1);
 
   process.env.NEXTPAY_API_KEY = 'synthetic-nextpay-fixture';
