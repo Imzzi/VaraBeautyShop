@@ -255,44 +255,30 @@ export const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
 
-          {/* Col 6: About Us & Trust */}
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <h4 className="text-xs font-semibold text-[#23191E] tracking-wide uppercase">
-                اصالت و اعتماد
-              </h4>
-              <div className="flex items-center gap-1.5 flex-wrap justify-start pt-1">
-                <span className="px-2.5 py-1 bg-white border border-[#F0E1E4] rounded-md text-[10px] font-medium text-[#8C3B58]">درگاه امن نکست‌پی</span>
-                <span className="px-2.5 py-1 bg-white border border-[#F0E1E4] rounded-md text-[10px] font-medium text-[#8C3B58]">کارت به کارت</span>
-              </div>
+          {/* Col 6: Enamad Trust Seal */}
+          <div className="space-y-2 text-right">
+            <span className="text-[10px] font-medium text-[#785E67] block">
+              نماد اعتماد الکترونیکی
+            </span>
+            <div className="w-24 h-28 bg-white border border-[#F0E1E4] rounded-xl p-2 flex items-center justify-center">
+              <a
+                referrerPolicy="origin"
+                target="_blank"
+                href="https://trustseal.enamad.ir/?id=7840738&Code=m1kzPQfDD4qthoDpXDrv0RPhoCm2lOVs"
+                className="w-full h-full flex items-center justify-center"
+              >
+                <img
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="origin"
+                  src="https://trustseal.enamad.ir/logo.aspx?id=7840738&Code=m1kzPQfDD4qthoDpXDrv0RPhoCm2lOVs"
+                  alt="نماد اعتماد الکترونیکی ورا بیوتی"
+                  style={{ cursor: 'pointer' }}
+                  className="max-h-full max-w-full object-contain"
+                  {...{ code: 'm1kzPQfDD4qthoDpXDrv0RPhoCm2lOVs' }}
+                />
+              </a>
             </div>
-
-            {/* Enamad Trust Seal */}
-            <div className="pt-3 border-t border-[#F0E1E4] space-y-2 text-right">
-              <span className="text-[10px] font-medium text-[#785E67] block">
-                نماد اعتماد الکترونیکی
-              </span>
-              <div className="w-24 h-28 bg-white border border-[#F0E1E4] rounded-xl p-2 flex items-center justify-center">
-                <a 
-                  referrerPolicy="origin" 
-                  target="_blank" 
-                  href="https://trustseal.enamad.ir/?id=7840738&Code=m1kzPQfDD4qthoDpXDrv0RPhoCm2lOVs"
-                  className="w-full h-full flex items-center justify-center"
-                >
-                  <img 
-                    loading="lazy"
-                    decoding="async"
-                    referrerPolicy="origin" 
-                    src="https://trustseal.enamad.ir/logo.aspx?id=7840738&Code=m1kzPQfDD4qthoDpXDrv0RPhoCm2lOVs" 
-                    alt="نماد اعتماد الکترونیکی ورا بیوتی" 
-                    style={{ cursor: 'pointer' }}
-                    className="max-h-full max-w-full object-contain"
-                    {...{ code: 'm1kzPQfDD4qthoDpXDrv0RPhoCm2lOVs' }}
-                  />
-                </a>
-              </div>
-            </div>
-
           </div>
 
         </div>
