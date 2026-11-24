@@ -1,4 +1,3 @@
-import { RoutineLabel } from './RoutineLabel';
 import { getProductImages, isPackShot, packagingImage } from '../lib/productImages';
 import { Modal } from './Modal';
 import React, { useState, useEffect } from 'react';
@@ -306,6 +305,23 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const [activeTab, setActiveTab] = useState<'features' | 'ingredients' | 'routine' | 'compatibility' | 'reviews'>('features');
   const [selectedIngredientIdx, setSelectedIngredientIdx] = useState<number | null>(null);
   const [routineTimeOfDay, setRoutineTimeOfDay] = useState<'morning' | 'night'>('morning');
+  const savedRoutineStep = product.routineStep?.trim() ?? '';
+  const routineStepPrefix = /^(?:گام|مرحله|step)\s*([0-9۰-۹٠-٩]+)\s*[:：.\-–—]?\s*/i;
+  const routinePurpose = savedRoutineStep.replace(routineStepPrefix, '');
+  const routineStepDigits = savedRoutineStep.match(routineStepPrefix)?.[1];
+  const activeRoutineStep = Number(routineStepDigits
+    ?.replace(/[۰-۹]/g, (digit) => String(digit.charCodeAt(0) - '۰'.charCodeAt(0)))
+    .replace(/[٠-٩]/g, (digit) => String(digit.charCodeAt(0) - '٠'.charCodeAt(0))));
+  const routineSteps = [
+    { title: 'پاک‌کننده و شوینده', description: 'پاک‌کردن آلودگی و چربی اضافی از سطح پوست' },
+    { title: 'تونر و اسنس', description: 'آماده‌سازی پوست برای مراحل بعدی' },
+    { title: 'سرم و آمپول', description: 'رسیدگی به نیازهای مشخص پوست' },
+    { title: 'کرم دور چشم', description: 'مراقبت از پوست اطراف چشم' },
+    { title: 'مرطوب‌کننده', description: 'حفظ رطوبت و تقویت سد دفاعی پوست' },
+    routineTimeOfDay === 'morning'
+      ? { title: 'ضدآفتاب', description: 'محافظت از پوست در برابر نور خورشید' }
+      : { title: 'بالم یا ماسک خواب', description: 'مراقبت تکمیلی پوست در طول شب' },
+  ];
   const [showStickyMobileBar, setShowStickyMobileBar] = useState<boolean>(false);
   const [added, setAdded] = useState(false);
   const [internalIsWishlisted, setInternalIsWishlisted] = useState(false);
@@ -967,7 +983,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <p className="font-jakarta text-xs sm:text-sm text-vara-muted tracking-normal" dir="ltr">
                 {product.nameEn}
               </p>
-              <RoutineLabel step={product.routineStep} />
+              {routinePurpose && (
+                <p className="text-sm leading-relaxed text-vara-muted-strong"><bdi>{routinePurpose}</bdi></p>
+              )}
             </div>
 
             {/* Skin Profile Compatibility Notice */}
@@ -1528,6 +1546,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 <h3 className="font-vazir font-bold text-base sm:text-lg text-vara-ink">
                   چیدمان گام‌به‌گام مراحل مراقبت از پوست
                 </h3>
+                {savedRoutineStep && (
+                  <p className="mt-1.5 text-xs leading-relaxed text-vara-muted">
+                    <bdi>{savedRoutineStep}</bdi>
+                  </p>
+                )}
               </div>
 
               <div className="flex items-center bg-vara-surface p-1 rounded-lg border border-vara-line">
@@ -1558,68 +1581,28 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-5 gap-2.5">
-                <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
-                  <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-full bg-white border border-vara-line text-vara-muted text-[10px] font-bold font-jakarta flex items-center justify-center">
-                      1
-                    </span>
-                    <span className="text-[10px] text-vara-muted font-vazir">مرحله اول</span>
-                  </div>
-                  <div className="font-bold text-xs text-vara-ink font-vazir">شوینده ملایم</div>
-                  <p className="text-[10px] text-vara-muted font-vazir line-clamp-2">پاکسازی آلودگی‌ها و باز کردن منافذ</p>
-                </div>
-
-                <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
-                  <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-full bg-white border border-vara-line text-vara-muted text-[10px] font-bold font-jakarta flex items-center justify-center">
-                      2
-                    </span>
-                    <span className="text-[10px] text-vara-muted font-vazir">مرحله دوم</span>
-                  </div>
-                  <div className="font-bold text-xs text-vara-ink font-vazir">تونر و آماده‌سازی</div>
-                  <p className="text-[10px] text-vara-muted font-vazir line-clamp-2">تنظیم pH پوست و آماده‌سازی سد دفاعی</p>
-                </div>
-
-                <div className="bg-vara-surface border-2 border-vara-rose rounded-xl p-3.5 space-y-1.5 text-center sm:text-right relative overflow-hidden">
-                  <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-full bg-vara-rose text-white text-[10px] font-bold font-jakarta flex items-center justify-center">
-                      3
-                    </span>
-                    <span className="text-[10px] font-bold text-vara-rose-ink font-vazir">گام فعال شما</span>
-                  </div>
-                  <div className="font-bold text-xs text-vara-ink font-vazir truncate">{product.nameFa}</div>
-                  <p className="text-[10px] text-vara-muted-strong font-vazir font-medium">جذب عمیق مواد موثره به لایه‌های اپیدرم</p>
-                </div>
-
-                <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
-                  <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-full bg-white border border-vara-line text-vara-muted text-[10px] font-bold font-jakarta flex items-center justify-center">
-                      4
-                    </span>
-                    <span className="text-[10px] text-vara-muted font-vazir">مرحله چهارم</span>
-                  </div>
-                  <div className="font-bold text-xs text-vara-ink font-vazir">کرم مرطوب‌کننده</div>
-                  <p className="text-[10px] text-vara-muted font-vazir line-clamp-2">قفل رطوبت و ترمیم چربی‌های سد محافظتی</p>
-                </div>
-
-                <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
-                  <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-full bg-white border border-vara-line text-vara-muted text-[10px] font-bold font-jakarta flex items-center justify-center">
-                      5
-                    </span>
-                    <span className="text-[10px] text-vara-muted font-vazir">مرحله پایانی</span>
-                  </div>
-                  <div className="font-bold text-xs text-vara-ink font-vazir">
-                    {routineTimeOfDay === 'morning' ? 'ضدآفتاب SPF' : 'ماسک شب / روغن'}
-                  </div>
-                  <p className="text-[10px] text-vara-muted font-vazir line-clamp-2">
-                    {routineTimeOfDay === 'morning' ? 'حفاظت کامل در برابر پرتوهای مضر آفتاب' : 'بازسازی و تثبیت شبانه سلول‌ها'}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <ol className="grid grid-cols-1 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+              {routineSteps.map(({ title, description }, index) => {
+                const stepNumber = index + 1;
+                const isActive = stepNumber === activeRoutineStep;
+                return (
+                  <li
+                    key={title}
+                    aria-current={isActive ? 'step' : undefined}
+                    className={`space-y-1.5 rounded-xl border p-3.5 text-start ${isActive ? 'border-vara-rose bg-vara-tint' : 'border-vara-line bg-vara-canvas'}`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="flex size-5 shrink-0 items-center justify-center rounded-full border border-vara-line bg-white text-[10px] font-bold text-vara-ink">
+                        {stepNumber.toLocaleString('fa-IR')}
+                      </span>
+                      {isActive && <span className="text-[10px] font-semibold text-vara-muted-strong">گام این محصول</span>}
+                    </div>
+                    <div className="text-xs font-bold text-vara-ink">{title}</div>
+                    <p className="text-[11px] leading-relaxed text-vara-muted-strong">{description}</p>
+                  </li>
+                );
+              })}
+            </ol>
           </div>
         )}
 

@@ -1,5 +1,4 @@
 import { ProductImage } from './ProductImage';
-import { RoutineLabel } from './RoutineLabel';
 import React, { useState } from 'react';
 import { Star, Plus } from 'lucide-react';
 import { Product, ProductSize, ProductVariant } from '../types';
@@ -119,7 +118,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <h3 className="vara-card-title">
             <a href={productUrl} onClick={openProduct}><bdi>{product.nameFa}</bdi></a>
           </h3>
-          <RoutineLabel step={product.routineStep} />
 
           {/* Key Active Ingredients */}
           {product.keyIngredients && product.keyIngredients.length > 0 && (

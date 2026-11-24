@@ -198,18 +198,6 @@
 }
 .vara-shell [dir="ltr"], .vara-modal [dir="ltr"] { unicode-bidi: isolate; }
 
-.vara-routine-label {
-  display: inline-block;
-  max-inline-size: 100%;
-  padding: .25rem .5rem;
-  border-radius: var(--vara-radius-pill);
-  background: var(--vara-tint);
-  color: var(--vara-accent-text);
-  font-size: .8125rem;
-  line-height: 1.55;
-  overflow-wrap: anywhere;
-}
-
 .vara-header { background: var(--vara-canvas); border-color: var(--vara-line); }
 .vara-header .vara-search { min-block-size: 44px; background: var(--vara-stage); border-color: var(--vara-line); border-radius: var(--vara-radius-pill); }
 .vara-header .vara-search:focus-within { border-color: var(--vara-accent); }
