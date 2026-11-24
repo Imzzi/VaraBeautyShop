@@ -363,42 +363,42 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
       {/* 1. Quick Statistics Dashboard Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
         <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-sm flex items-center gap-2.5 sm:gap-3">
-          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] flex items-center justify-center shrink-0">
-            <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-[#b8b8b9]" />
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-vara-muted-strong/90 hover:bg-vara-muted-strong text-white flex items-center justify-center shrink-0">
+            <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-vara-line" />
           </div>
           <div className="min-w-0">
-            <div className="text-[10px] sm:text-[11px] font-bold text-[#454a4f]/70 truncate">کل سفارش‌ها</div>
-            <div className="text-base sm:text-xl font-extrabold text-[#454a4f] font-vazir">{formatPrice(totalOrdersCount)}</div>
+            <div className="text-[10px] sm:text-[11px] font-bold text-vara-muted-strong/70 truncate">کل سفارش‌ها</div>
+            <div className="text-base sm:text-xl font-extrabold text-vara-muted-strong font-vazir">{formatPrice(totalOrdersCount)}</div>
           </div>
         </div>
 
         <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-sm flex items-center gap-2.5 sm:gap-3">
-          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-amber-500 text-[#dde2e7] flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-amber-500 text-white flex items-center justify-center shrink-0">
             <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="min-w-0">
-            <div className="text-[10px] sm:text-[11px] font-bold text-[#454a4f]/70 truncate">نیازمند بررسی</div>
+            <div className="text-[10px] sm:text-[11px] font-bold text-vara-muted-strong/70 truncate">نیازمند بررسی</div>
             <div className="text-base sm:text-xl font-extrabold text-amber-700 font-vazir">{formatPrice(pendingOrdersCount)}</div>
           </div>
         </div>
 
         <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-sm flex items-center gap-2.5 sm:gap-3">
-          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-blue-600 text-[#dde2e7] flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-blue-600 text-white flex items-center justify-center shrink-0">
             <Package className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="min-w-0">
-            <div className="text-[10px] sm:text-[11px] font-bold text-[#454a4f]/70 truncate">در حال بسته‌بندی</div>
+            <div className="text-[10px] sm:text-[11px] font-bold text-vara-muted-strong/70 truncate">در حال بسته‌بندی</div>
             <div className="text-base sm:text-xl font-extrabold text-blue-700 font-vazir">{formatPrice(processingOrdersCount)}</div>
           </div>
         </div>
 
         <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-2xs flex items-center gap-2.5 sm:gap-3">
-          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-vara-muted-strong/90 hover:bg-vara-muted-strong text-white flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="min-w-0">
-            <div className="text-[10px] sm:text-[11px] font-bold text-[#788089] truncate">مجموع فروش نهایی</div>
-            <div className="text-xs sm:text-base font-extrabold text-[#454a4f] font-vazir truncate">{formatPrice(totalRevenue)} ت</div>
+            <div className="text-[10px] sm:text-[11px] font-bold text-vara-muted truncate">مجموع فروش نهایی</div>
+            <div className="text-xs sm:text-base font-extrabold text-vara-muted-strong font-vazir truncate">{formatPrice(totalRevenue)} ت</div>
           </div>
         </div>
       </div>
@@ -409,12 +409,12 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
         className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3"
       >
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-[#eff2f4] text-[#454a4f] flex items-center justify-center shrink-0">
-            <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-[#949c91]" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-vara-surface text-vara-muted-strong flex items-center justify-center shrink-0">
+            <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-vara-muted" />
           </div>
           <div>
-            <div className="text-xs sm:text-sm font-extrabold text-[#454a4f] font-vazir">تنظیم هزینه ارسال پست پیشتاز</div>
-            <div className="text-[11px] text-[#788089] font-vazir">
+            <div className="text-xs sm:text-sm font-extrabold text-vara-muted-strong font-vazir">تنظیم هزینه ارسال پست پیشتاز</div>
+            <div className="text-[11px] text-vara-muted font-vazir">
               پیک موتوری تهران: پس‌کرایه (به عهده مشتری)
             </div>
           </div>
@@ -433,16 +433,16 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                 postExpressFeeRef.current = parsed === '' ? 0 : parsed;
                 setPostExpressFeeInput(parsed);
               }}
-              className="w-full bg-[#eff2f4] rounded-xl pl-12 pr-3.5 py-2 text-xs font-vazir font-bold text-[#454a4f] focus:outline-none focus:border-[#949c91] border border-transparent"
+              className="w-full bg-vara-surface rounded-full pl-12 pr-3.5 py-2 text-xs font-vazir font-bold text-vara-muted-strong focus:outline-none focus:border-vara-muted border border-transparent"
             />
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] text-[#788089] font-vazir">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] text-vara-muted font-vazir">
               تومان
             </span>
           </div>
           <button
             type="submit"
             disabled={savingShippingFee}
-            className="px-4 py-2 rounded-xl text-xs font-bold font-vazir bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] transition-all cursor-pointer disabled:opacity-50 shrink-0"
+            className="px-4 py-2 rounded-full text-xs font-bold font-vazir bg-vara-rose hover:bg-vara-rose-hover text-white transition-all cursor-pointer disabled:opacity-50 shrink-0"
           >
             {savingShippingFee ? 'در حال ذخیره...' : shippingSavedSuccess ? 'ذخیره شد ✓' : 'ذخیره هزینه پست'}
           </button>
@@ -463,13 +463,13 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                 placeholder="جستجو با کد سفارش، نام یا شماره تماس..."
                 value={searchQuery}
                 onChange={(e) => changeSearch(e.target.value)}
-                className="w-full bg-[#eff2f4] rounded-2xl pl-4 pr-10 py-2.5 text-xs text-[#454a4f] focus:outline-none focus:border-[#949c91]"
+                className="w-full bg-vara-surface rounded-full pl-4 pr-10 py-2.5 text-xs text-vara-muted-strong focus:outline-none focus:border-vara-muted"
               />
-              <Search className="w-4 h-4 text-[#454a4f]/50 absolute right-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-vara-muted-strong/50 absolute right-3.5 top-1/2 -translate-y-1/2" />
               {searchQuery && (
                 <button
                   onClick={() => changeSearch('')}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#454a4f]/40 hover:text-[#454a4f]"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-vara-muted-strong/40 hover:text-vara-muted-strong"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -479,10 +479,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
             <button
               onClick={handleManualRefresh}
               disabled={isRefreshing}
-              className="flex items-center gap-1.5 px-3 py-2.5 rounded-2xl text-xs font-bold bg-[#eff2f4] hover:bg-[#b8b8b9] text-[#454a4f] transition-all cursor-pointer disabled:opacity-50 shrink-0"
+              className="flex items-center gap-1.5 px-3 py-2.5 rounded-full text-xs font-bold bg-vara-surface hover:bg-vara-line text-vara-muted-strong transition-all cursor-pointer disabled:opacity-50 shrink-0"
               title="بروزرسانی زنده لیست سفارش‌ها"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-blue-600' : 'text-[#454a4f]'}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-blue-600' : 'text-vara-muted-strong'}`} />
               <span className="hidden sm:inline">{isRefreshing ? 'بروزرسانی...' : 'بروزرسانی'}</span>
             </button>
           </div>
@@ -491,10 +491,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
           <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 text-xs no-scrollbar">
             <button
               onClick={() => setStatusFilter('all')}
-              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
                 statusFilter === 'all'
-                  ? 'bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] shadow-xs'
-                  : 'bg-[#eff2f4] text-[#454a4f]/80 hover:bg-[#b8b8b9]'
+                  ? 'bg-vara-rose hover:bg-vara-rose-hover text-white shadow-xs'
+                  : 'bg-vara-surface text-vara-muted-strong/80 hover:bg-vara-line'
               }`}
             >
               همه ({formatPrice(totalOrdersCount)})
@@ -502,10 +502,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
             <button
               onClick={() => setStatusFilter('pending')}
-              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
                 statusFilter === 'pending'
-                  ? 'bg-amber-600 text-[#dde2e7] shadow-xs'
-                  : 'bg-[#eff2f4] text-[#454a4f]/80 hover:bg-[#b8b8b9]'
+                  ? 'bg-amber-600 text-white shadow-xs'
+                  : 'bg-vara-surface text-vara-muted-strong/80 hover:bg-vara-line'
               }`}
             >
               در انتظار ({formatPrice(pendingOrdersCount)})
@@ -513,10 +513,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
             <button
               onClick={() => setStatusFilter('processing')}
-              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
                 statusFilter === 'processing'
-                  ? 'bg-blue-600 text-[#dde2e7] shadow-xs'
-                  : 'bg-[#eff2f4] text-[#454a4f]/80 hover:bg-[#b8b8b9]'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'bg-vara-surface text-vara-muted-strong/80 hover:bg-vara-line'
               }`}
             >
               در حال پردازش ({formatPrice(processingOrdersCount)})
@@ -524,10 +524,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
             <button
               onClick={() => setStatusFilter('shipped')}
-              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
                 statusFilter === 'shipped'
-                  ? 'bg-purple-600 text-[#dde2e7] shadow-xs'
-                  : 'bg-[#eff2f4] text-[#454a4f]/80 hover:bg-[#b8b8b9]'
+                  ? 'bg-purple-600 text-white shadow-xs'
+                  : 'bg-vara-surface text-vara-muted-strong/80 hover:bg-vara-line'
               }`}
             >
               ارسال شده ({formatPrice(shippedOrdersCount)})
@@ -535,10 +535,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
             <button
               onClick={() => setStatusFilter('delivered')}
-              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
                 statusFilter === 'delivered'
-                  ? 'bg-emerald-600 text-[#dde2e7] shadow-xs'
-                  : 'bg-[#eff2f4] text-[#454a4f]/80 hover:bg-[#b8b8b9]'
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'bg-vara-surface text-vara-muted-strong/80 hover:bg-vara-line'
               }`}
             >
               تحویل شده
@@ -546,10 +546,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
             <button
               onClick={() => setStatusFilter('cancelled')}
-              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`shrink-0 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
                 statusFilter === 'cancelled'
-                  ? 'bg-rose-600 text-[#dde2e7] shadow-xs'
-                  : 'bg-[#eff2f4] text-[#454a4f]/80 hover:bg-[#b8b8b9]'
+                  ? 'bg-rose-600 text-white shadow-xs'
+                  : 'bg-vara-surface text-vara-muted-strong/80 hover:bg-vara-line'
               }`}
             >
               لغو شده / ناموفق ({formatPrice(cancelledOrdersCount)})
@@ -568,14 +568,14 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
       {/* 3. Orders List */}
       {loading || (loadedFilter.current !== activeFilter && !fetchError) ? (
         <div role="status" className="bg-white rounded-3xl p-16 text-center space-y-3">
-          <RefreshCw className="w-8 h-8 text-[#949c91] animate-spin mx-auto" />
-          <p className="text-xs text-[#454a4f]/70">در حال دریافت فهرست سفارش‌ها...</p>
+          <RefreshCw className="w-8 h-8 text-vara-muted animate-spin mx-auto" />
+          <p className="text-xs text-vara-muted-strong/70">در حال دریافت فهرست سفارش‌ها...</p>
         </div>
       ) : visibleOrders.length === 0 ? fetchError ? null : (
         <div className="bg-white rounded-3xl p-16 text-center space-y-3">
-          <ShoppingBag className="w-12 h-12 text-[#b8b8b9] mx-auto" />
-          <h3 className="text-base font-bold text-[#454a4f]">سفارشی با این مشخصات یافت نشد</h3>
-          <p className="text-xs text-[#454a4f]/60">
+          <ShoppingBag className="w-12 h-12 text-vara-line mx-auto" />
+          <h3 className="text-base font-bold text-vara-muted-strong">سفارشی با این مشخصات یافت نشد</h3>
+          <p className="text-xs text-vara-muted-strong/60">
             {searchQuery || statusFilter !== 'all' ? 'عبارت جستجو را تغییر دهید یا فیلتر را بازنشانی کنید.' : 'هنوز سفارشی ثبت نشده است.'}
           </p>
         </div>
@@ -589,17 +589,17 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
             return (
               <div
                 key={order.id}
-                className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm hover:border-[#b8b8b9] transition-all space-y-4"
+                className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm hover:border-vara-line transition-all space-y-4"
               >
                 {/* Order Top Bar */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#b8b8b9] pb-3.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-vara-line pb-3.5">
                   <div className="flex items-start sm:items-center gap-2.5 sm:gap-3">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-[#eff2f4] flex items-center justify-center font-mono font-bold text-xs text-[#454a4f] shrink-0 mt-0.5 sm:mt-0">
-                      <Hash className="w-4 h-4 text-[#949c91]" />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-vara-surface flex items-center justify-center font-mono font-bold text-xs text-vara-muted-strong shrink-0 mt-0.5 sm:mt-0">
+                      <Hash className="w-4 h-4 text-vara-muted" />
                     </div>
                     <div>
                       <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <span className="font-mono text-xs sm:text-sm font-extrabold text-[#454a4f]">
+                        <span className="font-mono text-xs sm:text-sm font-extrabold text-vara-muted-strong">
                           {order.orderNumber}
                         </span>
                         <span className={`text-[10px] font-bold px-2 sm:px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${statusConfig.bg}`}>
@@ -610,8 +610,8 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                           {paymentConfig.label}
                         </span>
                       </div>
-                      <div className="text-[10px] sm:text-[11px] text-[#454a4f]/60 flex items-center gap-1 mt-0.5">
-                        <Calendar className="w-3 h-3 text-[#949c91]" />
+                      <div className="text-[10px] sm:text-[11px] text-vara-muted-strong/60 flex items-center gap-1 mt-0.5">
+                        <Calendar className="w-3 h-3 text-vara-muted" />
                         <span>ثبت شده در: {formatPersianDate(order.createdAt)}</span>
                       </div>
                     </div>
@@ -621,16 +621,16 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                   <div className="flex items-center gap-2 self-end sm:self-auto">
                     <button
                       onClick={() => setInvoiceOrder(order)}
-                      className="bg-[#eff2f4] hover:bg-[#b8b8b9] text-[#454a4f] px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-[#b8b8b9] transition-colors cursor-pointer"
+                      className="bg-vara-surface hover:bg-vara-line text-vara-muted-strong px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 border border-vara-line transition-colors cursor-pointer"
                       title="مشاهده و چاپ فاکتور"
                     >
-                      <Printer className="w-3.5 h-3.5 text-[#949c91]" />
+                      <Printer className="w-3.5 h-3.5 text-vara-muted" />
                       <span>چاپ فاکتور</span>
                     </button>
 
                     <button
                       onClick={() => setDeleteConfirmOrder(order)}
-                      className="p-1.5 sm:p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors cursor-pointer"
+                      className="p-1.5 sm:p-2 text-rose-600 hover:bg-rose-50 rounded-full transition-colors cursor-pointer"
                       title="حذف سفارش"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -642,24 +642,24 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 text-xs">
                   
                   {/* Left Column: Customer & Delivery Details */}
-                  <div className="lg:col-span-5 bg-[#eff2f4]/70 p-4 rounded-2xl space-y-2.5">
-                    <div className="font-bold text-xs text-[#454a4f] border-b border-[#b8b8b9] pb-1.5 flex items-center justify-between">
+                  <div className="lg:col-span-5 bg-vara-surface/70 p-4 rounded-2xl space-y-2.5">
+                    <div className="font-bold text-xs text-vara-muted-strong border-b border-vara-line pb-1.5 flex items-center justify-between">
                       <span>اطلاعات خریدار و ارسال:</span>
-                      <span className="text-[11px] text-[#949c91]">
+                      <span className="text-[11px] text-vara-muted">
                         {order.shippingMethod === 'courier_tehran' ? 'پیک موتوری (ویژه تهران)' : 'پست پیشتاز سراسری'}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-[#454a4f]/70">نام گیرنده:</span>
-                      <span className="font-bold text-[#454a4f]">{order.customer.name}</span>
+                      <span className="text-vara-muted-strong/70">نام گیرنده:</span>
+                      <span className="font-bold text-vara-muted-strong">{order.customer.name}</span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-[#454a4f]/70">شماره تماس:</span>
+                      <span className="text-vara-muted-strong/70">شماره تماس:</span>
                       <a 
                         href={`tel:${order.customer.phone}`}
-                        className="font-mono font-bold text-[#949c91] hover:underline flex items-center gap-1 dir-ltr"
+                        className="font-mono font-bold text-vara-muted hover:underline flex items-center gap-1 dir-ltr"
                       >
                         <Phone className="w-3 h-3" />
                         <span>{order.customer.phone}</span>
@@ -667,16 +667,16 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                     </div>
 
                     <div className="flex items-start justify-between gap-2">
-                      <span className="text-[#454a4f]/70 shrink-0">نشانی:</span>
-                      <span className="font-medium text-[#454a4f] text-left leading-relaxed">
+                      <span className="text-vara-muted-strong/70 shrink-0">نشانی:</span>
+                      <span className="font-medium text-vara-muted-strong text-left leading-relaxed">
                         {order.customer.province}، {order.customer.city}، {order.customer.address}
                       </span>
                     </div>
 
                     {order.customer.postalCode && (
                       <div className="flex items-center justify-between">
-                        <span className="text-[#454a4f]/70">کد پستی:</span>
-                        <span className="font-mono text-[#454a4f]">{order.customer.postalCode}</span>
+                        <span className="text-vara-muted-strong/70">کد پستی:</span>
+                        <span className="font-mono text-vara-muted-strong">{order.customer.postalCode}</span>
                       </div>
                     )}
 
@@ -700,9 +700,9 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
                   {/* Right Column: Ordered Products Breakdown */}
                   <div className="lg:col-span-7 space-y-3">
-                    <div className="font-bold text-xs text-[#454a4f] flex items-center justify-between">
+                    <div className="font-bold text-xs text-vara-muted-strong flex items-center justify-between">
                       <span>اقلام سفارش داده شده ({formatPrice(order.items.length)}):</span>
-                      <span className="text-[#949c91] font-bold">
+                      <span className="text-vara-muted font-bold">
                         مبلغ کل: {formatPrice(order.totalAmount)} تومان
                       </span>
                     </div>
@@ -711,26 +711,26 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                       {order.items.map((item, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center justify-between p-2.5 bg-[#eff2f4]/40 rounded-xl border border-[#b8b8b9]"
+                          className="flex items-center justify-between p-2.5 bg-vara-surface/40 rounded-xl border border-vara-line"
                         >
                           <div className="flex items-center gap-3">
                             <img
                               src={item.image}
                               alt={item.nameFa}
-                              className="w-10 h-10 object-cover rounded-lg bg-[#b8b8b9]"
+                              className="w-10 h-10 object-cover rounded-lg bg-vara-line"
                               referrerPolicy="no-referrer"
                             />
                             <div>
-                              <div className="font-bold text-xs text-[#454a4f] line-clamp-1">
+                              <div className="font-bold text-xs text-vara-muted-strong line-clamp-1">
                                 {item.nameFa}
                               </div>
-                              <div className="text-[10px] text-[#949c91] mt-0.5">
+                              <div className="text-[10px] text-vara-muted mt-0.5">
                                 حجم: {item.sizeLabel} | تعداد: {formatPrice(item.quantity)} عدد
                               </div>
                             </div>
                           </div>
 
-                          <div className="font-semibold text-xs text-[#454a4f]">
+                          <div className="font-semibold text-xs text-vara-muted-strong">
                             {formatPrice(item.price * item.quantity)} تومان
                           </div>
                         </div>
@@ -739,10 +739,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
                     {/* Card-to-Card Receipt Actions */}
                     {order.paymentMethod === 'card_transfer' && order.hasPaymentReceipt && (
-                      <div className="p-3 bg-[#eff2f4] rounded-2xl flex items-center justify-between">
+                      <div className="p-3 bg-vara-surface rounded-2xl flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
                           <div>
-                            <span className="font-bold text-xs text-[#454a4f] block">تصویر فیش واریزی مشتری</span>
+                            <span className="font-bold text-xs text-vara-muted-strong block">تصویر فیش واریزی مشتری</span>
                             <button
                               onClick={async () => {
                                 try {
@@ -754,7 +754,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                                   window.alert('رسید در دسترس نیست.');
                                 }
                               }}
-                              className="text-[11px] text-[#949c91] hover:underline flex items-center gap-1 cursor-pointer"
+                              className="text-[11px] text-vara-muted hover:underline flex items-center gap-1 cursor-pointer"
                             >
                               <Eye className="w-3 h-3" />
                               <span>مشاهده اندازه بزرگ فیش</span>
@@ -766,7 +766,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                           <button
                             onClick={() => handleVerifyCardPayment(order.id)}
                             disabled={actionLoadingId === order.id}
-                            className="bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
+                            className="bg-vara-rose hover:bg-vara-rose-hover text-white px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             <span>تأیید فیش واریزی</span>
@@ -778,14 +778,14 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                 </div>
 
                 {/* Order Footer Actions & Pipeline Change */}
-                <div className="border-t border-[#b8b8b9] pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 text-xs">
+                <div className="border-t border-vara-line pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 text-xs">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2">
-                    <span className="font-bold text-[#454a4f] text-[11px] sm:text-xs">تغییر وضعیت سفارش:</span>
+                    <span className="font-bold text-vara-muted-strong text-[11px] sm:text-xs">تغییر وضعیت سفارش:</span>
                     <select
                       value={order.status}
                       disabled={actionLoadingId === order.id}
                       onChange={(e) => handleStatusChange(order, e.target.value as OrderStatus)}
-                      className="bg-[#eff2f4] border border-[#b8b8b9] rounded-xl px-3 py-2 sm:py-1.5 text-xs font-semibold text-[#454a4f] focus:outline-none focus:border-[#949c91] cursor-pointer w-full sm:w-auto"
+                      className="bg-vara-surface border border-vara-line rounded-full px-3 py-2 sm:py-1.5 text-xs font-semibold text-vara-muted-strong focus:outline-none focus:border-vara-muted cursor-pointer w-full sm:w-auto"
                     >
                       <option value="pending">در انتظار بررسی / واریز</option>
                       <option value="processing">در حال بسته‌بندی و آماده‌سازی</option>
@@ -806,7 +806,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                           currentCode: order.postalTrackingCode || ''
                         });
                       }}
-                      className="w-full sm:w-auto justify-center text-[#454a4f] hover:text-purple-700 text-xs flex items-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-xl border border-[#b8b8b9] bg-white hover:bg-[#eff2f4] cursor-pointer transition-colors"
+                      className="w-full sm:w-auto justify-center text-vara-muted-strong hover:text-purple-700 text-xs flex items-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full border border-vara-line bg-white hover:bg-vara-surface cursor-pointer transition-colors"
                     >
                       <Truck className="w-3.5 h-3.5 text-purple-600" />
                       <span>{order.postalTrackingCode ? 'ویرایش کد رهگیری' : 'ثبت کد رهگیری (اختیاری)'}</span>
@@ -822,12 +822,12 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
       {(cursors.length > 0 || nextCursor) && (
         <nav aria-label="صفحه‌بندی سفارش‌ها" className="flex items-center justify-center gap-3 text-sm">
-          <button type="button" className="px-3 py-2 rounded-xl bg-white disabled:opacity-50"
+          <button type="button" className="px-3 py-2 rounded-full bg-white disabled:opacity-50"
             disabled={isRefreshing || cursors.length === 0} onClick={() => setCursors((pages) => pages.slice(0, -1))}>
             صفحه قبل
           </button>
           <span>{formatPrice(cursors.length + 1)}</span>
-          <button type="button" className="px-3 py-2 rounded-xl bg-white disabled:opacity-50"
+          <button type="button" className="px-3 py-2 rounded-full bg-white disabled:opacity-50"
             disabled={isRefreshing || !nextCursor} onClick={() => nextCursor && setCursors((pages) => [...pages, nextCursor])}>
             صفحه بعد
           </button>
@@ -840,18 +840,18 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-right space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-purple-600 text-[#dde2e7] flex items-center justify-center">
+                <div className="w-10 h-10 rounded-2xl bg-purple-600 text-white flex items-center justify-center">
                   <Truck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-extrabold text-[#454a4f]">کد رهگیری مرسوله پستی</h3>
-                  <p className="text-xs text-[#454a4f]/70">سفارش شماره {trackingModal.orderNumber}</p>
+                  <h3 className="text-base font-extrabold text-vara-muted-strong">کد رهگیری مرسوله پستی</h3>
+                  <p className="text-xs text-vara-muted-strong/70">سفارش شماره {trackingModal.orderNumber}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setTrackingModal(null)}
-                className="w-8 h-8 rounded-full bg-[#eff2f4] hover:bg-[#b8b8b9] flex items-center justify-center text-[#454a4f] cursor-pointer"
+                className="w-8 h-8 rounded-full bg-vara-surface hover:bg-vara-line flex items-center justify-center text-vara-muted-strong cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -859,7 +859,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
             <form onSubmit={handleSaveTrackingCode} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-[#454a4f] mb-1.5">
+                <label className="block text-xs font-bold text-vara-muted-strong mb-1.5">
                   کد رهگیری ۲۴ رقمی پست پیشتاز <span className="text-purple-600 font-normal">(اختیاری)</span>:
                 </label>
                 <input
@@ -867,9 +867,9 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                   placeholder="مثال: 184920394820194820192847 (اختیاری)"
                   value={trackingInput}
                   onChange={(e) => setTrackingInput(e.target.value)}
-                  className="w-full bg-[#eff2f4] border border-[#b8b8b9] rounded-xl px-3.5 py-2.5 text-xs font-mono font-bold tracking-wider text-[#454a4f] focus:outline-none focus:border-[#949c91]"
+                  className="w-full bg-vara-surface border border-vara-line rounded-full px-3.5 py-2.5 text-xs font-mono font-bold tracking-wider text-vara-muted-strong focus:outline-none focus:border-vara-muted"
                 />
-                <p className="text-[11px] text-[#949c91] mt-1.5 leading-relaxed">
+                <p className="text-[11px] text-vara-muted mt-1.5 leading-relaxed">
                   ثبت کد رهگیری اختیاری است. در صورت ثبت، مشتری در پنل کاربری خود امکان رهگیری بسته را خواهد داشت. برای ارسال بدون کد، می‌توانید این کادر را خالی بگذارید.
                 </p>
               </div>
@@ -878,7 +878,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                 <button
                   type="button"
                   onClick={() => setTrackingModal(null)}
-                  className="px-3.5 py-2 rounded-xl border border-[#b8b8b9] text-xs font-bold text-[#454a4f] hover:bg-[#eff2f4] cursor-pointer"
+                  className="px-3.5 py-2 rounded-full border border-vara-line text-xs font-bold text-vara-muted-strong hover:bg-vara-surface cursor-pointer"
                 >
                   انصراف
                 </button>
@@ -894,7 +894,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                       }, 10);
                     }}
                     disabled={actionLoadingId === trackingModal.orderId}
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 cursor-pointer"
+                    className="px-3.5 py-2 rounded-full text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 cursor-pointer"
                   >
                     حذف کد رهگیری
                   </button>
@@ -903,7 +903,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                 <button
                   type="submit"
                   disabled={actionLoadingId === trackingModal.orderId}
-                  className="px-5 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-700 text-[#dde2e7] shadow-md flex items-center gap-1.5 cursor-pointer"
+                  className="px-5 py-2 rounded-full text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white shadow-md flex items-center gap-1.5 cursor-pointer"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   <span>ذخیره تغییرات</span>
@@ -922,10 +922,10 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="w-full flex justify-between items-center px-2">
-              <span className="text-xs font-bold text-[#454a4f]">تصویر رسید واریزی کارت به کارت</span>
+              <span className="text-xs font-bold text-vara-muted-strong">تصویر رسید واریزی کارت به کارت</span>
               <button
                 onClick={() => setSelectedReceiptImage(null)}
-                className="p-1 hover:bg-[#eff2f4] rounded-full text-[#454a4f] cursor-pointer"
+                className="p-1 hover:bg-vara-surface rounded-full text-vara-muted-strong cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -944,14 +944,14 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
             className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl text-right space-y-6 my-auto max-h-[92vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#b8b8b9] pb-4">
+            <div className="flex items-center justify-between border-b border-vara-line pb-4">
               <div>
-                <span className="text-xs font-bold text-[#949c91]">فاکتور رسمی و برچسب پستی مرسوله</span>
-                <h3 className="text-lg font-extrabold text-[#454a4f]">فروشگاه تخصصی مراقبت پوست ورا بیوتی</h3>
+                <span className="text-xs font-bold text-vara-muted">فاکتور رسمی و برچسب پستی مرسوله</span>
+                <h3 className="text-lg font-extrabold text-vara-muted-strong">فروشگاه تخصصی مراقبت پوست ورا بیوتی</h3>
               </div>
               <button
                 onClick={() => setInvoiceOrder(null)}
-                className="w-8 h-8 rounded-full bg-[#eff2f4] hover:bg-[#b8b8b9] flex items-center justify-center text-[#454a4f] cursor-pointer"
+                className="w-8 h-8 rounded-full bg-vara-surface hover:bg-vara-line flex items-center justify-center text-vara-muted-strong cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -959,21 +959,21 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
 
             {/* Printable Invoice Sheet Body */}
             <div id="printable-invoice" className="space-y-4 overflow-y-auto p-1 text-xs">
-              <div className="grid grid-cols-2 gap-4 bg-[#eff2f4] p-4 rounded-2xl">
+              <div className="grid grid-cols-2 gap-4 bg-vara-surface p-4 rounded-2xl">
                 <div>
-                  <span className="text-[#454a4f]/70 block">شماره فاکتور / سفارش:</span>
-                  <span className="font-mono text-sm font-bold text-[#454a4f]">{invoiceOrder.orderNumber}</span>
+                  <span className="text-vara-muted-strong/70 block">شماره فاکتور / سفارش:</span>
+                  <span className="font-mono text-sm font-bold text-vara-muted-strong">{invoiceOrder.orderNumber}</span>
                 </div>
                 <div>
-                  <span className="text-[#454a4f]/70 block">تاریخ صدور:</span>
-                  <span className="font-bold text-[#454a4f]">{formatPersianDate(invoiceOrder.createdAt)}</span>
+                  <span className="text-vara-muted-strong/70 block">تاریخ صدور:</span>
+                  <span className="font-bold text-vara-muted-strong">{formatPersianDate(invoiceOrder.createdAt)}</span>
                 </div>
-                <div className="col-span-2 border-t border-[#b8b8b9] pt-2">
-                  <span className="text-[#454a4f]/70 block">مشخصات گیرنده و نشانی پستی:</span>
-                  <span className="font-bold text-[#454a4f] block">
+                <div className="col-span-2 border-t border-vara-line pt-2">
+                  <span className="text-vara-muted-strong/70 block">مشخصات گیرنده و نشانی پستی:</span>
+                  <span className="font-bold text-vara-muted-strong block">
                     {invoiceOrder.customer.name} - شماره همراه: {invoiceOrder.customer.phone}
                   </span>
-                  <span className="text-[#454a4f] block mt-0.5">
+                  <span className="text-vara-muted-strong block mt-0.5">
                     {invoiceOrder.customer.province}، {invoiceOrder.customer.city}، {invoiceOrder.customer.address} (کد پستی: {invoiceOrder.customer.postalCode || '---'})
                   </span>
                 </div>
@@ -982,7 +982,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
               {/* Items Table */}
               <div className="rounded-2xl overflow-hidden">
                 <table className="w-full text-right border-collapse">
-                  <thead className="bg-[#eff2f4] border-b border-[#b8b8b9] text-[11px] font-bold text-[#454a4f]">
+                  <thead className="bg-vara-surface border-b border-vara-line text-[11px] font-bold text-vara-muted-strong">
                     <tr>
                       <th className="p-2.5">ردیف</th>
                       <th className="p-2.5">نام کالا</th>
@@ -992,12 +992,12 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                       <th className="p-2.5">مبلغ کل</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#b8b8b9]">
+                  <tbody className="divide-y divide-vara-line">
                     {invoiceOrder.items.map((it, idx) => (
-                      <tr key={idx} className="hover:bg-[#eff2f4]/40">
+                      <tr key={idx} className="hover:bg-vara-surface/40">
                         <td className="p-2.5 font-jakarta font-semibold">{idx + 1}</td>
                         <td className="p-2.5 font-bold">{it.nameFa}</td>
-                        <td className="p-2.5 text-[#949c91]">{it.sizeLabel}</td>
+                        <td className="p-2.5 text-vara-muted">{it.sizeLabel}</td>
                         <td className="p-2.5 font-jakarta">{it.quantity}</td>
                         <td className="p-2.5">{formatPrice(it.price)} ت</td>
                         <td className="p-2.5 font-bold">{formatPrice(it.price * it.quantity)} ت</td>
@@ -1008,13 +1008,13 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
               </div>
 
               {/* Totals */}
-              <div className="bg-[#eff2f4] p-4 rounded-2xl space-y-1 text-xs">
+              <div className="bg-vara-surface p-4 rounded-2xl space-y-1 text-xs">
                 <div className="flex justify-between">
                   <span>جمع اقلام:</span>
                   <span>{formatPrice(invoiceOrder.subtotal)} تومان</span>
                 </div>
                 {invoiceOrder.discountAmount > 0 && (
-                  <div className="flex justify-between text-[#949c91] font-bold">
+                  <div className="flex justify-between text-vara-muted font-bold">
                     <span>تخفیف:</span>
                     <span>- {formatPrice(invoiceOrder.discountAmount)} تومان</span>
                   </div>
@@ -1029,26 +1029,26 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                       : `${formatPrice(invoiceOrder.shippingFee)} تومان`}
                   </span>
                 </div>
-                <div className="flex justify-between font-extrabold text-sm text-[#454a4f] border-t border-[#b8b8b9] pt-2">
+                <div className="flex justify-between font-extrabold text-sm text-vara-muted-strong border-t border-vara-line pt-2">
                   <span>مبلغ کل پرداختی:</span>
-                  <span className="text-[#949c91]">{formatPrice(invoiceOrder.totalAmount)} تومان</span>
+                  <span className="text-vara-muted">{formatPrice(invoiceOrder.totalAmount)} تومان</span>
                 </div>
               </div>
             </div>
 
             {/* Modal Print Footer */}
-            <div className="flex items-center justify-end gap-3 border-t border-[#b8b8b9] pt-3">
+            <div className="flex items-center justify-end gap-3 border-t border-vara-line pt-3">
               <button
                 type="button"
                 onClick={() => setInvoiceOrder(null)}
-                className="px-4 py-2.5 rounded-xl border border-[#b8b8b9] text-xs font-bold text-[#454a4f] hover:bg-[#eff2f4] cursor-pointer"
+                className="px-4 py-2.5 rounded-full border border-vara-line text-xs font-bold text-vara-muted-strong hover:bg-vara-surface cursor-pointer"
               >
                 بستن
               </button>
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="px-6 py-2.5 rounded-xl text-xs font-bold bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] shadow-2xs flex items-center gap-2 cursor-pointer transition-colors"
+                className="px-6 py-2.5 rounded-full text-xs font-bold bg-vara-rose hover:bg-vara-rose-hover text-white shadow-2xs flex items-center gap-2 cursor-pointer transition-colors"
               >
                 <Printer className="w-4 h-4" />
                 <span>چاپ فاکتور و برچسب</span>
@@ -1067,12 +1067,12 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                 <AlertCircle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-extrabold text-[#454a4f]">حذف سفارش</h3>
-                <p className="text-xs text-[#454a4f]/70">سفارش شماره {deleteConfirmOrder.orderNumber}</p>
+                <h3 className="text-base font-extrabold text-vara-muted-strong">حذف سفارش</h3>
+                <p className="text-xs text-vara-muted-strong/70">سفارش شماره {deleteConfirmOrder.orderNumber}</p>
               </div>
             </div>
 
-            <p className="text-xs text-[#454a4f]/80 leading-relaxed bg-[#eff2f4] p-3.5 rounded-2xl">
+            <p className="text-xs text-vara-muted-strong/80 leading-relaxed bg-vara-surface p-3.5 rounded-2xl">
               آیا از حذف دائم این سفارش از سیستم اطمینان دارید؟ این عمل غیرقابل بازگشت است.
             </p>
 
@@ -1080,7 +1080,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
               <button
                 type="button"
                 onClick={() => setDeleteConfirmOrder(null)}
-                className="px-4 py-2 rounded-xl border border-[#b8b8b9] text-xs font-bold text-[#454a4f] hover:bg-[#eff2f4] cursor-pointer"
+                className="px-4 py-2 rounded-full border border-vara-line text-xs font-bold text-vara-muted-strong hover:bg-vara-surface cursor-pointer"
               >
                 انصراف
               </button>
@@ -1088,7 +1088,7 @@ export const AdminOrdersList: React.FC<AdminOrdersListProps> = ({ stats }) => {
                 type="button"
                 onClick={() => handleDeleteOrder(deleteConfirmOrder.id)}
                 disabled={actionLoadingId === deleteConfirmOrder.id}
-                className="px-5 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-[#dde2e7] shadow-md cursor-pointer"
+                className="px-5 py-2 rounded-full text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md cursor-pointer"
               >
                 {actionLoadingId === deleteConfirmOrder.id ? 'در حال حذف...' : 'حذف سفارش'}
               </button>

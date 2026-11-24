@@ -390,15 +390,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   };
 
   return (
-    <Modal label="تسویه‌حساب" onClose={handleClose} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#23191E]/50 backdrop-blur-xs animate-fadeIn overflow-y-auto font-vazir">
+    <Modal label="تسویه‌حساب" onClose={handleClose} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-vara-ink/50 backdrop-blur-xs animate-fadeIn overflow-y-auto font-vazir">
       <div 
-        className="bg-white w-full max-w-2xl rounded-2xl border border-[#F0E1E4] overflow-hidden shadow-shop-elevated p-5 sm:p-7 relative text-right my-auto max-h-[92vh] flex flex-col"
+        className="bg-white w-full max-w-2xl rounded-2xl border border-vara-line overflow-hidden shadow-shop-elevated p-5 sm:p-7 relative text-right my-auto max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 left-4 p-2 hover:bg-[#F5E6EB] rounded-lg text-[#785E67] hover:text-[#8C3B58] transition-colors cursor-pointer"
+          className="absolute top-4 left-4 p-2 hover:bg-vara-tint rounded-full text-vara-muted hover:text-vara-rose-ink transition-colors cursor-pointer"
           aria-label="بستن"
         >
           <X className="w-4 h-4" />
@@ -407,24 +407,24 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         {/* Step 1: Customer & Shipping Details */}
         {step === 'form' && (
           <form onSubmit={handleSubmitAddress} className="space-y-4 overflow-y-auto pr-1">
-            <div className="border-b border-[#F0E1E4] pb-3">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C3B58] font-jakarta">مرحله ۱ از ۲ · ارسال</span>
-              <h2 ref={stepTitle} tabIndex={-1} className="text-lg font-bold text-[#23191E] mt-0.5">مشخصات تحویل‌گیرنده و آدرس ارسال</h2>
+            <div className="border-b border-vara-line pb-3">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-vara-rose-ink font-jakarta">مرحله ۱ از ۲ · ارسال</span>
+              <h2 ref={stepTitle} tabIndex={-1} className="text-lg font-bold text-vara-ink mt-0.5">مشخصات تحویل‌گیرنده و آدرس ارسال</h2>
             </div>
 
             {/* Order Items Preview */}
-            <div className="bg-[#F9F1F0] p-3.5 rounded-xl border border-[#F0E1E4] space-y-2 max-h-32 overflow-y-auto">
-              <div className="flex justify-between items-center text-xs font-bold text-[#23191E]">
+            <div className="bg-vara-surface p-3.5 rounded-xl border border-vara-line space-y-2 max-h-32 overflow-y-auto">
+              <div className="flex justify-between items-center text-xs font-bold text-vara-ink">
                 <span>اقلام انتخاب‌شده ({items.length.toLocaleString('fa-IR')}):</span>
-                <span className="text-[#8C3B58] font-jakarta tabular-nums">{formatPrice(subtotal)} تومان</span>
+                <span className="text-vara-rose-ink font-jakarta tabular-nums">{formatPrice(subtotal)} تومان</span>
               </div>
               {items.map((item) => {
                 const variantOrSize = item.selectedVariant ? item.selectedVariant.name : (item.selectedSize?.label || 'استاندارد');
                 const unitPrice = item.selectedVariant?.price ?? (item.selectedSize?.price ?? item.product?.price ?? 0);
                 return (
-                  <div key={`${item.product?.id || 'item'}-${item.selectedVariant?.id || item.selectedSize?.label || 'default'}`} className="flex justify-between items-center text-xs text-[#785E67]">
-                    <span className="line-clamp-1 text-[#23191E]">{item.product?.nameFa || 'محصول'} ({variantOrSize}) × {item.quantity}</span>
-                    <span className="font-semibold text-[#23191E] font-jakarta tabular-nums shrink-0">{formatPrice(unitPrice * item.quantity)} تومان</span>
+                  <div key={`${item.product?.id || 'item'}-${item.selectedVariant?.id || item.selectedSize?.label || 'default'}`} className="flex justify-between items-center text-xs text-vara-muted">
+                    <span className="line-clamp-1 text-vara-ink">{item.product?.nameFa || 'محصول'} ({variantOrSize}) × {item.quantity}</span>
+                    <span className="font-semibold text-vara-ink font-jakarta tabular-nums shrink-0">{formatPrice(unitPrice * item.quantity)} تومان</span>
                   </div>
                 );
               })}
@@ -433,7 +433,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             {/* Inputs Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div>
-                <label htmlFor="checkout-name" className="block text-xs font-semibold text-[#23191E] mb-1">نام و نام خانوادگی تحویل‌گیرنده: *</label>
+                <label htmlFor="checkout-name" className="block text-xs font-semibold text-vara-ink mb-1">نام و نام خانوادگی تحویل‌گیرنده: *</label>
                 <div className="relative">
                   <input
                     type="text"
@@ -441,14 +441,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     placeholder="مثال: مریم محمدی"
                     id="checkout-name" autoComplete="name" value={customerName}
                     onChange={(e) => updateDeliveryField('name', e.target.value)}
-                    className="w-full text-xs py-2.5 px-3.5 pr-9 rounded-xl border border-[#F0E1E4] bg-[#FDFBF9] focus:bg-white text-[#23191E] focus:outline-none focus:border-[#8C3B58] transition-colors"
+                    className="w-full text-xs py-2.5 px-3.5 pr-9 rounded-full border border-vara-line bg-vara-canvas focus:bg-white text-vara-ink focus:outline-none focus:border-vara-rose transition-colors"
                   />
-                  <User className="w-4 h-4 text-[#8C3B58] absolute right-3 top-1/2 -translate-y-1/2" />
+                  <User className="w-4 h-4 text-vara-rose-ink absolute right-3 top-1/2 -translate-y-1/2" />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="checkout-phone" className="block text-xs font-semibold text-[#23191E] mb-1">شماره همراه (پیامک رهگیری مرسوله): *</label>
+                <label htmlFor="checkout-phone" className="block text-xs font-semibold text-vara-ink mb-1">شماره همراه (پیامک رهگیری مرسوله): *</label>
                 <div className="relative">
                   <input
                     type="tel"
@@ -468,11 +468,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         setPhoneError('');
                       }
                     }}
-                    className={`w-full text-xs py-2.5 px-3.5 pr-9 rounded-xl border bg-[#FDFBF9] focus:bg-white text-[#23191E] font-jakarta focus:outline-none transition-colors ${
-                      phoneError ? 'border-rose-400 focus:border-rose-500' : 'border-[#F0E1E4] focus:border-[#8C3B58]'
+                    className={`w-full text-xs py-2.5 px-3.5 pr-9 rounded-full border bg-vara-canvas focus:bg-white text-vara-ink font-jakarta focus:outline-none transition-colors ${
+                      phoneError ? 'border-rose-400 focus:border-rose-500' : 'border-vara-line focus:border-vara-rose'
                     }`}
                   />
-                  <Phone className="w-4 h-4 text-[#8C3B58] absolute right-3 top-1/2 -translate-y-1/2" />
+                  <Phone className="w-4 h-4 text-vara-rose-ink absolute right-3 top-1/2 -translate-y-1/2" />
                 </div>
                 {phoneError && (
                   <p id="checkout-phone-error" className="text-sm text-rose-700 mt-1">{phoneError}</p>
@@ -480,31 +480,31 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div>
-                <label htmlFor="checkout-province" className="block text-xs font-semibold text-[#23191E] mb-1">استان مقصد: *</label>
+                <label htmlFor="checkout-province" className="block text-xs font-semibold text-vara-ink mb-1">استان مقصد: *</label>
                 <input
                   type="text"
                   required
                   placeholder="تهران، خراسان رضوی، فارس..."
                   id="checkout-province" autoComplete="address-level1" value={province}
                   onChange={(e) => updateDeliveryField('province', e.target.value)}
-                  className="w-full text-xs py-2.5 px-3.5 rounded-xl border border-[#F0E1E4] bg-[#FDFBF9] focus:bg-white text-[#23191E] focus:outline-none focus:border-[#8C3B58] transition-colors"
+                  className="w-full text-xs py-2.5 px-3.5 rounded-full border border-vara-line bg-vara-canvas focus:bg-white text-vara-ink focus:outline-none focus:border-vara-rose transition-colors"
                 />
               </div>
 
               <div>
-                <label htmlFor="checkout-city" className="block text-xs font-semibold text-[#23191E] mb-1">شهر مقصد: *</label>
+                <label htmlFor="checkout-city" className="block text-xs font-semibold text-vara-ink mb-1">شهر مقصد: *</label>
                 <input
                   type="text"
                   required
                   placeholder="تهران، مشهد، شیراز، اصفهان..."
                   id="checkout-city" autoComplete="address-level2" value={city}
                   onChange={(e) => updateDeliveryField('city', e.target.value)}
-                  className="w-full text-xs py-2.5 px-3.5 rounded-xl border border-[#F0E1E4] bg-[#FDFBF9] focus:bg-white text-[#23191E] focus:outline-none focus:border-[#8C3B58] transition-colors"
+                  className="w-full text-xs py-2.5 px-3.5 rounded-full border border-vara-line bg-vara-canvas focus:bg-white text-vara-ink focus:outline-none focus:border-vara-rose transition-colors"
                 />
               </div>
 
               <div>
-                <label htmlFor="checkout-postalCode" className="block text-xs font-semibold text-[#23191E] mb-1">کد پستی (۱۰ رقمی): *</label>
+                <label htmlFor="checkout-postalCode" className="block text-xs font-semibold text-vara-ink mb-1">کد پستی (۱۰ رقمی): *</label>
                 <input
                   type="text"
                   required
@@ -523,8 +523,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       setPostalCodeError('');
                     }
                   }}
-                  className={`w-full text-xs py-2.5 px-3.5 rounded-xl border bg-[#FDFBF9] focus:bg-white text-[#23191E] font-jakarta focus:outline-none transition-colors ${
-                    postalCodeError ? 'border-rose-400 focus:border-rose-500' : 'border-[#F0E1E4] focus:border-[#8C3B58]'
+                  className={`w-full text-xs py-2.5 px-3.5 rounded-full border bg-vara-canvas focus:bg-white text-vara-ink font-jakarta focus:outline-none transition-colors ${
+                    postalCodeError ? 'border-rose-400 focus:border-rose-500' : 'border-vara-line focus:border-vara-rose'
                   }`}
                 />
                 {postalCodeError && (
@@ -533,47 +533,47 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div>
-                <label htmlFor="checkout-notes" className="block text-xs font-semibold text-[#23191E] mb-1">توضیحات ارسال (اختیاری):</label>
+                <label htmlFor="checkout-notes" className="block text-xs font-semibold text-vara-ink mb-1">توضیحات ارسال (اختیاری):</label>
                 <input
                   type="text"
                   placeholder="ساعت تحویل، هماهنگی با نگهبانی و..."
                   id="checkout-notes" autoComplete="off" value={notes}
                   onChange={(e) => updateDeliveryField('notes', e.target.value)}
-                  className="w-full text-xs py-2.5 px-3.5 rounded-xl border border-[#F0E1E4] bg-[#FDFBF9] focus:bg-white text-[#23191E] focus:outline-none focus:border-[#8C3B58] transition-colors"
+                  className="w-full text-xs py-2.5 px-3.5 rounded-full border border-vara-line bg-vara-canvas focus:bg-white text-vara-ink focus:outline-none focus:border-vara-rose transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="checkout-address" className="block text-xs font-semibold text-[#23191E] mb-1">نشانی دقیق پستی: *</label>
+              <label htmlFor="checkout-address" className="block text-xs font-semibold text-vara-ink mb-1">نشانی دقیق پستی: *</label>
               <textarea
                 required
                 rows={2}
                 placeholder="خیابان اصلی، کوچه، پلاک، واحد..."
                 id="checkout-address" autoComplete="street-address" value={address}
                 onChange={(e) => updateDeliveryField('address', e.target.value)}
-                className="w-full text-xs p-3 rounded-xl border border-[#F0E1E4] bg-[#FDFBF9] focus:bg-white text-[#23191E] focus:outline-none focus:border-[#8C3B58] transition-colors"
+                className="w-full text-xs p-3 rounded-xl border border-vara-line bg-vara-canvas focus:bg-white text-vara-ink focus:outline-none focus:border-vara-rose transition-colors"
               />
             </div>
 
             {/* Shipping Method Selector */}
             <div className="space-y-2 pt-1">
-              <label className="block text-xs font-semibold text-[#23191E]">روش ارسال سفارش:</label>
+              <label className="block text-xs font-semibold text-vara-ink">روش ارسال سفارش:</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button
                   type="button"
                   aria-pressed={shippingMethod === 'post_express'}
                   onClick={() => updateDeliveryField('shippingMethod', 'post_express')}
-                  className={`p-3.5 rounded-xl border text-right transition-all flex flex-col justify-between cursor-pointer ${
+                  className={`p-3.5 rounded-full border text-right transition-all flex flex-col justify-between cursor-pointer ${
                     shippingMethod === 'post_express'
-                      ? 'bg-[#8C3B58] text-white border-[#8C3B58]'
-                      : 'bg-[#F9F1F0] text-[#23191E] border-[#F0E1E4] hover:border-[#D48C9E]'
+                      ? 'bg-vara-rose text-white border-vara-rose'
+                      : 'bg-vara-surface text-vara-ink border-vara-line hover:border-vara-tint-line'
                   }`}
                 >
                   <div className="text-xs font-bold">
                     <span>پست پیشتاز سراسری</span>
                   </div>
-                  <span className={`text-[11px] font-semibold mt-1 ${shippingMethod === 'post_express' ? 'text-white/80' : 'text-[#785E67]'}`}>
+                  <span className={`text-[11px] font-semibold mt-1 ${shippingMethod === 'post_express' ? 'text-white/80' : 'text-vara-muted'}`}>
                     {`${formatPrice(postExpressFee)} تومان`}
                   </span>
                 </button>
@@ -582,16 +582,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   type="button"
                   aria-pressed={shippingMethod === 'courier_tehran'}
                   onClick={() => updateDeliveryField('shippingMethod', 'courier_tehran')}
-                  className={`p-3.5 rounded-xl border text-right transition-all flex flex-col justify-between cursor-pointer ${
+                  className={`p-3.5 rounded-full border text-right transition-all flex flex-col justify-between cursor-pointer ${
                     shippingMethod === 'courier_tehran'
-                      ? 'bg-[#8C3B58] text-white border-[#8C3B58]'
-                      : 'bg-[#F9F1F0] text-[#23191E] border-[#F0E1E4] hover:border-[#D48C9E]'
+                      ? 'bg-vara-rose text-white border-vara-rose'
+                      : 'bg-vara-surface text-vara-ink border-vara-line hover:border-vara-tint-line'
                   }`}
                 >
                   <div className="text-xs font-bold">
                     <span>پیک موتوری (ویژه تهران)</span>
                   </div>
-                  <span className={`text-[11px] font-semibold mt-1 ${shippingMethod === 'courier_tehran' ? 'text-white/80' : 'text-[#785E67]'}`}>
+                  <span className={`text-[11px] font-semibold mt-1 ${shippingMethod === 'courier_tehran' ? 'text-white/80' : 'text-vara-muted'}`}>
                     هزینه به عهده مشتری (پس‌کرایه)
                   </span>
                 </button>
@@ -606,15 +606,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             )}
 
             {/* Total Summary Footer */}
-            <div className="bg-[#F9F1F0] border border-[#F0E1E4] text-[#23191E] p-4 rounded-xl flex items-center justify-between text-xs mt-2">
+            <div className="bg-vara-surface border border-vara-line text-vara-ink p-4 rounded-xl flex items-center justify-between text-xs mt-2">
               <div>
-                <span className="text-[#785E67]">مبلغ قابل پرداخت</span>
-                <span className="block text-[#785E67]">{shippingMethod === 'post_express' ? `پست پیشتاز: ${formatPrice(shippingFee)} تومان` : 'هزینه پیک هنگام تحویل پرداخت می‌شود.'}</span>
-                <span className="text-lg font-bold block text-[#8C3B58] font-jakarta tabular-nums">{formatPrice(displayTotal)} تومان</span>
+                <span className="text-vara-muted">مبلغ قابل پرداخت</span>
+                <span className="block text-vara-muted">{shippingMethod === 'post_express' ? `پست پیشتاز: ${formatPrice(shippingFee)} تومان` : 'هزینه پیک هنگام تحویل پرداخت می‌شود.'}</span>
+                <span className="text-lg font-bold block text-vara-rose-ink font-jakarta tabular-nums">{formatPrice(displayTotal)} تومان</span>
               </div>
               <button
                 type="submit"
-                className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-1.5 cursor-pointer active:scale-[0.99] shadow-xs"
+                className="bg-vara-rose hover:bg-vara-rose-hover text-white px-6 py-3 rounded-full font-semibold transition-all flex items-center gap-1.5 cursor-pointer active:scale-[0.99] shadow-xs"
               >
                 <span>انتخاب شیوه پرداخت</span>
                 <ArrowRight className="w-4 h-4 rotate-180" />
@@ -626,9 +626,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         {/* Step 2: Payment Gateway / Card Transfer */}
         {step === 'payment' && (
           <div className="space-y-4 overflow-y-auto pr-1">
-            <div className="border-b border-[#F0E1E4] pb-3">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C3B58] font-jakarta">مرحله ۲ از ۲ · پرداخت</span>
-              <h2 ref={stepTitle} tabIndex={-1} className="text-lg font-bold text-[#23191E] mt-0.5">تسویه حساب و نهایی‌سازی سفارش</h2>
+            <div className="border-b border-vara-line pb-3">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-vara-rose-ink font-jakarta">مرحله ۲ از ۲ · پرداخت</span>
+              <h2 ref={stepTitle} tabIndex={-1} className="text-lg font-bold text-vara-ink mt-0.5">تسویه حساب و نهایی‌سازی سفارش</h2>
             </div>
 
             <div className="vara-status justify-between" role="status">
@@ -643,20 +643,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 aria-pressed={paymentMethod === 'online_gateway'}
                   disabled={Boolean(completedOrder) || isSubmitting}
                   onClick={() => setPaymentMethod('online_gateway')}
-                className={`p-4 rounded-xl border transition-all text-right flex items-center justify-between cursor-pointer ${
+                className={`p-4 rounded-full border transition-all text-right flex items-center justify-between cursor-pointer ${
                   paymentMethod === 'online_gateway'
-                    ? 'bg-[#8C3B58] text-white border-[#8C3B58] font-semibold'
-                    : 'bg-[#F9F1F0] text-[#23191E] border-[#F0E1E4] hover:border-[#D48C9E]'
+                    ? 'bg-vara-rose text-white border-vara-rose font-semibold'
+                    : 'bg-vara-surface text-vara-ink border-vara-line hover:border-vara-tint-line'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <CreditCard className={`w-4 h-4 ${paymentMethod === 'online_gateway' ? 'text-white' : 'text-[#8C3B58]'}`} />
+                  <CreditCard className={`w-4 h-4 ${paymentMethod === 'online_gateway' ? 'text-white' : 'text-vara-rose-ink'}`} />
                   <div>
                     <div className="text-xs">درگاه آنلاین بانکی</div>
-                    <div className={`text-[10px] font-normal ${paymentMethod === 'online_gateway' ? 'text-white/75' : 'text-[#785E67]'}`}>پرداخت امن شاپرک</div>
+                    <div className={`text-[10px] font-normal ${paymentMethod === 'online_gateway' ? 'text-white/75' : 'text-vara-muted'}`}>پرداخت امن شاپرک</div>
                   </div>
                 </div>
-                <div className={`w-3.5 h-3.5 rounded-full border ${paymentMethod === 'online_gateway' ? 'border-white bg-white' : 'border-[#D48C9E]'}`} />
+                <div className={`w-3.5 h-3.5 rounded-full border ${paymentMethod === 'online_gateway' ? 'border-white bg-white' : 'border-vara-tint-line'}`} />
               </button>
 
               <button
@@ -664,65 +664,65 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 aria-pressed={paymentMethod === 'card_transfer'}
                   disabled={Boolean(completedOrder) || isSubmitting}
                   onClick={() => setPaymentMethod('card_transfer')}
-                className={`p-4 rounded-xl border transition-all text-right flex items-center justify-between cursor-pointer ${
+                className={`p-4 rounded-full border transition-all text-right flex items-center justify-between cursor-pointer ${
                   paymentMethod === 'card_transfer'
-                    ? 'bg-[#8C3B58] text-white border-[#8C3B58] font-semibold'
-                    : 'bg-[#F9F1F0] text-[#23191E] border-[#F0E1E4] hover:border-[#D48C9E]'
+                    ? 'bg-vara-rose text-white border-vara-rose font-semibold'
+                    : 'bg-vara-surface text-vara-ink border-vara-line hover:border-vara-tint-line'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <Building className={`w-4 h-4 ${paymentMethod === 'card_transfer' ? 'text-white' : 'text-[#8C3B58]'}`} />
+                  <Building className={`w-4 h-4 ${paymentMethod === 'card_transfer' ? 'text-white' : 'text-vara-rose-ink'}`} />
                   <div>
                     <div className="text-xs">کارت به کارت</div>
-                    <div className={`text-[10px] font-normal ${paymentMethod === 'card_transfer' ? 'text-white/75' : 'text-[#785E67]'}`}>واریز و آپلود فیش</div>
+                    <div className={`text-[10px] font-normal ${paymentMethod === 'card_transfer' ? 'text-white/75' : 'text-vara-muted'}`}>واریز و آپلود فیش</div>
                   </div>
                 </div>
-                <div className={`w-3.5 h-3.5 rounded-full border ${paymentMethod === 'card_transfer' ? 'border-white bg-white' : 'border-[#D48C9E]'}`} />
+                <div className={`w-3.5 h-3.5 rounded-full border ${paymentMethod === 'card_transfer' ? 'border-white bg-white' : 'border-vara-tint-line'}`} />
               </button>
             </div>
 
             {/* Online Gateway Channel */}
             {paymentMethod === 'online_gateway' && (
-              <div className="space-y-3 p-4 bg-[#F9F1F0] border border-[#F0E1E4] rounded-xl">
-                <div className="p-3.5 rounded-xl border bg-white border-[#8C3B58] ring-1 ring-[#8C3B58] text-right flex items-center justify-between gap-3">
+              <div className="space-y-3 p-4 bg-vara-surface border border-vara-line rounded-xl">
+                <div className="p-3.5 rounded-xl border bg-white border-vara-rose ring-1 ring-vara-rose text-right flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-[#F5E6EB] text-[#8C3B58] flex items-center justify-center shrink-0 border border-[#D48C9E]/40">
+                    <div className="w-9 h-9 rounded-lg bg-vara-tint text-vara-rose-ink flex items-center justify-center shrink-0 border border-vara-tint-line/40">
                       <CreditCard className="w-4 h-4" />
                     </div>
                     <div className="text-right">
-                      <div className="text-xs font-bold text-[#23191E]">
+                      <div className="text-xs font-bold text-vara-ink">
                         درگاه زرین‌پال (شاپرک)
                       </div>
-                      <div className="text-[10px] text-[#785E67]">
+                      <div className="text-[10px] text-vara-muted">
                         کلیه کارت‌های عضو شبکه شتاب
                       </div>
                     </div>
                   </div>
-                  <div className="w-3.5 h-3.5 rounded-full border shrink-0 border-[#8C3B58] bg-[#8C3B58]" />
+                  <div className="w-3.5 h-3.5 rounded-full border shrink-0 border-vara-rose bg-vara-rose" />
                 </div>
               </div>
             )}
 
             {/* Card to Card Bank Details & Receipt Upload */}
             {paymentMethod === 'card_transfer' && (
-              <div className="space-y-3 p-4 bg-[#F9F1F0] border border-[#F0E1E4] rounded-xl">
-                <div className="p-3.5 bg-white border border-[#F0E1E4] rounded-xl space-y-2 text-xs">
-                  <div className="font-bold text-[#23191E] flex items-center justify-between">
+              <div className="space-y-3 p-4 bg-vara-surface border border-vara-line rounded-xl">
+                <div className="p-3.5 bg-white border border-vara-line rounded-xl space-y-2 text-xs">
+                  <div className="font-bold text-vara-ink flex items-center justify-between">
                     <span>اطلاعات حساب بانکی فروشگاه ورا بیوتی:</span>
                     <button
                       type="button"
                       onClick={handleCopyCardNumber}
-                      className="text-[#8C3B58] hover:underline flex items-center gap-1 text-[11px] cursor-pointer font-semibold"
+                      className="text-vara-rose-ink hover:underline flex items-center gap-1 text-[11px] cursor-pointer font-semibold"
                     >
                       <Copy className="w-3.5 h-3.5" />
                       <span>{copiedCard ? 'کپی شد' : 'کپی شماره کارت'}</span>
                     </button>
                   </div>
                   
-                  <div dir="ltr" className="font-mono text-sm font-bold text-[#23191E] tracking-wider text-left bg-[#F5E6EB] p-2.5 rounded-lg border border-[#D48C9E]/40">
+                  <div dir="ltr" className="font-mono text-sm font-bold text-vara-ink tracking-wider text-left bg-vara-tint p-2.5 rounded-lg border border-vara-tint-line/40">
                     6104-3386-1565-9576
                   </div>
-                  <div className="text-[11px] text-[#785E67] flex justify-between">
+                  <div className="text-[11px] text-vara-muted flex justify-between">
                     <span>بانک ملت</span>
                     <span>به‌نام: سمیه حاجی آقایی طبالوندانی</span>
                   </div>
@@ -738,7 +738,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <p className="text-xs mt-2">JPEG، PNG یا WebP · حداکثر ۵ مگابایت</p>
 
                   {receiptImage && (
-                    <div className="mt-2 relative w-24 h-24 rounded-xl overflow-hidden border border-[#F0E1E4]">
+                    <div className="mt-2 relative w-24 h-24 rounded-xl overflow-hidden border border-vara-line">
                       <img src={receiptImage} alt="رسید" className="w-full h-full object-cover" />
                       <button
                         type="button"
@@ -746,7 +746,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                           setReceiptImage(null);
                           setReceiptFileName('');
                         }}
-                        className="absolute top-1 right-1 p-1 bg-[#23191E]/70 text-white rounded-full hover:bg-[#23191E] cursor-pointer"
+                        className="absolute top-1 right-1 p-1 bg-vara-ink/70 text-white rounded-full hover:bg-vara-ink cursor-pointer"
                       >
                         <X className="w-3 h-3" />
                       </button>
@@ -757,19 +757,19 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             )}
 
             {/* Recipient summary recap */}
-            <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-3.5 rounded-xl space-y-1 text-xs text-[#23191E]">
+            <div className="bg-vara-surface border border-vara-line p-3.5 rounded-xl space-y-1 text-xs text-vara-ink">
               <div className="flex justify-between">
-                <span className="text-[#785E67]">تحویل گیرنده:</span>
+                <span className="text-vara-muted">تحویل گیرنده:</span>
                 <span className="font-semibold">{customerName} ({phone})</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#785E67]">آدرس:</span>
+                <span className="text-vara-muted">آدرس:</span>
                 <span className="font-semibold line-clamp-1">{province}، {city}، {address}</span>
               </div>
             </div>
 
             {/* Mandatory Legal & Return Policy Consent Checkbox */}
-            <div className="p-3.5 rounded-xl bg-[#FDFBF9] border border-[#F0E1E4] space-y-2">
+            <div className="p-3.5 rounded-xl bg-vara-canvas border border-vara-line space-y-2">
               <label className="flex items-start gap-2.5 cursor-pointer select-none">
                 <input
                   type="checkbox"
@@ -780,13 +780,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       setSubmissionError('');
                     }
                   }}
-                  className="mt-1 w-4 h-4 accent-[#8C3B58] rounded cursor-pointer shrink-0"
+                  className="mt-1 w-4 h-4 accent-vara-rose rounded cursor-pointer shrink-0"
                 />
-                <span className="text-xs text-[#23191E] leading-relaxed">
+                <span className="text-xs text-vara-ink leading-relaxed">
                   <button
                     type="button"
                     onClick={() => setActivePolicyPreview('terms')}
-                    className="text-[#8C3B58] font-bold hover:underline cursor-pointer mx-0.5"
+                    className="text-vara-rose-ink font-bold hover:underline cursor-pointer mx-0.5"
                   >
                     قوانین و مقررات خرید
                   </button>
@@ -794,7 +794,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setActivePolicyPreview('return-policy')}
-                    className="text-[#8C3B58] font-bold hover:underline cursor-pointer mx-0.5"
+                    className="text-vara-rose-ink font-bold hover:underline cursor-pointer mx-0.5"
                   >
                     شرایط بازگشت و استرداد وجه
                   </button>
@@ -816,7 +816,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 type="button"
                 onClick={() => { setSubmissionError(''); setStep('form'); }}
                 disabled={isSubmitting || Boolean(completedOrder)}
-                className="text-xs text-[#785E67] hover:text-[#8C3B58] font-semibold cursor-pointer py-2 px-3 rounded-lg hover:bg-[#F5E6EB]"
+                className="text-xs text-vara-muted hover:text-vara-rose-ink font-semibold cursor-pointer py-2 px-3 rounded-full hover:bg-vara-tint"
               >
                 بازگشت و ویرایش آدرس
               </button>
@@ -825,7 +825,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 type="button"
                 onClick={handleFinalizeOrder}
                 disabled={isSubmitting || readingReceipt}
-                className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-7 py-3.5 rounded-xl text-xs font-semibold cursor-pointer active:scale-[0.99] disabled:opacity-50 shadow-xs"
+                className="bg-vara-rose hover:bg-vara-rose-hover text-white px-7 py-3.5 rounded-full text-xs font-semibold cursor-pointer active:scale-[0.99] disabled:opacity-50 shadow-xs"
               >
                 <span>
                   {isSubmitting
@@ -842,60 +842,60 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         {/* Step 3: Order Receipt & Success Screen */}
         {step === 'receipt' && completedOrder && (
           <div className="space-y-5 text-center overflow-y-auto pr-1">
-            <div className="w-14 h-14 bg-[#8C3B58] text-white rounded-2xl flex items-center justify-center mx-auto shadow-xs">
+            <div className="w-14 h-14 bg-vara-rose text-white rounded-2xl flex items-center justify-center mx-auto shadow-xs">
               <CheckCircle2 className="w-7 h-7" />
             </div>
 
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C3B58] font-jakarta">ORDER CONFIRMED</span>
-              <h2 ref={stepTitle} tabIndex={-1} className="text-xl font-bold text-[#23191E] mt-0.5">با تشکر از اعتماد شما به «ورا بیوتی»</h2>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-vara-rose-ink font-jakarta">ORDER CONFIRMED</span>
+              <h2 ref={stepTitle} tabIndex={-1} className="text-xl font-bold text-vara-ink mt-0.5">با تشکر از اعتماد شما به «ورا بیوتی»</h2>
             </div>
 
             {/* Receipt Box */}
-            <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-5 rounded-xl text-right space-y-3 text-xs">
-              <div className="flex justify-between items-center border-b border-[#F0E1E4] pb-2.5 font-bold text-[#23191E]">
+            <div className="bg-vara-surface border border-vara-line p-5 rounded-xl text-right space-y-3 text-xs">
+              <div className="flex justify-between items-center border-b border-vara-line pb-2.5 font-bold text-vara-ink">
                 <span>کد رهگیری اختصاصی سفارش:</span>
-                <span className="font-mono text-sm text-[#8C3B58] bg-white px-3 py-1 rounded-lg border border-[#D48C9E]/50">
+                <span className="font-mono text-sm text-vara-rose-ink bg-white px-3 py-1 rounded-full border border-vara-tint-line/50">
                   {completedOrder.orderNumber}
                 </span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-[#785E67]">نام خریدار:</span>
-                <span className="font-semibold text-[#23191E]">{completedOrder.customer.name}</span>
+                <span className="text-vara-muted">نام خریدار:</span>
+                <span className="font-semibold text-vara-ink">{completedOrder.customer.name}</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-[#785E67]">شماره پیگیری پیامک:</span>
-                <span className="font-jakarta font-semibold text-[#23191E]">{completedOrder.customer.phone}</span>
+                <span className="text-vara-muted">شماره پیگیری پیامک:</span>
+                <span className="font-jakarta font-semibold text-vara-ink">{completedOrder.customer.phone}</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-[#785E67]">آدرس ارسال:</span>
-                <span className="font-semibold text-[#23191E] line-clamp-1">{completedOrder.customer.province}، {completedOrder.customer.city}، {completedOrder.customer.address}</span>
+                <span className="text-vara-muted">آدرس ارسال:</span>
+                <span className="font-semibold text-vara-ink line-clamp-1">{completedOrder.customer.province}، {completedOrder.customer.city}، {completedOrder.customer.address}</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-[#785E67]">مبلغ کل سفارش:</span>
-                <span className="font-bold text-[#8C3B58] font-jakarta tabular-nums">{formatPrice(completedOrder.totalAmount)} تومان</span>
+                <span className="text-vara-muted">مبلغ کل سفارش:</span>
+                <span className="font-bold text-vara-rose-ink font-jakarta tabular-nums">{formatPrice(completedOrder.totalAmount)} تومان</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-[#785E67]">روش پرداخت:</span>
-                <span className="font-semibold text-[#23191E]">
+                <span className="text-vara-muted">روش پرداخت:</span>
+                <span className="font-semibold text-vara-ink">
                   {completedOrder.paymentMethod === 'online_gateway' ? 'درگاه آنلاین (پرداخت موفق)' : 'کارت به کارت (در انتظار تایید فیش)'}
                 </span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-[#785E67]">وضعیت سفارش:</span>
-                <span className="bg-white text-[#8C3B58] font-semibold px-2.5 py-0.5 rounded-md text-[11px] border border-[#D48C9E]/50">
+                <span className="text-vara-muted">وضعیت سفارش:</span>
+                <span className="bg-white text-vara-rose-ink font-semibold px-2.5 py-0.5 rounded-full text-[11px] border border-vara-tint-line/50">
                   {completedOrder.status === 'processing' ? 'در نوبت پردازش و بسته‌بندی' : 'در انتظار تایید'}
                 </span>
               </div>
             </div>
 
-            <p className="text-xs text-[#785E67]">
+            <p className="text-xs text-vara-muted">
               پیامک تایید سفارش و کد رهگیری پستی به شماره همراه شما ارسال خواهد شد.
             </p>
 
@@ -903,16 +903,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <button
                 type="button"
                 onClick={handlePrint}
-                className="bg-white hover:bg-[#F5E6EB] text-[#23191E] border border-[#F0E1E4] hover:border-[#D48C9E] px-5 py-3 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
+                className="bg-white hover:bg-vara-tint text-vara-ink border border-vara-line hover:border-vara-tint-line px-5 py-3 rounded-full text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
               >
-                <Printer className="w-4 h-4 text-[#8C3B58]" />
+                <Printer className="w-4 h-4 text-vara-rose-ink" />
                 <span>چاپ فاکتور</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleClose}
-                className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-8 py-3 rounded-xl text-xs font-semibold cursor-pointer transition-colors shadow-xs"
+                className="bg-vara-rose hover:bg-vara-rose-hover text-white px-8 py-3 rounded-full text-xs font-semibold cursor-pointer transition-colors shadow-xs"
               >
                 بازگشت به فروشگاه
               </button>

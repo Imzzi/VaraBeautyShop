@@ -441,7 +441,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
   if (!isTechAuthenticated) {
     return (
       <div className="max-w-md mx-auto py-14 px-4 animate-fadeIn" dir="rtl">
-        <div className="bg-[#1e2329] text-white rounded-3xl p-7 sm:p-8 shadow-2xl border border-white/10 relative overflow-hidden space-y-6">
+        <div className="bg-vara-ink text-white rounded-3xl p-7 sm:p-8 shadow-2xl border border-white/10 relative overflow-hidden space-y-6">
           {/* Subtle glowing background circle */}
           <div className="absolute top-0 right-1/4 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -484,7 +484,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   onChange={(e) => setPasswordInput(e.target.value)}
                   placeholder="رمز عبور را وارد کنید..."
                   disabled={verifyLoading || lockoutRemaining > 0}
-                  className="w-full bg-white/5 border border-white/20 hover:border-white/30 focus:border-amber-400 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-400/20 transition-all font-mono pl-11 disabled:opacity-50"
+                  className="w-full bg-white/5 border border-white/20 hover:border-white/30 focus:border-amber-400 rounded-full px-4 py-2.5 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-400/20 transition-all font-mono pl-11 disabled:opacity-50"
                   autoFocus
                   required
                 />
@@ -503,7 +503,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             <button
               type="submit"
               disabled={verifyLoading || !passwordInput.trim() || lockoutRemaining > 0}
-              className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-950 font-bold py-2.5 px-4 rounded-xl text-xs font-vazir shadow-lg shadow-amber-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-950 font-bold py-2.5 px-4 rounded-full text-xs font-vazir shadow-lg shadow-amber-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {verifyLoading ? (
                 <>
@@ -538,7 +538,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
   return (
     <div className="space-y-6 animate-fadeIn pb-12" dir="rtl">
       {/* Top Header & Overview Banner */}
-      <div className="bg-gradient-to-r from-[#1e2329] via-[#2d3239] to-[#1e2329] text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-white/10 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-vara-ink via-[#2d3239] to-vara-ink text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-white/10 relative overflow-hidden">
         {/* Glow decoration */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -546,10 +546,10 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-emerald-400">
+              <span className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-emerald-400">
                 <Server className="w-5 h-5" />
               </span>
-              <h2 className="text-xl sm:text-2xl font-black font-jakarta tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-black font-jakarta tracking-normal">
                 مرکز پایش فنی و سرویس‌های ابری (Integrations Monitor)
               </h2>
               <span className="inline-flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 text-[11px] font-bold px-3 py-1 rounded-full border border-emerald-500/40">
@@ -572,7 +572,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             <button
               onClick={handlePingAll}
               disabled={isPingingAll || loading}
-              className="bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-bold text-xs px-4 py-2.5 rounded-full shadow-lg transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${isPingingAll ? 'animate-spin' : ''}`} />
               <span>{isPingingAll ? 'در حال پایش زنده...' : 'تست زنده تمام سرویس‌ها'}</span>
@@ -581,7 +581,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             <button
               onClick={handleCopyReport}
               disabled={!data}
-              className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl border border-white/20 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-3.5 py-2.5 rounded-full border border-white/20 transition-all flex items-center gap-1.5 cursor-pointer"
               title="کپی لاگ و گزارش کامل در قالب JSON"
             >
               {copiedReport ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -590,7 +590,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
             <button
               onClick={handleLogoutTech}
-              className="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs px-3.5 py-2.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer font-bold"
+              className="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs px-3.5 py-2.5 rounded-full transition-all flex items-center gap-1.5 cursor-pointer font-bold"
               title="خروج و قفل مجدد پنل فنی"
             >
               <Lock className="w-3.5 h-3.5" />
@@ -600,7 +600,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             {onBackToProducts && (
               <button
                 onClick={onBackToProducts}
-                className="bg-white/10 hover:bg-white/20 text-white text-xs px-3.5 py-2.5 rounded-xl border border-white/20 transition-all flex items-center gap-1 cursor-pointer"
+                className="bg-white/10 hover:bg-white/20 text-white text-xs px-3.5 py-2.5 rounded-full border border-white/20 transition-all flex items-center gap-1 cursor-pointer"
               >
                 <span>بازگشت به محصولات</span>
                 <ArrowRight className="w-4 h-4 rotate-180" />
@@ -641,13 +641,13 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
       </div>
 
       {/* Navigation Sub-Tabs */}
-      <div className="bg-[#eff2f4] p-1.5 rounded-2xl flex items-center gap-1.5 border border-[#b8b8b9]/40 overflow-x-auto no-scrollbar">
+      <div className="bg-vara-surface p-1.5 rounded-2xl flex items-center gap-1.5 border border-vara-line/40 overflow-x-auto no-scrollbar">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
             activeTab === 'overview'
-              ? 'bg-white text-[#454a4f] shadow-xs border border-[#b8b8b9]'
-              : 'text-[#454a4f]/70 hover:text-[#454a4f] hover:bg-white/50'
+              ? 'bg-white text-vara-muted-strong shadow-xs border border-vara-line'
+              : 'text-vara-muted-strong/70 hover:text-vara-muted-strong hover:bg-white/50'
           }`}
         >
           <Activity className="w-3.5 h-3.5 text-emerald-600" />
@@ -656,10 +656,10 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
         <button
           onClick={() => setActiveTab('turso')}
-          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
             activeTab === 'turso'
-              ? 'bg-white text-[#454a4f] shadow-xs border border-[#b8b8b9]'
-              : 'text-[#454a4f]/70 hover:text-[#454a4f] hover:bg-white/50'
+              ? 'bg-white text-vara-muted-strong shadow-xs border border-vara-line'
+              : 'text-vara-muted-strong/70 hover:text-vara-muted-strong hover:bg-white/50'
           }`}
         >
           <Database className="w-3.5 h-3.5 text-blue-600" />
@@ -671,10 +671,10 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
         <button
           onClick={() => setActiveTab('blob')}
-          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
             activeTab === 'blob'
-              ? 'bg-white text-[#454a4f] shadow-xs border border-[#b8b8b9]'
-              : 'text-[#454a4f]/70 hover:text-[#454a4f] hover:bg-white/50'
+              ? 'bg-white text-vara-muted-strong shadow-xs border border-vara-line'
+              : 'text-vara-muted-strong/70 hover:text-vara-muted-strong hover:bg-white/50'
           }`}
         >
           <Cloud className="w-3.5 h-3.5 text-indigo-600" />
@@ -686,10 +686,10 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
         <button
           onClick={() => setActiveTab('gemini')}
-          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
             activeTab === 'gemini'
-              ? 'bg-white text-[#454a4f] shadow-xs border border-[#b8b8b9]'
-              : 'text-[#454a4f]/70 hover:text-[#454a4f] hover:bg-white/50'
+              ? 'bg-white text-vara-muted-strong shadow-xs border border-vara-line'
+              : 'text-vara-muted-strong/70 hover:text-vara-muted-strong hover:bg-white/50'
           }`}
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-600" />
@@ -701,10 +701,10 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
         <button
           onClick={() => setActiveTab('messaging')}
-          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
+          className={`px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
             activeTab === 'messaging'
-              ? 'bg-white text-[#454a4f] shadow-xs border border-[#b8b8b9]'
-              : 'text-[#454a4f]/70 hover:text-[#454a4f] hover:bg-white/50'
+              ? 'bg-white text-vara-muted-strong shadow-xs border border-vara-line'
+              : 'text-vara-muted-strong/70 hover:text-vara-muted-strong hover:bg-white/50'
           }`}
         >
           <MessageSquare className="w-3.5 h-3.5 text-purple-600" />
@@ -713,10 +713,10 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
         <button
           onClick={() => setActiveTab('system_report')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer ${
+          className={`px-4 py-2 rounded-full text-xs font-bold font-vazir transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === 'system_report'
-              ? 'bg-white text-[#454a4f] shadow-xs border border-[#b8b8b9]'
-              : 'text-[#454a4f]/70 hover:text-[#454a4f] hover:bg-white/50'
+              ? 'bg-white text-vara-muted-strong shadow-xs border border-vara-line'
+              : 'text-vara-muted-strong/70 hover:text-vara-muted-strong hover:bg-white/50'
           }`}
         >
           <Terminal className="w-3.5 h-3.5 text-gray-700" />
@@ -726,9 +726,9 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
       {/* Loading & Error States */}
       {loading && !data && (
-        <div className="bg-white rounded-3xl p-12 text-center shadow-xs border border-[#b8b8b9]/30">
-          <RefreshCw className="w-8 h-8 animate-spin text-[#949c91] mx-auto mb-3" />
-          <div className="text-sm font-bold text-[#454a4f]">در حال تحلیل وضعیت سرویس‌ها و انجام پینگ فنی...</div>
+        <div className="bg-white rounded-3xl p-12 text-center shadow-xs border border-vara-line/30">
+          <RefreshCw className="w-8 h-8 animate-spin text-vara-muted mx-auto mb-3" />
+          <div className="text-sm font-bold text-vara-muted-strong">در حال تحلیل وضعیت سرویس‌ها و انجام پینگ فنی...</div>
         </div>
       )}
 
@@ -741,13 +741,13 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => fetchDiagnostics()}
-              className="px-3.5 py-1.5 bg-white border border-red-300 hover:bg-red-100 text-red-900 rounded-xl text-xs font-bold font-vazir transition-colors cursor-pointer"
+              className="px-3.5 py-1.5 bg-white border border-red-300 hover:bg-red-100 text-red-900 rounded-full text-xs font-bold font-vazir transition-colors cursor-pointer"
             >
               تلاش مجدد
             </button>
             <button
               onClick={handleLogoutTech}
-              className="px-3.5 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold font-vazir transition-colors cursor-pointer"
+              className="px-3.5 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-full text-xs font-bold font-vazir transition-colors cursor-pointer"
             >
               ورود مجدد
             </button>
@@ -763,7 +763,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
           {/* Status Matrix Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Turso Cloud Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -771,8 +771,8 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                       <Database className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-black text-[#454a4f]">Turso Cloud</h4>
-                      <p className="text-[11px] text-[#454a4f]/60 font-jakarta">libSQL Distributed SQLite</p>
+                      <h4 className="text-sm font-black text-vara-muted-strong">Turso Cloud</h4>
+                      <p className="text-[11px] text-vara-muted-strong/60 font-jakarta">libSQL Distributed SQLite</p>
                     </div>
                   </div>
                   <span
@@ -791,20 +791,20 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </span>
                 </div>
 
-                <div className="bg-[#eff2f4]/60 p-3 rounded-2xl space-y-1.5 text-xs">
-                  <div className="flex justify-between text-[#454a4f]/80">
+                <div className="bg-vara-surface/60 p-3 rounded-2xl space-y-1.5 text-xs">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>پینگ دیتابیس:</span>
                     <span className="font-bold font-jakarta text-emerald-700">
                       {tursoPingResult ? `${tursoPingResult.latencyMs} ms` : `${data.integrations.turso.latencyMs || 0} ms`}
                     </span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>محصولات در دیتابیس:</span>
                     <span className="font-bold font-jakarta">
                       {(data.integrations.turso.stats?.products || 0).toLocaleString('fa-IR')}
                     </span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>سفارشات ثبت‌شده:</span>
                     <span className="font-bold font-jakarta">
                       {(data.integrations.turso.stats?.orders || 0).toLocaleString('fa-IR')}
@@ -813,7 +813,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#b8b8b9]/30 flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-vara-line/30 flex items-center justify-between">
                 <button
                   onClick={handlePingTurso}
                   disabled={tursoPingLoading}
@@ -824,7 +824,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 </button>
                 <button
                   onClick={() => setActiveTab('turso')}
-                  className="text-xs text-[#454a4f]/70 hover:text-[#454a4f] font-bold flex items-center gap-1 cursor-pointer"
+                  className="text-xs text-vara-muted-strong/70 hover:text-vara-muted-strong font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <span>جزئیات فنی</span>
                   <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -833,7 +833,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             </div>
 
             {/* Vercel Blob Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -841,8 +841,8 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                       <Cloud className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-black text-[#454a4f]">Vercel Blob</h4>
-                      <p className="text-[11px] text-[#454a4f]/60 font-jakarta">Global Edge Object Storage</p>
+                      <h4 className="text-sm font-black text-vara-muted-strong">Vercel Blob</h4>
+                      <p className="text-[11px] text-vara-muted-strong/60 font-jakarta">Global Edge Object Storage</p>
                     </div>
                   </div>
                   <span
@@ -861,20 +861,20 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </span>
                 </div>
 
-                <div className="bg-[#eff2f4]/60 p-3 rounded-2xl space-y-1.5 text-xs">
-                  <div className="flex justify-between text-[#454a4f]/80">
+                <div className="bg-vara-surface/60 p-3 rounded-2xl space-y-1.5 text-xs">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>تعداد فایل‌های ابری:</span>
                     <span className="font-bold font-jakarta">
                       {data.integrations.vercelBlob.totalFiles.toLocaleString('fa-IR')} فایل
                     </span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>حجم کل مصرفی:</span>
                     <span className="font-bold font-jakarta text-indigo-700">
                       {data.integrations.vercelBlob.totalSizeFormatted}
                     </span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>نوع استور:</span>
                     <span className="font-bold">
                       {data.integrations.vercelBlob.isPrivateStore ? 'اختصاصی (Private + Stream)' : 'عمومی (Public)'}
@@ -883,14 +883,14 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#b8b8b9]/30 flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-vara-line/30 flex items-center justify-between">
                 <span className="text-[11px] text-emerald-700 font-bold flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>فشرده‌سازی WebP فعال</span>
                 </span>
                 <button
                   onClick={() => setActiveTab('blob')}
-                  className="text-xs text-[#454a4f]/70 hover:text-[#454a4f] font-bold flex items-center gap-1 cursor-pointer"
+                  className="text-xs text-vara-muted-strong/70 hover:text-vara-muted-strong font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <span>مدیریت فایل‌ها</span>
                   <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -899,7 +899,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             </div>
 
             {/* Google Gemini AI Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -907,8 +907,8 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                       <Sparkles className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-black text-[#454a4f]">Google Gemini AI</h4>
-                      <p className="text-[11px] text-[#454a4f]/60 font-jakarta">{data.integrations.gemini.model}</p>
+                      <h4 className="text-sm font-black text-vara-muted-strong">Google Gemini AI</h4>
+                      <p className="text-[11px] text-vara-muted-strong/60 font-jakarta">{data.integrations.gemini.model}</p>
                     </div>
                   </div>
                   <span
@@ -927,25 +927,25 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </span>
                 </div>
 
-                <div className="bg-[#eff2f4]/60 p-3 rounded-2xl space-y-1.5 text-xs">
-                  <div className="flex justify-between text-[#454a4f]/80">
+                <div className="bg-vara-surface/60 p-3 rounded-2xl space-y-1.5 text-xs">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>مدل اصلی:</span>
                     <span className="font-bold font-jakarta text-amber-700">{data.integrations.gemini.model}</span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>پاسخ‌گویی آخرین آزمون:</span>
                     <span className="font-bold font-jakarta text-emerald-700">
                       {geminiPingResult ? `${geminiPingResult.latencyMs} ms` : 'آماده تست'}
                     </span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>قابلیت‌ها:</span>
                     <span className="font-bold">مشاور پوست + تحلیل لینک</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#b8b8b9]/30 flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-vara-line/30 flex items-center justify-between">
                 <button
                   onClick={handlePingGemini}
                   disabled={geminiPingLoading}
@@ -956,7 +956,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 </button>
                 <button
                   onClick={() => setActiveTab('gemini')}
-                  className="text-xs text-[#454a4f]/70 hover:text-[#454a4f] font-bold flex items-center gap-1 cursor-pointer"
+                  className="text-xs text-vara-muted-strong/70 hover:text-vara-muted-strong font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <span>قابلیت‌ها</span>
                   <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -965,7 +965,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             </div>
 
             {/* Kavenegar SMS Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -973,8 +973,8 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                       <MessageSquare className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-black text-[#454a4f]">کاوه‌نگار (Kavenegar)</h4>
-                      <p className="text-[11px] text-[#454a4f]/60 font-jakarta">سامانه ارسال پیامک OTP</p>
+                      <h4 className="text-sm font-black text-vara-muted-strong">کاوه‌نگار (Kavenegar)</h4>
+                      <p className="text-[11px] text-vara-muted-strong/60 font-jakarta">سامانه ارسال پیامک OTP</p>
                     </div>
                   </div>
                   <span
@@ -993,25 +993,25 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </span>
                 </div>
 
-                <div className="bg-[#eff2f4]/60 p-3 rounded-2xl space-y-1.5 text-xs">
-                  <div className="flex justify-between text-[#454a4f]/80">
+                <div className="bg-vara-surface/60 p-3 rounded-2xl space-y-1.5 text-xs">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>الگوی پیامک (Template):</span>
                     <span className="font-bold font-jakarta text-purple-700">{data.integrations.kavenegar.template}</span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>وضعیت ارتباط:</span>
                     <span className="font-bold">
                       {kavenegarPingResult ? `${kavenegarPingResult.latencyMs} ms` : 'آماده اتصال'}
                     </span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>کاربرد اصلی:</span>
                     <span className="font-bold">احراز هویت و ورود با کد پیامکی</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#b8b8b9]/30 flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-vara-line/30 flex items-center justify-between">
                 <button
                   onClick={handlePingKavenegar}
                   disabled={kavenegarPingLoading}
@@ -1022,7 +1022,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 </button>
                 <button
                   onClick={() => setActiveTab('messaging')}
-                  className="text-xs text-[#454a4f]/70 hover:text-[#454a4f] font-bold flex items-center gap-1 cursor-pointer"
+                  className="text-xs text-vara-muted-strong/70 hover:text-vara-muted-strong font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <span>مشاهده جزئیات</span>
                   <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -1031,7 +1031,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             </div>
 
             {/* Resend Email Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -1039,8 +1039,8 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                       <Mail className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-black text-[#454a4f]">Resend Email</h4>
-                      <p className="text-[11px] text-[#454a4f]/60 font-jakarta">سرویس ارسال فاکتور و اعلان</p>
+                      <h4 className="text-sm font-black text-vara-muted-strong">Resend Email</h4>
+                      <p className="text-[11px] text-vara-muted-strong/60 font-jakarta">سرویس ارسال فاکتور و اعلان</p>
                     </div>
                   </div>
                   <span
@@ -1059,29 +1059,29 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </span>
                 </div>
 
-                <div className="bg-[#eff2f4]/60 p-3 rounded-2xl space-y-1.5 text-xs">
-                  <div className="flex justify-between text-[#454a4f]/80">
+                <div className="bg-vara-surface/60 p-3 rounded-2xl space-y-1.5 text-xs">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>فرستنده ایمیل:</span>
                     <span className="font-bold font-jakarta text-rose-700 truncate max-w-[160px]">
                       {formatSenderString(data.integrations.resend.sender)}
                     </span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>کاربرد:</span>
                     <span className="font-bold">ارسال رسید خرید به ایمیل کاربر</span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>وضعیت اتصال:</span>
                     <span className="font-bold">{data.integrations.resend.configured ? 'آماده ارسال' : 'غیرفعال'}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#b8b8b9]/30 flex items-center justify-between">
-                <span className="text-[11px] text-[#454a4f]/60">ایمیل تراکنشی</span>
+              <div className="mt-4 pt-3 border-t border-vara-line/30 flex items-center justify-between">
+                <span className="text-[11px] text-vara-muted-strong/60">ایمیل تراکنشی</span>
                 <button
                   onClick={() => setActiveTab('messaging')}
-                  className="text-xs text-[#454a4f]/70 hover:text-[#454a4f] font-bold flex items-center gap-1 cursor-pointer"
+                  className="text-xs text-vara-muted-strong/70 hover:text-vara-muted-strong font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <span>مشاهده جزئیات</span>
                   <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -1090,7 +1090,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             </div>
 
             {/* Vercel Hosting & Edge Network Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -1098,8 +1098,8 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                       <Server className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-black text-[#454a4f]">Vercel Edge & Host</h4>
-                      <p className="text-[11px] text-[#454a4f]/60 font-jakarta">Serverless & CDN Edge</p>
+                      <h4 className="text-sm font-black text-vara-muted-strong">Vercel Edge & Host</h4>
+                      <p className="text-[11px] text-vara-muted-strong/60 font-jakarta">Serverless & CDN Edge</p>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -1108,30 +1108,30 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </span>
                 </div>
 
-                <div className="bg-[#eff2f4]/60 p-3 rounded-2xl space-y-1.5 text-xs">
-                  <div className="flex justify-between text-[#454a4f]/80">
+                <div className="bg-vara-surface/60 p-3 rounded-2xl space-y-1.5 text-xs">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>محیط اجرا:</span>
                     <span className="font-bold font-jakarta text-teal-700">{data.host.environment}</span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>نسخه Node.js:</span>
                     <span className="font-bold font-jakarta">{data.host.nodeVersion}</span>
                   </div>
-                  <div className="flex justify-between text-[#454a4f]/80">
+                  <div className="flex justify-between text-vara-muted-strong/80">
                     <span>شناسه پردازه (PID):</span>
                     <span className="font-bold font-jakarta">{data.host.pid}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#b8b8b9]/30 flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-vara-line/30 flex items-center justify-between">
                 <span className="text-[11px] text-teal-700 font-bold flex items-center gap-1">
                   <Zap className="w-3.5 h-3.5" />
                   <span>تحویل فوق‌سریع جهانی</span>
                 </span>
                 <button
                   onClick={() => setActiveTab('system_report')}
-                  className="text-xs text-[#454a4f]/70 hover:text-[#454a4f] font-bold flex items-center gap-1 cursor-pointer"
+                  className="text-xs text-vara-muted-strong/70 hover:text-vara-muted-strong font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <span>بررسی متغیرها</span>
                   <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -1141,28 +1141,28 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
           </div>
 
           {/* Quick Technical Summary Card */}
-          <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30">
-            <h3 className="text-sm font-black text-[#454a4f] flex items-center gap-2 mb-4">
+          <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30">
+            <h3 className="text-sm font-black text-vara-muted-strong flex items-center gap-2 mb-4">
               <Zap className="w-4 h-4 text-emerald-600" />
               <span>وضعیت یکپارچگی‌های فنی کل سیستم</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-              <div className="bg-[#eff2f4]/40 p-4 rounded-2xl border border-[#b8b8b9]/30 space-y-2">
-                <div className="font-bold text-[#454a4f] flex items-center gap-1.5">
+              <div className="bg-vara-surface/40 p-4 rounded-2xl border border-vara-line/30 space-y-2">
+                <div className="font-bold text-vara-muted-strong flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   <span>داده‌ها و ذخیره‌سازی ابری</span>
                 </div>
-                <p className="text-[#454a4f]/70 leading-relaxed text-[11px]">
+                <p className="text-vara-muted-strong/70 leading-relaxed text-[11px]">
                   پایگاه‌داده توزیع‌شده Turso اطلاعات محصولات و سفارش‌ها را بر بستر پروتکل libSQL ذخیره می‌کند و کلیه تصاویر با الگوریتم مدرن WebP در Vercel Blob میزبانی می‌شوند.
                 </p>
               </div>
 
-              <div className="bg-[#eff2f4]/40 p-4 rounded-2xl border border-[#b8b8b9]/30 space-y-2">
-                <div className="font-bold text-[#454a4f] flex items-center gap-1.5">
+              <div className="bg-vara-surface/40 p-4 rounded-2xl border border-vara-line/30 space-y-2">
+                <div className="font-bold text-vara-muted-strong flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   <span>ارتباطات و هوش مصنوعی</span>
                 </div>
-                <p className="text-[#454a4f]/70 leading-relaxed text-[11px]">
+                <p className="text-vara-muted-strong/70 leading-relaxed text-[11px]">
                   موتور Gemini 2.5 Flash فرآیند مشاوره تخصصی پوست و استخراج خودکار محصول از لینک را هدایت می‌کند و پیامک‌های ورود با پترن خدماتی سریع کاوه‌نگار ارسال می‌گردند.
                 </p>
               </div>
@@ -1176,15 +1176,15 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
       {/* ------------------------------------------------------------- */}
       {activeTab === 'turso' && data && (
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-[#b8b8b9]/30 space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-vara-line/30 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
                   <Database className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-base font-black text-[#454a4f]">پایگاه‌داده ابری Turso (libSQL)</h3>
-                  <p className="text-xs text-[#454a4f]/60 mt-0.5">
+                  <h3 className="text-base font-black text-vara-muted-strong">پایگاه‌داده ابری Turso (libSQL)</h3>
+                  <p className="text-xs text-vara-muted-strong/60 mt-0.5">
                     دیتابیس توزیع‌شده SQLite در لبه شبکه برای پایداری ۱۰۰٪ اطلاعات در دیپلوی ورسل
                   </p>
                 </div>
@@ -1193,7 +1193,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
               <button
                 onClick={handlePingTurso}
                 disabled={tursoPingLoading}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer self-start sm:self-auto"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-full shadow-xs transition-all flex items-center gap-2 cursor-pointer self-start sm:self-auto"
               >
                 <RefreshCw className={`w-4 h-4 ${tursoPingLoading ? 'animate-spin' : ''}`} />
                 <span>{tursoPingLoading ? 'در حال ارسال کوئری پینگ...' : 'تست پینگ زنده به Turso'}</span>
@@ -1202,9 +1202,9 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
             {/* Turso Specs Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-[#eff2f4]/60 p-4 rounded-2xl border border-[#b8b8b9]/30">
-                <div className="text-[11px] text-[#454a4f]/60">حالت اجرا (Driver Mode)</div>
-                <div className="text-sm font-bold text-[#454a4f] mt-1 font-jakarta">
+              <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
+                <div className="text-[11px] text-vara-muted-strong/60">حالت اجرا (Driver Mode)</div>
+                <div className="text-sm font-bold text-vara-muted-strong mt-1 font-jakarta">
                   {data.integrations.turso.mode}
                 </div>
                 <div className="text-[11px] text-emerald-600 font-bold mt-1 flex items-center gap-1">
@@ -1213,18 +1213,18 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 </div>
               </div>
 
-              <div className="bg-[#eff2f4]/60 p-4 rounded-2xl border border-[#b8b8b9]/30">
-                <div className="text-[11px] text-[#454a4f]/60">آدرس دیتابیس در Turso</div>
+              <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
+                <div className="text-[11px] text-vara-muted-strong/60">آدرس دیتابیس در Turso</div>
                 <div className="text-xs font-bold text-blue-700 mt-1 font-jakarta truncate dir-ltr">
                   {data.integrations.turso.urlPreview || 'libsql://[your-db].turso.io'}
                 </div>
-                <div className="text-[11px] text-[#454a4f]/60 mt-1">
+                <div className="text-[11px] text-vara-muted-strong/60 mt-1">
                   متغیر TURSO_DATABASE_URL
                 </div>
               </div>
 
-              <div className="bg-[#eff2f4]/60 p-4 rounded-2xl border border-[#b8b8b9]/30">
-                <div className="text-[11px] text-[#454a4f]/60">تاخیر رفت و برگشت (Round-trip)</div>
+              <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
+                <div className="text-[11px] text-vara-muted-strong/60">تاخیر رفت و برگشت (Round-trip)</div>
                 <div className="text-xl font-black text-emerald-700 mt-1 font-jakarta">
                   {tursoPingResult ? `${tursoPingResult.latencyMs} ms` : `${data.integrations.turso.latencyMs || 0} ms`}
                 </div>
@@ -1235,33 +1235,33 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             </div>
 
             {/* Turso Tables Stats */}
-            <div className="border-t border-[#b8b8b9]/30 pt-6">
-              <h4 className="text-xs font-bold text-[#454a4f] mb-3">آمار جداول دیتابیس (Active Database Tables)</h4>
+            <div className="border-t border-vara-line/30 pt-6">
+              <h4 className="text-xs font-bold text-vara-muted-strong mb-3">آمار جداول دیتابیس (Active Database Tables)</h4>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded-2xl bg-white border border-[#b8b8b9]/40 text-center">
-                  <div className="text-xl font-black text-[#454a4f] font-jakarta">
+                <div className="p-3 rounded-2xl bg-white border border-vara-line/40 text-center">
+                  <div className="text-xl font-black text-vara-muted-strong font-jakarta">
                     {(data.integrations.turso.stats?.products || 0).toLocaleString('fa-IR')}
                   </div>
-                  <div className="text-[11px] text-[#454a4f]/70 mt-1">جدول products</div>
+                  <div className="text-[11px] text-vara-muted-strong/70 mt-1">جدول products</div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-white border border-[#b8b8b9]/40 text-center">
-                  <div className="text-xl font-black text-[#454a4f] font-jakarta">
+                <div className="p-3 rounded-2xl bg-white border border-vara-line/40 text-center">
+                  <div className="text-xl font-black text-vara-muted-strong font-jakarta">
                     {(data.integrations.turso.stats?.orders || 0).toLocaleString('fa-IR')}
                   </div>
-                  <div className="text-[11px] text-[#454a4f]/70 mt-1">جدول orders</div>
+                  <div className="text-[11px] text-vara-muted-strong/70 mt-1">جدول orders</div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-white border border-[#b8b8b9]/40 text-center">
-                  <div className="text-xl font-black text-[#454a4f] font-jakarta">
+                <div className="p-3 rounded-2xl bg-white border border-vara-line/40 text-center">
+                  <div className="text-xl font-black text-vara-muted-strong font-jakarta">
                     {(data.integrations.turso.stats?.brands || 0).toLocaleString('fa-IR')}
                   </div>
-                  <div className="text-[11px] text-[#454a4f]/70 mt-1">جدول brands</div>
+                  <div className="text-[11px] text-vara-muted-strong/70 mt-1">جدول brands</div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-white border border-[#b8b8b9]/40 text-center">
-                  <div className="text-xl font-black text-[#454a4f] font-jakarta">۱</div>
-                  <div className="text-[11px] text-[#454a4f]/70 mt-1">جدول admins</div>
+                <div className="p-3 rounded-2xl bg-white border border-vara-line/40 text-center">
+                  <div className="text-xl font-black text-vara-muted-strong font-jakarta">۱</div>
+                  <div className="text-[11px] text-vara-muted-strong/70 mt-1">جدول admins</div>
                 </div>
               </div>
             </div>
@@ -1296,15 +1296,15 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
       {/* ------------------------------------------------------------- */}
       {activeTab === 'gemini' && data && (
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-[#b8b8b9]/30 space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-vara-line/30 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
                   <Sparkles className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-base font-black text-[#454a4f]">موتور هوش مصنوعی Google Gemini</h3>
-                  <p className="text-xs text-[#454a4f]/60 mt-0.5 font-jakarta">
+                  <h3 className="text-base font-black text-vara-muted-strong">موتور هوش مصنوعی Google Gemini</h3>
+                  <p className="text-xs text-vara-muted-strong/60 mt-0.5 font-jakarta">
                     SDK رسمی @google/genai با مدل مدرن {data.integrations.gemini.model}
                   </p>
                 </div>
@@ -1313,7 +1313,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
               <button
                 onClick={handlePingGemini}
                 disabled={geminiPingLoading}
-                className="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer self-start sm:self-auto"
+                className="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2.5 rounded-full shadow-xs transition-all flex items-center gap-2 cursor-pointer self-start sm:self-auto"
               >
                 <RefreshCw className={`w-4 h-4 ${geminiPingLoading ? 'animate-spin' : ''}`} />
                 <span>{geminiPingLoading ? 'در حال ارسال پیام تست...' : 'تست زنده تاخیر هوش مصنوعی'}</span>
@@ -1343,34 +1343,34 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
             {/* Features List */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold text-[#454a4f]">ماژول‌های فعال هوش مصنوعی در سایت ورا:</h4>
+              <h4 className="text-xs font-bold text-vara-muted-strong">ماژول‌های فعال هوش مصنوعی در سایت ورا:</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className="bg-[#eff2f4]/60 p-4 rounded-2xl border border-[#b8b8b9]/30">
-                  <div className="font-bold text-xs text-[#454a4f] flex items-center gap-1.5">
+                <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
+                  <div className="font-bold text-xs text-vara-muted-strong flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-amber-600" />
                     <span>مشاور تخصصی پوست</span>
                   </div>
-                  <p className="text-[11px] text-[#454a4f]/70 mt-1 leading-relaxed">
+                  <p className="text-[11px] text-vara-muted-strong/70 mt-1 leading-relaxed">
                     تحلیل نوع پوست (چرب، خشک، مختلط) و تدوین روتین پوستی روز و شب متناسب با نیاز مشتری.
                   </p>
                 </div>
 
-                <div className="bg-[#eff2f4]/60 p-4 rounded-2xl border border-[#b8b8b9]/30">
-                  <div className="font-bold text-xs text-[#454a4f] flex items-center gap-1.5">
+                <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
+                  <div className="font-bold text-xs text-vara-muted-strong flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-amber-600" />
                     <span>تحلیل بینایی و تصویر (Vision)</span>
                   </div>
-                  <p className="text-[11px] text-[#454a4f]/70 mt-1 leading-relaxed">
+                  <p className="text-[11px] text-vara-muted-strong/70 mt-1 leading-relaxed">
                     امکان آپلود عکس پوست یا محصول و دریافت تحلیل ترکیبات فعال نظیر نیاسینامید، رتینول و سالیسیلیک.
                   </p>
                 </div>
 
-                <div className="bg-[#eff2f4]/60 p-4 rounded-2xl border border-[#b8b8b9]/30">
-                  <div className="font-bold text-xs text-[#454a4f] flex items-center gap-1.5">
+                <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
+                  <div className="font-bold text-xs text-vara-muted-strong flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-amber-600" />
                     <span>استخراج خودکار محصول از لینک</span>
                   </div>
-                  <p className="text-[11px] text-[#454a4f]/70 mt-1 leading-relaxed">
+                  <p className="text-[11px] text-vara-muted-strong/70 mt-1 leading-relaxed">
                     اسکرپ و استخراج خودکار مشخصات، نام فارسی/انگلیسی، حجم و قیمت کالا از لینک فروشگاه‌های خارجی و ایرانی.
                   </p>
                 </div>
@@ -1387,22 +1387,22 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Kavenegar SMS Details */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 space-y-4">
+            <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center">
                     <MessageSquare className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-black text-[#454a4f]">کاوه‌نگار (Kavenegar)</h4>
-                    <p className="text-[11px] text-[#454a4f]/60 font-jakarta">سامانه ارسال سریع کد تایید OTP</p>
+                    <h4 className="text-sm font-black text-vara-muted-strong">کاوه‌نگار (Kavenegar)</h4>
+                    <p className="text-[11px] text-vara-muted-strong/60 font-jakarta">سامانه ارسال سریع کد تایید OTP</p>
                   </div>
                 </div>
 
                 <button
                   onClick={handlePingKavenegar}
                   disabled={kavenegarPingLoading}
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-3 py-1.5 rounded-full transition-all cursor-pointer"
                 >
                   {kavenegarPingLoading ? 'در حال تست...' : 'تست اعتبار'}
                 </button>
@@ -1418,18 +1418,18 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 </div>
               )}
 
-              <div className="bg-[#eff2f4]/60 p-4 rounded-2xl space-y-2 text-xs">
-                <div className="flex justify-between text-[#454a4f]">
+              <div className="bg-vara-surface/60 p-4 rounded-2xl space-y-2 text-xs">
+                <div className="flex justify-between text-vara-muted-strong">
                   <span>الگوی تایید هویت (OTP Template):</span>
                   <span className="font-bold font-mono text-purple-700">{data.integrations.kavenegar.template}</span>
                 </div>
-                <div className="flex justify-between text-[#454a4f]">
+                <div className="flex justify-between text-vara-muted-strong">
                   <span>وضعیت اتصال API:</span>
                   <span className={`font-bold text-[11px] ${data.integrations.kavenegar.configured ? 'text-emerald-600' : 'text-amber-600'}`}>
                     {data.integrations.kavenegar.configured ? 'کلید معتبر تنظیم شده' : 'تنظیم نشده (KAVENEGAR_API_KEY)'}
                   </span>
                 </div>
-                <div className="flex justify-between text-[#454a4f]">
+                <div className="flex justify-between text-vara-muted-strong">
                   <span>ارسال به شماره‌های بلک‌لیست:</span>
                   <span className="font-bold text-emerald-600">پشتیبانی می‌شود (Lookup Service)</span>
                 </div>
@@ -1437,15 +1437,15 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             </div>
 
             {/* Resend Email Details */}
-            <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 space-y-4">
+            <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="w-10 h-10 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-black text-[#454a4f]">Resend Email Service</h4>
-                    <p className="text-[11px] text-[#454a4f]/60 font-jakarta">سرویس ایمیل مدرن برای سفارشات</p>
+                    <h4 className="text-sm font-black text-vara-muted-strong">Resend Email Service</h4>
+                    <p className="text-[11px] text-vara-muted-strong/60 font-jakarta">سرویس ایمیل مدرن برای سفارشات</p>
                   </div>
                 </div>
 
@@ -1460,18 +1460,18 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 </span>
               </div>
 
-              <div className="bg-[#eff2f4]/60 p-4 rounded-2xl space-y-2 text-xs">
-                <div className="flex justify-between text-[#454a4f]">
+              <div className="bg-vara-surface/60 p-4 rounded-2xl space-y-2 text-xs">
+                <div className="flex justify-between text-vara-muted-strong">
                   <span>آدرس فرستنده رسمی (Sender):</span>
                   <span className="font-bold font-mono text-rose-700 truncate max-w-[200px]">
                     {formatSenderString(data.integrations.resend.sender)}
                   </span>
                 </div>
-                <div className="flex justify-between text-[#454a4f]">
+                <div className="flex justify-between text-vara-muted-strong">
                   <span>متغیر محیطی:</span>
                   <span className="font-bold font-mono text-[11px]">RESEND_API_KEY</span>
                 </div>
-                <div className="flex justify-between text-[#454a4f]">
+                <div className="flex justify-between text-vara-muted-strong">
                   <span>قالب‌های HTML:</span>
                   <span className="font-bold text-emerald-600">فاکتور سفارش و کد پیگیری خرید</span>
                 </div>
@@ -1486,18 +1486,18 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
       {/* ------------------------------------------------------------- */}
       {activeTab === 'system_report' && data && (
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-[#b8b8b9]/30 space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-vara-line/30 space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-black text-[#454a4f]">ممیزی فنی متغیرهای محیطی و محیط سرورلس</h3>
-                <p className="text-xs text-[#454a4f]/60 mt-0.5">
+                <h3 className="text-base font-black text-vara-muted-strong">ممیزی فنی متغیرهای محیطی و محیط سرورلس</h3>
+                <p className="text-xs text-vara-muted-strong/60 mt-0.5">
                   بررسی صحت ست بودن کلیدها جهت استقرار پایدار در Vercel
                 </p>
               </div>
 
               <button
                 onClick={handleCopyReport}
-                className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs px-3.5 py-2 rounded-xl border border-emerald-200 transition-all flex items-center gap-1.5 cursor-pointer"
+                className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs px-3.5 py-2 rounded-full border border-emerald-200 transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 {copiedReport ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-emerald-600" />}
                 <span>{copiedReport ? 'کپی شد' : 'کپی کل گزارش'}</span>
@@ -1508,16 +1508,16 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             <div className="overflow-x-auto">
               <table className="w-full text-right text-xs">
                 <thead>
-                  <tr className="border-b border-[#b8b8b9]/30 text-[#454a4f]/70">
+                  <tr className="border-b border-vara-line/30 text-vara-muted-strong/70">
                     <th className="py-2.5 px-3">سرویس</th>
                     <th className="py-2.5 px-3">نام متغیر در ورسل (Key)</th>
                     <th className="py-2.5 px-3">ضرورت</th>
                     <th className="py-2.5 px-3">وضعیت فعلی</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#b8b8b9]/20 font-vazir">
+                <tbody className="divide-y divide-vara-line/20 font-vazir">
                   <tr>
-                    <td className="py-3 px-3 font-bold text-[#454a4f]">پایگاه‌داده Turso</td>
+                    <td className="py-3 px-3 font-bold text-vara-muted-strong">پایگاه‌داده Turso</td>
                     <td className="py-3 px-3 font-mono text-[11px] text-blue-700">TURSO_DATABASE_URL</td>
                     <td className="py-3 px-3 text-red-600 font-bold">حیاتی (Required)</td>
                     <td className="py-3 px-3">
@@ -1534,7 +1534,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </tr>
 
                   <tr>
-                    <td className="py-3 px-3 font-bold text-[#454a4f]">توکن Turso</td>
+                    <td className="py-3 px-3 font-bold text-vara-muted-strong">توکن Turso</td>
                     <td className="py-3 px-3 font-mono text-[11px] text-blue-700">TURSO_AUTH_TOKEN</td>
                     <td className="py-3 px-3 text-red-600 font-bold">حیاتی (Required)</td>
                     <td className="py-3 px-3">
@@ -1551,9 +1551,9 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </tr>
 
                   <tr>
-                    <td className="py-3 px-3 font-bold text-[#454a4f]">فضای ابری تصاویر</td>
+                    <td className="py-3 px-3 font-bold text-vara-muted-strong">فضای ابری تصاویر</td>
                     <td className="py-3 px-3 font-mono text-[11px] text-indigo-700">VARA_MEDIA_STORE_ID</td>
-                    <td className="py-3 px-3 text-[#454a4f]/70">توصیه‌شده</td>
+                    <td className="py-3 px-3 text-vara-muted-strong/70">توصیه‌شده</td>
                     <td className="py-3 px-3">
                       {data.integrations.vercelBlob.configured ? (
                         <span className="text-emerald-700 font-bold flex items-center gap-1">
@@ -1568,9 +1568,9 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </tr>
 
                   <tr>
-                    <td className="py-3 px-3 font-bold text-[#454a4f]">هوش مصنوعی Gemini</td>
+                    <td className="py-3 px-3 font-bold text-vara-muted-strong">هوش مصنوعی Gemini</td>
                     <td className="py-3 px-3 font-mono text-[11px] text-amber-700">GEMINI_API_KEY</td>
-                    <td className="py-3 px-3 text-[#454a4f]/70">اختیاری (برای چت هوشمند)</td>
+                    <td className="py-3 px-3 text-vara-muted-strong/70">اختیاری (برای چت هوشمند)</td>
                     <td className="py-3 px-3">
                       {data.integrations.gemini.configured ? (
                         <span className="text-emerald-700 font-bold flex items-center gap-1">
@@ -1585,9 +1585,9 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                   </tr>
 
                   <tr>
-                    <td className="py-3 px-3 font-bold text-[#454a4f]">پیامک کاوه‌نگار</td>
+                    <td className="py-3 px-3 font-bold text-vara-muted-strong">پیامک کاوه‌نگار</td>
                     <td className="py-3 px-3 font-mono text-[11px] text-purple-700">KAVENEGAR_API_KEY</td>
-                    <td className="py-3 px-3 text-[#454a4f]/70">توصیه‌شده (برای ورود پیامکی)</td>
+                    <td className="py-3 px-3 text-vara-muted-strong/70">توصیه‌شده (برای ورود پیامکی)</td>
                     <td className="py-3 px-3">
                       {data.integrations.kavenegar.configured ? (
                         <span className="text-emerald-700 font-bold flex items-center gap-1">
@@ -1605,15 +1605,15 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             </div>
 
             {/* Raw JSON Debug Viewer */}
-            <div className="space-y-2 pt-4 border-t border-[#b8b8b9]/30">
-              <div className="flex items-center justify-between text-xs text-[#454a4f]/70">
+            <div className="space-y-2 pt-4 border-t border-vara-line/30">
+              <div className="flex items-center justify-between text-xs text-vara-muted-strong/70">
                 <span className="font-bold flex items-center gap-1.5">
                   <Terminal className="w-4 h-4" />
                   <span>داده‌های خام تشخیصی سرور (Raw JSON Telemetry):</span>
                 </span>
                 <span className="text-[11px] font-mono text-gray-500">{data.timestamp}</span>
               </div>
-              <pre className="bg-[#1e2329] text-emerald-400 p-4 rounded-2xl text-[11px] font-mono overflow-x-auto max-h-72 dir-ltr">
+              <pre className="bg-vara-ink text-emerald-400 p-4 rounded-2xl text-[11px] font-mono overflow-x-auto max-h-72 dir-ltr">
                 {JSON.stringify(data, null, 2)}
               </pre>
             </div>

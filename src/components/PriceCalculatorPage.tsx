@@ -437,50 +437,50 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF9] text-[#23191E] font-vazir text-right pb-16 pt-4 sm:pt-8" dir="rtl">
+    <div className="min-h-screen bg-vara-canvas text-vara-ink font-vazir text-right pb-16 pt-4 sm:pt-8" dir="rtl">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         {/* Top Breadcrumb & Back Button */}
-        <div className="flex items-center justify-between border-b border-[#F0E1E4] pb-4">
+        <div className="flex items-center justify-between border-b border-vara-line pb-4">
           <button
             type="button"
             onClick={onBackToHome}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white border border-[#F0E1E4] text-xs font-bold text-[#23191E] hover:bg-[#F9F1F0] hover:border-[#D48C9E] transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-vara-line text-xs font-bold text-vara-ink hover:bg-vara-surface hover:border-vara-tint-line transition-all cursor-pointer"
           >
-            <ArrowRight className="w-4 h-4 text-[#8C3B58]" />
+            <ArrowRight className="w-4 h-4 text-vara-rose-ink" />
             <span>بازگشت به فروشگاه ورا</span>
           </button>
 
-          <div className="flex items-center gap-2 text-xs text-[#785E67]">
+          <div className="flex items-center gap-2 text-xs text-vara-muted">
             <span className="hidden sm:inline">سرویس خرید مستقیم بین‌المللی</span>
             <span>/</span>
-            <span className="font-bold text-[#8C3B58]">محاسبه‌گر هوشمند قیمت</span>
+            <span className="font-bold text-vara-rose-ink">محاسبه‌گر هوشمند قیمت</span>
           </div>
         </div>
 
         {/* Hero Header Banner */}
-        <div className="bg-[#8C3B58] text-white p-6 sm:p-8 rounded-2xl border border-[#732E47] shadow-[0_14px_32px_-8px_rgba(140,59,88,0.25)] relative overflow-hidden">
+        <div className="bg-vara-tint text-vara-ink p-6 sm:p-8 rounded-3xl border border-vara-tint-line relative overflow-hidden">
           <div className="relative z-10 max-w-3xl space-y-3">
-            <div className="inline-flex items-center px-2.5 py-1 rounded-sm bg-white/15 text-white/95 text-[11px] font-bold tracking-[0.06em] uppercase font-jakarta">
+            <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/85 text-vara-rose-ink text-[11px] font-semibold font-jakarta">
               <span>DIRECT SOURCING PRICE CALCULATOR</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-vara-ink leading-tight">
               خرید مستقیم از سفورا، آمازون، لوک‌فنتستیک و ترندیول
             </h1>
 
-            <p className="text-xs sm:text-sm text-white/85 leading-relaxed">
+            <p className="text-xs sm:text-sm text-vara-muted-strong leading-relaxed">
               لینک کالا را وارد کنید تا قیمت واقعی ارزی (درهم، لیر، پوند یا یورو) و معادل تومانی آن با کلیه هزینه‌های حمل هوایی و ترخیص به صورت آنی محاسبه شود.
             </p>
 
             <div className="flex flex-wrap items-center gap-2 pt-2 text-[11px]">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-white/15 text-white/95 font-medium">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/85 text-vara-rose-ink font-medium">
                 خرید مستقیم از استور رسمی
               </span>
-              <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-white/15 text-white/95 font-medium">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/85 text-vara-rose-ink font-medium">
                 تحویل ۶ تا ۸ هفته
               </span>
-              <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-white/15 text-white/95 font-medium">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/85 text-vara-rose-ink font-medium">
                 ضمانت ۱۰۰٪ اصالت بچ‌کد
               </span>
             </div>
@@ -492,14 +492,14 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
           <div className="bg-amber-50/90 border border-amber-200 text-[#B45309] px-4 py-3 rounded-xl flex items-center gap-3 text-xs">
             <AlertCircle className="w-5 h-5 text-[#B45309] shrink-0" />
             <div className="flex-1">
-              <p className="font-bold text-[#23191E]">توجه در استعلام لینک:</p>
-              <p className="text-[#5C444D] mt-0.5">{errorMessage}</p>
+              <p className="font-bold text-vara-ink">توجه در استعلام لینک:</p>
+              <p className="text-vara-muted-strong mt-0.5">{errorMessage}</p>
             </div>
           </div>
         )}
 
         {/* Link Input Bar */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#F0E1E4] shadow-[0_8px_24px_-6px_rgba(140,59,88,0.05)] space-y-3">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-vara-line shadow-vara-float space-y-3">
           <form onSubmit={handleCalculateSubmit} className="flex flex-col sm:flex-row items-stretch gap-3">
             <div className="flex-1 relative">
               <input
@@ -509,27 +509,27 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                 onChange={(e) => setInputUrl(e.target.value)}
                 placeholder="لینک کالا از Sephora.ae، Amazon.ae، Lookfantastic یا Trendyol را وارد کنید..."
                 dir="ltr"
-                className="w-full bg-[#FDFBF9] border border-[#F0E1E4] focus:border-[#8C3B58] focus:bg-white rounded-xl px-4 py-3 text-xs sm:text-sm outline-none font-jakarta text-left text-[#23191E] transition-colors"
+                className="w-full bg-vara-canvas border border-vara-line focus:border-vara-rose focus:bg-white rounded-full px-4 py-3 text-xs sm:text-sm outline-none font-jakarta text-left text-vara-ink transition-colors"
               />
             </div>
 
             <button
               type="submit"
               disabled={isCalculating}
-              className="px-6 py-3 rounded-xl bg-[#8C3B58] hover:bg-[#732E47] text-white text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 disabled:opacity-50 shadow-[0_8px_20px_-4px_rgba(140,59,88,0.28)]"
+              className="px-6 py-3 rounded-full bg-vara-rose hover:bg-vara-rose-hover text-white text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 disabled:opacity-50 shadow-vara-float"
             >
               <span>{isCalculating ? 'در حال استعلام قیمت...' : 'محاسبه قیمت'}</span>
             </button>
           </form>
 
           {/* Supported Stores Strip */}
-          <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-[#785E67]">
-            <span className="font-semibold text-[#5C444D]">فروشگاه‌های پشتیبانی‌شده:</span>
+          <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-vara-muted">
+            <span className="font-semibold text-vara-muted-strong">فروشگاه‌های پشتیبانی‌شده:</span>
             <a
               href="https://www.sephora.ae"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-2.5 py-1 rounded-lg bg-[#FDFBF9] hover:bg-[#F9F1F0] border border-[#F0E1E4] text-[#23191E] font-jakarta font-medium transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-vara-canvas hover:bg-vara-surface border border-vara-line text-vara-ink font-jakarta font-medium transition-colors"
             >
               sephora.ae
             </a>
@@ -537,7 +537,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
               href="https://www.amazon.ae"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-2.5 py-1 rounded-lg bg-[#FDFBF9] hover:bg-[#F9F1F0] border border-[#F0E1E4] text-[#23191E] font-jakarta font-medium transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-vara-canvas hover:bg-vara-surface border border-vara-line text-vara-ink font-jakarta font-medium transition-colors"
             >
               amazon.ae
             </a>
@@ -545,7 +545,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
               href="https://www.lookfantastic.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-2.5 py-1 rounded-lg bg-[#FDFBF9] hover:bg-[#F9F1F0] border border-[#F0E1E4] text-[#23191E] font-jakarta font-medium transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-vara-canvas hover:bg-vara-surface border border-vara-line text-vara-ink font-jakarta font-medium transition-colors"
             >
               lookfantastic.com
             </a>
@@ -553,7 +553,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
               href="https://www.trendyol.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-2.5 py-1 rounded-lg bg-[#FDFBF9] hover:bg-[#F9F1F0] border border-[#F0E1E4] text-[#23191E] font-jakarta font-medium transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-vara-canvas hover:bg-vara-surface border border-vara-line text-vara-ink font-jakarta font-medium transition-colors"
             >
               trendyol.com
             </a>
@@ -562,31 +562,31 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
 
         {/* Non-UAE Branch Guidance Card */}
         {nonUaeNotice && (
-          <div className="bg-white border border-[#8C3B58] rounded-2xl p-5 sm:p-6 space-y-4">
+          <div className="bg-white border border-vara-rose rounded-2xl p-5 sm:p-6 space-y-4">
             <div className="flex items-start gap-3.5">
-              <div className="w-10 h-10 rounded-lg bg-[#8C3B58] text-white flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-vara-rose text-white flex items-center justify-center shrink-0">
                 <Globe className="w-5 h-5" />
               </div>
               <div className="flex-1 space-y-1">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="text-sm sm:text-base font-bold text-[#23191E]">
+                  <h3 className="text-sm sm:text-base font-bold text-vara-ink">
                     لزوم ارسال لینک از شعب امارات متحده عربی (دبی)
                   </h3>
-                  <span className="text-[11px] font-jakarta text-[#8C3B58] font-bold bg-[#F9F1F0] px-2.5 py-0.5 rounded-sm border border-[#F0E1E4]" dir="ltr">
+                  <span className="text-[11px] font-jakarta text-vara-rose-ink font-bold bg-vara-surface px-2.5 py-0.5 rounded-full border border-vara-line" dir="ltr">
                     {nonUaeNotice.detectedDomain}
                   </span>
                 </div>
-                <p className="text-xs text-[#5C444D] leading-relaxed pt-0.5">
+                <p className="text-xs text-vara-muted-strong leading-relaxed pt-0.5">
                   خرید مستقیم، پلمپ مبدأ و ترخیص محموله‌های ورا بیوتی <strong>منحصراً از دبی</strong> انجام می‌پذیرد و تمامی هزینه‌ها بر پایه درهم امارات (AED) محاسبه می‌شوند. لینک ارسالی شما متعلق به شعبه {nonUaeNotice.detectedRegionName || 'خارج از امارات'} است.
                 </p>
               </div>
             </div>
 
-            <div className="p-4 bg-[#FDFBF9] rounded-xl border border-[#F0E1E4] text-xs text-[#23191E] space-y-3">
-              <div className="text-xs font-bold text-[#23191E]">
+            <div className="p-4 bg-vara-canvas rounded-xl border border-vara-line text-xs text-vara-ink space-y-3">
+              <div className="text-xs font-bold text-vara-ink">
                 <span>لطفاً لینک نسخه امارات (sephora.ae یا amazon.ae) را وارد فرمایید:</span>
               </div>
-              <p className="text-[11px] text-[#785E67] leading-relaxed">
+              <p className="text-[11px] text-vara-muted leading-relaxed">
                 جهت استعلام دقیق و ثبت سفارش، کافیست این کالا را در نسخه امارات باز نموده و لینک آن را در کادر بالا قرار دهید:
               </p>
 
@@ -596,7 +596,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                     href={nonUaeNotice.suggestedUaeSearchUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#8C3B58] hover:bg-[#732E47] text-white text-xs font-bold transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-vara-rose hover:bg-vara-rose-hover text-white text-xs font-bold transition-all cursor-pointer"
                   >
                     <span>جستجوی «{nonUaeNotice.extractedKeywords}» در {nonUaeNotice.suggestedUaeStoreName}</span>
                     <ExternalLink className="w-3 h-3" />
@@ -607,20 +607,20 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                   href="https://www.sephora.ae"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white hover:bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] text-xs font-semibold transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white hover:bg-vara-surface text-vara-ink border border-vara-line text-xs font-semibold transition-all cursor-pointer"
                 >
                   <span>ورود به سفورا امارات (sephora.ae)</span>
-                  <ExternalLink className="w-3 h-3 text-[#785E67]" />
+                  <ExternalLink className="w-3 h-3 text-vara-muted" />
                 </a>
 
                 <a
                   href="https://www.amazon.ae"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white hover:bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] text-xs font-semibold transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white hover:bg-vara-surface text-vara-ink border border-vara-line text-xs font-semibold transition-all cursor-pointer"
                 >
                   <span>ورود به آمازون امارات (amazon.ae)</span>
-                  <ExternalLink className="w-3 h-3 text-[#785E67]" />
+                  <ExternalLink className="w-3 h-3 text-vara-muted" />
                 </a>
               </div>
             </div>
@@ -629,19 +629,19 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
 
         {/* Extraction Loading Indicator */}
         {isCalculating && (
-          <div className="bg-white p-4 rounded-xl border border-[#F0E1E4] flex items-center justify-between gap-4">
+          <div className="bg-white p-4 rounded-xl border border-vara-line flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <RefreshCw className="w-4 h-4 text-[#8C3B58] animate-spin shrink-0" />
+              <RefreshCw className="w-4 h-4 text-vara-rose-ink animate-spin shrink-0" />
               <div className="space-y-0.5">
-                <p className="text-xs sm:text-sm font-bold text-[#23191E]">
+                <p className="text-xs sm:text-sm font-bold text-vara-ink">
                   {extractionStatusText || 'در حال دریافت اطلاعات کالا از فروشگاه مبدأ...'}
                 </p>
-                <p className="text-[11px] text-[#785E67]">
+                <p className="text-[11px] text-vara-muted">
                   استعلام زنده از فروشگاه رسمی و محاسبه دقیق معادل تومانی
                 </p>
               </div>
             </div>
-            <span className="text-[11px] font-bold text-[#8C3B58] bg-[#F9F1F0] px-2.5 py-1 rounded-md border border-[#F0E1E4] hidden sm:inline">
+            <span className="text-[11px] font-bold text-vara-rose-ink bg-vara-surface px-2.5 py-1 rounded-full border border-vara-line hidden sm:inline">
               استعلام آنلاین
             </span>
           </div>
@@ -650,18 +650,18 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
         {/* Calculated Results Area */}
         {productData && (
           <div className="space-y-4">
-            <div className="bg-white border border-[#F0E1E4] rounded-xl px-4 py-2.5 flex items-center justify-between gap-2 text-[#23191E] text-xs">
+            <div className="bg-white border border-vara-line rounded-xl px-4 py-2.5 flex items-center justify-between gap-2 text-vara-ink text-xs">
               <span className="font-bold">اطلاعات کالا از {productData.storeName} دریافت شد.</span>
-              <span className="text-[11px] text-[#8C3B58] font-bold font-jakarta">OFFICIAL {currencyInfo.code} ESTIMATE</span>
+              <span className="text-[11px] text-vara-rose-ink font-bold font-jakarta">OFFICIAL {currencyInfo.code} ESTIMATE</span>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
               {/* Product Media & Specs - 5 cols */}
-              <div className="lg:col-span-5 bg-white p-5 rounded-2xl border border-[#F0E1E4] shadow-[0_8px_24px_-6px_rgba(140,59,88,0.05)] space-y-4">
+              <div className="lg:col-span-5 bg-white p-5 rounded-2xl border border-vara-line shadow-vara-float space-y-4">
                 
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-sm bg-[#F9F1F0] text-[#8C3B58] border border-[#F0E1E4]">
+                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-vara-surface text-vara-rose-ink border border-vara-line">
                     {productData.storeName}
                   </span>
 
@@ -669,7 +669,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                     href={productData.storeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[11px] text-[#785E67] hover:text-[#8C3B58] flex items-center gap-1 font-medium"
+                    className="text-[11px] text-vara-muted hover:text-vara-rose-ink flex items-center gap-1 font-medium"
                   >
                     <span>مشاهده در سایت مبدأ</span>
                     <ExternalLink className="w-3 h-3" />
@@ -683,7 +683,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                   const showImage = Boolean(safeImgUrl && !imageLoadFailed);
 
                   return (
-                    <div className="relative aspect-square rounded-xl overflow-hidden bg-[#F9F1F0] border border-[#F0E1E4] group flex items-center justify-center">
+                    <div className="relative aspect-square rounded-xl overflow-hidden bg-vara-surface border border-vara-line group flex items-center justify-center">
                       {showImage ? (
                         <img 
                           src={safeImgUrl} 
@@ -711,15 +711,15 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                           }}
                         />
                       ) : (
-                        <div className="flex flex-col items-center justify-center p-6 text-center text-[#785E67] space-y-2">
-                          <div className="w-12 h-12 rounded-lg bg-white border border-[#F0E1E4] flex items-center justify-center text-[#8C3B58]">
+                        <div className="flex flex-col items-center justify-center p-6 text-center text-vara-muted space-y-2">
+                          <div className="w-12 h-12 rounded-lg bg-white border border-vara-line flex items-center justify-center text-vara-rose-ink">
                             <ImageOff className="w-5 h-5 stroke-[1.5]" />
                           </div>
-                          <p className="text-xs font-bold text-[#23191E]">تصویر کالا در فروشگاه مبدأ ارائه نشده است</p>
-                          <span className="text-[11px] text-[#785E67]">{productData.brand}</span>
+                          <p className="text-xs font-bold text-vara-ink">تصویر کالا در فروشگاه مبدأ ارائه نشده است</p>
+                          <span className="text-[11px] text-vara-muted">{productData.brand}</span>
                         </div>
                       )}
-                      <div className="absolute top-3 right-3 bg-[#8C3B58] text-white text-[10px] px-2.5 py-1 rounded-sm font-bold">
+                      <div className="absolute top-3 right-3 bg-vara-rose text-white text-[10px] px-2.5 py-1 rounded-sm font-bold">
                         <span>اصالت تضمین‌شده فروشگاه رسمی</span>
                       </div>
                     </div>
@@ -728,36 +728,36 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
 
                 {/* Title & Brand */}
                 <div className="space-y-1">
-                  <span className="text-[11px] font-bold text-[#8C3B58] uppercase tracking-[0.08em] font-jakarta block">
+                  <span className="text-[11px] font-bold text-vara-rose-ink uppercase tracking-[0.08em] font-jakarta block">
                     {productData.brand}
                   </span>
-                  <h2 className="text-sm sm:text-base font-bold text-[#23191E] leading-snug">
+                  <h2 className="text-sm sm:text-base font-bold text-vara-ink leading-snug">
                     {productData.title}
                   </h2>
                   {selectedVariant ? (
-                    <p className="text-xs text-[#785E67]">
-                      مدل / شید انتخابی: <span className="text-[#8C3B58] font-bold">{selectedVariant.name}</span>
+                    <p className="text-xs text-vara-muted">
+                      مدل / شید انتخابی: <span className="text-vara-rose-ink font-bold">{selectedVariant.name}</span>
                     </p>
                   ) : productData.shadeOrSize ? (
-                    <p className="text-xs text-[#785E67]">
-                      مدل / سایز: <span className="text-[#8C3B58] font-bold">{productData.shadeOrSize}</span>
+                    <p className="text-xs text-vara-muted">
+                      مدل / سایز: <span className="text-vara-rose-ink font-bold">{productData.shadeOrSize}</span>
                     </p>
                   ) : null}
                 </div>
 
                 {/* Variants */}
                 {productData.variants && productData.variants.length > 0 && (
-                  <div className="pt-3 pb-1 border-t border-[#F0E1E4] space-y-2">
+                  <div className="pt-3 pb-1 border-t border-vara-line space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-[#23191E]">
+                      <span className="text-xs font-bold text-vara-ink">
                         انتخاب شید رنگ یا سایز:
                       </span>
-                      <span className="text-[10px] text-[#8C3B58] font-bold bg-[#F9F1F0] px-2 py-0.5 rounded-sm border border-[#F0E1E4]">
+                      <span className="text-[10px] text-vara-rose-ink font-bold bg-vara-surface px-2 py-0.5 rounded-full border border-vara-line">
                         {productData.variants.length} تنوع موجود
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto p-1.5 rounded-xl bg-[#FDFBF9] border border-[#F0E1E4]">
+                    <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto p-1.5 rounded-xl bg-vara-canvas border border-vara-line">
                       {productData.variants.map((v) => {
                         const isSelected = selectedVariant?.id === v.id;
                         return (
@@ -765,10 +765,10 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                             key={v.id}
                             type="button"
                             onClick={() => handleSelectVariant(v)}
-                            className={`group relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+                            className={`group relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs transition-all cursor-pointer ${
                               isSelected
-                                ? 'bg-[#8C3B58] text-white font-bold shadow-xs'
-                                : 'bg-white hover:bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] hover:border-[#D48C9E]'
+                                ? 'bg-vara-rose text-white font-bold shadow-xs'
+                                : 'bg-white hover:bg-vara-surface text-vara-ink border border-vara-line hover:border-vara-tint-line'
                             }`}
                             title={v.name}
                           >
@@ -782,11 +782,11 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                                 />
                               </span>
                             ) : (
-                              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSelected ? 'bg-white' : 'bg-[#8C3B58]'}`} />
+                              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSelected ? 'bg-white' : 'bg-vara-rose'}`} />
                             )}
                             <span className="truncate max-w-[130px] text-[11px]">{v.name}</span>
                             {v.price && v.price !== productData.originalPrice && (
-                              <span className={`text-[10px] font-jakarta tabular-nums ${isSelected ? 'text-white/85' : 'text-[#785E67]'}`}>
+                              <span className={`text-[10px] font-jakarta tabular-nums ${isSelected ? 'text-white/85' : 'text-vara-muted'}`}>
                                 {v.price} {currencyInfo.code}
                               </span>
                             )}
@@ -798,21 +798,21 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                 )}
 
                 {productData.description && (
-                  <div className="pt-2 border-t border-[#F0E1E4]">
-                    <p className="text-xs text-[#5C444D] leading-relaxed line-clamp-3 hover:line-clamp-none transition-all">
+                  <div className="pt-2 border-t border-vara-line">
+                    <p className="text-xs text-vara-muted-strong leading-relaxed line-clamp-3 hover:line-clamp-none transition-all">
                       {productData.description}
                     </p>
                   </div>
                 )}
 
                 <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
-                  <div className="bg-[#FDFBF9] p-2.5 rounded-lg border border-[#F0E1E4]">
-                    <span className="text-[#785E67] text-[10px] block">مبدأ ارسال</span>
-                    <span className="font-bold text-[#23191E]">{originLabel}</span>
+                  <div className="bg-vara-canvas p-2.5 rounded-lg border border-vara-line">
+                    <span className="text-vara-muted text-[10px] block">مبدأ ارسال</span>
+                    <span className="font-bold text-vara-ink">{originLabel}</span>
                   </div>
-                  <div className="bg-[#FDFBF9] p-2.5 rounded-lg border border-[#F0E1E4]">
-                    <span className="text-[#785E67] text-[10px] block">زمان تحویل</span>
-                    <span className="font-bold text-[#23191E]">۶ تا ۸ هفته</span>
+                  <div className="bg-vara-canvas p-2.5 rounded-lg border border-vara-line">
+                    <span className="text-vara-muted text-[10px] block">زمان تحویل</span>
+                    <span className="font-bold text-vara-ink">۶ تا ۸ هفته</span>
                   </div>
                 </div>
 
@@ -821,50 +821,50 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
               {/* Transparent Pricing & Final Price Card - 7 cols */}
               <div className="lg:col-span-7 space-y-4">
                 
-                <div className="bg-white p-6 rounded-2xl border border-[#F0E1E4] shadow-[0_8px_24px_-6px_rgba(140,59,88,0.05)] space-y-5">
-                  <div className="flex items-center justify-between pb-3.5 border-b border-[#F0E1E4]">
-                    <h3 className="text-sm sm:text-base font-bold text-[#23191E]">برآورد قیمت خرید مستقیم</h3>
-                    <span className="text-[10px] text-[#8C3B58] font-bold bg-[#F9F1F0] px-2.5 py-1 rounded-sm border border-[#F0E1E4]">
+                <div className="bg-white p-6 rounded-2xl border border-vara-line shadow-vara-float space-y-5">
+                  <div className="flex items-center justify-between pb-3.5 border-b border-vara-line">
+                    <h3 className="text-sm sm:text-base font-bold text-vara-ink">برآورد قیمت خرید مستقیم</h3>
+                    <span className="text-[10px] text-vara-rose-ink font-bold bg-vara-surface px-2.5 py-1 rounded-full border border-vara-line">
                       پلمپ اصل مبدأ
                     </span>
                   </div>
 
                   <div className="space-y-3 text-xs sm:text-sm">
-                    <div className="flex items-center justify-between py-2 border-b border-[#F0E1E4]/60">
+                    <div className="flex items-center justify-between py-2 border-b border-vara-line/60">
                       <div>
-                        <span className="text-[#5C444D] block">
+                        <span className="text-vara-muted-strong block">
                           {sourceOriginalPrice && sourceOriginalCurrency && sourceOriginalCurrency !== currencyInfo.code
                             ? `قیمت تبدیل‌شده به ${currencyInfo.labelFa}`
                             : `قیمت رسمی در مبدأ (${currencyInfo.labelFa})`}
                         </span>
                         {sourceOriginalPrice && sourceOriginalCurrency && sourceOriginalCurrency !== currencyInfo.code && (
-                          <span className="text-[11px] text-[#785E67] font-jakarta block mt-0.5" dir="ltr">
+                          <span className="text-[11px] text-vara-muted font-jakarta block mt-0.5" dir="ltr">
                             قیمت اصلی سایت: {Number.isInteger(sourceOriginalPrice) ? sourceOriginalPrice : sourceOriginalPrice.toFixed(2)} {sourceOriginalCurrency}
                           </span>
                         )}
                       </div>
-                      <span className="font-bold text-[#23191E] font-jakarta text-sm tabular-nums">
+                      <span className="font-bold text-vara-ink font-jakarta text-sm tabular-nums">
                         {Number.isInteger(originalPrice) ? originalPrice : originalPrice.toFixed(2)} {currencyInfo.code}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between py-2 border-b border-[#F0E1E4]/60">
-                      <span className="text-[#5C444D]">فروشگاه مبدأ</span>
-                      <span className="font-bold text-[#23191E] flex items-center gap-1.5">
+                    <div className="flex items-center justify-between py-2 border-b border-vara-line/60">
+                      <span className="text-vara-muted-strong">فروشگاه مبدأ</span>
+                      <span className="font-bold text-vara-ink flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#15803D]" />
                         <span>{productData.storeName}</span>
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between py-2 border-b border-[#F0E1E4]/60">
-                      <span className="text-[#5C444D]">نحوه و مدت تحویل</span>
-                      <span className="font-medium text-[#23191E]">
+                    <div className="flex items-center justify-between py-2 border-b border-vara-line/60">
+                      <span className="text-vara-muted-strong">نحوه و مدت تحویل</span>
+                      <span className="font-medium text-vara-ink">
                         ارسال هوایی (تحویل ۶ تا ۸ هفته)
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between py-2 border-b border-[#F0E1E4]/60">
-                      <span className="text-[#5C444D]">ترخیص و تحویل</span>
+                    <div className="flex items-center justify-between py-2 border-b border-vara-line/60">
+                      <span className="text-vara-muted-strong">ترخیص و تحویل</span>
                       <span className="text-[#15803D] font-bold">
                         تحویل کامل درب منزل بدون هزینه مازاد
                       </span>
@@ -872,37 +872,37 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                   </div>
 
                   {/* Total Price */}
-                  <div className="p-4 rounded-xl bg-[#F9F1F0] border border-[#F0E1E4] flex items-center justify-between">
+                  <div className="p-4 rounded-xl bg-vara-surface border border-vara-line flex items-center justify-between">
                     <div>
-                      <span className="text-xs font-bold text-[#23191E] block">
+                      <span className="text-xs font-bold text-vara-ink block">
                         مبلغ نهایی و تمام‌شده
                       </span>
-                      <span className="text-[11px] text-[#785E67] block mt-0.5">
+                      <span className="text-[11px] text-vara-muted block mt-0.5">
                         قیمت قطعی شامل کلیه هزینه‌ها تا تحویل درب منزل
                       </span>
                     </div>
                     <div className="text-left tabular-nums">
-                      <span className="text-2xl sm:text-3xl font-black text-[#8C3B58] tracking-tight font-jakarta">
+                      <span className="text-2xl sm:text-3xl font-black text-vara-rose-ink tracking-tight font-jakarta">
                         {finalPriceToman.toLocaleString('fa-IR')}
                       </span>
-                      <span className="text-xs font-bold text-[#5C444D] mr-1.5">تومان</span>
+                      <span className="text-xs font-bold text-vara-muted-strong mr-1.5">تومان</span>
                     </div>
                   </div>
 
                   {/* Order & Action Buttons */}
                   {orderSuccess ? (
-                    <div className="bg-[#FDFBF9] border border-[#F0E1E4] text-[#23191E] p-5 rounded-xl text-center space-y-3">
+                    <div className="bg-vara-canvas border border-vara-line text-vara-ink p-5 rounded-xl text-center space-y-3">
                       <div className="w-10 h-10 rounded-lg bg-emerald-50 text-[#15803D] border border-emerald-200 flex items-center justify-center mx-auto">
                         <CheckCircle2 className="w-5 h-5" />
                       </div>
-                      <h4 className="text-sm font-bold text-[#23191E]">سفارش مستقیم شما از دبی با موفقیت ثبت شد</h4>
+                      <h4 className="text-sm font-bold text-vara-ink">سفارش مستقیم شما از دبی با موفقیت ثبت شد</h4>
                       {registeredOrderNumber && (
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-[#F0E1E4] text-xs font-jakarta font-bold text-[#8C3B58] tabular-nums">
-                          <span className="font-vazir font-normal text-[#785E67]">کد رهگیری سفارش:</span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-vara-line text-xs font-jakarta font-bold text-vara-rose-ink tabular-nums">
+                          <span className="font-vazir font-normal text-vara-muted">کد رهگیری سفارش:</span>
                           <span dir="ltr">{registeredOrderNumber}</span>
                         </div>
                       )}
-                      <p className="text-xs text-[#5C444D] leading-relaxed max-w-sm mx-auto">
+                      <p className="text-xs text-vara-muted-strong leading-relaxed max-w-sm mx-auto">
                         سفارش شما ثبت شد و در بخش سفارش‌های حساب کاربری قابل مشاهده است. کارشناسان ما جهت هماهنگی نهایی با شما در ارتباط خواهند بود.
                       </p>
                       <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
@@ -910,7 +910,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                           <button
                             type="button"
                             onClick={onNavigateToProfile}
-                            className="text-xs px-4 py-2 rounded-lg bg-[#8C3B58] text-white hover:bg-[#732E47] font-bold cursor-pointer transition-all"
+                            className="text-xs px-4 py-2 rounded-full bg-vara-rose text-white hover:bg-vara-rose-hover font-bold cursor-pointer transition-all"
                           >
                             مشاهده در حساب کاربری
                           </button>
@@ -921,7 +921,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                             setOrderSuccess(false);
                             setRegisteredOrderNumber('');
                           }}
-                          className="text-xs text-[#785E67] hover:text-[#8C3B58] hover:underline font-bold cursor-pointer px-2 py-1"
+                          className="text-xs text-vara-muted hover:text-vara-rose-ink hover:underline font-bold cursor-pointer px-2 py-1"
                         >
                           ثبت سفارش جدید
                         </button>
@@ -941,7 +941,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                           <button
                             type="button"
                             onClick={handleAddToCartDubai}
-                            className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-[#8C3B58] hover:bg-[#732E47] text-white text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_20px_-4px_rgba(140,59,88,0.28)]"
+                            className="w-full sm:flex-1 py-3 px-4 rounded-full bg-vara-rose hover:bg-vara-rose-hover text-white text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-vara-float"
                           >
                             <span>افزودن به سبد خرید</span>
                           </button>
@@ -950,16 +950,16 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                         <button
                           type="button"
                           onClick={handleCopyInvoice}
-                          className="w-full sm:w-auto py-3 px-4 rounded-xl bg-[#FDFBF9] hover:bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
+                          className="w-full sm:w-auto py-3 px-4 rounded-full bg-vara-canvas hover:bg-vara-surface text-vara-ink border border-vara-line text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
                         >
-                          <Copy className="w-3.5 h-3.5 text-[#8C3B58]" />
+                          <Copy className="w-3.5 h-3.5 text-vara-rose-ink" />
                           <span>{copiedInvoice ? 'کپی شد' : 'کپی پیش‌فاکتور'}</span>
                         </button>
                       </div>
 
                       {/* Quick direct phone order input with policy consent */}
-                      <form onSubmit={handleOrderSubmit} className="space-y-2.5 pt-2.5 border-t border-[#F0E1E4]">
-                        <label className="flex items-start gap-2 cursor-pointer select-none text-[11px] text-[#5C444D] leading-relaxed">
+                      <form onSubmit={handleOrderSubmit} className="space-y-2.5 pt-2.5 border-t border-vara-line">
+                        <label className="flex items-start gap-2 cursor-pointer select-none text-[11px] text-vara-muted-strong leading-relaxed">
                           <input
                             type="checkbox"
                             checked={acceptedPolicies}
@@ -969,13 +969,13 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                                 setOrderErrorMessage('');
                               }
                             }}
-                            className="mt-0.5 w-3.5 h-3.5 accent-[#8C3B58] rounded cursor-pointer shrink-0"
+                            className="mt-0.5 w-3.5 h-3.5 accent-vara-rose rounded cursor-pointer shrink-0"
                           />
                           <span>
                             <button
                               type="button"
                               onClick={() => setActivePolicyPreview('return-policy')}
-                              className="text-[#8C3B58] font-bold hover:underline cursor-pointer mx-0.5"
+                              className="text-vara-rose-ink font-bold hover:underline cursor-pointer mx-0.5"
                             >
                               شرایط لغو ۴ ساعته (۱۰٪ کارمزد) و بازگشت کالا
                             </button>
@@ -983,7 +983,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                             <button
                               type="button"
                               onClick={() => setActivePolicyPreview('terms')}
-                              className="text-[#8C3B58] font-bold hover:underline cursor-pointer mx-0.5"
+                              className="text-vara-rose-ink font-bold hover:underline cursor-pointer mx-0.5"
                             >
                               قوانین خرید
                             </button>
@@ -1000,12 +1000,12 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                             onChange={(e) => setCustomerPhone(e.target.value)}
                             placeholder="شماره تماس جهت ثبت سفارش مستقیم..."
                             dir="ltr"
-                            className="flex-1 bg-[#FDFBF9] border border-[#F0E1E4] focus:border-[#8C3B58] focus:bg-white rounded-xl px-3 py-2.5 text-xs outline-none font-jakarta text-[#23191E] disabled:opacity-50"
+                            className="flex-1 bg-vara-canvas border border-vara-line focus:border-vara-rose focus:bg-white rounded-full px-3 py-2.5 text-xs outline-none font-jakarta text-vara-ink disabled:opacity-50"
                           />
                           <button
                             type="submit"
                             disabled={isSubmittingOrder}
-                            className="py-2.5 px-4 rounded-xl bg-white hover:bg-[#8C3B58] text-[#8C3B58] hover:text-white border border-[#8C3B58] text-xs font-bold transition-all shrink-0 cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+                            className="py-2.5 px-4 rounded-full bg-white hover:bg-vara-tint text-vara-rose-ink hover:text-vara-rose-ink border border-vara-rose text-xs font-bold transition-all shrink-0 cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
                           >
                             {isSubmittingOrder ? (
                               <>
@@ -1024,15 +1024,15 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                 </div>
 
                 {/* Guarantees Box */}
-                <div className="bg-white p-3.5 rounded-xl border border-[#F0E1E4] grid grid-cols-3 gap-2 text-center text-xs">
-                  <div className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#FDFBF9] border border-[#F0E1E4]">
-                    <span className="font-bold text-[#23191E]">ضمانت اصالت ۱۰۰٪</span>
+                <div className="bg-white p-3.5 rounded-xl border border-vara-line grid grid-cols-3 gap-2 text-center text-xs">
+                  <div className="flex flex-col items-center justify-center p-2 rounded-lg bg-vara-canvas border border-vara-line">
+                    <span className="font-bold text-vara-ink">ضمانت اصالت ۱۰۰٪</span>
                   </div>
-                  <div className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#FDFBF9] border border-[#F0E1E4]">
-                    <span className="font-bold text-[#23191E]">ارسال مستقیم هوایی</span>
+                  <div className="flex flex-col items-center justify-center p-2 rounded-lg bg-vara-canvas border border-vara-line">
+                    <span className="font-bold text-vara-ink">ارسال مستقیم هوایی</span>
                   </div>
-                  <div className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#FDFBF9] border border-[#F0E1E4]">
-                    <span className="font-bold text-[#23191E]">قیمت قطعی و تضمین‌شده</span>
+                  <div className="flex flex-col items-center justify-center p-2 rounded-lg bg-vara-canvas border border-vara-line">
+                    <span className="font-bold text-vara-ink">قیمت قطعی و تضمین‌شده</span>
                   </div>
                 </div>
 
@@ -1044,20 +1044,20 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
 
         {/* Support Section when fetch fails */}
         {failedUrl && !productData && !isCalculating && (
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#F0E1E4] space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-[#F0E1E4]">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-vara-line space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-vara-line">
               <div>
-                <h3 className="text-base sm:text-lg font-bold text-[#23191E]">
+                <h3 className="text-base sm:text-lg font-bold text-vara-ink">
                   عدم امکان استعلام خودکار — تماس با پشتیبانی ورا
                 </h3>
-                <p className="text-xs text-[#785E67] mt-0.5">
+                <p className="text-xs text-vara-muted mt-0.5">
                   کارشناسان خرید ورا آماده استعلام دستی و صدور پیش‌فاکتور دقیق هستند
                 </p>
               </div>
             </div>
 
-            <div className="bg-[#FDFBF9] p-4 sm:p-5 rounded-xl border border-[#F0E1E4] space-y-2 text-xs leading-relaxed text-[#5C444D]">
-              <p className="font-bold text-[#23191E]">
+            <div className="bg-vara-canvas p-4 sm:p-5 rounded-xl border border-vara-line space-y-2 text-xs leading-relaxed text-vara-muted-strong">
+              <p className="font-bold text-vara-ink">
                 چرا این لینک به صورت خودکار خوانده نشد؟
               </p>
               <p>
@@ -1065,10 +1065,10 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
               </p>
             </div>
 
-            <div className="bg-[#FDFBF9] p-3.5 rounded-xl border border-[#F0E1E4] flex items-center justify-between gap-3 text-xs">
+            <div className="bg-vara-canvas p-3.5 rounded-xl border border-vara-line flex items-center justify-between gap-3 text-xs">
               <div className="flex items-center gap-2 overflow-hidden flex-1">
-                <span className="text-[#785E67] shrink-0 font-medium">لینک ارسالی شما:</span>
-                <span className="font-jakarta text-[11px] text-[#23191E] truncate text-left" dir="ltr">
+                <span className="text-vara-muted shrink-0 font-medium">لینک ارسالی شما:</span>
+                <span className="font-jakarta text-[11px] text-vara-ink truncate text-left" dir="ltr">
                   {failedUrl}
                 </span>
               </div>
@@ -1079,9 +1079,9 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                   setCopiedInvoice(true);
                   setTimeout(() => setCopiedInvoice(false), 2000);
                 }}
-                className="px-3 py-1.5 rounded-lg bg-white hover:bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] text-[11px] font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1"
+                className="px-3 py-1.5 rounded-full bg-white hover:bg-vara-surface text-vara-ink border border-vara-line text-[11px] font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1"
               >
-                <Copy className="w-3 h-3 text-[#8C3B58]" />
+                <Copy className="w-3 h-3 text-vara-rose-ink" />
                 <span>{copiedInvoice ? 'کپی شد' : 'کپی لینک'}</span>
               </button>
             </div>
@@ -1093,12 +1093,12 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 rounded-xl bg-[#FDFBF9] hover:bg-[#F9F1F0] border border-[#F0E1E4] hover:border-[#D48C9E] text-[#23191E] transition-all flex items-center justify-center gap-3 group cursor-pointer"
+                className="p-4 rounded-xl bg-vara-canvas hover:bg-vara-surface border border-vara-line hover:border-vara-tint-line text-vara-ink transition-all flex items-center justify-center gap-3 group cursor-pointer"
               >
-                <div className="w-9 h-9 rounded-lg bg-[#8C3B58] text-white flex items-center justify-center">
+                <div className="w-9 h-9 rounded-lg bg-vara-rose text-white flex items-center justify-center">
                   <MessageCircle className="w-4 h-4" />
                 </div>
-                <span className="text-xs font-bold text-[#23191E]">ارسال لینک در واتساپ</span>
+                <span className="text-xs font-bold text-vara-ink">ارسال لینک در واتساپ</span>
               </a>
 
               <a
@@ -1107,12 +1107,12 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 rounded-xl bg-[#FDFBF9] hover:bg-[#F9F1F0] border border-[#F0E1E4] hover:border-[#D48C9E] text-[#23191E] transition-all flex items-center justify-center gap-3 group cursor-pointer"
+                className="p-4 rounded-xl bg-vara-canvas hover:bg-vara-surface border border-vara-line hover:border-vara-tint-line text-vara-ink transition-all flex items-center justify-center gap-3 group cursor-pointer"
               >
-                <div className="w-9 h-9 rounded-lg bg-[#8C3B58] text-white flex items-center justify-center">
+                <div className="w-9 h-9 rounded-lg bg-vara-rose text-white flex items-center justify-center">
                   <Send className="w-4 h-4" />
                 </div>
-                <span className="text-xs font-bold text-[#23191E]">ارسال در تلگرام</span>
+                <span className="text-xs font-bold text-vara-ink">ارسال در تلگرام</span>
               </a>
             </div>
           </div>
@@ -1120,53 +1120,53 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
 
         {/* Clean Empty Initial State Guide */}
         {!productData && !failedUrl && !isCalculating && (
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#F0E1E4] shadow-[0_8px_24px_-6px_rgba(140,59,88,0.05)] space-y-6">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-vara-line shadow-vara-float space-y-6">
             <div className="text-center max-w-xl mx-auto space-y-2">
-              <h3 className="text-base sm:text-lg font-bold text-[#23191E]">
+              <h3 className="text-base sm:text-lg font-bold text-vara-ink">
                 راهنمای استعلام و خرید آنلاین از فروشگاه‌های بین‌المللی
               </h3>
-              <p className="text-xs text-[#785E67] leading-relaxed">
+              <p className="text-xs text-vara-muted leading-relaxed">
                 کافی است لینک محصول مورد نظر خود را در کادر بالا قرار دهید تا محاسبات دقیق قیمت با نرخ روز ارز انجام شود.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div className="p-4 rounded-xl bg-[#FDFBF9] border border-[#F0E1E4] space-y-2">
-                <div className="w-7 h-7 rounded-md bg-[#8C3B58] text-white flex items-center justify-center font-bold font-jakarta text-xs">
+              <div className="p-4 rounded-xl bg-vara-canvas border border-vara-line space-y-2">
+                <div className="w-7 h-7 rounded-md bg-vara-rose text-white flex items-center justify-center font-bold font-jakarta text-xs">
                   01
                 </div>
-                <h4 className="font-bold text-[#23191E]">کپی لینک از فروشگاه</h4>
-                <p className="text-[#5C444D] leading-relaxed text-[11px]">
+                <h4 className="font-bold text-vara-ink">کپی لینک از فروشگاه</h4>
+                <p className="text-vara-muted-strong leading-relaxed text-[11px]">
                   وارد سایت sephora.ae، amazon.ae، lookfantastic یا trendyol.com شوید و آدرس صفحه محصول دلخواهتان را کپی کنید.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#FDFBF9] border border-[#F0E1E4] space-y-2">
-                <div className="w-7 h-7 rounded-md bg-[#8C3B58] text-white flex items-center justify-center font-bold font-jakarta text-xs">
+              <div className="p-4 rounded-xl bg-vara-canvas border border-vara-line space-y-2">
+                <div className="w-7 h-7 rounded-md bg-vara-rose text-white flex items-center justify-center font-bold font-jakarta text-xs">
                   02
                 </div>
-                <h4 className="font-bold text-[#23191E]">محاسبه شفاف هزینه‌ها</h4>
-                <p className="text-[#5C444D] leading-relaxed text-[11px]">
+                <h4 className="font-bold text-vara-ink">محاسبه شفاف هزینه‌ها</h4>
+                <p className="text-vara-muted-strong leading-relaxed text-[11px]">
                   سیستم هوشمند ورا قیمت ارزی کالا، هزینه حمل هوایی، ترخیص و بیمه را به صورت شفاف محاسبه می‌کند.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#FDFBF9] border border-[#F0E1E4] space-y-2">
-                <div className="w-7 h-7 rounded-md bg-[#8C3B58] text-white flex items-center justify-center font-bold font-jakarta text-xs">
+              <div className="p-4 rounded-xl bg-vara-canvas border border-vara-line space-y-2">
+                <div className="w-7 h-7 rounded-md bg-vara-rose text-white flex items-center justify-center font-bold font-jakarta text-xs">
                   03
                 </div>
-                <h4 className="font-bold text-[#23191E]">تحویل درب منزل با پلمپ</h4>
-                <p className="text-[#5C444D] leading-relaxed text-[11px]">
+                <h4 className="font-bold text-vara-ink">تحویل درب منزل با پلمپ</h4>
+                <p className="text-vara-muted-strong leading-relaxed text-[11px]">
                   پس از ثبت سفارش، تیم خرید ورا سفارش را از فروشگاه اصلی تهیه کرده و با پلمپ اورجینال تحویل می‌دهد.
                 </p>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#F0E1E4] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#785E67]">
+            <div className="pt-3 border-t border-vara-line flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-vara-muted">
               <span>ضمانت ۱۰۰٪ اصالت و ارائه فاکتور رسمی خرید از فروشگاه‌های معتبر بین‌المللی</span>
               <a 
                 href="tel:02188888888" 
-                className="text-[#8C3B58] hover:underline font-bold"
+                className="text-vara-rose-ink hover:underline font-bold"
               >
                 <span>نیاز به راهنمایی دارید؟ تماس با پشتیبانی (۰۲۱-۸۸۸۸۸۸۸۸)</span>
               </a>

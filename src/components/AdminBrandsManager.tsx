@@ -180,34 +180,34 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
         <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-xs space-y-1">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-[#454a4f]/70">تعداد کل برندها</span>
-            <div className="w-8 h-8 rounded-xl bg-[#eff2f4] flex items-center justify-center text-[#454a4f]">
+            <span className="text-xs text-vara-muted-strong/70">تعداد کل برندها</span>
+            <div className="w-8 h-8 rounded-xl bg-vara-surface flex items-center justify-center text-vara-muted-strong">
               <Award className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-xl sm:text-2xl font-black text-[#454a4f] font-vazir">{totalBrandsCount.toLocaleString('fa-IR')}</div>
-          <div className="text-[10px] sm:text-[11px] text-[#949c91] font-medium">پوشش کامل برندهای معتبر کره‌ای و بین‌المللی</div>
+          <div className="text-xl sm:text-2xl font-black text-vara-muted-strong font-vazir">{totalBrandsCount.toLocaleString('fa-IR')}</div>
+          <div className="text-[10px] sm:text-[11px] text-vara-muted font-medium">پوشش کامل برندهای معتبر کره‌ای و بین‌المللی</div>
         </div>
 
         <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-xs space-y-1">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-[#454a4f]/70">برندهای دارای محصول</span>
+            <span className="text-xs text-vara-muted-strong/70">برندهای دارای محصول</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700">
               <Package className="w-4 h-4" />
             </div>
           </div>
           <div className="text-xl sm:text-2xl font-black text-emerald-700 font-vazir">{brandsWithProductsCount.toLocaleString('fa-IR')}</div>
-          <div className="text-[10px] sm:text-[11px] text-[#454a4f]/70 font-medium">دارای حداقل ۱ محصول فعال در فروشگاه</div>
+          <div className="text-[10px] sm:text-[11px] text-vara-muted-strong/70 font-medium">دارای حداقل ۱ محصول فعال در فروشگاه</div>
         </div>
 
         <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-xs space-y-1 flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-[#454a4f]/70">عملیات پایگاه‌داده برندها</span>
+            <span className="text-xs text-vara-muted-strong/70">عملیات پایگاه‌داده برندها</span>
           </div>
           <div className="pt-2">
             <button
               onClick={() => setIsResetConfirmOpen(true)}
-              className="w-full py-2 px-3 bg-[#eff2f4] hover:bg-amber-50 text-amber-800 border border-amber-200/80 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full py-2 px-3 bg-vara-surface hover:bg-amber-50 text-amber-800 border border-amber-200/80 rounded-full text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>بازنشانی به لیست پیش‌فرض</span>
@@ -218,14 +218,14 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
 
       {/* Main Section: Create New Brand Form */}
       <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm space-y-4 sm:space-y-5">
-        <div className="flex items-center justify-between border-b border-[#b8b8b9] pb-3.5 sm:pb-4">
+        <div className="flex items-center justify-between border-b border-vara-line pb-3.5 sm:pb-4">
           <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] flex items-center justify-center shadow-xs shrink-0">
-              <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-[#b8b8b9]" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-vara-muted-strong/90 hover:bg-vara-muted-strong text-white flex items-center justify-center shadow-xs shrink-0">
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-vara-line" />
             </div>
             <div>
-              <h2 className="text-sm sm:text-base font-extrabold text-[#454a4f]">افزودن و ثبت برند جدید</h2>
-              <p className="text-[11px] sm:text-xs text-[#454a4f]/70 mt-0.5">
+              <h2 className="text-sm sm:text-base font-extrabold text-vara-muted-strong">افزودن و ثبت برند جدید</h2>
+              <p className="text-[11px] sm:text-xs text-vara-muted-strong/70 mt-0.5">
                 پس از ایجاد، برند جدید فوراً در فیلترهای فروشگاه و در فرم ثبت محصول در دسترس خواهد بود.
               </p>
             </div>
@@ -248,7 +248,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
 
         <form onSubmit={handleCreateBrand} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
           <div className="md:col-span-5">
-            <label className="block text-xs font-bold text-[#454a4f] mb-1.5">
+            <label className="block text-xs font-bold text-vara-muted-strong mb-1.5">
               نام انگلیسی برند (Brand Name - EN) <span className="text-rose-500">*</span>:
             </label>
             <input
@@ -257,13 +257,13 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
               value={newLabelEn}
               onChange={(e) => handleLabelEnChange(e.target.value)}
               placeholder="مثال: Skin1004 یا Haruharu Wonder"
-              className="w-full bg-[#eff2f4] border border-[#b8b8b9] rounded-xl px-3.5 py-2.5 text-xs text-left font-sans focus:outline-none focus:border-[#2B2927]"
+              className="w-full bg-vara-surface border border-vara-line rounded-full px-3.5 py-2.5 text-xs text-left font-sans focus:outline-none focus:border-vara-ink"
               required
             />
           </div>
 
           <div className="md:col-span-5">
-            <label className="block text-xs font-bold text-[#454a4f] mb-1.5">
+            <label className="block text-xs font-bold text-vara-muted-strong mb-1.5">
               نام فارسی برند (Brand Name - FA) <span className="text-rose-500">*</span>:
             </label>
             <input
@@ -271,7 +271,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
               value={newLabelFa}
               onChange={(e) => handleLabelFaChange(e.target.value)}
               placeholder="مثال: اسکین ۱۰۰۴ یا هاروهارو واندر"
-              className="w-full bg-[#eff2f4] border border-[#b8b8b9] rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#2B2927]"
+              className="w-full bg-vara-surface border border-vara-line rounded-full px-3.5 py-2.5 text-xs focus:outline-none focus:border-vara-ink"
               required
             />
           </div>
@@ -280,16 +280,16 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-2.5 px-4 bg-[#454a4f]/90 hover:bg-[#454a4f] disabled:bg-gray-400 text-[#dde2e7] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full py-2.5 px-4 bg-vara-rose hover:bg-vara-rose-hover disabled:bg-gray-400 text-white rounded-full text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
             >
               {isSubmitting ? (
                 <>
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#b8b8b9]" />
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-vara-line" />
                   <span>در حال ذخیره...</span>
                 </>
               ) : (
                 <>
-                  <Plus className="w-4 h-4 text-[#b8b8b9]" />
+                  <Plus className="w-4 h-4 text-vara-line" />
                   <span>ثبت برند جدید</span>
                 </>
               )}
@@ -307,9 +307,9 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
               placeholder="جستجو در نام فارسی یا انگلیسی برندها..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#eff2f4] text-xs pr-9 pl-3 py-2.5 rounded-xl border border-[#b8b8b9] focus:outline-none focus:border-[#2B2927]"
+              className="w-full bg-vara-surface text-xs pr-9 pl-3 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-ink"
             />
-            <Search className="w-4 h-4 text-[#788089] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-4 h-4 text-vara-muted absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
@@ -321,33 +321,33 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
           </div>
 
           <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 no-scrollbar">
-            <div className="flex items-center gap-1 bg-[#eff2f4] border border-[#b8b8b9] p-1 rounded-xl text-xs shrink-0">
+            <div className="flex items-center gap-1 bg-vara-surface border border-vara-line p-1 rounded-xl text-xs shrink-0">
               <button
                 onClick={() => setFilterMode('all')}
-                className={`px-2.5 sm:px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
+                className={`px-2.5 sm:px-3 py-1 rounded-full font-medium transition-colors cursor-pointer whitespace-nowrap ${
                   filterMode === 'all' 
-                    ? 'bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] font-bold' 
-                    : 'text-[#454a4f]/70 hover:bg-white'
+                    ? 'bg-vara-rose hover:bg-vara-rose-hover text-white font-bold'
+                    : 'text-vara-muted-strong/70 hover:bg-white'
                 }`}
               >
                 همه ({brands.length.toLocaleString('fa-IR')})
               </button>
               <button
                 onClick={() => setFilterMode('hasProducts')}
-                className={`px-2.5 sm:px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
+                className={`px-2.5 sm:px-3 py-1 rounded-full font-medium transition-colors cursor-pointer whitespace-nowrap ${
                   filterMode === 'hasProducts' 
-                    ? 'bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] font-bold' 
-                    : 'text-[#454a4f]/70 hover:bg-white'
+                    ? 'bg-vara-rose hover:bg-vara-rose-hover text-white font-bold'
+                    : 'text-vara-muted-strong/70 hover:bg-white'
                 }`}
               >
                 دارای محصول ({brandsWithProductsCount.toLocaleString('fa-IR')})
               </button>
               <button
                 onClick={() => setFilterMode('noProducts')}
-                className={`px-2.5 sm:px-3 py-1 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
+                className={`px-2.5 sm:px-3 py-1 rounded-full font-medium transition-colors cursor-pointer whitespace-nowrap ${
                   filterMode === 'noProducts' 
-                    ? 'bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] font-bold' 
-                    : 'text-[#454a4f]/70 hover:bg-white'
+                    ? 'bg-vara-rose hover:bg-vara-rose-hover text-white font-bold'
+                    : 'text-vara-muted-strong/70 hover:bg-white'
                 }`}
               >
                 بدون محصول ({(brands.length - brandsWithProductsCount).toLocaleString('fa-IR')})
@@ -359,7 +359,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
 
       {/* Brands Grid Listing */}
       <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between text-xs font-bold text-[#454a4f]/80">
+        <div className="flex items-center justify-between text-xs font-bold text-vara-muted-strong/80">
           <span>لیست برندهای ثبت شده ({filteredBrands.length.toLocaleString('fa-IR')} مورد یافت شد)</span>
           {filteredBrands.length < brands.length && (
             <button
@@ -367,7 +367,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
                 setSearchTerm('');
                 setFilterMode('all');
               }}
-              className="text-[#949c91] hover:underline cursor-pointer"
+              className="text-vara-muted hover:underline cursor-pointer"
             >
               نمایش همه برندها
             </button>
@@ -376,11 +376,11 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
 
         {filteredBrands.length === 0 ? (
           <div className="py-16 text-center space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#eff2f4] flex items-center justify-center mx-auto text-[#949c91]">
+            <div className="w-12 h-12 rounded-2xl bg-vara-surface flex items-center justify-center mx-auto text-vara-muted">
               <Search className="w-6 h-6" />
             </div>
-            <p className="text-sm font-bold text-[#454a4f]">هیچ برندی با این مشخصات یافت نشد.</p>
-            <p className="text-xs text-[#454a4f]/70">می‌توانید با استفاده از فرم بالا این برند را اضافه کنید.</p>
+            <p className="text-sm font-bold text-vara-muted-strong">هیچ برندی با این مشخصات یافت نشد.</p>
+            <p className="text-xs text-vara-muted-strong/70">می‌توانید با استفاده از فرم بالا این برند را اضافه کنید.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
@@ -389,23 +389,23 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
               return (
                 <div
                   key={brand.id}
-                  className="bg-[#eff2f4] hover:bg-white border border-[#b8b8b9] hover:border-[#b8b8b9] p-3.5 rounded-2xl transition-all duration-200 flex items-center justify-between group shadow-2xs"
+                  className="bg-vara-surface hover:bg-white border border-vara-line hover:border-vara-line p-3.5 rounded-2xl transition-all duration-200 flex items-center justify-between group shadow-2xs"
                 >
                   <div className="space-y-1 min-w-0 pr-1">
                     <div className="flex items-center gap-1.5">
-                      <span className="font-extrabold text-xs text-[#454a4f] truncate">
+                      <span className="font-extrabold text-xs text-vara-muted-strong truncate">
                         {brand.labelFa}
                       </span>
                       {productCount > 0 && (
                         <span 
                           title={`${productCount.toLocaleString('fa-IR')} محصول در فروشگاه`}
-                          className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-1.5 py-0.2 rounded-md font-vazir shrink-0"
+                          className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-1.5 py-0.2 rounded-full font-vazir shrink-0"
                         >
                           {productCount.toLocaleString('fa-IR')} محصول
                         </span>
                       )}
                     </div>
-                    <div className="text-[11px] text-[#788089] font-sans truncate" dir="ltr">
+                    <div className="text-[11px] text-vara-muted font-sans truncate" dir="ltr">
                       {brand.labelEn}
                     </div>
                   </div>
@@ -414,7 +414,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
                     <button
                       type="button"
                       onClick={() => setBrandToDelete(brand)}
-                      className="w-8 h-8 rounded-xl bg-white group-hover:bg-rose-50 text-[#788089] hover:text-rose-700 hover:border-rose-200 border border-[#b8b8b9] flex items-center justify-center transition-colors cursor-pointer"
+                      className="w-8 h-8 rounded-full bg-white group-hover:bg-rose-50 text-vara-muted hover:text-rose-700 hover:border-rose-200 border border-vara-line flex items-center justify-center transition-colors cursor-pointer"
                       title="حذف این برند"
                       aria-label={`حذف برند ${brand.labelFa}`}
                     >
@@ -437,11 +437,11 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
             </div>
 
             <div className="text-center space-y-2">
-              <h3 className="text-base font-extrabold text-[#454a4f]">
+              <h3 className="text-base font-extrabold text-vara-muted-strong">
                 آیا از حذف این برند اطمینان دارید؟
               </h3>
-              <p className="text-xs text-[#454a4f]/80">
-                برند انتخابی: <strong className="text-[#454a4f]">{brandToDelete.labelFa} ({brandToDelete.labelEn})</strong>
+              <p className="text-xs text-vara-muted-strong/80">
+                برند انتخابی: <strong className="text-vara-muted-strong">{brandToDelete.labelFa} ({brandToDelete.labelEn})</strong>
               </p>
               
               {(brandProductsCountMap[brandToDelete.id] || brandProductsCountMap[brandToDelete.labelEn] || 0) > 0 && (
@@ -472,7 +472,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
                   setDeleteError(null);
                 }}
                 disabled={isDeleting}
-                className="flex-1 py-2.5 px-4 bg-[#eff2f4] hover:bg-[#b8b8b9] text-[#454a4f] rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                className="flex-1 py-2.5 px-4 bg-vara-surface hover:bg-vara-line text-vara-muted-strong rounded-full text-xs font-bold transition-colors cursor-pointer"
               >
                 انصراف
               </button>
@@ -481,7 +481,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
                 type="button"
                 onClick={handleConfirmDelete}
                 disabled={isDeleting}
-                className="flex-1 py-2.5 px-4 bg-rose-600 hover:bg-rose-700 text-[#dde2e7] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 py-2.5 px-4 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {isDeleting ? (
                   <>
@@ -509,10 +509,10 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
             </div>
 
             <div className="text-center space-y-2">
-              <h3 className="text-base font-extrabold text-[#454a4f]">
+              <h3 className="text-base font-extrabold text-vara-muted-strong">
                 بازنشانی لیست برندها به حالت پیش‌فرض
               </h3>
-              <p className="text-xs text-[#454a4f]/80">
+              <p className="text-xs text-vara-muted-strong/80">
                 آیا مایلید تمام برندهای سامانه به کاتالوگ استاندارد اولیه بازگردانی شوند؟
               </p>
             </div>
@@ -522,7 +522,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
                 type="button"
                 onClick={() => setIsResetConfirmOpen(false)}
                 disabled={isResetting}
-                className="flex-1 py-2.5 px-4 bg-[#eff2f4] hover:bg-[#b8b8b9] text-[#454a4f] rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                className="flex-1 py-2.5 px-4 bg-vara-surface hover:bg-vara-line text-vara-muted-strong rounded-full text-xs font-bold transition-colors cursor-pointer"
               >
                 انصراف
               </button>
@@ -531,7 +531,7 @@ export const AdminBrandsManager: React.FC<AdminBrandsManagerProps> = ({
                 type="button"
                 onClick={handleResetToDefault}
                 disabled={isResetting}
-                className="flex-1 py-2.5 px-4 bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 py-2.5 px-4 bg-vara-rose hover:bg-vara-rose-hover text-white rounded-full text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {isResetting ? (
                   <>

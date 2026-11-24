@@ -56,15 +56,15 @@ export const UserReviewsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-[#F0E1E4] pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-vara-line pb-4">
           <div>
-            <div className="text-[11px] font-semibold text-[#8C3B58] uppercase tracking-[0.12em] mb-1 flex items-center gap-1.5 font-jakarta">
+            <div className="text-[11px] font-semibold text-vara-rose-ink uppercase tracking-[0.12em] mb-1 flex items-center gap-1.5 font-jakarta">
               <span>CLINICAL FEEDBACK · بازخورد مصرف‌کنندگان</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[#23191E] tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold text-vara-ink tracking-normal">
               تجربیات و نتایج واقعی خریداران
             </h2>
-            <p className="text-xs sm:text-sm text-[#785E67] mt-1">
+            <p className="text-xs sm:text-sm text-vara-muted mt-1">
               گزارش‌های تاییدشده از اثربخشی محصولات بر انواع تیپ‌های پوستی
             </p>
           </div>
@@ -75,59 +75,59 @@ export const UserReviewsSection: React.FC = () => {
           {reviews.map((rev, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-2xl p-5 flex flex-col justify-between border border-[#F0E1E4] hover:border-[#D48C9E] transition-all duration-200 shadow-shop-card hover:shadow-shop-elevated"
+              className="bg-white rounded-2xl p-5 flex flex-col justify-between border border-vara-line hover:border-vara-tint-line transition-all duration-200 shadow-shop-card hover:shadow-shop-elevated"
             >
               <div>
                 {/* Rating */}
                 <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-1.5 text-[#8C3B58]">
-                    <Star className="w-3.5 h-3.5 fill-[#8C3B58] text-[#8C3B58]" />
-                    <span className="text-xs font-bold text-[#23191E] font-jakarta">
+                  <div className="flex items-center gap-1.5 text-vara-rose-ink">
+                    <Star className="w-3.5 h-3.5 fill-vara-rose text-vara-rose-ink" />
+                    <span className="text-xs font-bold text-vara-ink font-jakarta">
                       {rev.rating.toLocaleString('fa-IR')} / ۵
                     </span>
                   </div>
-                  <span className="text-[10px] text-[#8C3B58] bg-[#F5E6EB] px-2 py-0.5 rounded font-medium border border-[#F0E1E4]">
+                  <span className="text-[10px] text-vara-rose-ink bg-vara-tint px-2 py-0.5 rounded-full font-medium border border-vara-line">
                     مصرف {rev.usedFor}
                   </span>
                 </div>
 
                 {/* Metadata List */}
-                <div className="grid grid-cols-2 gap-1.5 text-[11px] text-[#785E67] bg-[#F9F1F0] border border-[#F0E1E4] rounded-xl p-2.5 mb-3 text-right">
-                  <div><span className="text-[#23191E] font-medium">پوست:</span> {rev.skinType}</div>
-                  <div><span className="text-[#23191E] font-medium">سن:</span> {rev.age.toLocaleString('fa-IR')} سال</div>
-                  <div className="col-span-2 truncate"><span className="text-[#23191E] font-medium">دغدغه:</span> {rev.concern}</div>
+                <div className="grid grid-cols-2 gap-1.5 text-[11px] text-vara-muted bg-vara-surface border border-vara-line rounded-xl p-2.5 mb-3 text-right">
+                  <div><span className="text-vara-ink font-medium">پوست:</span> {rev.skinType}</div>
+                  <div><span className="text-vara-ink font-medium">سن:</span> {rev.age.toLocaleString('fa-IR')} سال</div>
+                  <div className="col-span-2 truncate"><span className="text-vara-ink font-medium">دغدغه:</span> {rev.concern}</div>
                 </div>
 
                 {/* Comment */}
-                <p className="text-xs text-[#23191E] leading-relaxed text-right line-clamp-4">
+                <p className="text-xs text-vara-ink leading-relaxed text-right line-clamp-4">
                   «{rev.comment}»
                 </p>
               </div>
 
               {/* Author & Heart */}
-              <div className="flex items-center justify-between pt-3.5 mt-4 border-t border-[#F0E1E4]">
+              <div className="flex items-center justify-between pt-3.5 mt-4 border-t border-vara-line">
                 <div className="flex items-center gap-2">
                   <img
                     loading="lazy"
                     decoding="async"
                     src={rev.avatar}
                     alt={rev.name}
-                    className="w-6 h-6 rounded-full object-cover border border-[#F0E1E4]"
+                    className="w-6 h-6 rounded-full object-cover border border-vara-line"
                     referrerPolicy="no-referrer"
                   />
-                  <span className="text-xs font-semibold text-[#23191E]">
+                  <span className="text-xs font-semibold text-vara-ink">
                     {rev.name}
                   </span>
                 </div>
 
                 <button
                   onClick={() => toggleLike(idx)}
-                  className={`p-1.5 rounded-lg hover:bg-[#F5E6EB] transition-colors cursor-pointer ${
-                    likedReviews[idx] ? 'text-[#8C3B58]' : 'text-[#785E67]'
+                  className={`p-1.5 rounded-full hover:bg-vara-tint transition-colors cursor-pointer ${
+                    likedReviews[idx] ? 'text-vara-rose-ink' : 'text-vara-muted'
                   }`}
                   aria-label="پسندیدن نظر"
                 >
-                  <Heart className={`w-3.5 h-3.5 ${likedReviews[idx] ? 'fill-[#8C3B58]' : ''}`} />
+                  <Heart className={`w-3.5 h-3.5 ${likedReviews[idx] ? 'fill-vara-rose' : ''}`} />
                 </button>
               </div>
 

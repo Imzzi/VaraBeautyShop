@@ -269,7 +269,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
   return (
     <div className="space-y-6 text-right font-vazir" dir="rtl">
       {/* Top Banner: Status & Refresh */}
-      <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm border border-[#b8b8b9]/30">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm border border-vara-line/30">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div
@@ -288,7 +288,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
 
             <div>
               <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                <h2 className="text-base sm:text-lg font-black text-[#454a4f]">
+                <h2 className="text-base sm:text-lg font-black text-vara-muted-strong">
                   وضعیت فضای ذخیره‌سازی ابری (Vercel Blob)
                 </h2>
                 {data?.configured ? (
@@ -310,7 +310,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                   </span>
                 )}
               </div>
-              <p className="text-[11px] sm:text-xs text-[#454a4f]/70 mt-1">
+              <p className="text-[11px] sm:text-xs text-vara-muted-strong/70 mt-1">
                 مدیریت زنده فضای ابری تصاویر محصولات، اسلایدرها و رسیدهای پرداخت در شبکه CDN ورسل
               </p>
             </div>
@@ -321,7 +321,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
             <button
               onClick={handleTestUpload}
               disabled={testUploading || !data?.configured}
-              className="flex-1 md:flex-initial bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+              className="flex-1 md:flex-initial bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white px-3.5 py-2.5 rounded-full text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
               title="آپلود یک فایل تستی کوچک برای بررسی فوری دسترسی نوشتن به سرور ابری"
             >
               <Zap className={`w-4 h-4 ${testUploading ? 'animate-bounce' : ''}`} />
@@ -332,7 +332,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
             <button
               onClick={() => fetchDiagnostics(true)}
               disabled={refreshing || loading}
-              className="bg-[#eff2f4] hover:bg-white text-[#454a4f] border border-[#b8b8b9]/60 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              className="bg-vara-surface hover:bg-white text-vara-muted-strong border border-vara-line/60 px-3.5 py-2.5 rounded-full text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               title="بروزرسانی اطلاعات و لیست فایل‌ها"
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin text-emerald-600' : ''}`} />
@@ -344,10 +344,10 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
               href="https://vercel.com/dashboard"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-[#eff2f4] text-[#454a4f] border border-[#b8b8b9]/60 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-1 cursor-pointer"
+              className="bg-white hover:bg-vara-surface text-vara-muted-strong border border-vara-line/60 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-1 cursor-pointer"
             >
               <span>داشبورد Vercel</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#949c91]" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-vara-muted" />
             </a>
           </div>
         </div>
@@ -374,44 +374,44 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
       {/* Metrics Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Files Card */}
-        <div className="bg-white p-5 rounded-3xl shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#454a4f]/70 text-xs">
+        <div className="bg-white p-5 rounded-3xl shadow-xs border border-vara-line/30 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-vara-muted-strong/70 text-xs">
             <span>تعداد کل فایل‌های ابری</span>
             <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
               <ImageIcon className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-[#454a4f] font-jakarta">
+            <div className="text-2xl font-black text-vara-muted-strong font-jakarta">
               {loading ? '...' : (data?.totalBlobs || 0).toLocaleString('fa-IR')}
             </div>
-            <div className="text-[11px] text-[#454a4f]/60 mt-1">
+            <div className="text-[11px] text-vara-muted-strong/60 mt-1">
               تصاویر محصولات، اسلایدرها و بنرها
             </div>
           </div>
         </div>
 
         {/* Storage Size Card */}
-        <div className="bg-white p-5 rounded-3xl shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#454a4f]/70 text-xs">
+        <div className="bg-white p-5 rounded-3xl shadow-xs border border-vara-line/30 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-vara-muted-strong/70 text-xs">
             <span>حجم کل مصرفی در CDN</span>
             <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
               <HardDrive className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-[#454a4f] font-jakarta">
+            <div className="text-2xl font-black text-vara-muted-strong font-jakarta">
               {loading ? '...' : data?.totalSizeFormatted || '0 B'}
             </div>
-            <div className="text-[11px] text-[#454a4f]/60 mt-1">
+            <div className="text-[11px] text-vara-muted-strong/60 mt-1">
               بهینه‌سازی شده با الگوریتم WebP
             </div>
           </div>
         </div>
 
         {/* CDN Provider Card */}
-        <div className="bg-white p-5 rounded-3xl shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#454a4f]/70 text-xs">
+        <div className="bg-white p-5 rounded-3xl shadow-xs border border-vara-line/30 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-vara-muted-strong/70 text-xs">
             <span>شبکه توزیع محتوا (CDN)</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <Cloud className="w-4 h-4" />
@@ -421,25 +421,25 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
             <div className="text-base font-black text-emerald-700 font-jakarta">
               Vercel Global Edge
             </div>
-            <div className="text-[11px] text-[#454a4f]/60 mt-1">
+            <div className="text-[11px] text-vara-muted-strong/60 mt-1">
               تحویل فوق سریع جهانی بدون بار روی دیتابیس
             </div>
           </div>
         </div>
 
         {/* Compression Engine Card */}
-        <div className="bg-white p-5 rounded-3xl shadow-xs border border-[#b8b8b9]/30 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#454a4f]/70 text-xs">
+        <div className="bg-white p-5 rounded-3xl shadow-xs border border-vara-line/30 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-vara-muted-strong/70 text-xs">
             <span>موتور فشرده‌سازی خودکار</span>
             <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
               <Layers className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-base font-black text-[#454a4f]">
+            <div className="text-base font-black text-vara-muted-strong">
               فعال (WebP Client-Side)
             </div>
-            <div className="text-[11px] text-[#454a4f]/60 mt-1">
+            <div className="text-[11px] text-vara-muted-strong/60 mt-1">
               کاهش خودکار تا ۸۵٪ حجم تصاویر قبل از آپلود
             </div>
           </div>
@@ -461,25 +461,25 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                 ۱۰۰٪ فعال
               </span>
             </div>
-            <p className="text-xs text-[#454a4f]/80 leading-relaxed">
+            <p className="text-xs text-vara-muted-strong/80 leading-relaxed">
               جهت حفظ سهمیه رایگان Vercel Blob و جلوگیری از افت سرعت یا خطای حجم، تمامی تصاویر در مرورگر پیش از آپلود با ابعاد و فرمت بهینه فشرده می‌شوند:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
               <div className="bg-white/90 p-3 rounded-xl border border-emerald-100 text-xs">
-                <div className="font-bold text-[#454a4f]">کاهش رزولوشن هوشمند</div>
-                <div className="text-[11px] text-[#454a4f]/70 mt-1">
+                <div className="font-bold text-vara-muted-strong">کاهش رزولوشن هوشمند</div>
+                <div className="text-[11px] text-vara-muted-strong/70 mt-1">
                   محصولات: حداکثر ۱۲۰۰px | بنرها: ۱۶۰۰px | فیش‌ها: ۱۰۰۰px
                 </div>
               </div>
               <div className="bg-white/90 p-3 rounded-xl border border-emerald-100 text-xs">
-                <div className="font-bold text-[#454a4f]">فرمت نسل جدید WebP</div>
-                <div className="text-[11px] text-[#454a4f]/70 mt-1">
+                <div className="font-bold text-vara-muted-strong">فرمت نسل جدید WebP</div>
+                <div className="text-[11px] text-vara-muted-strong/70 mt-1">
                   کاهش ۷۰٪ تا ۹۰٪ حجم فایل با حفظ شفافیت رتینا و پالت رنگ اصلی
                 </div>
               </div>
               <div className="bg-white/90 p-3 rounded-xl border border-emerald-100 text-xs">
-                <div className="font-bold text-[#454a4f]">پاسخ‌گویی سریع CDN</div>
-                <div className="text-[11px] text-[#454a4f]/70 mt-1">
+                <div className="font-bold text-vara-muted-strong">پاسخ‌گویی سریع CDN</div>
+                <div className="text-[11px] text-vara-muted-strong/70 mt-1">
                   لود عکس‌ها در کسر ثانیه و بدون تجاوز از محدودیت ۴.۵ مگابایتی ورسل
                 </div>
               </div>
@@ -490,13 +490,13 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
 
       {/* Folders Breakdown Section */}
       {data?.foldersBreakdown && data.foldersBreakdown.length > 0 && (
-        <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 space-y-4">
+        <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-black text-[#454a4f] flex items-center gap-2">
-              <Folder className="w-4 h-4 text-[#949c91]" />
+            <h3 className="text-sm font-black text-vara-muted-strong flex items-center gap-2">
+              <Folder className="w-4 h-4 text-vara-muted" />
               <span>تفکیک مصرف حجم بر اساس پوشه‌ها</span>
             </h3>
-            <span className="text-xs text-[#454a4f]/60 font-jakarta">
+            <span className="text-xs text-vara-muted-strong/60 font-jakarta">
               {data.foldersBreakdown.length} پوشه فعال
             </span>
           </div>
@@ -509,30 +509,30 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                 className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                   selectedFolder === f.folder
                     ? 'border-emerald-500 bg-emerald-50/40 ring-2 ring-emerald-500/20'
-                    : 'border-[#b8b8b9]/40 bg-[#eff2f4]/30 hover:bg-white'
+                    : 'border-vara-line/40 bg-vara-surface/30 hover:bg-white'
                 }`}
               >
-                <div className="flex items-center justify-between text-xs font-bold text-[#454a4f]">
+                <div className="flex items-center justify-between text-xs font-bold text-vara-muted-strong">
                   <span className="flex items-center gap-1.5">
-                    <Folder className="w-3.5 h-3.5 text-[#949c91]" />
+                    <Folder className="w-3.5 h-3.5 text-vara-muted" />
                     <span>{getFolderLabel(f.folder)}</span>
                   </span>
-                  <span className="text-[11px] font-jakarta bg-white px-2 py-0.5 rounded-md border border-[#b8b8b9]/40">
+                  <span className="text-[11px] font-jakarta bg-white px-2 py-0.5 rounded-full border border-vara-line/40">
                     {f.count} فایل
                   </span>
                 </div>
 
                 <div className="mt-2.5 flex items-center justify-between text-xs">
-                  <span className="text-[#454a4f]/70 text-[11px]">حجم:</span>
-                  <span className="font-bold font-jakarta text-[#454a4f]">
+                  <span className="text-vara-muted-strong/70 text-[11px]">حجم:</span>
+                  <span className="font-bold font-jakarta text-vara-muted-strong">
                     {f.sizeFormatted} ({f.percentage}٪)
                   </span>
                 </div>
 
                 {/* Progress Bar */}
-                <div className="w-full bg-[#eff2f4] rounded-full h-1.5 mt-2 overflow-hidden">
+                <div className="w-full bg-vara-surface rounded-full h-1.5 mt-2 overflow-hidden">
                   <div
-                    className="bg-[#454a4f] h-full rounded-full transition-all duration-500"
+                    className="bg-vara-muted-strong h-full rounded-full transition-all duration-500"
                     style={{ width: `${Math.max(f.percentage, 4)}%` }}
                   />
                 </div>
@@ -543,14 +543,14 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
       )}
 
       {/* Recent Files Table & Toolbar */}
-      <div className="bg-white rounded-3xl p-6 shadow-xs border border-[#b8b8b9]/30 space-y-5">
+      <div className="bg-white rounded-3xl p-6 shadow-xs border border-vara-line/30 space-y-5">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-sm font-black text-[#454a4f] flex items-center gap-2">
-              <ImageIcon className="w-4 h-4 text-[#949c91]" />
+            <h3 className="text-sm font-black text-vara-muted-strong flex items-center gap-2">
+              <ImageIcon className="w-4 h-4 text-vara-muted" />
               <span>فایل‌های بارگذاری شده در Vercel Blob</span>
             </h3>
-            <p className="text-xs text-[#454a4f]/70 mt-0.5">
+            <p className="text-xs text-vara-muted-strong/70 mt-0.5">
               نمایش آخرین فایل‌های ذخیره شده در CDN همراه با پیش‌نمایش و لینک مستقیم
             </p>
           </div>
@@ -564,16 +564,16 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="جستجو در فایل‌ها..."
-                className="w-full pr-8 pl-3 py-2 bg-[#eff2f4] text-[#454a4f] text-xs rounded-xl border border-transparent focus:border-[#454a4f] focus:bg-white focus:outline-none transition-all placeholder:text-[#454a4f]/50"
+                className="w-full pr-8 pl-3 py-2 bg-vara-surface text-vara-muted-strong text-xs rounded-full border border-transparent focus:border-vara-muted-strong focus:bg-white focus:outline-none transition-all placeholder:text-vara-muted-strong/50"
               />
-              <Search className="w-3.5 h-3.5 text-[#454a4f]/50 absolute right-2.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 text-vara-muted-strong/50 absolute right-2.5 top-1/2 -translate-y-1/2" />
             </div>
 
             {/* Folder Dropdown */}
             <select
               value={selectedFolder}
               onChange={(e) => setSelectedFolder(e.target.value)}
-              className="bg-[#eff2f4] text-[#454a4f] text-xs py-2 px-3 rounded-xl border border-transparent focus:border-[#454a4f] focus:bg-white focus:outline-none cursor-pointer"
+              className="bg-vara-surface text-vara-muted-strong text-xs py-2 px-3 rounded-full border border-transparent focus:border-vara-muted-strong focus:bg-white focus:outline-none cursor-pointer"
             >
               <option value="all">همه پوشه‌ها</option>
               {data?.foldersBreakdown.map((f) => (
@@ -587,28 +587,28 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
 
         {/* Files Content */}
         {loading ? (
-          <div className="py-16 text-center text-[#454a4f]/60 space-y-3">
-            <RefreshCw className="w-6 h-6 animate-spin mx-auto text-[#949c91]" />
+          <div className="py-16 text-center text-vara-muted-strong/60 space-y-3">
+            <RefreshCw className="w-6 h-6 animate-spin mx-auto text-vara-muted" />
             <p className="text-xs font-bold">در حال دریافت لیست فایل‌ها از سرور Vercel Blob...</p>
           </div>
         ) : filteredBlobs.length === 0 ? (
-          <div className="py-14 text-center border-2 border-dashed border-[#b8b8b9]/40 rounded-2xl p-6 space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#eff2f4] text-[#454a4f]/60 flex items-center justify-center mx-auto">
+          <div className="py-14 text-center border-2 border-dashed border-vara-line/40 rounded-2xl p-6 space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-vara-surface text-vara-muted-strong/60 flex items-center justify-center mx-auto">
               <ImageIcon className="w-6 h-6" />
             </div>
-            <div className="text-xs font-bold text-[#454a4f]">
+            <div className="text-xs font-bold text-vara-muted-strong">
               {searchTerm || selectedFolder !== 'all'
                 ? 'هیچ فایلی با این مشخصات یافت نشد.'
                 : 'هنوز هیچ تصویری در Vercel Blob ذخیره نشده است.'}
             </div>
-            <p className="text-[11px] text-[#454a4f]/60 max-w-sm mx-auto">
+            <p className="text-[11px] text-vara-muted-strong/60 max-w-sm mx-auto">
               با افزودن تصویر جدید برای محصولات یا بنرهای هیرو، تصاویر به صورت ابری اینجا لیست خواهند شد.
             </p>
             {data?.configured && (
               <button
                 onClick={handleTestUpload}
                 disabled={testUploading}
-                className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2 rounded-xl font-bold transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2 rounded-full font-bold transition-all cursor-pointer"
               >
                 <Zap className="w-3.5 h-3.5" />
                 <span>اجرای تست آپلود آزمایشی</span>
@@ -621,7 +621,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-right text-xs">
                 <thead>
-                  <tr className="border-b border-[#b8b8b9]/30 text-[#454a4f]/70 font-bold">
+                  <tr className="border-b border-vara-line/30 text-vara-muted-strong/70 font-bold">
                     <th className="py-3 px-3">تصویر</th>
                     <th className="py-3 px-3">نام و مسیر فایل</th>
                     <th className="py-3 px-3">پوشه</th>
@@ -630,18 +630,18 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                     <th className="py-3 px-3 text-center">عملیات</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#b8b8b9]/20">
+                <tbody className="divide-y divide-vara-line/20">
                   {filteredBlobs.map((blob) => {
                     const folder = blob.pathname.includes('/') ? blob.pathname.split('/')[0] : 'root';
                     const basename = blob.pathname.split('/').pop() || blob.pathname;
 
                     return (
-                      <tr key={blob.url} className="hover:bg-[#eff2f4]/50 transition-colors group">
+                      <tr key={blob.url} className="hover:bg-vara-surface/50 transition-colors group">
                         {/* Image Thumbnail */}
                         <td className="py-2.5 px-3">
                           <div
                             onClick={() => setPreviewModalUrl(blob.url)}
-                            className="w-11 h-11 rounded-xl overflow-hidden bg-gray-100 border border-[#b8b8b9]/40 cursor-pointer relative shrink-0 group-hover:scale-105 transition-transform"
+                            className="w-11 h-11 rounded-xl overflow-hidden bg-gray-100 border border-vara-line/40 cursor-pointer relative shrink-0 group-hover:scale-105 transition-transform"
                             title="کلیک جهت مشاهده تصویر در سایز بزرگ"
                           >
                             <img
@@ -658,28 +658,28 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
 
                         {/* File Pathname */}
                         <td className="py-2.5 px-3">
-                          <div className="font-bold text-[#454a4f] max-w-xs truncate" title={blob.pathname}>
+                          <div className="font-bold text-vara-muted-strong max-w-xs truncate" title={blob.pathname}>
                             {basename}
                           </div>
-                          <div className="text-[10px] text-[#454a4f]/50 font-mono truncate max-w-xs mt-0.5" dir="ltr">
+                          <div className="text-[10px] text-vara-muted-strong/50 font-mono truncate max-w-xs mt-0.5" dir="ltr">
                             {blob.pathname}
                           </div>
                         </td>
 
                         {/* Folder Badge */}
                         <td className="py-2.5 px-3">
-                          <span className="inline-block bg-[#eff2f4] text-[#454a4f] text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#b8b8b9]/30">
+                          <span className="inline-block bg-vara-surface text-vara-muted-strong text-[10px] font-bold px-2 py-0.5 rounded-full border border-vara-line/30">
                             {folder}
                           </span>
                         </td>
 
                         {/* File Size */}
-                        <td className="py-2.5 px-3 font-jakarta font-bold text-[#454a4f]">
+                        <td className="py-2.5 px-3 font-jakarta font-bold text-vara-muted-strong">
                           {blob.sizeFormatted}
                         </td>
 
                         {/* Upload Date */}
-                        <td className="py-2.5 px-3 text-[11px] text-[#454a4f]/70">
+                        <td className="py-2.5 px-3 text-[11px] text-vara-muted-strong/70">
                           {formatUploadDate(blob.uploadedAt)}
                         </td>
 
@@ -689,7 +689,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                             {/* Copy URL */}
                             <button
                               onClick={() => handleCopy(blob.url)}
-                              className="p-1.5 rounded-lg bg-[#eff2f4] hover:bg-white text-[#454a4f] border border-[#b8b8b9]/40 transition-colors cursor-pointer"
+                              className="p-1.5 rounded-full bg-vara-surface hover:bg-white text-vara-muted-strong border border-vara-line/40 transition-colors cursor-pointer"
                               title="کپی لینک CDN"
                             >
                               {copiedUrl === blob.url ? (
@@ -704,17 +704,17 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                               href={blob.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1.5 rounded-lg bg-[#eff2f4] hover:bg-white text-[#454a4f] border border-[#b8b8b9]/40 transition-colors cursor-pointer"
+                              className="p-1.5 rounded-lg bg-vara-surface hover:bg-white text-vara-muted-strong border border-vara-line/40 transition-colors cursor-pointer"
                               title="مشاهده مستقیم فایل در تب جدید"
                             >
-                              <ExternalLink className="w-3.5 h-3.5 text-[#949c91]" />
+                              <ExternalLink className="w-3.5 h-3.5 text-vara-muted" />
                             </a>
 
                             {/* Delete File */}
                             <button
                               onClick={() => setDeleteConfirmBlob(blob)}
                               disabled={deletingUrl === blob.url}
-                              className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition-colors cursor-pointer disabled:opacity-50"
+                              className="p-1.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition-colors cursor-pointer disabled:opacity-50"
                               title="حذف از فضای ابری"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -737,12 +737,12 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                 return (
                   <div
                     key={blob.url}
-                    className="p-3 bg-[#eff2f4]/60 border border-[#b8b8b9]/40 rounded-2xl space-y-2.5"
+                    className="p-3 bg-vara-surface/60 border border-vara-line/40 rounded-2xl space-y-2.5"
                   >
                     <div className="flex items-center gap-3">
                       <div
                         onClick={() => setPreviewModalUrl(blob.url)}
-                        className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 border border-[#b8b8b9]/40 cursor-pointer shrink-0 relative"
+                        className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 border border-vara-line/40 cursor-pointer shrink-0 relative"
                         title="کلیک جهت مشاهده تصویر"
                       >
                         <img
@@ -758,29 +758,29 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
 
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5 justify-between">
-                          <span className="font-bold text-xs text-[#454a4f] truncate" title={blob.pathname}>
+                          <span className="font-bold text-xs text-vara-muted-strong truncate" title={blob.pathname}>
                             {basename}
                           </span>
-                          <span className="bg-white text-[#454a4f] text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#b8b8b9]/30 shrink-0">
+                          <span className="bg-white text-vara-muted-strong text-[10px] font-bold px-2 py-0.5 rounded-full border border-vara-line/30 shrink-0">
                             {folder}
                           </span>
                         </div>
-                        <div className="text-[10px] text-[#454a4f]/50 font-mono truncate mt-0.5" dir="ltr">
+                        <div className="text-[10px] text-vara-muted-strong/50 font-mono truncate mt-0.5" dir="ltr">
                           {blob.pathname}
                         </div>
-                        <div className="flex items-center gap-3 mt-1 text-[11px] text-[#454a4f]/70">
-                          <span className="font-bold font-jakarta text-[#454a4f]">{blob.sizeFormatted}</span>
+                        <div className="flex items-center gap-3 mt-1 text-[11px] text-vara-muted-strong/70">
+                          <span className="font-bold font-jakarta text-vara-muted-strong">{blob.sizeFormatted}</span>
                           <span>•</span>
                           <span>{formatUploadDate(blob.uploadedAt)}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1.5 pt-2 border-t border-[#b8b8b9]/30 justify-between">
+                    <div className="flex items-center gap-1.5 pt-2 border-t border-vara-line/30 justify-between">
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={() => handleCopy(blob.url)}
-                          className="px-2.5 py-1.5 rounded-xl bg-white text-[#454a4f] border border-[#b8b8b9]/40 text-xs font-semibold flex items-center gap-1 cursor-pointer active:scale-95 transition-all"
+                          className="px-2.5 py-1.5 rounded-full bg-white text-vara-muted-strong border border-vara-line/40 text-xs font-semibold flex items-center gap-1 cursor-pointer active:scale-95 transition-all"
                         >
                           {copiedUrl === blob.url ? (
                             <>
@@ -789,7 +789,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                             </>
                           ) : (
                             <>
-                              <Copy className="w-3.5 h-3.5 text-[#949c91]" />
+                              <Copy className="w-3.5 h-3.5 text-vara-muted" />
                               <span>کپی لینک</span>
                             </>
                           )}
@@ -799,9 +799,9 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                           href={blob.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-2.5 py-1.5 rounded-xl bg-white text-[#454a4f] border border-[#b8b8b9]/40 text-xs font-semibold flex items-center gap-1 cursor-pointer"
+                          className="px-2.5 py-1.5 rounded-xl bg-white text-vara-muted-strong border border-vara-line/40 text-xs font-semibold flex items-center gap-1 cursor-pointer"
                         >
-                          <ExternalLink className="w-3.5 h-3.5 text-[#949c91]" />
+                          <ExternalLink className="w-3.5 h-3.5 text-vara-muted" />
                           <span>مشاهده</span>
                         </a>
                       </div>
@@ -809,7 +809,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
                       <button
                         onClick={() => setDeleteConfirmBlob(blob)}
                         disabled={deletingUrl === blob.url}
-                        className="px-2.5 py-1.5 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 text-xs font-semibold flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                        className="px-2.5 py-1.5 rounded-full bg-rose-50 text-rose-600 border border-rose-200 text-xs font-semibold flex items-center gap-1 cursor-pointer disabled:opacity-50"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                         <span>حذف</span>
@@ -823,9 +823,9 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
         )}
 
         {/* Footer info note */}
-        <div className="pt-3 border-t border-[#b8b8b9]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between text-[11px] text-[#454a4f]/60 gap-2">
+        <div className="pt-3 border-t border-vara-line/30 flex flex-col sm:flex-row items-start sm:items-center justify-between text-[11px] text-vara-muted-strong/60 gap-2">
           <div className="flex items-center gap-1.5">
-            <Info className="w-3.5 h-3.5 text-[#949c91]" />
+            <Info className="w-3.5 h-3.5 text-vara-muted" />
             <span>تصاویر ذخیره شده به صورت عمومی از طریق لبه‌های CDN ورسل با دامنه public.blob.vercel-storage.com فراخوانی می‌شوند.</span>
           </div>
           {data?.checkedAt && (
@@ -843,11 +843,11 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
             className="bg-white rounded-3xl p-4 max-w-xl w-full max-h-[85vh] flex flex-col items-center gap-3 relative shadow-2xl animate-scaleUp"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="w-full flex items-center justify-between border-b border-[#b8b8b9]/30 pb-2">
-              <span className="text-xs font-bold text-[#454a4f]">پیش‌نمایش تصویر در اندازه کامل</span>
+            <div className="w-full flex items-center justify-between border-b border-vara-line/30 pb-2">
+              <span className="text-xs font-bold text-vara-muted-strong">پیش‌نمایش تصویر در اندازه کامل</span>
               <button
                 onClick={() => setPreviewModalUrl(null)}
-                className="text-xs text-[#454a4f]/70 hover:text-black cursor-pointer font-bold px-2 py-1"
+                className="text-xs text-vara-muted-strong/70 hover:text-black cursor-pointer font-bold px-2 py-1"
               >
                 ✕ بستن
               </button>
@@ -860,12 +860,12 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
               />
             </div>
             <div className="w-full flex items-center justify-between gap-2 pt-1">
-              <span className="text-[10px] font-mono text-[#454a4f]/60 truncate flex-1" dir="ltr">
+              <span className="text-[10px] font-mono text-vara-muted-strong/60 truncate flex-1" dir="ltr">
                 {previewModalUrl}
               </span>
               <button
                 onClick={() => handleCopy(previewModalUrl)}
-                className="bg-[#454a4f] text-[#dde2e7] text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1 cursor-pointer shrink-0"
+                className="bg-vara-rose text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 cursor-pointer shrink-0"
               >
                 <Copy className="w-3.5 h-3.5" />
                 <span>کپی لینک CDN</span>
@@ -887,17 +887,17 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
             </div>
 
             <div className="text-center space-y-1">
-              <h4 className="text-base font-black text-[#454a4f]">حذف دائمی فایل از Vercel Blob</h4>
-              <p className="text-xs text-[#454a4f]/70 leading-relaxed">
+              <h4 className="text-base font-black text-vara-muted-strong">حذف دائمی فایل از Vercel Blob</h4>
+              <p className="text-xs text-vara-muted-strong/70 leading-relaxed">
                 آیا از حذف این فایل مطمئن هستید؟ این عملیات غیرقابل بازگشت است و تصویر از فضای ابری CDN پاک خواهد شد.
               </p>
             </div>
 
-            <div className="bg-[#eff2f4] p-3 rounded-2xl text-xs space-y-1 border border-[#b8b8b9]/30">
-              <div className="font-bold text-[#454a4f] truncate" dir="ltr">
+            <div className="bg-vara-surface p-3 rounded-2xl text-xs space-y-1 border border-vara-line/30">
+              <div className="font-bold text-vara-muted-strong truncate" dir="ltr">
                 {deleteConfirmBlob.pathname}
               </div>
-              <div className="text-[#454a4f]/60 font-jakarta text-[11px]">
+              <div className="text-vara-muted-strong/60 font-jakarta text-[11px]">
                 حجم: {deleteConfirmBlob.sizeFormatted}
               </div>
             </div>
@@ -906,7 +906,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
               <button
                 onClick={() => handleDeleteBlob(deleteConfirmBlob)}
                 disabled={deletingUrl === deleteConfirmBlob.url}
-                className="flex-1 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white py-2.5 rounded-full text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>{deletingUrl === deleteConfirmBlob.url ? 'در حال حذف...' : 'بله، حذف کن'}</span>
@@ -914,7 +914,7 @@ export const AdminStorageDiagnostics: React.FC<AdminStorageDiagnosticsProps> = (
 
               <button
                 onClick={() => setDeleteConfirmBlob(null)}
-                className="flex-1 bg-[#eff2f4] hover:bg-[#b8b8b9]/40 text-[#454a4f] py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer"
+                className="flex-1 bg-vara-surface hover:bg-vara-line/40 text-vara-muted-strong py-2.5 rounded-full text-xs font-medium transition-all cursor-pointer"
               >
                 انصراف
               </button>

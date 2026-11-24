@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="w-full bg-[var(--vara-stage)] border-t border-[var(--vara-line)] pt-10 pb-28 sm:pb-14 font-vazir text-right" dir="rtl">
+    <footer className="w-full bg-vara-surface border-t border-vara-line pt-12 pb-28 sm:pb-14 font-vazir text-right" dir="rtl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Columns Grid */}
@@ -45,26 +45,26 @@ export const Footer: React.FC<FooterProps> = ({
                 size="md"
                 subtitleFa="ورا بیوتی شاپ"
               />
-              <span className="text-[12px] text-[#8C3B58] font-semibold font-vazir block pt-1">
+              <span className="text-[12px] text-vara-rose-ink font-semibold font-vazir block pt-1">
                 مرجع تخصصی تامین مستقیم محصولات مراقبت از پوست از امارات
               </span>
             </div>
-            <p className="text-xs text-[#785E67] leading-relaxed max-w-sm pt-1">
+            <p className="text-xs text-vara-muted leading-relaxed max-w-sm pt-1">
               ورا بیوتی (VARA BEAUTY) ارائه‌دهنده اصیل‌ترین فرمولاسیون‌های کلینیکال و مراقبت از پوست و مو از نمایندگی‌های رسمی سفورا و آمازون امارات با ضمانت بچ‌کد.
             </p>
-            <div className="flex items-center gap-2.5 pt-2 text-[#8C3B58]">
+            <div className="flex items-center gap-2.5 pt-2 text-vara-rose-ink">
               <a
                 href="https://www.instagram.com/varabeautyshop"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-white border border-[#F0E1E4] flex items-center justify-center hover:bg-[#8C3B58] hover:text-white hover:border-[#8C3B58] transition-all cursor-pointer"
+                className="w-9 h-9 rounded-lg bg-white border border-vara-line flex items-center justify-center hover:bg-vara-tint hover:text-vara-rose-ink hover:border-vara-rose transition-all cursor-pointer"
                 aria-label="اینستاگرام"
               >
                 <Instagram className="w-4 h-4" />
               </a>
               <a
                 href="mailto:info@varabeauty.ir"
-                className="w-9 h-9 rounded-lg bg-white border border-[#F0E1E4] flex items-center justify-center hover:bg-[#8C3B58] hover:text-white hover:border-[#8C3B58] transition-all cursor-pointer"
+                className="w-9 h-9 rounded-lg bg-white border border-vara-line flex items-center justify-center hover:bg-vara-tint hover:text-vara-rose-ink hover:border-vara-rose transition-all cursor-pointer"
                 aria-label="ایمیل"
               >
                 <Mail className="w-4 h-4" />
@@ -74,15 +74,15 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 3: Shop */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-[#23191E] tracking-wide uppercase">
+            <h4 className="text-xs font-semibold text-vara-ink tracking-normal uppercase">
               دسته‌بندی‌ها
             </h4>
-            <ul className="space-y-2.5 text-xs text-[#785E67]">
+            <ul className="space-y-2.5 text-xs text-vara-muted">
               <li>
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { productType: 'all', routine: 'all', category: 'all' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   مراقبت از صورت
                 </a>
@@ -91,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { productType: 'hair-body' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   مراقبت از مو
                 </a>
@@ -100,7 +100,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { productType: 'hair-body' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   مراقبت از بدن
                 </a>
@@ -109,7 +109,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { productType: 'sunscreen' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   ضد آفتاب تخصصی
                 </a>
@@ -118,7 +118,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { sortBy: 'newest' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   جدیدترین فرمولاسیون‌ها
                 </a>
@@ -128,15 +128,15 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 4: Shop by Concern */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-[#23191E] tracking-wide uppercase">
+            <h4 className="text-xs font-semibold text-vara-ink tracking-normal uppercase">
               بر اساس دغدغه پوست
             </h4>
-            <ul className="space-y-2.5 text-xs text-[#785E67]">
+            <ul className="space-y-2.5 text-xs text-vara-muted">
               <li>
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { routine: 'acne-blemish' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   درمان جوش و آکنه
                 </a>
@@ -145,7 +145,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { routine: 'anti-aging' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   ضد پیری و چروک
                 </a>
@@ -154,7 +154,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { routine: 'brightening' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   ضد لک و روشن‌کننده
                 </a>
@@ -163,7 +163,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { routine: 'hydration' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   آبرسانی و خشکی
                 </a>
@@ -172,7 +172,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <a
                   href="/shop"
                   onClick={(e) => handleFilterClick(e, { routine: 'barrier-repair' })}
-                  className="hover:text-[#8C3B58] transition-colors cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   ترمیم سد دفاعی و قرمزی
                 </a>
@@ -182,14 +182,14 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 5: Customer Care */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-[#23191E] tracking-wide uppercase">
+            <h4 className="text-xs font-semibold text-vara-ink tracking-normal uppercase">
               خدمات مشتریان
             </h4>
-            <ul className="space-y-2.5 text-xs text-[#785E67]">
+            <ul className="space-y-2.5 text-xs text-vara-muted">
               <li>
                 <button
                   onClick={onNavigateToCalculator}
-                  className="hover:text-[#8C3B58] transition-colors text-right cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer"
                 >
                   استعلام قیمت از امارات
                 </button>
@@ -197,7 +197,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button 
                   onClick={onNavigateToProfile} 
-                  className="hover:text-[#8C3B58] transition-colors text-right cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer"
                 >
                   پیگیری سفارش و مرسولات
                 </button>
@@ -205,7 +205,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button 
                   onClick={onNavigateToProfile} 
-                  className="hover:text-[#8C3B58] transition-colors text-right cursor-pointer"
+                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer"
                 >
                   حساب کاربری من
                 </button>
@@ -219,7 +219,7 @@ export const Footer: React.FC<FooterProps> = ({
                       onNavigateToReturnPolicy();
                     }
                   }}
-                  className="hover:text-[#8C3B58] transition-colors text-right cursor-pointer inline-block"
+                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer inline-block"
                 >
                   شرایط بازگشت و استرداد وجه
                 </a>
@@ -233,7 +233,7 @@ export const Footer: React.FC<FooterProps> = ({
                       onNavigateToTerms();
                     }
                   }}
-                  className="hover:text-[#8C3B58] transition-colors text-right cursor-pointer inline-block"
+                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer inline-block"
                 >
                   قوانین و مقررات خرید
                 </a>
@@ -247,7 +247,7 @@ export const Footer: React.FC<FooterProps> = ({
                       onNavigateToContact();
                     }
                   }}
-                  className="hover:text-[#8C3B58] transition-colors text-right cursor-pointer inline-block"
+                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer inline-block"
                 >
                   تماس با ما
                 </a>
@@ -257,10 +257,10 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 6: Enamad Trust Seal */}
           <div className="space-y-2 text-right">
-            <span className="text-[10px] font-medium text-[#785E67] block">
+            <span className="text-[10px] font-medium text-vara-muted block">
               نماد اعتماد الکترونیکی
             </span>
-            <div className="w-24 h-28 bg-white border border-[#F0E1E4] rounded-xl p-2 flex items-center justify-center">
+            <div className="w-24 h-28 bg-white border border-vara-line rounded-xl p-2 flex items-center justify-center">
               <a
                 referrerPolicy="origin"
                 target="_blank"
@@ -284,20 +284,9 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Bottom Bar: Copyright */}
-        <div className="mt-12 pt-6 border-t border-[#F0E1E4] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-right">
-            <p className="text-xs text-[#785E67]">
-              تمامی حقوق این وب‌سایت متعلق به فروشگاه «ورا بیوتی» (<span className="font-jakarta text-[#8C3B58] font-medium">varabeauty.ir</span>) است.
-            </p>
-          </div>
-          <div className="text-xs text-[#785E67] flex items-center gap-3">
-            <span>تضمین ۱۰۰٪ اصالت بچ‌کد</span>
-            <span className="text-[#D48C9E]">·</span>
-            <span>ارسال مستقیم از دبی</span>
-            <span className="text-[#D48C9E]">·</span>
-            <span>مشاوره تخصصی پوست</span>
-          </div>
-        </div>
+        <p className="mt-12 pt-6 border-t border-vara-line text-xs text-vara-muted">
+          تمامی حقوق این وب‌سایت متعلق به فروشگاه «ورا بیوتی» (<span className="font-jakarta text-vara-rose-ink font-medium">varabeauty.ir</span>) است.
+        </p>
 
       </div>
     </footer>

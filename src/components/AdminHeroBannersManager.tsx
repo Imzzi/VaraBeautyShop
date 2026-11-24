@@ -207,12 +207,12 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
       <div className="bg-white p-5 sm:p-6 rounded-2xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-base sm:text-lg font-bold text-[#454a4f]">مدیریت اسلایدر بنرهای هیرو</h3>
-            <span className="bg-[#FAF6F2] text-[#8A1A3C] text-xs px-2.5 py-0.5 rounded-full font-bold border border-[#b8b8b9]">
+            <h3 className="text-base sm:text-lg font-bold text-vara-muted-strong">مدیریت اسلایدر بنرهای هیرو</h3>
+            <span className="bg-vara-surface text-vara-rose-ink text-xs px-2.5 py-0.5 rounded-full font-bold border border-vara-line">
               {slides.length} اسلاید فعال
             </span>
           </div>
-          <p className="text-xs text-[#788089] mt-1.5 leading-relaxed">
+          <p className="text-xs text-vara-muted mt-1.5 leading-relaxed">
             امکان ویرایش تصویر تمام‌صفحه، عناوین فارسی و انگلیسی، توضیحات، متن و لینک دکمه، و همچنین کم و زیاد کردن و جابجایی تعداد اسلایدها.
           </p>
         </div>
@@ -221,16 +221,16 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
           <button
             type="button"
             onClick={handleAddNewSlide}
-            className="px-4 py-2.5 rounded-xl bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2.5 rounded-full bg-vara-rose hover:bg-vara-rose-hover text-white text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer"
           >
-            <Plus className="w-4 h-4 text-[#949c91]" />
+            <Plus className="w-4 h-4 text-vara-muted" />
             <span>افزودن اسلاید جدید</span>
           </button>
 
           <button
             type="button"
             onClick={handleResetToDefault}
-            className="px-3.5 py-2.5 rounded-xl bg-[#eff2f4] hover:bg-[#b8b8b9] text-[#788089] hover:text-[#454a4f] text-xs font-semibold transition-all border border-[#b8b8b9] flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2.5 rounded-full bg-vara-surface hover:bg-vara-line text-vara-muted hover:text-vara-muted-strong text-xs font-semibold transition-all border border-vara-line flex items-center gap-1.5 cursor-pointer"
             title="بازنشانی به بنرهای اولیه سایت"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -249,7 +249,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
 
       {/* Active Slides List Cards */}
       <div className="space-y-4">
-        <h4 className="text-xs font-bold text-[#788089] uppercase tracking-wider px-1">
+        <h4 className="text-xs font-bold text-vara-muted uppercase tracking-normal px-1">
           فهرست اسلایدهای فعال (به ترتیب نمایش در سایت)
         </h4>
 
@@ -262,31 +262,31 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                 key={slide.id}
                 className={`bg-white rounded-2xl border transition-all p-4 sm:p-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 ${
                   isBeingEdited 
-                    ? 'border-[#949c91] ring-2 ring-[#949c91]/20 shadow-md' 
-                    : 'border-[#b8b8b9] hover:border-[#949c91]/50 shadow-2xs'
+                    ? 'border-vara-muted ring-2 ring-vara-muted/20 shadow-md'
+                    : 'border-vara-line hover:border-vara-muted/50 shadow-2xs'
                 }`}
               >
                 {/* Right: Slide Thumbnail & Order Badge */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3.5 min-w-0">
                   <div className="flex items-center gap-3 shrink-0">
-                    <div className="flex flex-col items-center justify-center gap-0.5 text-[#788089]">
+                    <div className="flex flex-col items-center justify-center gap-0.5 text-vara-muted">
                       <button
                         type="button"
                         disabled={idx === 0}
                         onClick={() => handleMoveSlide(idx, 'up')}
-                        className="p-1 rounded hover:bg-[#eff2f4] disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed"
+                        className="p-1 rounded-full hover:bg-vara-surface disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed"
                         title="انتقال به بالا"
                       >
                         <MoveUp className="w-3.5 h-3.5" />
                       </button>
-                      <span className="text-xs font-bold font-jakarta text-[#454a4f]">
+                      <span className="text-xs font-bold font-jakarta text-vara-muted-strong">
                         {idx + 1}
                       </span>
                       <button
                         type="button"
                         disabled={idx === slides.length - 1}
                         onClick={() => handleMoveSlide(idx, 'down')}
-                        className="p-1 rounded hover:bg-[#eff2f4] disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed"
+                        className="p-1 rounded-full hover:bg-vara-surface disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed"
                         title="انتقال به پایین"
                       >
                         <MoveDown className="w-3.5 h-3.5" />
@@ -294,7 +294,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                     </div>
 
                     {/* Thumbnail Image */}
-                    <div className="relative w-24 h-16 sm:w-28 sm:h-18 rounded-xl overflow-hidden border border-[#b8b8b9] shrink-0 bg-[#eff2f4]">
+                    <div className="relative w-24 h-16 sm:w-28 sm:h-18 rounded-xl overflow-hidden border border-vara-line shrink-0 bg-vara-surface">
                       <img 
                         src={slide.imageSrc} 
                         alt={slide.imageAlt || slide.titlePart1}
@@ -308,29 +308,29 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                   {/* Text Details */}
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-mono text-[#788089] font-bold tracking-wider font-jakarta">
+                      <span className="text-[10px] font-mono text-vara-muted font-bold tracking-wider font-jakarta">
                         {slide.eyebrow}
                       </span>
-                      <span className="text-[10px] bg-[#FAF6F2] text-[#8A1A3C] px-2 py-0.5 rounded font-semibold">
+                      <span className="text-[10px] bg-vara-surface text-vara-rose-ink px-2 py-0.5 rounded-full font-semibold">
                         {slide.actionType === 'ai_advisor' ? 'هوش مصنوعی AI' : slide.actionType === 'explore' ? 'فروشگاه' : slide.actionType === 'quiz' ? 'کوئیز پوست' : slide.actionType === 'flash' ? 'تخفیف ویژه' : 'لینک سفارشی'}
                       </span>
                     </div>
 
-                    <h4 className="text-sm sm:text-base font-bold text-[#454a4f] flex items-center gap-1.5 flex-wrap">
+                    <h4 className="text-sm sm:text-base font-bold text-vara-muted-strong flex items-center gap-1.5 flex-wrap">
                       <span>{slide.titlePart1}</span>
-                      <span className={slide.titleColorClass || 'text-[#8A1A3C]'}>
+                      <span className={slide.titleColorClass || 'text-vara-rose-ink'}>
                         {slide.titlePart2}
                       </span>
                     </h4>
 
-                    <p className="text-xs text-[#788089] line-clamp-1">
+                    <p className="text-xs text-vara-muted line-clamp-1">
                       {slide.subtitle}
                     </p>
 
-                    <div className="flex items-center gap-2 pt-1 text-[11px] text-[#454a4f]/80 flex-wrap">
-                      <span className="font-semibold text-[#949c91]">دکمه: {slide.ctaText}</span>
+                    <div className="flex items-center gap-2 pt-1 text-[11px] text-vara-muted-strong/80 flex-wrap">
+                      <span className="font-semibold text-vara-muted">دکمه: {slide.ctaText}</span>
                       {slide.actionType === 'custom_url' && slide.linkUrl && (
-                        <span className="text-[#788089] truncate max-w-xs font-mono text-[10px]" dir="ltr">
+                        <span className="text-vara-muted truncate max-w-xs font-mono text-[10px]" dir="ltr">
                           {slide.linkUrl}
                         </span>
                       )}
@@ -339,30 +339,30 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                 </div>
 
                 {/* Left: Action Controls */}
-                <div className="flex items-center gap-2 justify-end pt-2 md:pt-0 border-t md:border-t-0 border-[#b8b8b9]/60 w-full md:w-auto">
+                <div className="flex items-center gap-2 justify-end pt-2 md:pt-0 border-t md:border-t-0 border-vara-line/60 w-full md:w-auto">
                   <button
                     type="button"
                     onClick={() => setPreviewSlide(slide)}
-                    className="p-2 sm:px-3 rounded-xl bg-[#eff2f4] hover:bg-[#b8b8b9] text-[#454a4f] text-xs font-semibold transition-all flex items-center gap-1 cursor-pointer"
+                    className="p-2 sm:px-3 rounded-full bg-vara-surface hover:bg-vara-line text-vara-muted-strong text-xs font-semibold transition-all flex items-center gap-1 cursor-pointer"
                     title="پیش‌نمایش این اسلاید"
                   >
-                    <Eye className="w-4 h-4 text-[#788089]" />
+                    <Eye className="w-4 h-4 text-vara-muted" />
                     <span className="hidden sm:inline">پیش‌نمایش</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleStartEdit(idx)}
-                    className="flex-1 md:flex-initial px-3.5 py-2 rounded-xl bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                    className="flex-1 md:flex-initial px-3.5 py-2 rounded-full bg-vara-rose hover:bg-vara-rose-hover text-white text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
                   >
-                    <Edit3 className="w-3.5 h-3.5 text-[#949c91]" />
+                    <Edit3 className="w-3.5 h-3.5 text-vara-muted" />
                     <span>ویرایش اسلاید</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleDeleteSlide(idx)}
-                    className="p-2 rounded-xl hover:bg-red-50 text-red-600 border border-transparent hover:border-red-200 transition-all cursor-pointer"
+                    className="p-2 rounded-full hover:bg-red-50 text-red-600 border border-transparent hover:border-red-200 transition-all cursor-pointer"
                     title="حذف اسلاید"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -376,15 +376,15 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
 
       {/* Edit or Add Slide Form Modal / Section */}
       {editingSlide && (
-        <div className="bg-white p-5 sm:p-7 rounded-2xl border-2 border-[#949c91] shadow-lg space-y-5 animate-in fade-in">
-          <div className="flex items-center justify-between pb-3 border-b border-[#b8b8b9]">
-            <h4 className="text-base font-bold text-[#454a4f]">
+        <div className="bg-white p-5 sm:p-7 rounded-2xl border-2 border-vara-muted shadow-lg space-y-5 animate-in fade-in">
+          <div className="flex items-center justify-between pb-3 border-b border-vara-line">
+            <h4 className="text-base font-bold text-vara-muted-strong">
               {isNewSlide ? 'افزودن اسلاید بنر جدید' : `ویرایش اسلاید شماره ${editingIndex !== null ? editingIndex + 1 : ''}`}
             </h4>
             <button
               type="button"
               onClick={handleCancelEdit}
-              className="text-xs text-[#788089] hover:text-[#454a4f] p-1 cursor-pointer"
+              className="text-xs text-vara-muted hover:text-vara-muted-strong p-1 cursor-pointer"
             >
               انصراف
             </button>
@@ -394,12 +394,12 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
             
             {/* Field: Image URL */}
             <div className="md:col-span-2 space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f] flex items-center justify-between">
+              <label className="text-xs font-bold text-vara-muted-strong flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <ImageIcon className="w-3.5 h-3.5 text-[#949c91]" />
+                  <ImageIcon className="w-3.5 h-3.5 text-vara-muted" />
                   <span>آدرس تصویر بنر (URL مستقیم یا عکس از Unsplash / CDN)</span>
                 </span>
-                <span className="text-[11px] text-[#788089]">کیفیت پیشنهادی: 1200x600 پیکسل</span>
+                <span className="text-[11px] text-vara-muted">کیفیت پیشنهادی: 1200x600 پیکسل</span>
               </label>
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
@@ -407,7 +407,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                   value={editingSlide.imageSrc}
                   onChange={(e) => setEditingSlide({ ...editingSlide, imageSrc: e.target.value })}
                   placeholder="https://... یا آپلود از کامپیوتر"
-                  className="flex-1 bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs text-left ltr font-mono outline-none"
+                  className="flex-1 bg-vara-surface border border-vara-line focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs text-left ltr font-mono outline-none"
                   dir="ltr"
                 />
                 <input
@@ -421,7 +421,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                   type="button"
                   disabled={isUploadingBanner}
                   onClick={() => bannerFileInputRef.current?.click()}
-                  className="px-4 py-2.5 rounded-xl bg-[#2B2927] text-white hover:bg-[#1a1918] transition-all text-xs font-vazir font-bold flex items-center justify-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-60"
+                  className="px-4 py-2.5 rounded-full bg-vara-rose text-white hover:bg-[#1a1918] transition-all text-xs font-vazir font-bold flex items-center justify-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-60"
                 >
                   {isUploadingBanner ? (
                     <>
@@ -438,14 +438,14 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
               </div>
               {/* Quick image preview */}
               {editingSlide.imageSrc && (
-                <div className="mt-2 relative h-32 rounded-xl overflow-hidden border border-[#b8b8b9] bg-[#eff2f4]">
+                <div className="mt-2 relative h-32 rounded-xl overflow-hidden border border-vara-line bg-vara-surface">
                   <img 
                     src={editingSlide.imageSrc} 
                     alt="پیش‌نمایش" 
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-xs text-[#dde2e7] text-[10px] px-2 py-0.5 rounded font-bold">
+                  <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded font-bold">
                     پیش‌نمایش تصویر
                   </div>
                 </div>
@@ -454,7 +454,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
 
             {/* Field: Eyebrow (Latin Tag) */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f]">
+              <label className="text-xs font-bold text-vara-muted-strong">
                 متن انگلیسی بالای عنوان (Eyebrow Tag)
               </label>
               <input
@@ -462,14 +462,14 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                 value={editingSlide.eyebrow}
                 onChange={(e) => setEditingSlide({ ...editingSlide, eyebrow: e.target.value })}
                 placeholder="S H E G L A M   H A I R"
-                className="w-full bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs outline-none uppercase font-mono ltr"
+                className="w-full bg-vara-surface border border-vara-line focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs outline-none uppercase font-mono ltr"
                 dir="ltr"
               />
             </div>
 
             {/* Field: Alt tag */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f]">
+              <label className="text-xs font-bold text-vara-muted-strong">
                 متن جایگزین تصویر (Alt Text جهت سئو)
               </label>
               <input
@@ -477,13 +477,13 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                 value={editingSlide.imageAlt}
                 onChange={(e) => setEditingSlide({ ...editingSlide, imageAlt: e.target.value })}
                 placeholder="دستگاه جدید شیگلم"
-                className="w-full bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs outline-none"
+                className="w-full bg-vara-surface border border-vara-line focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs outline-none"
               />
             </div>
 
             {/* Field: Title Part 1 (Regular) */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f]">
+              <label className="text-xs font-bold text-vara-muted-strong">
                 بخش اول عنوان (فونت استاندارد)
               </label>
               <input
@@ -491,13 +491,13 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                 value={editingSlide.titlePart1}
                 onChange={(e) => setEditingSlide({ ...editingSlide, titlePart1: e.target.value })}
                 placeholder="جدیدترین دستگاه"
-                className="w-full bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs outline-none"
+                className="w-full bg-vara-surface border border-vara-line focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs outline-none"
               />
             </div>
 
             {/* Field: Title Part 2 (Bold / Colored / Lalezar) */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f]">
+              <label className="text-xs font-bold text-vara-muted-strong">
                 بخش دوم عنوان (برجسته و لاله زار)
               </label>
               <input
@@ -505,19 +505,19 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                 value={editingSlide.titlePart2}
                 onChange={(e) => setEditingSlide({ ...editingSlide, titlePart2: e.target.value })}
                 placeholder="شیگلم رسید"
-                className="w-full bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs outline-none font-bold"
+                className="w-full bg-vara-surface border border-vara-line focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs outline-none font-bold"
               />
             </div>
 
             {/* Field: Title Color Picker */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f] block">
+              <label className="text-xs font-bold text-vara-muted-strong block">
                 <span>رنگ بخش دوم عنوان</span>
               </label>
               <select
                 value={editingSlide.titleColorClass || 'text-[#8A1A3C]'}
                 onChange={(e) => setEditingSlide({ ...editingSlide, titleColorClass: e.target.value })}
-                className="w-full bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs outline-none cursor-pointer"
+                className="w-full bg-vara-surface border border-vara-line focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs outline-none cursor-pointer"
               >
                 {PRESET_TITLE_COLORS.map(c => (
                   <option key={c.value} value={c.value}>{c.label}</option>
@@ -527,7 +527,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
 
             {/* Field: CTA Button Text */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f]">
+              <label className="text-xs font-bold text-vara-muted-strong">
                 متن روی دکمه (CTA Button)
               </label>
               <input
@@ -535,20 +535,20 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                 value={editingSlide.ctaText}
                 onChange={(e) => setEditingSlide({ ...editingSlide, ctaText: e.target.value })}
                 placeholder="مشاهده و خرید دستگاه"
-                className="w-full bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs outline-none font-semibold"
+                className="w-full bg-vara-surface border border-vara-line focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs outline-none font-semibold"
               />
             </div>
 
             {/* Field: Action Type / Link */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f] flex items-center gap-1.5">
-                <LinkIcon className="w-3.5 h-3.5 text-[#949c91]" />
+              <label className="text-xs font-bold text-vara-muted-strong flex items-center gap-1.5">
+                <LinkIcon className="w-3.5 h-3.5 text-vara-muted" />
                 <span>عملکرد و لینک دکمه اسلاید</span>
               </label>
               <select
                 value={editingSlide.actionType}
                 onChange={(e) => setEditingSlide({ ...editingSlide, actionType: e.target.value as any })}
-                className="w-full bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs outline-none cursor-pointer"
+                className="w-full bg-vara-surface border border-vara-line focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs outline-none cursor-pointer"
               >
                 <option value="explore">انتقال به بخش فروشگاه و کاتالوگ محصولات</option>
                 <option value="ai_advisor">مشاور و آنالیزور هوش مصنوعی (AI Beauty Advisor)</option>
@@ -561,7 +561,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
             {/* Field: Custom URL if selected */}
             {editingSlide.actionType === 'custom_url' && (
               <div className="space-y-1.5 animate-in fade-in">
-                <label className="text-xs font-bold text-[#8A1A3C]">
+                <label className="text-xs font-bold text-vara-rose-ink">
                   آدرس اینترنتی یا مسیر لینک سفارشی
                 </label>
                 <input
@@ -569,7 +569,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                   value={editingSlide.linkUrl || ''}
                   onChange={(e) => setEditingSlide({ ...editingSlide, linkUrl: e.target.value })}
                   placeholder="https://... یا /#shop"
-                  className="w-full bg-[#FAF6F2] border border-[#949c91] focus:border-[#2B2927] rounded-xl px-3.5 py-2.5 text-xs outline-none ltr text-left"
+                  className="w-full bg-vara-surface border border-vara-muted focus:border-vara-ink rounded-full px-3.5 py-2.5 text-xs outline-none ltr text-left"
                   dir="ltr"
                 />
               </div>
@@ -577,7 +577,7 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
 
             {/* Field: Subtitle Description */}
             <div className="md:col-span-2 space-y-1.5">
-              <label className="text-xs font-bold text-[#454a4f]">
+              <label className="text-xs font-bold text-vara-muted-strong">
                 متن توضیحات اسلاید (زیرنویس)
               </label>
               <textarea
@@ -585,18 +585,18 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
                 value={editingSlide.subtitle}
                 onChange={(e) => setEditingSlide({ ...editingSlide, subtitle: e.target.value })}
                 placeholder="برس حرارتی و حالت‌دهنده هوشمند، بدون آسیب به ساقه مو با ماندگاری ۲۴ ساعته"
-                className="w-full bg-[#FAF6F2] border border-[#b8b8b9] focus:border-[#2B2927] rounded-xl p-3 text-xs outline-none resize-none leading-relaxed"
+                className="w-full bg-vara-surface border border-vara-line focus:border-vara-ink rounded-xl p-3 text-xs outline-none resize-none leading-relaxed"
               />
             </div>
 
           </div>
 
           {/* Form Action Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#b8b8b9]">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-vara-line">
             <button
               type="button"
               onClick={handleCancelEdit}
-              className="px-5 py-2.5 rounded-xl text-xs font-semibold text-[#788089] hover:bg-[#eff2f4] cursor-pointer"
+              className="px-5 py-2.5 rounded-full text-xs font-semibold text-vara-muted hover:bg-vara-surface cursor-pointer"
             >
               انصراف
             </button>
@@ -604,9 +604,9 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
             <button
               type="button"
               onClick={handleSaveSlide}
-              className="px-6 py-2.5 rounded-xl bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer"
+              className="px-6 py-2.5 rounded-full bg-vara-rose hover:bg-vara-rose-hover text-white text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer"
             >
-              <Save className="w-4 h-4 text-[#949c91]" />
+              <Save className="w-4 h-4 text-vara-muted" />
               <span>ذخیره اسلاید بنر</span>
             </button>
           </div>
@@ -617,11 +617,11 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
       {previewSlide && (
         <div className="bg-white p-5 rounded-2xl shadow-xs space-y-3">
           <div className="flex items-center justify-between">
-            <h4 className="text-xs font-bold text-[#454a4f] flex items-center gap-1.5">
-              <Eye className="w-4 h-4 text-[#949c91]" />
+            <h4 className="text-xs font-bold text-vara-muted-strong flex items-center gap-1.5">
+              <Eye className="w-4 h-4 text-vara-muted" />
               <span>پیش‌نمایش زنده در نمای صفحه اصلی:</span>
             </h4>
-            <span className="text-[11px] text-[#788089]">
+            <span className="text-[11px] text-vara-muted">
               این اسلاید در حال حاضر در هیرو نمایش داده خواهد شد
             </span>
           </div>
@@ -639,15 +639,15 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
 
             {/* Slide Content */}
             <div className="relative z-10 max-w-[65%] space-y-2.5">
-              <div className="text-[10px] font-bold text-[#788089] tracking-widest uppercase font-mono">
+              <div className="text-[10px] font-bold text-vara-muted tracking-widest uppercase font-mono">
                 {previewSlide.eyebrow} ✦
               </div>
 
               <div className="space-y-0.5">
-                <h2 className="text-xl sm:text-2xl font-black text-[#454a4f]">
+                <h2 className="text-xl sm:text-2xl font-black text-vara-muted-strong">
                   {previewSlide.titlePart1}
                 </h2>
-                <div className={`text-2xl sm:text-3xl font-black font-lalezar ${previewSlide.titleColorClass || 'text-[#8A1A3C]'}`}>
+                <div className={`text-2xl sm:text-3xl font-black font-lalezar ${previewSlide.titleColorClass || 'text-vara-rose-ink'}`}>
                   {previewSlide.titlePart2}
                 </div>
               </div>
@@ -657,9 +657,9 @@ export const AdminHeroBannersManager: React.FC<AdminHeroBannersManagerProps> = (
               </p>
 
               <div className="pt-1">
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#454a4f]/90 hover:bg-[#454a4f] text-[#dde2e7] text-xs font-bold shadow-xs">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-vara-muted-strong/90 hover:bg-vara-muted-strong text-white text-xs font-bold shadow-xs">
                   <span>{previewSlide.ctaText}</span>
-                  <ArrowLeft className="w-3.5 h-3.5 text-[#949c91]" />
+                  <ArrowLeft className="w-3.5 h-3.5 text-vara-muted" />
                 </span>
               </div>
             </div>

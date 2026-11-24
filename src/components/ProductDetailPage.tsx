@@ -555,20 +555,20 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
     <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 space-y-6 sm:space-y-10 text-right font-vazir overflow-x-hidden">
       
       {/* Top Navigation & Breadcrumbs */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 border-b border-[#F0E1E4] pb-3 sm:pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 border-b border-vara-line pb-3 sm:pb-4">
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-2 bg-white hover:bg-[#F9F1F0] text-[#23191E] hover:text-[#8C3B58] px-3.5 sm:px-4 py-2 rounded-lg border border-[#F0E1E4] hover:border-[#D48C9E] text-xs font-bold transition-all cursor-pointer active:scale-98 shrink-0"
+          className="inline-flex items-center gap-2 bg-white hover:bg-vara-surface text-vara-ink hover:text-vara-rose-ink px-3.5 sm:px-4 py-2 rounded-full border border-vara-line hover:border-vara-tint-line text-xs font-bold transition-all cursor-pointer active:scale-98 shrink-0"
         >
-          <ArrowRight className="w-4 h-4 text-[#8C3B58]" />
+          <ArrowRight className="w-4 h-4 text-vara-rose-ink" />
           <span>بازگشت به فهرست محصولات</span>
         </button>
 
         {/* Breadcrumb Path */}
-        <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-[#785E67] max-w-full min-w-0">
-          <button onClick={onBack} className="hover:text-[#8C3B58] transition-colors cursor-pointer shrink-0">فروشگاه</button>
+        <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-vara-muted max-w-full min-w-0">
+          <button onClick={onBack} className="hover:text-vara-rose-ink transition-colors cursor-pointer shrink-0">فروشگاه</button>
           <span>/</span>
-          <span className="text-[#23191E] font-bold truncate max-w-[150px] sm:max-w-xs md:max-w-none">{product.nameFa}</span>
+          <span className="text-vara-ink font-bold truncate max-w-[150px] sm:max-w-xs md:max-w-none">{product.nameFa}</span>
         </div>
       </div>
 
@@ -644,7 +644,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     e.stopPropagation();
                     handlePrevImage();
                   }}
-                  className={`absolute top-1/2 -translate-y-1/2 right-3 z-20 w-9 h-9 rounded-lg bg-white/95 hover:bg-white text-[#23191E] hover:text-[#8C3B58] flex items-center justify-center transition-all cursor-pointer backdrop-blur-xs border border-[#F0E1E4] hover:border-[#D48C9E] ${
+                  className={`absolute top-1/2 -translate-y-1/2 right-3 z-20 w-9 h-9 rounded-full bg-white/95 hover:bg-white text-vara-ink hover:text-vara-rose-ink flex items-center justify-center transition-all cursor-pointer backdrop-blur-xs border border-vara-line hover:border-vara-tint-line ${
                     isHoverZooming ? 'opacity-0 pointer-events-none' : 'opacity-90 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95'
                   }`}
                   aria-label="تصویر قبلی"
@@ -659,7 +659,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     e.stopPropagation();
                     handleNextImage();
                   }}
-                  className={`absolute top-1/2 -translate-y-1/2 left-3 z-20 w-9 h-9 rounded-lg bg-white/95 hover:bg-white text-[#23191E] hover:text-[#8C3B58] flex items-center justify-center transition-all cursor-pointer backdrop-blur-xs border border-[#F0E1E4] hover:border-[#D48C9E] ${
+                  className={`absolute top-1/2 -translate-y-1/2 left-3 z-20 w-9 h-9 rounded-full bg-white/95 hover:bg-white text-vara-ink hover:text-vara-rose-ink flex items-center justify-center transition-all cursor-pointer backdrop-blur-xs border border-vara-line hover:border-vara-tint-line ${
                     isHoverZooming ? 'opacity-0 pointer-events-none' : 'opacity-90 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95'
                   }`}
                   aria-label="تصویر بعدی"
@@ -674,11 +674,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {(isOutOfStock || isLowStock) && (
               <div className="absolute top-3 right-3 z-20 flex flex-col gap-1.5 pointer-events-none">
                 {isOutOfStock ? (
-                  <span className="bg-[#23191E] text-white text-[11px] font-vazir font-bold px-2.5 py-1 rounded-md flex items-center gap-1.5">
+                  <span className="bg-vara-ink text-white text-[11px] font-vazir font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5">
                     <span>اتمام موجودی در انبار</span>
                   </span>
                 ) : isLowStock ? (
-                  <span className="bg-white/95 text-[#B45309] text-[11px] font-vazir font-bold px-2.5 py-1 rounded-md flex items-center gap-1.5 border border-[#F0E1E4]">
+                  <span className="bg-white/95 text-[#B45309] text-[11px] font-vazir font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-vara-line">
                     <span>تنها {currentStock} عدد باقی‌مانده</span>
                   </span>
                 ) : null}
@@ -696,14 +696,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   setInternalIsWishlisted(!internalIsWishlisted);
                 }
               }}
-              className={`absolute top-3 left-3 z-20 p-2.5 rounded-lg backdrop-blur-md border transition-all cursor-pointer active:scale-95 ${
+              className={`absolute top-3 left-3 z-20 p-2.5 rounded-full backdrop-blur-md border transition-all cursor-pointer active:scale-95 ${
                 isWishlisted
-                  ? 'bg-[#F5E6EB] border-[#8C3B58] text-[#8C3B58]'
-                  : 'bg-white/95 border-[#F0E1E4] text-[#785E67] hover:text-[#8C3B58] hover:border-[#D48C9E]'
+                  ? 'bg-vara-tint border-vara-rose text-vara-rose-ink'
+                  : 'bg-white/95 border-vara-line text-vara-muted hover:text-vara-rose-ink hover:border-vara-tint-line'
               }`}
               title={isWishlisted ? "حذف از علاقه‌مندی‌ها" : "افزودن به علاقه‌مندی‌ها"}
             >
-              <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#8C3B58] text-[#8C3B58]' : ''}`} />
+              <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-vara-rose text-vara-rose-ink' : ''}`} />
             </button>
 
             {/* Bottom Controls Row: Dots Indicator, Counter Badge & Zoom Trigger */}
@@ -716,17 +716,17 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   e.stopPropagation();
                   setIsLightboxOpen(true);
                 }}
-                className="pointer-events-auto px-3 py-1.5 rounded-lg bg-white/95 hover:bg-white text-[#23191E] hover:text-[#8C3B58] backdrop-blur-xs transition-all cursor-pointer border border-[#F0E1E4] hover:border-[#D48C9E] flex items-center gap-1.5 text-[11px] font-vazir font-medium"
+                className="pointer-events-auto px-3 py-1.5 rounded-full bg-white/95 hover:bg-white text-vara-ink hover:text-vara-rose-ink backdrop-blur-xs transition-all cursor-pointer border border-vara-line hover:border-vara-tint-line flex items-center gap-1.5 text-[11px] font-vazir font-medium"
                 title="بزرگ‌نمایی و مشاهده تمام صفحه"
                 disabled={!sources.length}
               >
-                <ZoomIn className="w-3.5 h-3.5 text-[#8C3B58]" />
+                <ZoomIn className="w-3.5 h-3.5 text-vara-rose-ink" />
                 <span className="hidden sm:inline">بزرگ‌نمایی</span>
               </button>
 
               {imagesList.length > 1 && (
                 <div 
-                  className="pointer-events-auto flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-[#23191E]/75 backdrop-blur-md"
+                  className="pointer-events-auto flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-vara-ink/75 backdrop-blur-md"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {imagesList.map((_, idx) => (
@@ -739,7 +739,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                       }}
                       className={`transition-all duration-300 rounded-full cursor-pointer ${
                         idx === activeImageIndex
-                          ? 'w-4 h-1.5 bg-[#D48C9E]'
+                          ? 'w-4 h-1.5 bg-vara-tint'
                           : 'w-1.5 h-1.5 bg-white/50 hover:bg-white'
                       }`}
                       aria-label={`رفتن به تصویر ${idx + 1}`}
@@ -749,7 +749,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               )}
 
               {imagesList.length > 1 && (
-                <div className="pointer-events-none select-none bg-[#23191E]/75 backdrop-blur-md text-white text-[11px] font-jakarta font-bold px-2.5 py-1 rounded-md flex items-center gap-1 tabular-nums">
+                <div className="pointer-events-none select-none bg-vara-ink/75 backdrop-blur-md text-white text-[11px] font-jakarta font-bold px-2.5 py-1 rounded-md flex items-center gap-1 tabular-nums">
                   <span>{activeImageIndex + 1}</span>
                   <span className="text-white/50">/</span>
                   <span>{imagesList.length}</span>
@@ -769,10 +769,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   key={idx}
                   type="button"
                   onClick={() => setCurrentImageIndex(idx)}
-                  className={`relative w-18 h-18 sm:w-20 sm:h-20 rounded-xl overflow-hidden border transition-all shrink-0 bg-[#F9F1F0] cursor-pointer ${
+                  className={`relative w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden border transition-all shrink-0 bg-vara-surface cursor-pointer ${
                     activeImageIndex === idx
-                      ? 'border-[#8C3B58] ring-1 ring-[#8C3B58]'
-                      : 'border-[#F0E1E4] opacity-65 hover:opacity-100 hover:border-[#D48C9E]'
+                      ? 'border-vara-rose ring-1 ring-vara-rose'
+                      : 'border-vara-line opacity-65 hover:opacity-100 hover:border-vara-tint-line'
                   }`}
                   aria-label={`مشاهده تصویر ${idx + 1}`}
                 >
@@ -794,51 +794,51 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
           {/* Boutique Trust Highlights */}
           <div className="pt-1">
-            <div className="bg-[#FDFBF9] p-4 rounded-xl border border-[#F0E1E4] grid grid-cols-2 gap-3 text-right">
-              <div className="text-xs font-vazir text-[#23191E] border-r-2 border-[#8C3B58] pr-2.5">
+            <div className="bg-vara-canvas p-4 rounded-xl border border-vara-line grid grid-cols-2 gap-3 text-right">
+              <div className="text-xs font-vazir text-vara-ink border-r-2 border-vara-rose pr-2.5">
                 <span className="font-bold block text-[11px]">تأمین مستقیم از دبی</span>
-                <span className="text-[10px] text-[#785E67]">تضمین اصالت و بچ‌کد رسمی</span>
+                <span className="text-[10px] text-vara-muted">تضمین اصالت و بچ‌کد رسمی</span>
               </div>
-              <div className="text-xs font-vazir text-[#23191E] border-r-2 border-[#8C3B58] pr-2.5">
+              <div className="text-xs font-vazir text-vara-ink border-r-2 border-vara-rose pr-2.5">
                 <span className="font-bold block text-[11px]">ارسال سریع سراسری</span>
-                <span className="text-[10px] text-[#785E67]">بسته‌بندی ایمن بوتیک</span>
+                <span className="text-[10px] text-vara-muted">بسته‌بندی ایمن بوتیک</span>
               </div>
-              <div className="text-xs font-vazir text-[#23191E] border-r-2 border-[#8C3B58] pr-2.5">
+              <div className="text-xs font-vazir text-vara-ink border-r-2 border-vara-rose pr-2.5">
                 <span className="font-bold block text-[11px]">فرمولاسیون اورجینال</span>
-                <span className="text-[10px] text-[#785E67]">نگهداری در دمای استاندارد</span>
+                <span className="text-[10px] text-vara-muted">نگهداری در دمای استاندارد</span>
               </div>
-              <div className="text-xs font-vazir text-[#23191E] border-r-2 border-[#8C3B58] pr-2.5">
+              <div className="text-xs font-vazir text-vara-ink border-r-2 border-vara-rose pr-2.5">
                 <span className="font-bold block text-[11px]">بررسی سازگاری پوست</span>
-                <span className="text-[10px] text-[#785E67]">آنالیز دقیق ترکیبات فعال</span>
+                <span className="text-[10px] text-vara-muted">آنالیز دقیق ترکیبات فعال</span>
               </div>
             </div>
           </div>
 
           {/* Key Product Specs & Authenticity Accordion (Placed in Right Column) */}
-          <div className="border border-[#F0E1E4] rounded-xl bg-white divide-y divide-[#F0E1E4] overflow-hidden">
+          <div className="border border-vara-line rounded-xl bg-white divide-y divide-vara-line overflow-hidden">
             {/* 1. اصالت کالا */}
             <div>
               <button
                 type="button"
                 onClick={() => toggleSpec('authenticity')}
-                className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-[#FDFBF9] transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-vara-canvas transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
                   <ShieldCheck className="w-4 h-4 text-[#15803D] shrink-0" />
-                  <span className="font-bold text-xs font-vazir text-[#23191E]">
+                  <span className="font-bold text-xs font-vazir text-vara-ink">
                     اصالت کالا و بچ‌کد
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <ChevronDown
-                    className={`w-4 h-4 text-[#785E67] transition-transform duration-200 ${
-                      openSpecs.authenticity ? 'rotate-180 text-[#8C3B58]' : ''
+                    className={`w-4 h-4 text-vara-muted transition-transform duration-200 ${
+                      openSpecs.authenticity ? 'rotate-180 text-vara-rose-ink' : ''
                     }`}
                   />
                 </div>
               </button>
               {openSpecs.authenticity && (
-                <div className="px-4 pb-3.5 pt-2 text-xs font-vazir text-[#4A3840] leading-relaxed bg-[#FDFBF9] border-t border-[#F0E1E4]">
+                <div className="px-4 pb-3.5 pt-2 text-xs font-vazir text-vara-muted-strong leading-relaxed bg-vara-canvas border-t border-vara-line">
                   <p className="whitespace-pre-wrap break-words">
                     {product.authenticity || 'ضمانت اصالت ۱۰۰٪ اورجینال با تأییدیه بچ‌کد رسمی از نمایندگی‌های معتبر امارات'}
                   </p>
@@ -851,22 +851,22 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <button
                 type="button"
                 onClick={() => toggleSpec('sourcing')}
-                className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-[#FDFBF9] transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-vara-canvas transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-[#8C3B58] shrink-0" />
-                  <span className="font-bold text-xs font-vazir text-[#23191E]">
+                  <MapPin className="w-4 h-4 text-vara-rose-ink shrink-0" />
+                  <span className="font-bold text-xs font-vazir text-vara-ink">
                     منبع تأمین و تولید
                   </span>
                 </div>
                 <ChevronDown
-                  className={`w-4 h-4 text-[#785E67] transition-transform duration-200 ${
-                    openSpecs.sourcing ? 'rotate-180 text-[#8C3B58]' : ''
+                  className={`w-4 h-4 text-vara-muted transition-transform duration-200 ${
+                    openSpecs.sourcing ? 'rotate-180 text-vara-rose-ink' : ''
                   }`}
                 />
               </button>
               {openSpecs.sourcing && (
-                <div className="px-4 pb-3.5 pt-2 text-xs font-vazir text-[#4A3840] leading-relaxed bg-[#FDFBF9] border-t border-[#F0E1E4]">
+                <div className="px-4 pb-3.5 pt-2 text-xs font-vazir text-vara-muted-strong leading-relaxed bg-vara-canvas border-t border-vara-line">
                   <p className="whitespace-pre-wrap break-words">
                     {product.sourcingOrigin || 'تأمین مستقیم از استورهای رسمی امارات متحده عربی (Sephora / Amazon UAE)'}
                   </p>
@@ -879,22 +879,22 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <button
                 type="button"
                 onClick={() => toggleSpec('targetAudience')}
-                className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-[#FDFBF9] transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-vara-canvas transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <UserCheck className="w-4 h-4 text-[#8C3B58] shrink-0" />
-                  <span className="font-bold text-xs font-vazir text-[#23191E]">
+                  <UserCheck className="w-4 h-4 text-vara-rose-ink shrink-0" />
+                  <span className="font-bold text-xs font-vazir text-vara-ink">
                     مناسب برای تیپ پوستی
                   </span>
                 </div>
                 <ChevronDown
-                  className={`w-4 h-4 text-[#785E67] transition-transform duration-200 ${
-                    openSpecs.targetAudience ? 'rotate-180 text-[#8C3B58]' : ''
+                  className={`w-4 h-4 text-vara-muted transition-transform duration-200 ${
+                    openSpecs.targetAudience ? 'rotate-180 text-vara-rose-ink' : ''
                   }`}
                 />
               </button>
               {openSpecs.targetAudience && (
-                <div className="px-4 pb-3.5 pt-2 text-xs font-vazir text-[#4A3840] leading-relaxed bg-[#FDFBF9] border-t border-[#F0E1E4]">
+                <div className="px-4 pb-3.5 pt-2 text-xs font-vazir text-vara-muted-strong leading-relaxed bg-vara-canvas border-t border-vara-line">
                   <p className="whitespace-pre-wrap break-words">
                     {product.targetAudience || 'انواع پوست نیازمند تقویت سد رطوبتی، شفافیت و تغذیه روزانه'}
                   </p>
@@ -907,22 +907,22 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <button
                 type="button"
                 onClick={() => toggleSpec('expiry')}
-                className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-[#FDFBF9] transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-vara-canvas transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-[#8C3B58] shrink-0" />
-                  <span className="font-bold text-xs font-vazir text-[#23191E]">
+                  <Clock className="w-4 h-4 text-vara-rose-ink shrink-0" />
+                  <span className="font-bold text-xs font-vazir text-vara-ink">
                     تاریخ انقضا و شرایط نگهداری
                   </span>
                 </div>
                 <ChevronDown
-                  className={`w-4 h-4 text-[#785E67] transition-transform duration-200 ${
-                    openSpecs.expiry ? 'rotate-180 text-[#8C3B58]' : ''
+                  className={`w-4 h-4 text-vara-muted transition-transform duration-200 ${
+                    openSpecs.expiry ? 'rotate-180 text-vara-rose-ink' : ''
                   }`}
                 />
               </button>
               {openSpecs.expiry && (
-                <div className="px-4 pb-3.5 pt-2 text-xs font-vazir text-[#4A3840] leading-relaxed bg-[#FDFBF9] border-t border-[#F0E1E4]">
+                <div className="px-4 pb-3.5 pt-2 text-xs font-vazir text-vara-muted-strong leading-relaxed bg-vara-canvas border-t border-vara-line">
                   <p className="whitespace-pre-wrap break-words">
                     {product.expiryDate || '۲۴ ماه پس از تولید (۱۲ ماه پس از باز شدن درب محصول)'}
                   </p>
@@ -937,23 +937,23 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           <div className="space-y-5">
             
             {/* Brand Eyebrow & Rating */}
-            <div className="flex items-center justify-between border-b border-[#F0E1E4] pb-3">
+            <div className="flex items-center justify-between border-b border-vara-line pb-3">
               {product.brand ? (
-                <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-[#8C3B58] font-jakarta">
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-vara-rose-ink font-jakarta">
                   <bdi>{product.brand}</bdi>
                 </div>
               ) : (
-                <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8C3B58] font-jakarta">
+                <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-vara-rose-ink font-jakarta">
                   <span>ورا</span>
                 </div>
               )}
 
               <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1 text-[#23191E] bg-[#FDFBF9] px-2.5 py-1 rounded-md border border-[#F0E1E4]">
-                  <Star className="w-3.5 h-3.5 fill-[#8C3B58] text-[#8C3B58]" />
-                  <span className="font-bold font-jakarta text-xs text-[#23191E] tabular-nums">{product.rating}</span>
+                <div className="flex items-center gap-1 text-vara-ink bg-vara-canvas px-2.5 py-1 rounded-md border border-vara-line">
+                  <Star className="w-3.5 h-3.5 fill-vara-rose text-vara-rose-ink" />
+                  <span className="font-bold font-jakarta text-xs text-vara-ink tabular-nums">{product.rating}</span>
                 </div>
-                <span className="text-[#785E67] text-xs font-vazir tabular-nums">
+                <span className="text-vara-muted text-xs font-vazir tabular-nums">
                   ({(product.reviewCount || 0).toLocaleString('fa-IR')} دیدگاه)
                 </span>
               </div>
@@ -964,7 +964,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <h1 className="vara-product-title">
                 <bdi>{product.nameFa}</bdi>
               </h1>
-              <p className="font-jakarta text-xs sm:text-sm text-[#785E67] tracking-wide" dir="ltr">
+              <p className="font-jakarta text-xs sm:text-sm text-vara-muted tracking-normal" dir="ltr">
                 {product.nameEn}
               </p>
               <RoutineLabel step={product.routineStep} />
@@ -972,8 +972,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {/* Skin Profile Compatibility Notice */}
             {userProfile && (
-              <div className="p-3.5 rounded-xl border border-[#F0E1E4] bg-[#FDFBF9] text-xs font-vazir flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-[#23191E]">
+              <div className="p-3.5 rounded-xl border border-vara-line bg-vara-canvas text-xs font-vazir flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-vara-ink">
                   {isCompatibleWithUserProfile ? (
                     <CheckCheck className="w-4 h-4 text-[#15803D] shrink-0" />
                   ) : (
@@ -990,7 +990,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             )}
 
             {/* Description */}
-            <p className="text-sm text-[#4A3840] font-vazir leading-relaxed whitespace-pre-wrap break-words">
+            <p className="text-sm text-vara-muted-strong font-vazir leading-relaxed whitespace-pre-wrap break-words">
               {product.descriptionFa}
             </p>
 
@@ -998,12 +998,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {hasVariants && product.variants && product.variants.length > 0 ? (
               <div className="space-y-2.5 pt-1">
                 <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold font-vazir text-[#23191E]">
+                  <label className="block text-xs font-bold font-vazir text-vara-ink">
                     انتخاب تنوع محصول (مدل / حجم / رنگ):
                   </label>
                   {selectedVariant && (
-                    <span className="text-[11px] font-vazir text-[#785E67]">
-                      انتخاب شده: <strong className="text-[#8C3B58]">{selectedVariant.name}</strong>
+                    <span className="text-[11px] font-vazir text-vara-muted">
+                      انتخاب شده: <strong className="text-vara-rose-ink">{selectedVariant.name}</strong>
                     </span>
                   )}
                 </div>
@@ -1018,10 +1018,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                         type="button"
                         aria-pressed={isSelected}
                         onClick={() => handleSelectVariant(v)}
-                        className={`p-3 rounded-xl text-right transition-all border flex flex-col justify-between gap-1.5 cursor-pointer ${
+                        className={`p-3 rounded-full text-right transition-all border flex flex-col justify-between gap-1.5 cursor-pointer ${
                           isSelected
-                            ? 'bg-[#8C3B58] text-white border-[#8C3B58] shadow-xs'
-                            : 'bg-white text-[#23191E] border-[#F0E1E4] hover:border-[#D48C9E]'
+                            ? 'bg-vara-rose text-white border-vara-rose shadow-xs'
+                            : 'bg-white text-vara-ink border-vara-line hover:border-vara-tint-line'
                         } ${vOutOfStock ? 'opacity-50' : ''}`}
                       >
                         <div className="flex items-center justify-between gap-2 w-full">
@@ -1037,8 +1037,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                           </div>
 
                           {vOutOfStock ? (
-                            <span className={`text-[10px] font-vazir px-1.5 py-0.5 rounded-sm font-bold ${
-                              isSelected ? 'bg-white/20 text-white' : 'bg-[#F9F1F0] text-[#785E67]'
+                            <span className={`text-[10px] font-vazir px-1.5 py-0.5 rounded-full font-bold ${
+                              isSelected ? 'bg-white/20 text-white' : 'bg-vara-surface text-vara-muted'
                             }`}>
                               ناموجود
                             </span>
@@ -1049,15 +1049,15 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                           )}
                         </div>
 
-                        <div className={`flex items-baseline justify-between w-full pt-1.5 border-t ${isSelected ? 'border-white/15' : 'border-[#F0E1E4]'}`}>
+                        <div className={`flex items-baseline justify-between w-full pt-1.5 border-t ${isSelected ? 'border-white/15' : 'border-vara-line'}`}>
                           {v.nameEn ? (
-                            <span className={`text-[10px] font-vazir ${isSelected ? 'text-white/75' : 'text-[#785E67]'}`}>
+                            <span className={`text-[10px] font-vazir ${isSelected ? 'text-white/75' : 'text-vara-muted'}`}>
                               <bdi>{v.nameEn}</bdi>
                             </span>
                           ) : <span />}
                           <div className="flex items-baseline gap-1 font-vazir tabular-nums">
                             {v.originalPrice && v.originalPrice > v.price && (
-                              <span className={`text-[10px] line-through font-vazir ${isSelected ? 'text-white/60' : 'text-[#785E67]'}`}>
+                              <span className={`text-[10px] line-through font-vazir ${isSelected ? 'text-white/60' : 'text-vara-muted'}`}>
                                 {formatPrice(v.originalPrice)}
                               </span>
                             )}
@@ -1073,7 +1073,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </div>
             ) : product.sizes && product.sizes.length > 0 ? (
               <div className="space-y-2 pt-1">
-                <label className="block text-xs font-bold font-vazir text-[#23191E]">
+                <label className="block text-xs font-bold font-vazir text-vara-ink">
                   انتخاب حجم محصول:
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -1082,10 +1082,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                       key={idx}
                       aria-pressed={selectedSize?.label === sz.label}
                       onClick={() => setSelectedSize(sz)}
-                      className={`px-4 py-2 rounded-lg text-xs font-vazir border transition-all flex items-center gap-2 cursor-pointer tabular-nums ${
+                      className={`px-4 py-2 rounded-full text-xs font-vazir border transition-all flex items-center gap-2 cursor-pointer tabular-nums ${
                         (selectedSize?.label || '') === sz.label
-                          ? 'bg-[#8C3B58] text-white border-[#8C3B58] font-bold shadow-xs'
-                          : 'bg-white text-[#23191E] border-[#F0E1E4] hover:border-[#D48C9E]'
+                          ? 'bg-vara-rose text-white border-vara-rose font-bold shadow-xs'
+                          : 'bg-white text-vara-ink border-vara-line hover:border-vara-tint-line'
                       }`}
                     >
                       <span>{sz.label}</span>
@@ -1100,22 +1100,22 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             <div className="vara-purchase p-4 sm:p-5 space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="space-y-0.5 font-vazir">
-                  <span className="text-[11px] text-[#785E67] font-vazir block">قیمت مصرف‌کننده:</span>
+                  <span className="text-[11px] text-vara-muted font-vazir block">قیمت مصرف‌کننده:</span>
                   <div className="flex items-baseline gap-2 font-vazir tabular-nums">
                     {activeOriginalPrice && (
-                      <span className="line-through text-xs text-[#785E67] font-vazir">
+                      <span className="line-through text-xs text-vara-muted font-vazir">
                         {formatPrice(activeOriginalPrice)} تومان
                       </span>
                     )}
-                    <span className="text-2xl sm:text-3xl font-bold font-vazir text-[#23191E]">
+                    <span className="text-2xl sm:text-3xl font-bold font-vazir text-vara-ink">
                       {formatPrice(activePrice * (isOutOfStock ? 1 : quantity))}
                     </span>
-                    <span className="text-xs text-[#785E67] font-vazir font-bold">تومان</span>
+                    <span className="text-xs text-vara-muted font-vazir font-bold">تومان</span>
                   </div>
                 </div>
-                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md border ${
+                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full border ${
                   isOutOfStock 
-                    ? 'bg-[#F9F1F0] text-[#785E67] border-[#F0E1E4]' 
+                    ? 'bg-vara-surface text-vara-muted border-vara-line'
                     : isLowStock 
                     ? 'bg-amber-50/80 text-[#B45309] border-amber-200' 
                     : 'bg-emerald-50/80 text-[#15803D] border-emerald-200'
@@ -1125,29 +1125,29 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </div>
 
               {isOutOfStock ? (
-                <div className="bg-white border border-[#F0E1E4] rounded-lg px-4 py-3 text-center">
-                  <span className="text-xs font-bold text-[#785E67]">
+                <div className="bg-white border border-vara-line rounded-lg px-4 py-3 text-center">
+                  <span className="text-xs font-bold text-vara-muted">
                     این محصول در حال حاضر ناموجود است.
                   </span>
                 </div>
               ) : (
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   {/* Tactile Quantity Stepper */}
-                  <div className="flex items-center justify-between border border-[#F0E1E4] bg-white rounded-xl p-1 w-full sm:w-32">
+                  <div className="flex items-center justify-between border border-vara-line bg-white rounded-xl p-1 w-full sm:w-32">
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="w-9 h-9 rounded-lg hover:bg-[#F9F1F0] text-[#23191E] hover:text-[#8C3B58] font-bold text-base flex items-center justify-center transition-colors cursor-pointer"
+                      className="w-9 h-9 rounded-full hover:bg-vara-surface text-vara-ink hover:text-vara-rose-ink font-bold text-base flex items-center justify-center transition-colors cursor-pointer"
                       title="کاهش تعداد"
                     >
                       -
                     </button>
-                    <span className="font-jakarta font-bold text-sm text-[#23191E] tabular-nums">
+                    <span className="font-jakarta font-bold text-sm text-vara-ink tabular-nums">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity((q) => Math.min(currentStock, q + 1))}
                       disabled={quantity >= currentStock}
-                      className="w-9 h-9 rounded-lg hover:bg-[#F9F1F0] text-[#23191E] hover:text-[#8C3B58] font-bold text-base flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                      className="w-9 h-9 rounded-full hover:bg-vara-surface text-vara-ink hover:text-vara-rose-ink font-bold text-base flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                       title="افزایش تعداد"
                     >
                       +
@@ -1157,10 +1157,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   {/* Primary Berry Mauve Add-to-Bag Button */}
                   <button
                     onClick={handleAddToCart}
-                    className={`flex-1 py-3.5 px-6 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 shadow-xs ${
+                    className={`flex-1 py-3.5 px-6 rounded-full font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 shadow-xs ${
                       added
                         ? 'bg-[#15803D] text-white'
-                        : 'bg-[#8C3B58] hover:bg-[#732E47] text-white'
+                        : 'bg-vara-rose hover:bg-vara-rose-hover text-white'
                     }`}
                   >
                     {added ? (
@@ -1178,34 +1178,34 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {/* Active Ingredients Hairline Accordion */}
             {activeIngredientsList.length > 0 && (
-              <div className="border border-[#F0E1E4] rounded-xl bg-white overflow-hidden">
+              <div className="border border-vara-line rounded-xl bg-white overflow-hidden">
                 <button
                   type="button"
                   onClick={() => setOpenIngredientsList((prev) => !prev)}
-                  className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-[#FDFBF9] transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between p-3.5 sm:p-4 text-right hover:bg-vara-canvas transition-colors cursor-pointer select-none"
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-md bg-[#F9F1F0] text-[#8C3B58] flex items-center justify-center shrink-0 border border-[#F0E1E4]">
+                    <span className="w-6 h-6 rounded-full bg-vara-surface text-vara-rose-ink flex items-center justify-center shrink-0 border border-vara-line">
                       <FlaskConical className="w-3.5 h-3.5" />
                     </span>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs sm:text-sm font-bold font-vazir text-[#23191E]">
+                      <span className="text-xs sm:text-sm font-bold font-vazir text-vara-ink">
                         ترکیبات فعال و کلیدی
                       </span>
-                      <span className="text-[10px] font-vazir text-[#8C3B58] bg-[#F5E6EB] px-2 py-0.5 rounded-sm font-bold border border-[#D48C9E]/40">
+                      <span className="text-[10px] font-vazir text-vara-rose-ink bg-vara-tint px-2 py-0.5 rounded-full font-bold border border-vara-tint-line/40">
                         {activeIngredientsList.length} ترکیب
                       </span>
                     </div>
                   </div>
                   <ChevronDown
-                    className={`w-4 h-4 text-[#785E67] transition-transform duration-200 ${
-                      openIngredientsList ? 'rotate-180 text-[#8C3B58]' : ''
+                    className={`w-4 h-4 text-vara-muted transition-transform duration-200 ${
+                      openIngredientsList ? 'rotate-180 text-vara-rose-ink' : ''
                     }`}
                   />
                 </button>
 
                 {openIngredientsList && (
-                  <div className="divide-y divide-[#F0E1E4] border-t border-[#F0E1E4] bg-[#FDFBF9]">
+                  <div className="divide-y divide-vara-line border-t border-vara-line bg-vara-canvas">
                     {activeIngredientsList.map((ing, idx) => {
                       const isExpanded = openIngredientIdx === idx;
                       const displayNameFa = cleanIngredientName(ing.nameFa);
@@ -1218,26 +1218,26 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                             className="w-full flex items-center justify-between p-3 sm:px-4 text-right hover:bg-white transition-colors cursor-pointer"
                           >
                             <div className="flex items-center gap-2 min-w-0 pr-1">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#8C3B58] shrink-0" />
-                              <span className="font-bold text-xs font-vazir text-[#23191E] truncate">
+                              <span className="w-1.5 h-1.5 rounded-full bg-vara-rose shrink-0" />
+                              <span className="font-bold text-xs font-vazir text-vara-ink truncate">
                                 {displayNameFa}
                               </span>
                               {displayNameEn && (
-                                <span className="hidden md:inline text-[10px] text-[#785E67] font-jakarta truncate">
+                                <span className="hidden md:inline text-[10px] text-vara-muted font-jakarta truncate">
                                   ({displayNameEn})
                                 </span>
                               )}
                             </div>
                             <ChevronDown
-                              className={`w-3.5 h-3.5 text-[#785E67] transition-transform duration-200 shrink-0 ${
-                                isExpanded ? 'rotate-180 text-[#8C3B58]' : ''
+                              className={`w-3.5 h-3.5 text-vara-muted transition-transform duration-200 shrink-0 ${
+                                isExpanded ? 'rotate-180 text-vara-rose-ink' : ''
                               }`}
                             />
                           </button>
                           {isExpanded && (
-                            <div className="px-5 pb-3.5 pt-2 text-[11px] font-vazir text-[#4A3840] leading-relaxed bg-white border-t border-[#F0E1E4]">
+                            <div className="px-5 pb-3.5 pt-2 text-[11px] font-vazir text-vara-muted-strong leading-relaxed bg-white border-t border-vara-line">
                               {displayNameEn && (
-                                <div className="md:hidden text-[10px] text-[#785E67] font-jakarta font-medium mb-1">
+                                <div className="md:hidden text-[10px] text-vara-muted font-jakarta font-medium mb-1">
                                   {displayNameEn}
                                 </div>
                               )}
@@ -1257,23 +1257,23 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
       </div>
 
       {/* Tabs Section (Ingredients, Routine & Customer Reviews) */}
-      <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 border border-[#F0E1E4] shadow-[0_12px_32px_-8px_rgba(140,59,88,0.05)] space-y-6 w-full max-w-full overflow-hidden">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 border border-vara-line shadow-vara-float space-y-6 w-full max-w-full overflow-hidden">
         
         {/* Navigation Tabs as Boutique Underline Tabs */}
-        <div className="flex border-b border-[#F0E1E4] overflow-x-auto gap-6 scrollbar-none">
+        <div className="flex border-b border-vara-line overflow-x-auto gap-6 scrollbar-none">
           <button
             onClick={() => setActiveTab('features')}
             className={`pb-3 text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 border-b-2 -mb-[1px] cursor-pointer ${
               activeTab === 'features'
-                ? 'border-[#8C3B58] text-[#8C3B58]'
-                : 'border-transparent text-[#785E67] hover:text-[#23191E]'
+                ? 'border-vara-rose text-vara-rose-ink'
+                : 'border-transparent text-vara-muted hover:text-vara-ink'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>ویژگی‌های محصول</span>
             {product.badges && product.badges.length > 0 && (
-              <span className={`px-1.5 py-0.5 rounded-sm text-[10px] font-bold tabular-nums ${
-                activeTab === 'features' ? 'bg-[#8C3B58] text-white' : 'bg-[#F9F1F0] text-[#785E67]'
+              <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold tabular-nums ${
+                activeTab === 'features' ? 'bg-vara-rose text-white' : 'bg-vara-surface text-vara-muted'
               }`}>
                 {product.badges.length}
               </span>
@@ -1283,8 +1283,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             onClick={() => setActiveTab('ingredients')}
             className={`pb-3 text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 border-b-2 -mb-[1px] cursor-pointer ${
               activeTab === 'ingredients'
-                ? 'border-[#8C3B58] text-[#8C3B58]'
-                : 'border-transparent text-[#785E67] hover:text-[#23191E]'
+                ? 'border-vara-rose text-vara-rose-ink'
+                : 'border-transparent text-vara-muted hover:text-vara-ink'
             }`}
           >
             <FlaskConical className="w-3.5 h-3.5" />
@@ -1294,8 +1294,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             onClick={() => setActiveTab('routine')}
             className={`pb-3 text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 border-b-2 -mb-[1px] cursor-pointer ${
               activeTab === 'routine'
-                ? 'border-[#8C3B58] text-[#8C3B58]'
-                : 'border-transparent text-[#785E67] hover:text-[#23191E]'
+                ? 'border-vara-rose text-vara-rose-ink'
+                : 'border-transparent text-vara-muted hover:text-vara-ink'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -1305,14 +1305,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             onClick={() => setActiveTab('reviews')}
             className={`pb-3 text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 border-b-2 -mb-[1px] cursor-pointer ${
               activeTab === 'reviews'
-                ? 'border-[#8C3B58] text-[#8C3B58]'
-                : 'border-transparent text-[#785E67] hover:text-[#23191E]'
+                ? 'border-vara-rose text-vara-rose-ink'
+                : 'border-transparent text-vara-muted hover:text-vara-ink'
             }`}
           >
             <Star className="w-3.5 h-3.5" />
             <span>دیدگاه‌های خریداران</span>
-            <span className={`px-1.5 py-0.5 rounded-sm text-[10px] font-bold tabular-nums ${
-              activeTab === 'reviews' ? 'bg-[#8C3B58] text-white' : 'bg-[#F9F1F0] text-[#785E67]'
+            <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold tabular-nums ${
+              activeTab === 'reviews' ? 'bg-vara-rose text-white' : 'bg-vara-surface text-vara-muted'
             }`}>
               {reviews.length}
             </span>
@@ -1322,12 +1322,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
         {/* Tab 1: ویژگی‌های محصول */}
         {activeTab === 'features' && (
           <div className="space-y-6 animate-fadeIn">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#F0E1E4] pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-vara-line pb-4">
               <div>
-                <div className="text-[11px] font-bold text-[#8C3B58] uppercase tracking-[0.08em] font-jakarta mb-1">
+                <div className="text-[11px] font-bold text-vara-rose-ink uppercase tracking-[0.08em] font-jakarta mb-1">
                   BOUTIQUE SPECIFICATIONS
                 </div>
-                <h3 className="font-vazir font-bold text-base sm:text-lg text-[#23191E]">
+                <h3 className="font-vazir font-bold text-base sm:text-lg text-vara-ink">
                   ویژگی‌های برجسته و مشخصات محصول
                 </h3>
               </div>
@@ -1335,17 +1335,17 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {product.badges && product.badges.length > 0 && (
               <div className="space-y-3">
-                <h4 className="text-xs font-bold font-vazir text-[#23191E]">ویژگی‌های کلیدی:</h4>
+                <h4 className="text-xs font-bold font-vazir text-vara-ink">ویژگی‌های کلیدی:</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
                   {product.badges.map((badge, idx) => (
                     <div
                       key={idx}
-                      className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3 flex items-center gap-2.5"
+                      className="bg-vara-canvas border border-vara-line rounded-xl p-3 flex items-center gap-2.5"
                     >
-                      <span className="w-5 h-5 rounded-md bg-white text-[#8C3B58] flex items-center justify-center shrink-0 border border-[#F0E1E4]">
+                      <span className="w-5 h-5 rounded-full bg-white text-vara-rose-ink flex items-center justify-center shrink-0 border border-vara-line">
                         <Check className="w-3 h-3" />
                       </span>
-                      <span className="font-bold text-xs font-vazir text-[#23191E]">{badge}</span>
+                      <span className="font-bold text-xs font-vazir text-vara-ink">{badge}</span>
                     </div>
                   ))}
                 </div>
@@ -1353,58 +1353,58 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             )}
 
             <div className="space-y-3 pt-1">
-              <h4 className="text-xs font-bold font-vazir text-[#23191E]">مشخصات فنی و راهنمای انتخاب:</h4>
+              <h4 className="text-xs font-bold font-vazir text-vara-ink">مشخصات فنی و راهنمای انتخاب:</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-vazir">
                 {product.brand && (
-                  <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1">
-                    <span className="text-[#785E67] text-[11px] block">برند سازنده:</span>
-                    <span className="font-bold text-[#23191E] text-xs">{product.brand}</span>
+                  <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1">
+                    <span className="text-vara-muted text-[11px] block">برند سازنده:</span>
+                    <span className="font-bold text-vara-ink text-xs">{product.brand}</span>
                   </div>
                 )}
                 {product.productType && (
-                  <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1">
-                    <span className="text-[#785E67] text-[11px] block">نوع فرآورده:</span>
-                    <span className="font-bold text-[#23191E] text-xs">{product.productType}</span>
+                  <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1">
+                    <span className="text-vara-muted text-[11px] block">نوع فرآورده:</span>
+                    <span className="font-bold text-vara-ink text-xs">{product.productType}</span>
                   </div>
                 )}
                 {product.skinTypes && product.skinTypes.length > 0 && (
-                  <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1">
-                    <span className="text-[#785E67] text-[11px] block">سازگار با انواع پوست:</span>
-                    <span className="font-bold text-[#23191E] text-xs">
+                  <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1">
+                    <span className="text-vara-muted text-[11px] block">سازگار با انواع پوست:</span>
+                    <span className="font-bold text-vara-ink text-xs">
                       {product.skinTypes.join('، ')}
                     </span>
                   </div>
                 )}
                 {product.concerns && product.concerns.length > 0 && (
-                  <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1">
-                    <span className="text-[#785E67] text-[11px] block">هدف و تمرکز بر دغدغه‌های:</span>
-                    <span className="font-bold text-[#23191E] text-xs">
+                  <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1">
+                    <span className="text-vara-muted text-[11px] block">هدف و تمرکز بر دغدغه‌های:</span>
+                    <span className="font-bold text-vara-ink text-xs">
                       {product.concerns.join('، ')}
                     </span>
                   </div>
                 )}
                 {product.authenticity && (
-                  <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1">
-                    <span className="text-[#785E67] text-[11px] block">اصالت کالا:</span>
-                    <span className="font-bold text-[#23191E] text-xs">{product.authenticity}</span>
+                  <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1">
+                    <span className="text-vara-muted text-[11px] block">اصالت کالا:</span>
+                    <span className="font-bold text-vara-ink text-xs">{product.authenticity}</span>
                   </div>
                 )}
                 {product.targetAudience && (
-                  <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1">
-                    <span className="text-[#785E67] text-[11px] block">جامعه هدف:</span>
-                    <span className="font-bold text-[#23191E] text-xs">{product.targetAudience}</span>
+                  <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1">
+                    <span className="text-vara-muted text-[11px] block">جامعه هدف:</span>
+                    <span className="font-bold text-vara-ink text-xs">{product.targetAudience}</span>
                   </div>
                 )}
                 {product.unsuitableFor && (
                   <div className="bg-amber-50/40 border border-amber-200 rounded-xl p-3.5 space-y-1">
                     <span className="text-[#B45309] text-[11px] block font-bold">موارد احتیاط یا منع مصرف:</span>
-                    <span className="text-[#23191E] text-xs font-vazir">{product.unsuitableFor}</span>
+                    <span className="text-vara-ink text-xs font-vazir">{product.unsuitableFor}</span>
                   </div>
                 )}
                 {product.expiryDate && (
-                  <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1">
-                    <span className="text-[#785E67] text-[11px] block">تاریخ انقضا و دوره ماندگاری:</span>
-                    <span className="font-bold text-[#23191E] text-xs">{product.expiryDate}</span>
+                  <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1">
+                    <span className="text-vara-muted text-[11px] block">تاریخ انقضا و دوره ماندگاری:</span>
+                    <span className="font-bold text-vara-ink text-xs">{product.expiryDate}</span>
                   </div>
                 )}
               </div>
@@ -1415,22 +1415,22 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
         {/* Tab 2: Interactive Ingredient Matrix & Scientific Analysis */}
         {activeTab === 'ingredients' && (
           <div className="space-y-6 animate-fadeIn">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#F0E1E4] pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-vara-line pb-4">
               <div>
-                <div className="text-[11px] font-bold text-[#8C3B58] uppercase tracking-[0.08em] font-jakarta mb-1">
+                <div className="text-[11px] font-bold text-vara-rose-ink uppercase tracking-[0.08em] font-jakarta mb-1">
                   ACTIVE FORMULATION MATRIX
                 </div>
-                <h3 className="font-vazir font-bold text-base sm:text-lg text-[#23191E]">
+                <h3 className="font-vazir font-bold text-base sm:text-lg text-vara-ink">
                   ترکیبات مؤثره و عملکرد زیستی
                 </h3>
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="bg-[#FDFBF9] border border-[#F0E1E4] text-[#23191E] px-2.5 py-1 rounded-md text-[11px] font-bold font-vazir flex items-center gap-1.5">
+                <span className="bg-vara-canvas border border-vara-line text-vara-ink px-2.5 py-1 rounded-full text-[11px] font-bold font-vazir flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#15803D]" />
                   <span>شاخص کومدوژنیک: ۰ (غیرجوش‌زا)</span>
                 </span>
-                <span className="bg-[#FDFBF9] border border-[#F0E1E4] text-[#23191E] px-2.5 py-1 rounded-md text-[11px] font-bold font-vazir flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#8C3B58]" />
+                <span className="bg-vara-canvas border border-vara-line text-vara-ink px-2.5 py-1 rounded-full text-[11px] font-bold font-vazir flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-vara-rose" />
                   <span>استاندارد کلینیکال: EWG 1</span>
                 </span>
               </div>
@@ -1445,38 +1445,38 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     onClick={() => setSelectedIngredientIdx(isExpanded ? null : idx)}
                     className={`rounded-xl p-4 border transition-all cursor-pointer text-right space-y-3 ${
                       isExpanded
-                        ? 'bg-[#FDFBF9] border-[#8C3B58]'
-                        : 'bg-white border-[#F0E1E4] hover:border-[#D48C9E]'
+                        ? 'bg-vara-canvas border-vara-rose'
+                        : 'bg-white border-vara-line hover:border-vara-tint-line'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-2.5">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${
-                          isExpanded ? 'bg-[#8C3B58] text-white border-[#8C3B58]' : 'bg-[#F9F1F0] text-[#8C3B58] border-[#F0E1E4]'
+                          isExpanded ? 'bg-vara-rose text-white border-vara-rose' : 'bg-vara-surface text-vara-rose-ink border-vara-line'
                         }`}>
                           <FlaskConical className="w-4 h-4" />
                         </div>
-                        <h4 className="font-bold text-xs sm:text-sm text-[#23191E] font-vazir leading-tight">
+                        <h4 className="font-bold text-xs sm:text-sm text-vara-ink font-vazir leading-tight">
                           {ing.nameFa}
                         </h4>
                       </div>
 
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <span className="text-[10px] font-bold font-vazir px-2 py-0.5 rounded-sm bg-[#F9F1F0] border border-[#F0E1E4] text-[#8C3B58]">
+                        <span className="text-[10px] font-bold font-vazir px-2 py-0.5 rounded-full bg-vara-surface border border-vara-line text-vara-rose-ink">
                           ترکیب فعال
                         </span>
-                        <ChevronDown className={`w-4 h-4 text-[#785E67] transition-transform ${isExpanded ? 'rotate-180 text-[#8C3B58]' : ''}`} />
+                        <ChevronDown className={`w-4 h-4 text-vara-muted transition-transform ${isExpanded ? 'rotate-180 text-vara-rose-ink' : ''}`} />
                       </div>
                     </div>
 
                     {isExpanded && (
-                      <div className="pt-3 border-t border-[#F0E1E4] space-y-2.5 animate-fadeIn text-xs font-vazir">
-                        <div className="bg-white p-3 rounded-lg border border-[#F0E1E4] space-y-1.5">
-                          <span className="font-bold text-[#8C3B58] text-[11px] flex items-center gap-1.5">
-                            <Zap className="w-3.5 h-3.5 text-[#8C3B58]" />
+                      <div className="pt-3 border-t border-vara-line space-y-2.5 animate-fadeIn text-xs font-vazir">
+                        <div className="bg-white p-3 rounded-lg border border-vara-line space-y-1.5">
+                          <span className="font-bold text-vara-rose-ink text-[11px] flex items-center gap-1.5">
+                            <Zap className="w-3.5 h-3.5 text-vara-rose-ink" />
                             <span>مکانیسم اثر بر لایه‌های سلولی:</span>
                           </span>
-                          <p className="text-[#4A3840] text-[11px] leading-relaxed">
+                          <p className="text-vara-muted-strong text-[11px] leading-relaxed">
                             {ing.description || 'این مولکول فعال با اتصال به گیرنده‌های غشایی کراتینوسیت‌ها، فرآیند رطوبت‌رسانی بین‌سلولی را تسریع کرده و از تخریب کلاژن ناشی از رادیکال‌های آزاد هوا جلوگیری می‌کند.'}
                           </p>
                         </div>
@@ -1487,30 +1487,30 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               })}
             </div>
 
-            <div className="bg-[#FDFBF9] p-5 rounded-xl border border-[#F0E1E4] space-y-3.5">
+            <div className="bg-vara-canvas p-5 rounded-xl border border-vara-line space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-xs text-[#23191E] font-vazir flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-[#8C3B58]" />
+                <span className="font-bold text-xs text-vara-ink font-vazir flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-vara-rose-ink" />
                   <span>تعهد ورا بیوتی در اصالت و سلامت فرمولاسیون:</span>
                 </span>
-                <span className="text-[10px] text-[#8C3B58] font-jakarta font-bold">BOUTIQUE STANDARDS</span>
+                <span className="text-[10px] text-vara-rose-ink font-jakarta font-bold">BOUTIQUE STANDARDS</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-right">
-                <div className="bg-white p-3 rounded-lg border border-[#F0E1E4] space-y-1">
-                  <span className="font-bold text-[11px] text-[#23191E] block">بدون تست حیوانی</span>
-                  <span className="text-[10px] text-[#785E67]">Cruelty Free گواهی‌شده</span>
+                <div className="bg-white p-3 rounded-lg border border-vara-line space-y-1">
+                  <span className="font-bold text-[11px] text-vara-ink block">بدون تست حیوانی</span>
+                  <span className="text-[10px] text-vara-muted">Cruelty Free گواهی‌شده</span>
                 </div>
-                <div className="bg-white p-3 rounded-lg border border-[#F0E1E4] space-y-1">
-                  <span className="font-bold text-[11px] text-[#23191E] block">فاقد پارابن و سولفات</span>
-                  <span className="text-[10px] text-[#785E67]">بدون ترکیبات شیمیایی خشن</span>
+                <div className="bg-white p-3 rounded-lg border border-vara-line space-y-1">
+                  <span className="font-bold text-[11px] text-vara-ink block">فاقد پارابن و سولفات</span>
+                  <span className="text-[10px] text-vara-muted">بدون ترکیبات شیمیایی خشن</span>
                 </div>
-                <div className="bg-white p-3 rounded-lg border border-[#F0E1E4] space-y-1">
-                  <span className="font-bold text-[11px] text-[#23191E] block">تنظیم pH فیزیولوژیک</span>
-                  <span className="text-[10px] text-[#785E67]">منطبق با اسیدیته ۵.۵ پوست</span>
+                <div className="bg-white p-3 rounded-lg border border-vara-line space-y-1">
+                  <span className="font-bold text-[11px] text-vara-ink block">تنظیم pH فیزیولوژیک</span>
+                  <span className="text-[10px] text-vara-muted">منطبق با اسیدیته ۵.۵ پوست</span>
                 </div>
-                <div className="bg-white p-3 rounded-lg border border-[#F0E1E4] space-y-1">
-                  <span className="font-bold text-[11px] text-[#23191E] block">تست درماتولوژی</span>
-                  <span className="text-[10px] text-[#785E67]">ایمن برای پوست‌های حساس</span>
+                <div className="bg-white p-3 rounded-lg border border-vara-line space-y-1">
+                  <span className="font-bold text-[11px] text-vara-ink block">تست درماتولوژی</span>
+                  <span className="text-[10px] text-vara-muted">ایمن برای پوست‌های حساس</span>
                 </div>
               </div>
             </div>
@@ -1520,24 +1520,24 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
         {/* Tab 3: Dynamic Skincare Routine Visualizer & Pairing Guide */}
         {activeTab === 'routine' && (
           <div className="space-y-6 animate-fadeIn">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#F0E1E4] pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-vara-line pb-4">
               <div>
-                <div className="text-[11px] font-bold text-[#8C3B58] uppercase tracking-[0.08em] font-jakarta mb-1">
+                <div className="text-[11px] font-bold text-vara-rose-ink uppercase tracking-[0.08em] font-jakarta mb-1">
                   REGIMEN PROTOCOL
                 </div>
-                <h3 className="font-vazir font-bold text-base sm:text-lg text-[#23191E]">
+                <h3 className="font-vazir font-bold text-base sm:text-lg text-vara-ink">
                   چیدمان گام‌به‌گام مراحل مراقبت از پوست
                 </h3>
               </div>
 
-              <div className="flex items-center bg-[#F9F1F0] p-1 rounded-lg border border-[#F0E1E4]">
+              <div className="flex items-center bg-vara-surface p-1 rounded-lg border border-vara-line">
                 <button
                   type="button"
                   onClick={() => setRoutineTimeOfDay('morning')}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-bold font-vazir transition-all cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold font-vazir transition-all cursor-pointer ${
                     routineTimeOfDay === 'morning'
-                      ? 'bg-[#8C3B58] text-white shadow-xs'
-                      : 'text-[#785E67] hover:text-[#23191E]'
+                      ? 'bg-vara-rose text-white shadow-xs'
+                      : 'text-vara-muted hover:text-vara-ink'
                   }`}
                 >
                   <Sun className="w-3.5 h-3.5" />
@@ -1546,10 +1546,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 <button
                   type="button"
                   onClick={() => setRoutineTimeOfDay('night')}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-bold font-vazir transition-all cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold font-vazir transition-all cursor-pointer ${
                     routineTimeOfDay === 'night'
-                      ? 'bg-[#8C3B58] text-white shadow-xs'
-                      : 'text-[#785E67] hover:text-[#23191E]'
+                      ? 'bg-vara-rose text-white shadow-xs'
+                      : 'text-vara-muted hover:text-vara-ink'
                   }`}
                 >
                   <Moon className="w-3.5 h-3.5" />
@@ -1560,61 +1560,61 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             <div className="space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-5 gap-2.5">
-                <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
+                <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
                   <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] text-[#785E67] text-[10px] font-bold font-jakarta flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-white border border-vara-line text-vara-muted text-[10px] font-bold font-jakarta flex items-center justify-center">
                       1
                     </span>
-                    <span className="text-[10px] text-[#785E67] font-vazir">مرحله اول</span>
+                    <span className="text-[10px] text-vara-muted font-vazir">مرحله اول</span>
                   </div>
-                  <div className="font-bold text-xs text-[#23191E] font-vazir">شوینده ملایم</div>
-                  <p className="text-[10px] text-[#785E67] font-vazir line-clamp-2">پاکسازی آلودگی‌ها و باز کردن منافذ</p>
+                  <div className="font-bold text-xs text-vara-ink font-vazir">شوینده ملایم</div>
+                  <p className="text-[10px] text-vara-muted font-vazir line-clamp-2">پاکسازی آلودگی‌ها و باز کردن منافذ</p>
                 </div>
 
-                <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
+                <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
                   <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] text-[#785E67] text-[10px] font-bold font-jakarta flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-white border border-vara-line text-vara-muted text-[10px] font-bold font-jakarta flex items-center justify-center">
                       2
                     </span>
-                    <span className="text-[10px] text-[#785E67] font-vazir">مرحله دوم</span>
+                    <span className="text-[10px] text-vara-muted font-vazir">مرحله دوم</span>
                   </div>
-                  <div className="font-bold text-xs text-[#23191E] font-vazir">تونر و آماده‌سازی</div>
-                  <p className="text-[10px] text-[#785E67] font-vazir line-clamp-2">تنظیم pH پوست و آماده‌سازی سد دفاعی</p>
+                  <div className="font-bold text-xs text-vara-ink font-vazir">تونر و آماده‌سازی</div>
+                  <p className="text-[10px] text-vara-muted font-vazir line-clamp-2">تنظیم pH پوست و آماده‌سازی سد دفاعی</p>
                 </div>
 
-                <div className="bg-[#F9F1F0] border-2 border-[#8C3B58] rounded-xl p-3.5 space-y-1.5 text-center sm:text-right relative overflow-hidden">
+                <div className="bg-vara-surface border-2 border-vara-rose rounded-xl p-3.5 space-y-1.5 text-center sm:text-right relative overflow-hidden">
                   <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-md bg-[#8C3B58] text-white text-[10px] font-bold font-jakarta flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-vara-rose text-white text-[10px] font-bold font-jakarta flex items-center justify-center">
                       3
                     </span>
-                    <span className="text-[10px] font-bold text-[#8C3B58] font-vazir">گام فعال شما</span>
+                    <span className="text-[10px] font-bold text-vara-rose-ink font-vazir">گام فعال شما</span>
                   </div>
-                  <div className="font-bold text-xs text-[#23191E] font-vazir truncate">{product.nameFa}</div>
-                  <p className="text-[10px] text-[#4A3840] font-vazir font-medium">جذب عمیق مواد موثره به لایه‌های اپیدرم</p>
+                  <div className="font-bold text-xs text-vara-ink font-vazir truncate">{product.nameFa}</div>
+                  <p className="text-[10px] text-vara-muted-strong font-vazir font-medium">جذب عمیق مواد موثره به لایه‌های اپیدرم</p>
                 </div>
 
-                <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
+                <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
                   <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] text-[#785E67] text-[10px] font-bold font-jakarta flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-white border border-vara-line text-vara-muted text-[10px] font-bold font-jakarta flex items-center justify-center">
                       4
                     </span>
-                    <span className="text-[10px] text-[#785E67] font-vazir">مرحله چهارم</span>
+                    <span className="text-[10px] text-vara-muted font-vazir">مرحله چهارم</span>
                   </div>
-                  <div className="font-bold text-xs text-[#23191E] font-vazir">کرم مرطوب‌کننده</div>
-                  <p className="text-[10px] text-[#785E67] font-vazir line-clamp-2">قفل رطوبت و ترمیم چربی‌های سد محافظتی</p>
+                  <div className="font-bold text-xs text-vara-ink font-vazir">کرم مرطوب‌کننده</div>
+                  <p className="text-[10px] text-vara-muted font-vazir line-clamp-2">قفل رطوبت و ترمیم چربی‌های سد محافظتی</p>
                 </div>
 
-                <div className="bg-[#FDFBF9] border border-[#F0E1E4] rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
+                <div className="bg-vara-canvas border border-vara-line rounded-xl p-3.5 space-y-1.5 text-center sm:text-right">
                   <div className="flex items-center justify-between">
-                    <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] text-[#785E67] text-[10px] font-bold font-jakarta flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-white border border-vara-line text-vara-muted text-[10px] font-bold font-jakarta flex items-center justify-center">
                       5
                     </span>
-                    <span className="text-[10px] text-[#785E67] font-vazir">مرحله پایانی</span>
+                    <span className="text-[10px] text-vara-muted font-vazir">مرحله پایانی</span>
                   </div>
-                  <div className="font-bold text-xs text-[#23191E] font-vazir">
+                  <div className="font-bold text-xs text-vara-ink font-vazir">
                     {routineTimeOfDay === 'morning' ? 'ضدآفتاب SPF' : 'ماسک شب / روغن'}
                   </div>
-                  <p className="text-[10px] text-[#785E67] font-vazir line-clamp-2">
+                  <p className="text-[10px] text-vara-muted font-vazir line-clamp-2">
                     {routineTimeOfDay === 'morning' ? 'حفاظت کامل در برابر پرتوهای مضر آفتاب' : 'بازسازی و تثبیت شبانه سلول‌ها'}
                   </p>
                 </div>
@@ -1628,34 +1628,34 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           <div className="space-y-6 animate-fadeIn">
             <div className="space-y-3">
               {reviews.map((rev) => (
-                <div key={rev.id} className="bg-[#FDFBF9] border border-[#F0E1E4] p-4 rounded-xl space-y-2">
+                <div key={rev.id} className="bg-vara-canvas border border-vara-line p-4 rounded-xl space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-xs text-[#23191E] font-vazir">{rev.author}</span>
+                      <span className="font-bold text-xs text-vara-ink font-vazir">{rev.author}</span>
                       {rev.verified && (
-                        <span className="bg-white text-[#15803D] text-[9px] font-bold font-vazir px-2 py-0.5 rounded-sm border border-[#F0E1E4]">
+                        <span className="bg-white text-[#15803D] text-[9px] font-bold font-vazir px-2 py-0.5 rounded-full border border-vara-line">
                           خریدار تاییدشده
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-1 text-[#8C3B58]">
+                    <div className="flex items-center gap-1 text-vara-rose-ink">
                       {[...Array(rev.rating)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-[#8C3B58] text-[#8C3B58]" />
+                        <Star key={i} className="w-3.5 h-3.5 fill-vara-rose text-vara-rose-ink" />
                       ))}
                     </div>
                   </div>
-                  <p className="text-xs text-[#4A3840] font-vazir leading-relaxed">
+                  <p className="text-xs text-vara-muted-strong font-vazir leading-relaxed">
                     {rev.comment}
                   </p>
-                  <div className="text-[10px] text-[#785E67] font-vazir">
+                  <div className="text-[10px] text-vara-muted font-vazir">
                     {rev.skinType} • {rev.date}
                   </div>
                 </div>
               ))}
             </div>
 
-            <form onSubmit={handleAddReview} className="bg-[#FDFBF9] border border-[#F0E1E4] p-5 rounded-xl space-y-3.5">
-              <h4 className="font-bold text-xs text-[#23191E] font-vazir">ثبت دیدگاه جدید برای این محصول:</h4>
+            <form onSubmit={handleAddReview} className="bg-vara-canvas border border-vara-line p-5 rounded-xl space-y-3.5">
+              <h4 className="font-bold text-xs text-vara-ink font-vazir">ثبت دیدگاه جدید برای این محصول:</h4>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <input
@@ -1663,14 +1663,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   placeholder="نام و نام خانوادگی"
                   value={newAuthor}
                   onChange={(e) => setNewAuthor(e.target.value)}
-                  className="bg-white border border-[#F0E1E4] rounded-lg px-3.5 py-2.5 text-xs font-vazir focus:outline-none focus:border-[#8C3B58] text-[#23191E]"
+                  className="bg-white border border-vara-line rounded-full px-3.5 py-2.5 text-xs font-vazir focus:outline-none focus:border-vara-rose text-vara-ink"
                   required
                 />
 
                 <select
                   value={newSkinType}
                   onChange={(e) => setNewSkinType(e.target.value)}
-                  className="bg-white border border-[#F0E1E4] rounded-lg px-3.5 py-2.5 text-xs font-vazir focus:outline-none focus:border-[#8C3B58] text-[#23191E] cursor-pointer"
+                  className="bg-white border border-vara-line rounded-full px-3.5 py-2.5 text-xs font-vazir focus:outline-none focus:border-vara-rose text-vara-ink cursor-pointer"
                 >
                   <option value="پوست مختلط">نوع پوست: مختلط</option>
                   <option value="پوست خشک و دهیدراته">نوع پوست: خشک و کم‌آب</option>
@@ -1679,8 +1679,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   <option value="پوست معمولی">نوع پوست: معمولی</option>
                 </select>
                 
-                <div className="flex items-center gap-2 bg-white border border-[#F0E1E4] rounded-lg px-3.5 py-2">
-                  <span className="text-xs font-vazir text-[#785E67]">امتیاز:</span>
+                <div className="flex items-center gap-2 bg-white border border-vara-line rounded-lg px-3.5 py-2">
+                  <span className="text-xs font-vazir text-vara-muted">امتیاز:</span>
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map((num) => (
                       <button
@@ -1689,7 +1689,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                         onClick={() => setNewRating(num)}
                         className="focus:outline-none cursor-pointer"
                       >
-                        <Star className={`w-4 h-4 ${num <= newRating ? 'fill-[#8C3B58] text-[#8C3B58]' : 'text-[#F0E1E4]'}`} />
+                        <Star className={`w-4 h-4 ${num <= newRating ? 'fill-vara-rose text-vara-rose-ink' : 'text-vara-line'}`} />
                       </button>
                     ))}
                   </div>
@@ -1701,13 +1701,13 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 rows={3}
-                className="w-full bg-white border border-[#F0E1E4] rounded-lg p-3.5 text-xs font-vazir focus:outline-none focus:border-[#8C3B58] text-[#23191E]"
+                className="w-full bg-white border border-vara-line rounded-lg p-3.5 text-xs font-vazir focus:outline-none focus:border-vara-rose text-vara-ink"
                 required
               />
 
               <button
                 type="submit"
-                className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-6 py-2.5 rounded-lg text-xs font-vazir font-bold transition-all cursor-pointer active:scale-98 shadow-xs"
+                className="bg-vara-rose hover:bg-vara-rose-hover text-white px-6 py-2.5 rounded-full text-xs font-vazir font-bold transition-all cursor-pointer active:scale-98 shadow-xs"
               >
                 ارسال دیدگاه
               </button>
@@ -1725,14 +1725,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
       {/* Recommended Related Products Row */}
       {fallbackRelated.length > 0 && (
-        <div className="space-y-6 pt-6 border-t border-[#F0E1E4]">
+        <div className="space-y-6 pt-6 border-t border-vara-line">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg sm:text-xl font-bold font-vazir text-[#23191E]">
+            <h2 className="text-lg sm:text-xl font-bold font-vazir text-vara-ink">
               محصولات مکمل و مشابه برای روتین پوستی شما
             </h2>
             <button
               onClick={onBack}
-              className="text-xs font-vazir font-bold text-[#8C3B58] hover:underline cursor-pointer"
+              className="text-xs font-vazir font-bold text-vara-rose-ink hover:underline cursor-pointer"
             >
               مشاهده همه محصولات
             </button>
@@ -1754,11 +1754,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
       {/* Fullscreen Lightbox Modal */}
       {isLightboxOpen && (
         <Modal label="تصاویر محصول" onClose={() => setIsLightboxOpen(false)}
-          className="fixed inset-0 z-50 bg-[#23191E]/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6 animate-fadeIn"
+          className="fixed inset-0 z-50 bg-vara-ink/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6 animate-fadeIn"
         >
           <div className="flex items-center justify-between text-white max-w-5xl mx-auto w-full z-10" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center gap-2">
-              <span className="text-xs sm:text-sm font-vazir font-bold bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 tabular-nums">
+              <span className="text-xs sm:text-sm font-vazir font-bold bg-white/10 px-3 py-1.5 rounded-full border border-white/10 tabular-nums">
                 تصویر {activeImageIndex + 1} از {imagesList.length}
               </span>
               <span className="text-xs text-white/70 font-vazir hidden sm:inline">
@@ -1770,9 +1770,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <button
                 type="button"
                 onClick={() => setLightboxZoom(!lightboxZoom)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-vazir font-medium flex items-center gap-1.5 transition-all cursor-pointer border ${
+                className={`px-3 py-1.5 rounded-full text-xs font-vazir font-medium flex items-center gap-1.5 transition-all cursor-pointer border ${
                   lightboxZoom 
-                    ? 'bg-white text-[#23191E] border-white font-bold' 
+                    ? 'bg-white text-vara-ink border-white font-bold'
                     : 'bg-white/10 hover:bg-white/20 text-white border-white/15'
                 }`}
               >
@@ -1782,7 +1782,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
               <button
                 onClick={() => setIsLightboxOpen(false)}
-                className="p-2.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
+                className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
                 aria-label="بستن بزرگ‌نمایی"
               >
                 <X className="w-5 h-5" />
@@ -1820,7 +1820,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   e.stopPropagation();
                   handlePrevImage();
                 }}
-                className={`absolute right-2 sm:right-4 z-20 p-3 rounded-lg bg-black/50 hover:bg-black/80 text-white transition-all cursor-pointer backdrop-blur-md border border-white/20 ${
+                className={`absolute right-2 sm:right-4 z-20 p-3 rounded-full bg-black/50 hover:bg-black/80 text-white transition-all cursor-pointer backdrop-blur-md border border-white/20 ${
                   lightboxZoom ? 'opacity-30 hover:opacity-100' : ''
                 }`}
                 aria-label="تصویر قبلی"
@@ -1849,7 +1849,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   e.stopPropagation();
                   handleNextImage();
                 }}
-                className={`absolute left-2 sm:left-4 z-20 p-3 rounded-lg bg-black/50 hover:bg-black/80 text-white transition-all cursor-pointer backdrop-blur-md border border-white/20 ${
+                className={`absolute left-2 sm:left-4 z-20 p-3 rounded-full bg-black/50 hover:bg-black/80 text-white transition-all cursor-pointer backdrop-blur-md border border-white/20 ${
                   lightboxZoom ? 'opacity-30 hover:opacity-100' : ''
                 }`}
                 aria-label="تصویر بعدی"
@@ -1869,9 +1869,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   key={idx}
                   type="button"
                   onClick={() => setCurrentImageIndex(idx)}
-                  className={`relative w-14 h-14 rounded-lg overflow-hidden border-2 transition-all shrink-0 bg-black cursor-pointer ${
+                  className={`relative w-14 h-14 rounded-full overflow-hidden border-2 transition-all shrink-0 bg-black cursor-pointer ${
                     activeImageIndex === idx
-                      ? 'border-[#D48C9E] scale-105 opacity-100'
+                      ? 'border-vara-tint-line scale-105 opacity-100'
                       : 'border-white/20 opacity-40 hover:opacity-80'
                   }`}
                 >
@@ -1894,10 +1894,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
       {/* Sticky Mobile Purchase Bar */}
       {showStickyMobileBar && !isLightboxOpen && (
-        <div className="sm:hidden fixed bottom-14 inset-x-0 z-40 bg-[#FDFBF9]/95 backdrop-blur-md border-t border-[#F0E1E4] p-3 animate-fadeIn">
+        <div className="sm:hidden fixed bottom-14 inset-x-0 z-40 bg-vara-canvas/95 backdrop-blur-md border-t border-vara-line p-3 animate-fadeIn">
           <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-10 h-10 rounded-lg overflow-hidden border border-[#F0E1E4] shrink-0 bg-[#F9F1F0]">
+              <div className="w-10 h-10 rounded-lg overflow-hidden border border-vara-line shrink-0 bg-vara-surface">
                 <img
                   src={displayImage(imagesList[0])}
                   srcSet={responsiveImageSrcSet(displayImage(imagesList[0]), [48, 80, 128])}
@@ -1908,10 +1908,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 />
               </div>
               <div className="min-w-0 text-right">
-                <span className="font-bold text-xs text-[#23191E] font-vazir truncate block">
+                <span className="font-bold text-xs text-vara-ink font-vazir truncate block">
                   {product.nameFa}
                 </span>
-                <span className="text-[11px] font-jakarta font-bold text-[#8C3B58] block tabular-nums">
+                <span className="text-[11px] font-jakarta font-bold text-vara-rose-ink block tabular-nums">
                   {formatPrice(activePrice)} تومان
                 </span>
               </div>
@@ -1920,12 +1920,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             <button
               onClick={handleAddToCart}
               disabled={isOutOfStock}
-              className={`px-4 py-2.5 rounded-lg font-bold text-xs font-vazir transition-all shrink-0 active:scale-98 cursor-pointer shadow-xs ${
+              className={`px-4 py-2.5 rounded-full font-bold text-xs font-vazir transition-all shrink-0 active:scale-98 cursor-pointer shadow-xs ${
                 isOutOfStock
-                  ? 'bg-[#F9F1F0] text-[#785E67] opacity-60 cursor-not-allowed'
+                  ? 'bg-vara-surface text-vara-muted opacity-60 cursor-not-allowed'
                   : added
                   ? 'bg-[#15803D] text-white'
-                  : 'bg-[#8C3B58] hover:bg-[#732E47] text-white'
+                  : 'bg-vara-rose hover:bg-vara-rose-hover text-white'
               }`}
             >
               {isOutOfStock ? 'ناموجود' : added ? 'افزوده شد!' : 'خرید آنی'}

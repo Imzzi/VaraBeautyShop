@@ -458,14 +458,14 @@ export const ShopPage: React.FC<ShopPageProps> = ({
   return (
     <div className="min-h-screen w-full pb-24 font-vazir" dir="rtl">
       {/* Main Shop Container */}
-      <div className="vara-container pt-6 sm:pt-8">
+      <div className="vara-container pt-8 sm:pt-12">
         
-        <div className="space-y-3 mb-5">
+        <div className="space-y-3 mb-6">
           <h1 className="vara-shop-title">فروشگاه مراقبت پوست</h1>
           <CatalogNotice catalog={catalog} />
         </div>
         {/* Top Control Bar: Search & Sorting */}
-        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-[#F0E1E4] mb-6 w-full max-w-full overflow-hidden shadow-shop-card">
+        <div className="bg-vara-surface p-4 sm:p-6 rounded-3xl border border-vara-line mb-8 w-full max-w-full overflow-hidden shadow-shop-card">
           
           <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
             {/* Search Box */}
@@ -478,14 +478,14 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                 placeholder="نام محصول، برند یا ترکیب"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F9F1F0] text-[#23191E] placeholder-[#785E67] text-xs font-vazir pr-10 pl-8 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white transition-colors"
+                className="w-full bg-vara-surface text-vara-ink placeholder-vara-muted text-xs font-vazir pr-10 pl-8 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white transition-colors"
               />
-              <Search className="w-4 h-4 text-[#8C3B58] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-vara-rose-ink absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
                   aria-label="پاک کردن جستجو"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#785E67] hover:text-[#8C3B58] cursor-pointer"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-vara-muted hover:text-vara-rose-ink cursor-pointer"
                 >
                   ×
                 </button>
@@ -503,7 +503,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                 aria-haspopup="dialog"
                 aria-expanded={mobileFilterOpen}
                 aria-controls={mobileFilterOpen ? mobileFilterId : undefined}
-                className="lg:hidden flex items-center gap-2 bg-[#8C3B58] hover:bg-[#732E47] text-white px-4 py-2.5 rounded-xl text-xs font-semibold cursor-pointer shadow-xs"
+                className="lg:hidden flex items-center gap-2 bg-vara-rose hover:bg-vara-rose-hover text-white px-4 py-2.5 rounded-full text-xs font-semibold cursor-pointer shadow-xs"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5" />
                 <span>فیلترها {activeFiltersCount > 0 && `(${activeFiltersCount})`}</span>
@@ -511,13 +511,13 @@ export const ShopPage: React.FC<ShopPageProps> = ({
 
               {/* Sorting Dropdown */}
               <div className="flex items-center gap-2 text-xs">
-                <span className="text-[#785E67] shrink-0 font-medium hidden sm:inline">مرتب‌سازی:</span>
+                <span className="text-vara-muted shrink-0 font-medium hidden sm:inline">مرتب‌سازی:</span>
                 <select
                   ref={sortRef}
                   aria-label="مرتب‌سازی محصولات"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-[#F9F1F0] text-[#23191E] font-semibold text-xs px-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] cursor-pointer"
+                  className="bg-vara-surface text-vara-ink font-semibold text-xs px-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose cursor-pointer"
                 >
                   <option value="bestseller">پرفروش‌ترین‌ها</option>
                   <option value="newest">جدیدترین محصولات</option>
@@ -557,17 +557,17 @@ export const ShopPage: React.FC<ShopPageProps> = ({
           
           {/* Desktop Sidebar Filters */}
           <aside className="hidden lg:block lg:col-span-1 space-y-6">
-            <div className="bg-white p-5 rounded-2xl border border-[#F0E1E4] space-y-4 sticky top-28 max-h-[85vh] overflow-y-auto text-right shadow-shop-card">
+            <div className="bg-vara-surface p-6 rounded-2xl border border-vara-line space-y-5 sticky top-28 max-h-[85vh] overflow-y-auto text-right shadow-shop-card">
               
-              <div className="flex items-center justify-between pb-3 border-b border-[#F0E1E4]">
-                <h3 className="font-bold text-xs text-[#23191E] flex items-center gap-1.5">
-                  <SlidersHorizontal className="w-3.5 h-3.5 text-[#8C3B58]" />
+              <div className="flex items-center justify-between pb-3 border-b border-vara-line">
+                <h3 className="font-bold text-xs text-vara-ink flex items-center gap-1.5">
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-vara-rose-ink" />
                   <span>فیلترهای جامع فروشگاه</span>
                 </h3>
                 {activeFiltersCount > 0 && (
                   <button
                     onClick={resetAllFilters}
-                    className="text-[10px] text-[#8C3B58] hover:underline font-semibold cursor-pointer"
+                    className="text-[10px] text-vara-rose-ink hover:underline font-semibold cursor-pointer"
                   >
                     بازنشانی ({activeFiltersCount})
                   </button>
@@ -578,10 +578,10 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               <div className="space-y-2">
                 <button
                   onClick={() => toggleSection('brand')}
-                  className="w-full flex items-center justify-between text-[11px] font-bold text-[#23191E] cursor-pointer"
+                  className="w-full flex items-center justify-between text-[11px] font-bold text-vara-ink cursor-pointer"
                 >
                   <span>برند محصول</span>
-                  <ChevronDown className={`w-3 h-3 text-[#785E67] transition-transform duration-300 ${openSections.brand ? 'rotate-180 text-[#8C3B58]' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 text-vara-muted transition-transform duration-300 ${openSections.brand ? 'rotate-180 text-vara-rose-ink' : ''}`} />
                 </button>
                 
                 <AnimatePresence initial={false}>
@@ -602,13 +602,13 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                             placeholder="جستجوی برند..."
                             value={brandSearchInput}
                             onChange={(e) => setBrandSearchInput(e.target.value)}
-                            className="w-full bg-[#F9F1F0] text-[#23191E] placeholder-[#785E67] text-[10px] pr-7 pl-5 py-1.5 rounded-lg border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58]"
+                            className="w-full bg-vara-surface text-vara-ink placeholder-vara-muted text-[10px] pr-7 pl-5 py-1.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose"
                           />
-                          <Search className="w-3 h-3 text-[#8C3B58] absolute right-2 top-1/2 -translate-y-1/2" />
+                          <Search className="w-3 h-3 text-vara-rose-ink absolute right-2 top-1/2 -translate-y-1/2" />
                           {brandSearchInput && (
                             <button
                               onClick={() => setBrandSearchInput('')}
-                              className="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-[#785E67] hover:text-[#8C3B58]"
+                              className="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-vara-muted hover:text-vara-rose-ink"
                             >
                               ×
                             </button>
@@ -620,27 +620,27 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                             <button
                               key={brand.id}
                               onClick={() => setSelectedBrand(brand.id)} aria-pressed={selectedBrand === brand.id}
-                              className={`w-full text-right px-2.5 py-1.5 rounded-lg text-[11px] transition-all flex items-center justify-between cursor-pointer ${
+                              className={`w-full text-right px-2.5 py-1.5 rounded-full text-[11px] transition-all flex items-center justify-between cursor-pointer ${
                                 selectedBrand === brand.id
-                                  ? 'bg-[#8C3B58] text-white font-semibold'
-                                  : 'text-[#785E67] hover:bg-[#F5E6EB] hover:text-[#23191E]'
+                                  ? 'bg-vara-rose text-white font-semibold'
+                                  : 'text-vara-muted hover:bg-vara-tint hover:text-vara-ink'
                               }`}
                             >
                               <div className="flex flex-col truncate">
                                 <span className="truncate">{brand.labelFa}</span>
                                 {brand.id !== 'all' && (
-                                  <span className={`text-[9px] font-normal truncate font-jakarta ${selectedBrand === brand.id ? 'text-white/75' : 'text-[#785E67]'}`}>{brand.labelEn}</span>
+                                  <span className={`text-[9px] font-normal truncate font-jakarta ${selectedBrand === brand.id ? 'text-white/75' : 'text-vara-muted'}`}>{brand.labelEn}</span>
                                 )}
                               </div>
-                              <span className={`text-[9px] px-1.5 py-0.5 rounded shrink-0 ml-1 font-jakarta tabular-nums ${
-                                selectedBrand === brand.id ? 'bg-white/20 text-white' : 'bg-[#F9F1F0] text-[#785E67] border border-[#F0E1E4]'
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded-full shrink-0 ml-1 font-jakarta tabular-nums ${
+                                selectedBrand === brand.id ? 'bg-white/20 text-white' : 'bg-vara-surface text-vara-muted border border-vara-line'
                               }`}>
                                 {(brandCounts[brand.id] || 0).toLocaleString('fa-IR')}
                               </span>
                             </button>
                           ))}
                           {visibleBrandsList.length === 0 && (
-                            <p className="text-[10px] text-center text-[#785E67] py-2">برندی یافت نشد</p>
+                            <p className="text-[10px] text-center text-vara-muted py-2">برندی یافت نشد</p>
                           )}
                         </div>
                       </div>
@@ -650,13 +650,13 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* 2. نوع پوست (Skin Type Filter) */}
-              <div className="space-y-2 pt-2.5 border-t border-[#F0E1E4]">
+              <div className="space-y-2 pt-2.5 border-t border-vara-line">
                 <button
                   onClick={() => toggleSection('skinType')}
-                  className="w-full flex items-center justify-between text-[11px] font-bold text-[#23191E] cursor-pointer"
+                  className="w-full flex items-center justify-between text-[11px] font-bold text-vara-ink cursor-pointer"
                 >
                   <span>نوع پوست</span>
-                  <ChevronDown className={`w-3 h-3 text-[#785E67] transition-transform duration-300 ${openSections.skinType ? 'rotate-180 text-[#8C3B58]' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 text-vara-muted transition-transform duration-300 ${openSections.skinType ? 'rotate-180 text-vara-rose-ink' : ''}`} />
                 </button>
                 
                 <AnimatePresence initial={false}>
@@ -676,8 +676,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                             onClick={() => setSelectedSkinType(st.id)} aria-pressed={selectedSkinType === st.id}
                             className={`w-full px-2.5 py-1.5 rounded-lg text-[11px] transition-all flex items-center justify-between cursor-pointer ${
                               selectedSkinType === st.id
-                                ? 'bg-[#8C3B58] text-white font-semibold'
-                                : 'text-[#785E67] hover:bg-[#F5E6EB] hover:text-[#23191E]'
+                                ? 'bg-vara-rose text-white font-semibold'
+                                : 'text-vara-muted hover:bg-vara-tint hover:text-vara-ink'
                             }`}
                           >
                             <span className="flex items-center gap-1.5">
@@ -690,8 +690,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                               />
                               <span>{st.labelFa}</span>
                             </span>
-                            <span className={`text-[9px] px-1.5 py-0.5 rounded font-jakarta tabular-nums ${
-                              selectedSkinType === st.id ? 'bg-white/20 text-white' : 'bg-[#F9F1F0] text-[#785E67] border border-[#F0E1E4]'
+                            <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-jakarta tabular-nums ${
+                              selectedSkinType === st.id ? 'bg-white/20 text-white' : 'bg-vara-surface text-vara-muted border border-vara-line'
                             }`}>
                               {(skinTypeCounts[st.id] || 0).toLocaleString('fa-IR')}
                             </span>
@@ -704,13 +704,13 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* 3. مراقبت از پوست (Product Types / Skin Care Steps) */}
-              <div className="space-y-2 pt-2.5 border-t border-[#F0E1E4]">
+              <div className="space-y-2 pt-2.5 border-t border-vara-line">
                 <button
                   onClick={() => toggleSection('productType')}
-                  className="w-full flex items-center justify-between text-[11px] font-bold text-[#23191E] cursor-pointer"
+                  className="w-full flex items-center justify-between text-[11px] font-bold text-vara-ink cursor-pointer"
                 >
                   <span>مراقبت از پوست و محصولات</span>
-                  <ChevronDown className={`w-3 h-3 text-[#785E67] transition-transform duration-300 ${openSections.productType ? 'rotate-180 text-[#8C3B58]' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 text-vara-muted transition-transform duration-300 ${openSections.productType ? 'rotate-180 text-vara-rose-ink' : ''}`} />
                 </button>
                 
                 <AnimatePresence initial={false}>
@@ -728,15 +728,15 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                           <button
                             key={pt.id}
                             onClick={() => setSelectedProductType(pt.id)} aria-pressed={selectedProductType === pt.id}
-                            className={`w-full text-right px-2.5 py-1.5 rounded-lg text-[11px] transition-all flex items-center justify-between cursor-pointer ${
+                            className={`w-full text-right px-2.5 py-1.5 rounded-full text-[11px] transition-all flex items-center justify-between cursor-pointer ${
                               selectedProductType === pt.id
-                                ? 'bg-[#8C3B58] text-white font-semibold'
-                                : 'text-[#785E67] hover:bg-[#F5E6EB] hover:text-[#23191E]'
+                                ? 'bg-vara-rose text-white font-semibold'
+                                : 'text-vara-muted hover:bg-vara-tint hover:text-vara-ink'
                             }`}
                           >
                             <span className="truncate">{pt.labelFa}</span>
-                            <span className={`text-[9px] px-1.5 py-0.5 rounded font-jakarta tabular-nums ${
-                              selectedProductType === pt.id ? 'bg-white/20 text-white' : 'bg-[#F9F1F0] text-[#785E67] border border-[#F0E1E4]'
+                            <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-jakarta tabular-nums ${
+                              selectedProductType === pt.id ? 'bg-white/20 text-white' : 'bg-vara-surface text-vara-muted border border-vara-line'
                             }`}>
                               {(productTypeCounts[pt.id] || 0).toLocaleString('fa-IR')}
                             </span>
@@ -749,13 +749,13 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* 4. ترکیبات و مواد مؤثره (Ingredients) */}
-              <div className="space-y-2 pt-2.5 border-t border-[#F0E1E4]">
+              <div className="space-y-2 pt-2.5 border-t border-vara-line">
                 <button
                   onClick={() => toggleSection('ingredient')}
-                  className="w-full flex items-center justify-between text-[11px] font-bold text-[#23191E] cursor-pointer"
+                  className="w-full flex items-center justify-between text-[11px] font-bold text-vara-ink cursor-pointer"
                 >
                   <span>ترکیبات و مواد فعال</span>
-                  <ChevronDown className={`w-3 h-3 text-[#785E67] transition-transform duration-300 ${openSections.ingredient ? 'rotate-180 text-[#8C3B58]' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 text-vara-muted transition-transform duration-300 ${openSections.ingredient ? 'rotate-180 text-vara-rose-ink' : ''}`} />
                 </button>
                 
                 <AnimatePresence initial={false}>
@@ -773,10 +773,10 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                           <button
                             key={ing.id}
                             onClick={() => setSelectedIngredient(ing.id)} aria-pressed={selectedIngredient === ing.id}
-                            className={`w-full text-right px-2.5 py-1.5 rounded-lg text-[11px] transition-all flex items-center justify-between cursor-pointer ${
+                            className={`w-full text-right px-2.5 py-1.5 rounded-full text-[11px] transition-all flex items-center justify-between cursor-pointer ${
                               selectedIngredient === ing.id
-                                ? 'bg-[#8C3B58] text-white font-semibold'
-                                : 'text-[#785E67] hover:bg-[#F5E6EB] hover:text-[#23191E]'
+                                ? 'bg-vara-rose text-white font-semibold'
+                                : 'text-vara-muted hover:bg-vara-tint hover:text-vara-ink'
                             }`}
                           >
                             <span className="truncate">{ing.labelFa}</span>
@@ -790,13 +790,13 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* 5. روتین‌ها (Routines & Rituals) */}
-              <div className="space-y-2 pt-2.5 border-t border-[#F0E1E4]">
+              <div className="space-y-2 pt-2.5 border-t border-vara-line">
                 <button
                   onClick={() => toggleSection('routine')}
-                  className="w-full flex items-center justify-between text-[11px] font-bold text-[#23191E] cursor-pointer"
+                  className="w-full flex items-center justify-between text-[11px] font-bold text-vara-ink cursor-pointer"
                 >
                   <span>روتین‌ها و اهداف پوستی</span>
-                  <ChevronDown className={`w-3 h-3 text-[#785E67] transition-transform duration-300 ${openSections.routine ? 'rotate-180 text-[#8C3B58]' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 text-vara-muted transition-transform duration-300 ${openSections.routine ? 'rotate-180 text-vara-rose-ink' : ''}`} />
                 </button>
                 
                 <AnimatePresence initial={false}>
@@ -814,15 +814,15 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                           <button
                             key={r.id}
                             onClick={() => setSelectedRoutine(r.id)} aria-pressed={selectedRoutine === r.id}
-                            className={`w-full text-right px-2.5 py-1.5 rounded-lg text-[11px] transition-all flex items-center justify-between cursor-pointer ${
+                            className={`w-full text-right px-2.5 py-1.5 rounded-full text-[11px] transition-all flex items-center justify-between cursor-pointer ${
                               selectedRoutine === r.id
-                                ? 'bg-[#8C3B58] text-white font-semibold'
-                                : 'text-[#785E67] hover:bg-[#F5E6EB] hover:text-[#23191E]'
+                                ? 'bg-vara-rose text-white font-semibold'
+                                : 'text-vara-muted hover:bg-vara-tint hover:text-vara-ink'
                             }`}
                           >
                             <span className="truncate">{r.labelFa}</span>
-                            <span className={`text-[9px] px-1.5 py-0.5 rounded font-jakarta tabular-nums ${
-                              selectedRoutine === r.id ? 'bg-white/20 text-white' : 'bg-[#F9F1F0] text-[#785E67] border border-[#F0E1E4]'
+                            <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-jakarta tabular-nums ${
+                              selectedRoutine === r.id ? 'bg-white/20 text-white' : 'bg-vara-surface text-vara-muted border border-vara-line'
                             }`}>
                               {(routineCounts[r.id] || 0).toLocaleString('fa-IR')}
                             </span>
@@ -835,13 +835,13 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* Price Range Filter */}
-              <div className="space-y-2 pt-2.5 border-t border-[#F0E1E4]">
+              <div className="space-y-2 pt-2.5 border-t border-vara-line">
                 <button
                   onClick={() => toggleSection('price')}
-                  className="w-full flex items-center justify-between text-[11px] font-bold text-[#23191E] cursor-pointer"
+                  className="w-full flex items-center justify-between text-[11px] font-bold text-vara-ink cursor-pointer"
                 >
                   <span>محدوده قیمت</span>
-                  <ChevronDown className={`w-3 h-3 text-[#785E67] transition-transform duration-300 ${openSections.price ? 'rotate-180 text-[#8C3B58]' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 text-vara-muted transition-transform duration-300 ${openSections.price ? 'rotate-180 text-vara-rose-ink' : ''}`} />
                 </button>
                 
                 <AnimatePresence initial={false}>
@@ -863,14 +863,14 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                         ].map((pr) => (
                           <label
                             key={pr.id}
-                            className="flex items-center gap-2 text-[11px] text-[#785E67] hover:text-[#23191E] cursor-pointer py-1"
+                            className="flex items-center gap-2 text-[11px] text-vara-muted hover:text-vara-ink cursor-pointer py-1"
                           >
                             <input
                               type="radio"
                               name="priceRange"
                               checked={priceRange === pr.id}
                               onChange={() => setPriceRange(pr.id as any)}
-                              className="accent-[#8C3B58]"
+                              className="accent-vara-rose"
                             />
                             <span>{pr.label}</span>
                           </label>
@@ -882,32 +882,32 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* Special Toggles & In Stock */}
-              <div className="space-y-1.5 pt-2.5 border-t border-[#F0E1E4]">
-                <label className="flex items-center justify-between text-[11px] text-[#23191E] cursor-pointer py-0.5 font-semibold">
+              <div className="space-y-1.5 pt-2.5 border-t border-vara-line">
+                <label className="flex items-center justify-between text-[11px] text-vara-ink cursor-pointer py-0.5 font-semibold">
                   <span>فقط کالاهای موجود در انبار</span>
                   <input
                     type="checkbox"
                     checked={onlyInStock}
                     onChange={(e) => setOnlyInStock(e.target.checked)}
-                    className="accent-[#8C3B58] w-3.5 h-3.5 rounded cursor-pointer"
+                    className="accent-vara-rose w-3.5 h-3.5 rounded cursor-pointer"
                   />
                 </label>
-                <label className="flex items-center justify-between text-[11px] text-[#785E67] cursor-pointer py-0.5">
+                <label className="flex items-center justify-between text-[11px] text-vara-muted cursor-pointer py-0.5">
                   <span>محصولات پرفروش</span>
                   <input
                     type="checkbox"
                     checked={onlyBestSellers}
                     onChange={(e) => setOnlyBestSellers(e.target.checked)}
-                    className="accent-[#8C3B58] w-3.5 h-3.5 rounded cursor-pointer"
+                    className="accent-vara-rose w-3.5 h-3.5 rounded cursor-pointer"
                   />
                 </label>
-                <label className="flex items-center justify-between text-[11px] text-[#785E67] cursor-pointer py-0.5">
+                <label className="flex items-center justify-between text-[11px] text-vara-muted cursor-pointer py-0.5">
                   <span>جدیدترین محصولات</span>
                   <input
                     type="checkbox"
                     checked={onlyNew}
                     onChange={(e) => setOnlyNew(e.target.checked)}
-                    className="accent-[#8C3B58] w-3.5 h-3.5 rounded cursor-pointer"
+                    className="accent-vara-rose w-3.5 h-3.5 rounded cursor-pointer"
                   />
                 </label>
               </div>
@@ -919,9 +919,9 @@ export const ShopPage: React.FC<ShopPageProps> = ({
           <section aria-label="نتایج کاتالوگ" className="lg:col-span-3 min-w-0 space-y-5">
             
             {/* Results Count Header */}
-            <div className="flex items-center justify-between text-sm text-[#785E67] pb-3 border-b border-[#F0E1E4]">
+            <div className="flex items-center justify-between text-sm text-vara-muted pb-3 border-b border-vara-line">
               <span role="status">
-                نمایش <strong className="text-[#8C3B58] font-bold text-sm font-jakarta tabular-nums">{filteredProducts.length.toLocaleString('fa-IR')}</strong> محصول
+                نمایش <strong className="text-vara-rose-ink font-bold text-sm font-jakarta tabular-nums">{filteredProducts.length.toLocaleString('fa-IR')}</strong> محصول
               </span>
 
             </div>
@@ -940,11 +940,11 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
             ) : (
               /* Empty Search Results State */
-              <div className="bg-white p-12 rounded-2xl border border-[#F0E1E4] text-center space-y-4 my-8 shadow-shop-card">
-                <div className="w-14 h-14 bg-[#F9F1F0] rounded-2xl flex items-center justify-center mx-auto text-[#8C3B58] border border-[#F0E1E4]">
+              <div className="bg-white p-12 rounded-2xl border border-vara-line text-center space-y-4 my-8 shadow-shop-card">
+                <div className="w-14 h-14 bg-vara-surface rounded-2xl flex items-center justify-center mx-auto text-vara-rose-ink border border-vara-line">
                   <Search className="w-6 h-6" />
                 </div>
-                <h3 className="text-base font-bold text-[#23191E]">
+                <h3 className="text-base font-bold text-vara-ink">
                   {products.length === 0
                     ? catalog.status === 'current' ? 'هنوز محصولی در فروشگاه ثبت نشده است.' : catalog.status === 'loading' ? 'در حال دریافت محصولات…' : 'فهرست محصولات در دسترس نیست.'
                     : 'محصولی با این فیلترها پیدا نشد.'}
@@ -956,19 +956,19 @@ export const ShopPage: React.FC<ShopPageProps> = ({
             )}
 
             {/* Skincare Quiz Banner Callout */}
-            <div className="mt-12 bg-[#F9F1F0] border border-[#D48C9E]/50 p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="mt-12 bg-vara-surface border border-vara-tint-line/50 p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="space-y-1.5 text-right">
 
-                <h3 className="text-lg font-bold text-[#23191E]">
+                <h3 className="text-lg font-bold text-vara-ink">
                   برای انتخاب روتین راهنمایی می‌خواهید؟
                 </h3>
-                <p className="text-xs text-[#785E67]">
+                <p className="text-xs text-vara-muted">
                   به چند سؤال کوتاه درباره پوستتان پاسخ دهید.
                 </p>
               </div>
               <button
                 onClick={onOpenQuiz}
-                className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-6 py-3 rounded-xl text-xs font-semibold shrink-0 transition-all flex items-center gap-2 cursor-pointer shadow-xs"
+                className="bg-vara-rose hover:bg-vara-rose-hover text-white px-6 py-3 rounded-full text-xs font-semibold shrink-0 transition-all flex items-center gap-2 cursor-pointer shadow-xs"
               >
                 <ClipboardCheck className="w-4 h-4" />
                 <span>طراحی روتین پوست</span>
@@ -992,12 +992,12 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               setMobileFilterOpen(false);
             }}
             onKeyDown={keepMobileFilterTabInside}
-            className="fixed inset-0 m-0 h-dvh w-full max-h-none max-w-none flex-col bg-[#FDFBF9] text-[#23191E] open:flex lg:hidden"
+            className="fixed inset-0 m-0 h-dvh w-full max-h-none max-w-none flex-col bg-vara-canvas text-vara-ink open:flex lg:hidden"
             dir="rtl"
           >
-            <div className="p-4 border-b border-[#F0E1E4] flex items-center justify-between bg-white">
-              <h3 id={`${mobileFilterId}-title`} className="font-bold text-sm text-[#23191E] flex items-center gap-2">
-                <SlidersHorizontal className="w-4 h-4 text-[#8C3B58]" />
+            <div className="p-4 border-b border-vara-line flex items-center justify-between bg-white">
+              <h3 id={`${mobileFilterId}-title`} className="font-bold text-sm text-vara-ink flex items-center gap-2">
+                <SlidersHorizontal className="w-4 h-4 text-vara-rose-ink" />
                 <span>فیلترهای پیشرفته فروشگاه</span>
               </h3>
               <button
@@ -1005,18 +1005,18 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                 ref={closeMobileFilterRef}
                 aria-label="بستن فیلترها"
                 onClick={() => setMobileFilterOpen(false)}
-                className="p-2 text-[#785E67] hover:text-[#8C3B58] hover:bg-[#F5E6EB] rounded-lg cursor-pointer focus-visible:outline-2 focus-visible:outline-[#8C3B58]"
+                className="p-2 text-vara-muted hover:text-vara-rose-ink hover:bg-vara-tint rounded-full cursor-pointer focus-visible:outline-2 focus-visible:outline-vara-rose-ink"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-6 text-right bg-[#FDFBF9]">
+            <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-6 text-right bg-vara-canvas">
               {/* 1. برند */}
               <div className="space-y-2">
-                <h4 className="text-xs font-bold text-[#23191E] flex items-center justify-between">
+                <h4 className="text-xs font-bold text-vara-ink flex items-center justify-between">
                   <span>برند</span>
-                  <span className="text-[10px] text-[#785E67] font-normal">
+                  <span className="text-[10px] text-vara-muted font-normal">
                     {visibleBrandsList.length} برند
                   </span>
                 </h4>
@@ -1027,13 +1027,13 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                     placeholder="جستجوی برند..."
                     value={brandSearchInput}
                     onChange={(e) => setBrandSearchInput(e.target.value)}
-                    className="w-full bg-white text-[#23191E] placeholder-[#785E67] text-xs pr-8 pl-6 py-2 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58]"
+                    className="w-full bg-white text-vara-ink placeholder-vara-muted text-xs pr-8 pl-6 py-2 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose"
                   />
-                  <Search className="w-3.5 h-3.5 text-[#8C3B58] absolute right-2.5 top-1/2 -translate-y-1/2" />
+                  <Search className="w-3.5 h-3.5 text-vara-rose-ink absolute right-2.5 top-1/2 -translate-y-1/2" />
                   {brandSearchInput && (
                     <button
                       onClick={() => setBrandSearchInput('')}
-                      className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#785E67] hover:text-[#8C3B58]"
+                      className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-vara-muted hover:text-vara-rose-ink"
                     >
                       ×
                     </button>
@@ -1045,20 +1045,20 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                     <button
                       key={brand.id}
                       onClick={() => setSelectedBrand(brand.id)} aria-pressed={selectedBrand === brand.id}
-                      className={`p-2.5 rounded-xl text-xs transition-all cursor-pointer text-center flex flex-col items-center justify-center ${
+                      className={`p-2.5 rounded-full text-xs transition-all cursor-pointer text-center flex flex-col items-center justify-center ${
                         selectedBrand === brand.id
-                          ? 'bg-[#8C3B58] text-white font-semibold'
-                          : 'bg-white text-[#23191E] border border-[#F0E1E4]'
+                          ? 'bg-vara-rose text-white font-semibold'
+                          : 'bg-white text-vara-ink border border-vara-line'
                       }`}
                     >
                       <span className="truncate w-full">{brand.labelFa}</span>
                       {brand.id !== 'all' && (
-                        <span className={`text-[9px] truncate w-full font-normal font-jakarta ${selectedBrand === brand.id ? 'text-white/75' : 'text-[#785E67]'}`}>{brand.labelEn}</span>
+                        <span className={`text-[9px] truncate w-full font-normal font-jakarta ${selectedBrand === brand.id ? 'text-white/75' : 'text-vara-muted'}`}>{brand.labelEn}</span>
                       )}
                     </button>
                   ))}
                   {visibleBrandsList.length === 0 && (
-                    <div className="col-span-2 text-center text-xs text-[#785E67] py-3">
+                    <div className="col-span-2 text-center text-xs text-vara-muted py-3">
                       برندی با این نام یافت نشد.
                     </div>
                   )}
@@ -1066,8 +1066,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* 2. نوع پوست */}
-              <div className="space-y-2 pt-4 border-t border-[#F0E1E4]">
-                <h4 className="text-xs font-bold text-[#23191E]">
+              <div className="space-y-2 pt-4 border-t border-vara-line">
+                <h4 className="text-xs font-bold text-vara-ink">
                   <span>نوع پوست</span>
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
@@ -1075,10 +1075,10 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                     <button
                       key={st.id}
                       onClick={() => setSelectedSkinType(st.id)} aria-pressed={selectedSkinType === st.id}
-                      className={`p-2 rounded-xl text-xs transition-all cursor-pointer text-center ${
+                      className={`p-2 rounded-full text-xs transition-all cursor-pointer text-center ${
                         selectedSkinType === st.id
-                          ? 'bg-[#8C3B58] text-white font-semibold'
-                          : 'bg-white text-[#23191E] border border-[#F0E1E4]'
+                          ? 'bg-vara-rose text-white font-semibold'
+                          : 'bg-white text-vara-ink border border-vara-line'
                       }`}
                     >
                       {st.labelFa}
@@ -1088,8 +1088,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* 3. مراقبت از پوست */}
-              <div className="space-y-2 pt-4 border-t border-[#F0E1E4]">
-                <h4 className="text-xs font-bold text-[#23191E]">
+              <div className="space-y-2 pt-4 border-t border-vara-line">
+                <h4 className="text-xs font-bold text-vara-ink">
                   <span>مراقبت از پوست و محصولات</span>
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
@@ -1097,10 +1097,10 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                     <button
                       key={pt.id}
                       onClick={() => setSelectedProductType(pt.id)} aria-pressed={selectedProductType === pt.id}
-                      className={`p-2 rounded-xl text-xs transition-all cursor-pointer text-center ${
+                      className={`p-2 rounded-full text-xs transition-all cursor-pointer text-center ${
                         selectedProductType === pt.id
-                          ? 'bg-[#8C3B58] text-white font-semibold'
-                          : 'bg-white text-[#23191E] border border-[#F0E1E4]'
+                          ? 'bg-vara-rose text-white font-semibold'
+                          : 'bg-white text-vara-ink border border-vara-line'
                       }`}
                     >
                       {pt.labelFa}
@@ -1110,8 +1110,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* 4. ترکیبات */}
-              <div className="space-y-2 pt-4 border-t border-[#F0E1E4]">
-                <h4 className="text-xs font-bold text-[#23191E]">
+              <div className="space-y-2 pt-4 border-t border-vara-line">
+                <h4 className="text-xs font-bold text-vara-ink">
                   <span>ترکیبات و مواد فعال</span>
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
@@ -1119,10 +1119,10 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                     <button
                       key={ing.id}
                       onClick={() => setSelectedIngredient(ing.id)} aria-pressed={selectedIngredient === ing.id}
-                      className={`p-2 rounded-xl text-xs transition-all cursor-pointer text-center ${
+                      className={`p-2 rounded-full text-xs transition-all cursor-pointer text-center ${
                         selectedIngredient === ing.id
-                          ? 'bg-[#8C3B58] text-white font-semibold'
-                          : 'bg-white text-[#23191E] border border-[#F0E1E4]'
+                          ? 'bg-vara-rose text-white font-semibold'
+                          : 'bg-white text-vara-ink border border-vara-line'
                       }`}
                     >
                       {ing.labelFa}
@@ -1132,8 +1132,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* 5. روتین‌ها */}
-              <div className="space-y-2 pt-4 border-t border-[#F0E1E4]">
-                <h4 className="text-xs font-bold text-[#23191E]">
+              <div className="space-y-2 pt-4 border-t border-vara-line">
+                <h4 className="text-xs font-bold text-vara-ink">
                   <span>روتین‌ها و اهداف پوستی</span>
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
@@ -1141,10 +1141,10 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                     <button
                       key={r.id}
                       onClick={() => setSelectedRoutine(r.id)} aria-pressed={selectedRoutine === r.id}
-                      className={`p-2 rounded-xl text-xs transition-all cursor-pointer text-center ${
+                      className={`p-2 rounded-full text-xs transition-all cursor-pointer text-center ${
                         selectedRoutine === r.id
-                          ? 'bg-[#8C3B58] text-white font-semibold'
-                          : 'bg-white text-[#23191E] border border-[#F0E1E4]'
+                          ? 'bg-vara-rose text-white font-semibold'
+                          : 'bg-white text-vara-ink border border-vara-line'
                       }`}
                     >
                       {r.labelFa}
@@ -1154,27 +1154,27 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               </div>
 
               {/* موجودی */}
-              <div className="pt-4 border-t border-[#F0E1E4] space-y-2">
-                <label className="flex items-center justify-between text-xs text-[#23191E] py-1 font-bold">
+              <div className="pt-4 border-t border-vara-line space-y-2">
+                <label className="flex items-center justify-between text-xs text-vara-ink py-1 font-bold">
                   <span>فقط کالاهای موجود</span>
                   <input
                     type="checkbox"
                     checked={onlyInStock}
                     onChange={(e) => setOnlyInStock(e.target.checked)}
-                    className="accent-[#8C3B58] w-4 h-4 rounded"
+                    className="accent-vara-rose w-4 h-4 rounded"
                   />
                 </label>
               </div>
             </div>
 
-            <div className="p-4 border-t border-[#F0E1E4] bg-white flex gap-3">
+            <div className="p-4 border-t border-vara-line bg-white flex gap-3">
               <button
                 type="button"
                 onClick={() => {
                   resetAllFilters();
                   setMobileFilterOpen(false);
                 }}
-                className="w-1/3 bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] py-3 rounded-xl text-xs font-semibold cursor-pointer"
+                className="w-1/3 bg-vara-surface text-vara-ink border border-vara-line py-3 rounded-full text-xs font-semibold cursor-pointer"
               >
                 پاکسازی
               </button>
@@ -1182,7 +1182,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                 type="button"
                 ref={applyMobileFilterRef}
                 onClick={() => setMobileFilterOpen(false)}
-                className="w-2/3 bg-[#8C3B58] hover:bg-[#732E47] text-white py-3 rounded-xl text-xs font-semibold cursor-pointer"
+                className="w-2/3 bg-vara-rose hover:bg-vara-rose-hover text-white py-3 rounded-full text-xs font-semibold cursor-pointer"
               >
                 اعمال فیلترها ({filteredProducts.length.toLocaleString('fa-IR')})
               </button>

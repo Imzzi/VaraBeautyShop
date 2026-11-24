@@ -284,8 +284,8 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
     if (matchedProducts.length === 0) return null;
 
     return (
-      <div className="mt-3.5 pt-3 border-t border-[#F0E1E4] space-y-2.5">
-        <div className="text-[11px] font-bold text-[#8C3B58]">
+      <div className="mt-3.5 pt-3 border-t border-vara-line space-y-2.5">
+        <div className="text-[11px] font-bold text-vara-rose-ink">
           <span>محصولات توصیه شده برای این روتین:</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -296,7 +296,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
             return (
               <div 
                 key={prod.id}
-                className="bg-white rounded-xl p-2.5 border border-[#F0E1E4] shadow-xs flex items-center justify-between gap-2.5 hover:border-[#D48C9E] transition-all"
+                className="bg-white rounded-xl p-2.5 border border-vara-line shadow-xs flex items-center justify-between gap-2.5 hover:border-vara-tint-line transition-all"
               >
                 <div 
                   className="flex items-center gap-2 cursor-pointer flex-1 min-w-0"
@@ -305,12 +305,12 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                   <img 
                     src={prodImg} 
                     alt={prod.nameFa || 'محصول'}
-                    className="w-11 h-11 object-cover rounded-lg bg-[#F9F1F0] shrink-0" 
+                    className="w-11 h-11 object-cover rounded-lg bg-vara-surface shrink-0"
                   />
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-xs font-bold text-[#23191E] truncate">{prod.nameFa || 'محصول'}</h4>
-                    <p className="text-[11px] text-[#8C3B58] font-bold">
-                      {prodPrice} <span className="text-[9px] font-normal text-[#785E67]">تومان</span>
+                    <h4 className="text-xs font-bold text-vara-ink truncate">{prod.nameFa || 'محصول'}</h4>
+                    <p className="text-[11px] text-vara-rose-ink font-bold">
+                      {prodPrice} <span className="text-[9px] font-normal text-vara-muted">تومان</span>
                     </p>
                   </div>
                 </div>
@@ -318,10 +318,10 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                 <button
                   type="button"
                   onClick={() => handleQuickAddToCart(prod)}
-                  className={`p-2 rounded-lg text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                  className={`p-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                     isAdded 
-                      ? 'bg-[#8C3B58] text-white' 
-                      : 'bg-white hover:bg-[#8C3B58] text-[#8C3B58] hover:text-white border border-[#F0E1E4]'
+                      ? 'bg-vara-rose text-white'
+                      : 'bg-white hover:bg-vara-tint text-vara-rose-ink hover:text-vara-rose-ink border border-vara-line'
                   }`}
                   title="افزودن به سبد خرید"
                 >
@@ -340,10 +340,10 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
       {/* Advisor Drawer / Modal */}
       {isOpen && (
         <Modal label="مشاور پوست ورا" onClose={onClose}
-          className="fixed inset-0 z-50 flex items-end justify-end p-1.5 sm:p-4 md:p-6 bg-[#23191E]/45 font-vazir">
+          className="fixed inset-0 z-50 flex items-end justify-end p-1.5 sm:p-4 md:p-6 bg-vara-ink/45 font-vazir">
           <div 
             id="ai-advisor-window"
-            className={`pointer-events-auto relative z-10 bg-white rounded-t-[28px] sm:rounded-[28px] border border-[#F0E1E4] shadow-[0_24px_48px_-12px_rgba(35,25,30,0.2)] flex flex-col transition-all duration-300 overflow-hidden w-full ${
+            className={`pointer-events-auto relative z-10 bg-white rounded-t-[28px] sm:rounded-[28px] border border-vara-line shadow-vara-float flex flex-col transition-all duration-300 overflow-hidden w-full ${
               isExpanded 
                 ? 'sm:w-[620px] h-[85dvh] max-h-[calc(100dvh-1rem)] sm:max-h-[min(680px,calc(100dvh-2rem))]' 
                 : 'sm:w-[440px] h-[78dvh] max-h-[calc(100dvh-1rem)] sm:max-h-[min(540px,calc(100dvh-2rem))]'
@@ -351,32 +351,32 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="bg-white text-[#23191E] px-5 py-3.5 flex flex-col justify-center border-b border-[#F0E1E4] shrink-0">
+            <div className="bg-white text-vara-ink px-5 py-3.5 flex flex-col justify-center border-b border-vara-line shrink-0">
               {/* Mobile Pull/Close Indicator */}
               <div 
                 onClick={() => onClose()}
-                className="w-10 h-1 bg-[#E5CED5] hover:bg-[#8C3B58] rounded-full mx-auto mb-2 cursor-pointer transition-colors sm:hidden"
+                className="w-10 h-1 bg-vara-line-strong hover:bg-vara-tint rounded-full mx-auto mb-2 cursor-pointer transition-colors sm:hidden"
                 title="برای بستن لمس کنید"
               />
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-[#F9F1F0] flex items-center justify-center text-[#8C3B58] border border-[#F0E1E4]">
-                    <MessageSquareHeart className="w-4 h-4 text-[#8C3B58]" />
+                  <div className="w-8 h-8 rounded-full bg-vara-surface flex items-center justify-center text-vara-rose-ink border border-vara-line">
+                    <MessageSquareHeart className="w-4 h-4 text-vara-rose-ink" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-[#23191E] flex items-center gap-1.5">
+                    <h3 className="text-sm font-bold text-vara-ink flex items-center gap-1.5">
                       مشاور هوشمند پوست
                     </h3>
-                    <span className="text-[10px] text-[#785E67] hidden sm:inline-block">مشاور تخصصی ورا بیوتی</span>
+                    <span className="text-[10px] text-vara-muted hidden sm:inline-block">مشاور تخصصی ورا بیوتی</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-[#785E67]">
+                <div className="flex items-center gap-1.5 text-vara-muted">
                   <button
                     type="button"
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="p-1.5 hover:bg-[#F9F1F0] rounded-full transition-colors cursor-pointer hidden sm:flex items-center text-xs text-[#785E67] hover:text-[#8C3B58]"
+                    className="p-1.5 hover:bg-vara-surface rounded-full transition-colors cursor-pointer hidden sm:flex items-center text-xs text-vara-muted hover:text-vara-rose-ink"
                     title={isExpanded ? 'کوچک‌نمایی' : 'بزرگ‌نمایی'}
                   >
                     {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -384,7 +384,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                   <button
                     type="button"
                     onClick={() => onClose()}
-                    className="p-1.5 sm:px-3 sm:py-1 bg-[#F9F1F0] hover:bg-[#8C3B58] hover:text-white text-[#23191E] rounded-full transition-colors cursor-pointer flex items-center gap-1 border border-[#F0E1E4]"
+                    className="p-1.5 sm:px-3 sm:py-1 bg-vara-surface hover:bg-vara-tint hover:text-vara-rose-ink text-vara-ink rounded-full transition-colors cursor-pointer flex items-center gap-1 border border-vara-line"
                     title="بستن (Esc)"
                     aria-label="بستن مشاور هوشمند"
                   >
@@ -396,14 +396,14 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
             </div>
 
             {/* Navigation Tabs: Chat vs Vision Scan */}
-            <div className="bg-[#FDFBF9] p-1.5 border-b border-[#F0E1E4] flex items-center gap-1 shrink-0">
+            <div className="bg-vara-canvas p-1.5 border-b border-vara-line flex items-center gap-1 shrink-0">
               <button
                 type="button"
                 onClick={() => setActiveTab('chat')}
                 className={`flex-1 py-1.5 px-3 rounded-full text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   activeTab === 'chat'
-                    ? 'bg-[#8C3B58] text-white shadow-xs'
-                    : 'text-[#785E67] hover:text-[#8C3B58]'
+                    ? 'bg-vara-rose text-white shadow-xs'
+                    : 'text-vara-muted hover:text-vara-rose-ink'
                 }`}
               >
                 <Bot className="w-3.5 h-3.5" />
@@ -415,8 +415,8 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                 onClick={() => setActiveTab('scan')}
                 className={`flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   activeTab === 'scan'
-                    ? 'bg-[#8C3B58] text-white shadow-xs'
-                    : 'text-[#785E67] hover:text-[#8C3B58]'
+                    ? 'bg-vara-rose text-white shadow-xs'
+                    : 'text-vara-muted hover:text-vara-rose-ink'
                 }`}
               >
                 <Camera className="w-3.5 h-3.5" />
@@ -426,13 +426,13 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
 
             {/* Personalized Skin Profile Banner */}
             {savedSkinProfile && (
-              <div className="bg-[#F9F1F0] border-b border-[#F0E1E4] px-3.5 py-1.5 flex items-center justify-between text-[11px] font-vazir text-[#23191E]">
+              <div className="bg-vara-surface border-b border-vara-line px-3.5 py-1.5 flex items-center justify-between text-[11px] font-vazir text-vara-ink">
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-bold text-[#8C3B58]">پروفایل متصل:</span>
+                  <span className="font-bold text-vara-rose-ink">پروفایل متصل:</span>
                   <span className="font-serif italic font-medium">{savedSkinProfile.summaryLabelEn}</span>
                 </div>
-                <span className="text-[10px] text-[#785E67] font-mono">
+                <span className="text-[10px] text-vara-muted font-mono">
                   {savedSkinProfile.skinType} · {savedSkinProfile.primaryConcern}
                 </span>
               </div>
@@ -440,7 +440,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
 
             {/* Tab 1: Chat Mode */}
             {activeTab === 'chat' && (
-              <div className="flex-1 flex flex-col justify-between overflow-hidden bg-[#FDFBF9]">
+              <div className="flex-1 flex flex-col justify-between overflow-hidden bg-vara-canvas">
                 
                 {/* Messages Container */}
                 <div className="flex-1 p-4 overflow-y-auto space-y-4">
@@ -452,8 +452,8 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                       {/* Avatar */}
                       <div className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-xs font-bold shadow-xs ${
                         msg.sender === 'user' 
-                          ? 'bg-[#8C3B58] text-white' 
-                          : 'bg-[#F9F1F0] text-[#8C3B58] border border-[#F0E1E4]'
+                          ? 'bg-vara-rose text-white'
+                          : 'bg-vara-surface text-vara-rose-ink border border-vara-line'
                       }`}>
                         {msg.sender === 'user' ? <UserIcon className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                       </div>
@@ -461,8 +461,8 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                       {/* Message Bubble */}
                       <div className={`max-w-[85%] rounded-2xl p-3.5 text-xs font-vazir leading-relaxed text-right ${
                         msg.sender === 'user'
-                          ? 'bg-[#8C3B58] text-white rounded-tr-xs'
-                          : 'bg-white text-[#23191E] rounded-tl-xs border border-[#F0E1E4] shadow-xs'
+                          ? 'bg-vara-rose text-white rounded-tr-xs'
+                          : 'bg-white text-vara-ink rounded-tl-xs border border-vara-line shadow-xs'
                       }`}>
                         <div className="whitespace-pre-line">
                           {msg.text}
@@ -471,7 +471,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                         {/* Suggested Products (if any) */}
                         {msg.sender === 'bot' && renderSuggestedProducts(msg.suggestedProductIds)}
 
-                        <div className={`text-[10px] mt-1.5 opacity-60 text-left ${msg.sender === 'user' ? 'text-white' : 'text-[#785E67]'}`}>
+                        <div className={`text-[10px] mt-1.5 opacity-60 text-left ${msg.sender === 'user' ? 'text-white' : 'text-vara-muted'}`}>
                           {msg.timestamp}
                         </div>
                       </div>
@@ -481,14 +481,14 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                   {/* Loading Typing Indicator */}
                   {loading && (
                     <div className="flex gap-2.5 items-center text-right">
-                      <div className="w-8 h-8 rounded-full bg-[#F9F1F0] text-[#8C3B58] border border-[#F0E1E4] shrink-0 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-vara-surface text-vara-rose-ink border border-vara-line shrink-0 flex items-center justify-center">
                         <Bot className="w-4 h-4" />
                       </div>
-                      <div className="bg-white border border-[#F0E1E4] rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-[#D48C9E] animate-bounce [animation-delay:-0.3s]"></span>
-                        <span className="w-2 h-2 rounded-full bg-[#D48C9E] animate-bounce [animation-delay:-0.15s]"></span>
-                        <span className="w-2 h-2 rounded-full bg-[#8C3B58] animate-bounce"></span>
-                        <span className="text-[11px] text-[#785E67] mr-1.5 font-vazir">در حال بررسی کاتالوگ...</span>
+                      <div className="bg-white border border-vara-line rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-vara-tint animate-bounce [animation-delay:-0.3s]"></span>
+                        <span className="w-2 h-2 rounded-full bg-vara-tint animate-bounce [animation-delay:-0.15s]"></span>
+                        <span className="w-2 h-2 rounded-full bg-vara-rose animate-bounce"></span>
+                        <span className="text-[11px] text-vara-muted mr-1.5 font-vazir">در حال بررسی کاتالوگ...</span>
                       </div>
                     </div>
                   )}
@@ -497,15 +497,15 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                 </div>
 
                 {/* Quick Prompts Carousel */}
-                <div className="p-2.5 bg-white border-t border-[#F0E1E4] shrink-0">
-                  <p className="text-[10px] font-bold text-[#785E67] mb-1.5 text-right">پیشنهادهای سریع:</p>
+                <div className="p-2.5 bg-white border-t border-vara-line shrink-0">
+                  <p className="text-[10px] font-bold text-vara-muted mb-1.5 text-right">پیشنهادهای سریع:</p>
                   <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
                     {quickPrompts.map((p, idx) => (
                       <button
                         key={idx}
                         type="button"
                         onClick={() => handleSendMessage(p.query)}
-                        className="whitespace-nowrap bg-[#FDFBF9] hover:bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] px-2.5 py-1 rounded-full text-[11px] font-vazir font-semibold hover:border-[#D48C9E] transition-colors shrink-0 cursor-pointer"
+                        className="whitespace-nowrap bg-vara-canvas hover:bg-vara-surface text-vara-ink border border-vara-line px-2.5 py-1 rounded-full text-[11px] font-vazir font-semibold hover:border-vara-tint-line transition-colors shrink-0 cursor-pointer"
                       >
                         {p.label}
                       </button>
@@ -514,7 +514,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                 </div>
 
                 {/* Input Footer */}
-                <div className="p-3 bg-white border-t border-[#F0E1E4] shrink-0">
+                <div className="p-3 bg-white border-t border-vara-line shrink-0">
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -525,7 +525,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                     <button
                       type="button"
                       onClick={() => setActiveTab('scan')}
-                      className="p-2.5 rounded-xl bg-[#FDFBF9] text-[#8C3B58] hover:bg-[#F9F1F0] border border-[#F0E1E4] transition-colors cursor-pointer"
+                      className="p-2.5 rounded-full bg-vara-canvas text-vara-rose-ink hover:bg-vara-surface border border-vara-line transition-colors cursor-pointer"
                       title="آنالیز عکس پوست"
                     >
                       <Camera className="w-4 h-4" />
@@ -536,13 +536,13 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                       value={inputMessage}
                       onChange={(e) => setInputMessage(e.target.value)}
                       placeholder="نوع پوست، سوال یا دغدغه‌تان را بنویسید..."
-                      className="flex-1 bg-[#FDFBF9] border border-[#F0E1E4] text-[#23191E] text-xs font-vazir rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-[#8C3B58] focus:bg-white transition-all text-right placeholder-[#A18891]"
+                      className="flex-1 bg-vara-canvas border border-vara-line text-vara-ink text-xs font-vazir rounded-full px-3.5 py-2.5 focus:outline-none focus:border-vara-rose focus:bg-white transition-all text-right placeholder-vara-muted"
                     />
 
                     <button
                       type="submit"
                       disabled={!inputMessage.trim() || loading}
-                      className="p-2.5 rounded-xl bg-[#8C3B58] hover:bg-[#732E47] disabled:opacity-40 disabled:cursor-not-allowed text-white transition-all shadow-2xs cursor-pointer"
+                      className="p-2.5 rounded-full bg-vara-rose hover:bg-vara-rose-hover disabled:opacity-40 disabled:cursor-not-allowed text-white transition-all shadow-2xs cursor-pointer"
                       title="ارسال"
                     >
                       <Send className="w-4 h-4 rotate-180" />
@@ -555,20 +555,20 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
 
             {/* Tab 2: Skin Photo Scan Mode */}
             {activeTab === 'scan' && (
-              <div className="flex-1 overflow-y-auto p-4 bg-[#FDFBF9] space-y-4 text-right">
+              <div className="flex-1 overflow-y-auto p-4 bg-vara-canvas space-y-4 text-right">
                 
                 {/* Intro Box */}
-                <div className="bg-white p-4 rounded-2xl border border-[#F0E1E4] shadow-xs space-y-2">
-                  <div className="text-xs font-bold text-[#8C3B58]">
+                <div className="bg-white p-4 rounded-2xl border border-vara-line shadow-xs space-y-2">
+                  <div className="text-xs font-bold text-vara-rose-ink">
                     <span>آنالیز هوشمند تصویر چهره (AI Skin Vision)</span>
                   </div>
-                  <p className="text-xs text-[#5C444D] leading-relaxed font-vazir">
+                  <p className="text-xs text-vara-muted-strong leading-relaxed font-vazir">
                     عکسی واضح و بدون آرایش از پوست صورت خود را آپلود کنید تا مدل هوش مصنوعی وضعیت هیدراتاسیون، منافذ و سد دفاعی پوست را بررسی و روتین مناسب را پیشنهاد دهد.
                   </p>
                 </div>
 
                 {/* Upload / Camera Box */}
-                <div className="bg-white p-4 rounded-2xl border-2 border-dashed border-[#D48C9E] transition-all text-center">
+                <div className="bg-white p-4 rounded-2xl border-2 border-dashed border-vara-tint-line transition-all text-center">
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -579,15 +579,15 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
 
                   {selectedImage ? (
                     <div className="space-y-3">
-                      <div className="relative mx-auto max-w-[260px] aspect-square rounded-2xl overflow-hidden bg-[#F9F1F0] shadow-md">
+                      <div className="relative mx-auto max-w-[260px] aspect-square rounded-2xl overflow-hidden bg-vara-surface shadow-md">
                         <img
                           src={selectedImage}
                           alt="پوست انتخاب شده"
                           className="w-full h-full object-cover"
                         />
                         {analyzing && (
-                          <div className="absolute inset-0 bg-[#23191E]/60 backdrop-blur-xs flex flex-col items-center justify-center text-white p-4">
-                            <RefreshCw className="w-8 h-8 text-[#D48C9E] animate-spin mb-2" />
+                          <div className="absolute inset-0 bg-vara-ink/60 backdrop-blur-xs flex flex-col items-center justify-center text-white p-4">
+                            <RefreshCw className="w-8 h-8 text-vara-rose-ink animate-spin mb-2" />
                             <p className="text-xs font-bold font-vazir animate-pulse">در حال اسکن لایه‌های پوستی...</p>
                             <p className="text-[10px] text-white/80 mt-1">تطبیق با ترکیبات تخصصی</p>
                           </div>
@@ -598,7 +598,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                         <button
                           type="button"
                           onClick={() => fileInputRef.current?.click()}
-                          className="text-xs font-vazir text-[#23191E] hover:bg-[#F9F1F0] bg-[#FDFBF9] px-3 py-1.5 rounded-lg border border-[#F0E1E4] cursor-pointer"
+                          className="text-xs font-vazir text-vara-ink hover:bg-vara-surface bg-vara-canvas px-3 py-1.5 rounded-full border border-vara-line cursor-pointer"
                         >
                           تغییر تصویر
                         </button>
@@ -609,7 +609,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                             setImageFile(null);
                             setAnalysisResult(null);
                           }}
-                          className="text-xs font-vazir text-rose-600 bg-rose-50 px-3 py-1.5 rounded-lg border border-rose-200 cursor-pointer"
+                          className="text-xs font-vazir text-rose-600 bg-rose-50 px-3 py-1.5 rounded-full border border-rose-200 cursor-pointer"
                         >
                           حذف
                         </button>
@@ -620,14 +620,14 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                       onClick={() => fileInputRef.current?.click()}
                       className="py-6 cursor-pointer space-y-3 flex flex-col items-center"
                     >
-                      <div className="w-14 h-14 rounded-2xl bg-[#F9F1F0] border border-[#F0E1E4] flex items-center justify-center text-[#8C3B58] shadow-xs">
+                      <div className="w-14 h-14 rounded-2xl bg-vara-surface border border-vara-line flex items-center justify-center text-vara-rose-ink shadow-xs">
                         <Upload className="w-6 h-6" />
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-[#23191E] font-vazir">
+                        <p className="text-xs font-bold text-vara-ink font-vazir">
                           کلیک کنید تا تصویر آپلود یا عکس گرفته شود
                         </p>
-                        <p className="text-[11px] text-[#785E67] mt-1 font-vazir">
+                        <p className="text-[11px] text-vara-muted mt-1 font-vazir">
                           فرمت‌های JPG، PNG (حداکثر ۸ مگابایت)
                         </p>
                       </div>
@@ -638,7 +638,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                 {/* Additional User Notes */}
                 {selectedImage && !analysisResult && (
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#23191E] block">
+                    <label className="text-xs font-bold text-vara-ink block">
                       توضیح یا دغدغه تکمیلی (اختیاری):
                     </label>
                     <input
@@ -646,14 +646,14 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                       value={userNote}
                       onChange={(e) => setUserNote(e.target.value)}
                       placeholder="مثال: پوستم در فصل سرما پوسته پوسته می‌شود و احساس کشیدگی دارم..."
-                      className="w-full bg-white border border-[#F0E1E4] text-xs font-vazir rounded-xl p-3 focus:outline-none focus:border-[#8C3B58]"
+                      className="w-full bg-white border border-vara-line text-xs font-vazir rounded-full p-3 focus:outline-none focus:border-vara-rose"
                     />
 
                     <button
                       type="button"
                       onClick={handleAnalyzePhoto}
                       disabled={analyzing}
-                      className="w-full mt-2 bg-[#8C3B58] hover:bg-[#732E47] disabled:opacity-50 text-white font-bold text-xs font-vazir py-3 rounded-xl transition-all shadow-2xs flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full mt-2 bg-vara-rose hover:bg-vara-rose-hover disabled:opacity-50 text-white font-bold text-xs font-vazir py-3 rounded-full transition-all shadow-2xs flex items-center justify-center gap-2 cursor-pointer"
                     >
                       {analyzing ? (
                         <>
@@ -669,24 +669,24 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
 
                 {/* Analysis Result Display */}
                 {analysisResult && (
-                  <div className="bg-white p-4 rounded-2xl border border-[#F0E1E4] shadow-xs space-y-4">
-                    <div className="flex items-center justify-between border-b border-[#F0E1E4] pb-2.5">
-                      <div className="text-xs font-bold text-[#8C3B58]">
+                  <div className="bg-white p-4 rounded-2xl border border-vara-line shadow-xs space-y-4">
+                    <div className="flex items-center justify-between border-b border-vara-line pb-2.5">
+                      <div className="text-xs font-bold text-vara-rose-ink">
                         <span>گزارش تخصصی آنالیز چهره</span>
                       </div>
-                      <span className="text-[10px] bg-[#F9F1F0] px-2 py-0.5 rounded-full text-[#8C3B58] border border-[#F0E1E4]">
+                      <span className="text-[10px] bg-vara-surface px-2 py-0.5 rounded-full text-vara-rose-ink border border-vara-line">
                         تطبیق تخصصی پوست
                       </span>
                     </div>
 
-                    <div className="text-xs font-vazir leading-relaxed text-[#23191E] whitespace-pre-line space-y-2">
+                    <div className="text-xs font-vazir leading-relaxed text-vara-ink whitespace-pre-line space-y-2">
                       {analysisResult}
                     </div>
 
                     {/* Matched Products Recommendations */}
                     {renderSuggestedProducts(analysisProductIds)}
 
-                    <div className="pt-2 border-t border-[#F0E1E4] flex items-center justify-between">
+                    <div className="pt-2 border-t border-vara-line flex items-center justify-between">
                       <button
                         type="button"
                         onClick={() => {
@@ -694,7 +694,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                           setAnalysisResult(null);
                           setSelectedImage(null);
                         }}
-                        className="text-xs text-[#8C3B58] font-bold flex items-center gap-1 hover:underline cursor-pointer"
+                        className="text-xs text-vara-rose-ink font-bold flex items-center gap-1 hover:underline cursor-pointer"
                       >
                         <span>طرح سوال بیشتر در چت</span>
                         <ChevronLeft className="w-3.5 h-3.5" />
@@ -707,7 +707,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                           setSelectedImage(null);
                           setImageFile(null);
                         }}
-                        className="text-xs text-[#785E67] hover:text-[#23191E] cursor-pointer"
+                        className="text-xs text-vara-muted hover:text-vara-ink cursor-pointer"
                       >
                         آنالیز عکس دیگر
                       </button>
@@ -716,8 +716,8 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
                 )}
 
                 {/* Disclaimer */}
-                <div className="p-3 bg-[#F9F1F0] rounded-xl border border-[#F0E1E4] flex items-start gap-2 text-[11px] text-[#785E67] font-vazir">
-                  <Info className="w-4 h-4 text-[#8C3B58] shrink-0 mt-0.5" />
+                <div className="p-3 bg-vara-surface rounded-xl border border-vara-line flex items-start gap-2 text-[11px] text-vara-muted font-vazir">
+                  <Info className="w-4 h-4 text-vara-rose-ink shrink-0 mt-0.5" />
                   <p>
                     تحلیل‌های ارائه شده بر پایه راهنماهای مراقبت پوست است و جایگزین درمان‌های پزشکی تخصصی در موارد حاد پوستی نمی‌باشد.
                   </p>

@@ -60,8 +60,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className={`vara-card group bg-white rounded-xl p-3 border border-[#F0E1E4] hover:border-[#D48C9E] transition-all duration-200 flex flex-col justify-between ${
-      isOutOfStock ? 'opacity-85' : 'hover:-translate-y-0.5 shadow-shop-card hover:shadow-shop-card-hover'
+    <div className={`vara-card group bg-white rounded-2xl p-4 border border-vara-line hover:border-vara-tint-line transition-all duration-200 flex flex-col justify-between ${
+      isOutOfStock ? 'opacity-85' : 'shadow-shop-card hover:shadow-shop-card-hover'
     }`}>
       
       {/* Top Image & Single Boutique Tag Container */}
@@ -82,19 +82,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Single Restrained Boutique Tag */}
         <div className="absolute top-2.5 right-2.5 pointer-events-none">
           {isOutOfStock ? (
-            <span className="bg-[#23191E] text-white text-[10px] font-medium font-vazir px-2.5 py-0.5 rounded-md">
+            <span className="bg-vara-ink text-white text-[10px] font-medium font-vazir px-2.5 py-0.5 rounded-full">
               ناموجود
             </span>
           ) : isLowStock ? (
-            <span className="bg-white/95 text-[#B45309] text-[10px] font-semibold font-vazir px-2 py-0.5 rounded-md border border-[#F0E1E4]">
+            <span className="bg-white/95 text-[#B45309] text-[10px] font-semibold font-vazir px-2 py-0.5 rounded-full border border-vara-line">
               تنها {currentStock.toLocaleString('fa-IR')} عدد
             </span>
           ) : product.isNew ? (
-            <span className="bg-[#8C3B58] text-white text-[10px] font-semibold font-vazir px-2 py-0.5 rounded-md">
+            <span className="bg-vara-rose text-white text-[10px] font-semibold font-vazir px-2 py-0.5 rounded-full">
               جدید
             </span>
           ) : product.isBestSeller ? (
-            <span className="bg-[#F4E4E8]/95 text-[#8C3B58] font-semibold text-[10px] font-vazir px-2 py-0.5 rounded-md border border-[#D48C9E]/40">
+            <span className="bg-vara-tint/95 text-vara-rose-ink font-semibold text-[10px] font-vazir px-2 py-0.5 rounded-full border border-vara-tint-line/40">
               پرفروش
             </span>
           ) : null}
@@ -102,15 +102,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       </a>
 
       {/* Product Content Details */}
-      <div className="pt-3 px-1 flex-1 flex flex-col justify-between space-y-2.5 text-right">
+      <div className="pt-4 px-1 flex-1 flex flex-col justify-between space-y-3 text-right">
         <div>
           {/* Brand & Rating Row */}
           <div className="flex items-center justify-between text-xs mb-1">
-            <bdi className="text-xs font-semibold text-[#8C3B58] font-jakarta truncate max-w-[140px]">
+            <bdi className="text-xs font-semibold text-vara-rose-ink font-jakarta truncate max-w-[140px]">
               {product.brand || product.brandFa || 'VARA'}
             </bdi>
-            {product.rating > 0 && <div className="flex items-center gap-1 text-xs text-[#785E67]">
-              <Star className="w-3 h-3 fill-[#D48C9E] text-[#8C3B58]" />
+            {product.rating > 0 && <div className="flex items-center gap-1 text-xs text-vara-muted">
+              <Star className="w-3 h-3 fill-vara-rose-ink text-vara-rose-ink" />
               <span className="font-semibold tabular-nums">{product.rating.toLocaleString('fa-IR', { maximumFractionDigits: 1 })}</span>
             </div>}
           </div>
@@ -123,10 +123,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {/* Key Active Ingredients */}
           {product.keyIngredients && product.keyIngredients.length > 0 && (
-            <div className="flex items-center gap-1.5 mt-1 text-[11px] text-[#785E67] font-vazir truncate">
+            <div className="flex items-center gap-1.5 mt-1 text-[11px] text-vara-muted font-vazir truncate">
               {product.keyIngredients.slice(0, 2).map((ing, idx) => (
                 <React.Fragment key={idx}>
-                  {idx > 0 && <span aria-hidden="true" className="text-[#D48C9E]">·</span>}
+                  {idx > 0 && <span aria-hidden="true" className="text-vara-rose-ink">·</span>}
                   <span>{ing.nameFa}</span>
                 </React.Fragment>
               ))}
@@ -144,10 +144,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   type="button"
                   aria-pressed={selectedVariant?.id === v.id}
                   onClick={() => handleVariantSelect(v)}
-                  className={`text-[10px] font-vazir px-2 py-0.5 rounded-md border transition-all cursor-pointer flex items-center gap-1 ${
+                  className={`text-[10px] font-vazir px-2 py-0.5 rounded-full border transition-all cursor-pointer flex items-center gap-1 ${
                     selectedVariant?.id === v.id
-                      ? 'bg-[#8C3B58] text-white border-[#8C3B58] font-medium'
-                      : 'bg-[#F9F1F0] text-[#5E434D] border-[#F0E1E4] hover:border-[#D48C9E]'
+                      ? 'bg-vara-rose text-white border-vara-rose font-medium'
+                      : 'bg-vara-surface text-vara-muted-strong border-vara-line hover:border-vara-tint-line'
                   }`}
                   title={v.name}
                 >
@@ -170,10 +170,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   key={idx}
                   aria-pressed={selectedSize?.label === sz.label}
                   onClick={() => setSelectedSize(sz)}
-                  className={`text-[10px] font-vazir px-2 py-0.5 rounded-md border transition-all cursor-pointer ${
+                  className={`text-[10px] font-vazir px-2 py-0.5 rounded-full border transition-all cursor-pointer ${
                     (selectedSize?.label || '') === sz.label
-                      ? 'bg-[#8C3B58] text-white border-[#8C3B58] font-medium'
-                      : 'bg-[#F9F1F0] text-[#5E434D] border-[#F0E1E4] hover:border-[#D48C9E]'
+                      ? 'bg-vara-rose text-white border-vara-rose font-medium'
+                      : 'bg-vara-surface text-vara-muted-strong border-vara-line hover:border-vara-tint-line'
                   }`}
                 >
                   {sz.label}
@@ -184,20 +184,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         ) : null}
 
         {/* Price & Add To Cart Button */}
-        <div className="vara-card-actions pt-2.5 border-t border-[#F0E1E4]">
+        <div className="vara-card-actions pt-3 border-t border-vara-line">
           
           {/* Price Container */}
           <div className="flex flex-col text-right">
             {(selectedVariant?.originalPrice || selectedSize?.originalPrice) && (
-              <span className="line-through text-[10px] text-[#785E67] font-vazir">
+              <span className="line-through text-[10px] text-vara-muted font-vazir">
                 {formatPrice(selectedVariant?.originalPrice || selectedSize?.originalPrice)}
               </span>
             )}
             <div className="flex flex-wrap items-baseline gap-1">
-              <span className="font-bold font-jakarta text-sm sm:text-[15px] text-[#23191E] tracking-tight">
+              <span className="font-bold font-jakarta text-sm sm:text-[15px] text-vara-ink tracking-tight">
                 {hasVariants && selectedVariant ? formatPrice(selectedVariant.price) : formatPrice(selectedSize?.price || product.price)}
               </span>
-              <span className="text-[10px] font-vazir text-[#785E67]">تومان</span>
+              <span className="text-[10px] font-vazir text-vara-muted">تومان</span>
             </div>
           </div>
 
@@ -205,14 +205,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {isOutOfStock ? (
             <button
               disabled
-              className="bg-[#F9F1F0] text-[#785E67] px-3 py-1.5 rounded-lg text-xs font-vazir font-medium cursor-not-allowed border border-[#F0E1E4]"
+              className="bg-vara-surface text-vara-muted px-3 py-1.5 rounded-full text-xs font-vazir font-medium cursor-not-allowed border border-vara-line"
             >
               <span>ناموجود</span>
             </button>
           ) : (
             <button
               onClick={() => onAddToCart(product, selectedSize, 1, selectedVariant || undefined)}
-              className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-3.5 py-1.5 rounded-lg shadow-shop-pill transition-all flex items-center justify-center gap-1 text-xs font-vazir font-medium cursor-pointer active:scale-95"
+              className="bg-vara-rose hover:bg-vara-rose-hover text-white px-3.5 py-1.5 rounded-full shadow-shop-pill transition-all flex items-center justify-center gap-1 text-xs font-vazir font-medium cursor-pointer active:scale-95"
               aria-label={`افزودن ${product.nameFa} به سبد`}
             >
               <Plus aria-hidden="true" size={14} /><span>افزودن</span>

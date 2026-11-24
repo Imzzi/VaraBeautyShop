@@ -83,25 +83,25 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
   };
 
   return (
-    <Modal label="کارت هدیه" onClose={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#23191E]/50 backdrop-blur-sm animate-fadeIn font-vazir">
+    <Modal label="کارت هدیه" onClose={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-vara-ink/50 backdrop-blur-sm animate-fadeIn font-vazir">
       <div 
-        className="bg-white rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-[0_20px_50px_-12px_rgba(140,59,88,0.18)] border border-[#F0E1E4] relative text-right"
+        className="bg-white rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-vara-float border border-vara-line relative text-right"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-[#F0E1E4] flex items-center justify-between sticky top-0 bg-[#FDFBF9]/95 backdrop-blur-md z-10">
+        <div className="p-6 border-b border-vara-line flex items-center justify-between sticky top-0 bg-vara-canvas/95 backdrop-blur-md z-10">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-[#F9F1F0] border border-[#F0E1E4] flex items-center justify-center text-[#8C3B58]">
-              <Gift className="w-5 h-5 text-[#8C3B58]" />
+            <div className="w-10 h-10 rounded-2xl bg-vara-surface border border-vara-line flex items-center justify-center text-vara-rose-ink">
+              <Gift className="w-5 h-5 text-vara-rose-ink" />
             </div>
             <div>
-              <h3 className="font-bold text-base text-[#23191E]">کارت هدیه اختصاصی ورا بیوتی</h3>
-              <p className="text-xs text-[#785E67]">انتخاب مبلغ و ارسال آنی هدیه دیجیتال زیبایی</p>
+              <h3 className="font-bold text-base text-vara-ink">کارت هدیه اختصاصی ورا بیوتی</h3>
+              <p className="text-xs text-vara-muted">انتخاب مبلغ و ارسال آنی هدیه دیجیتال زیبایی</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-[#F9F1F0] text-[#785E67] hover:text-[#8C3B58] transition-colors cursor-pointer"
+            className="p-2 rounded-full hover:bg-vara-surface text-vara-muted hover:text-vara-rose-ink transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -111,10 +111,10 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
           {/* Card Preview */}
           <div className={`p-6 rounded-2xl transition-all duration-300 text-white relative overflow-hidden shadow-lg ${
             selectedTheme === 'luxury-dark'
-              ? 'bg-gradient-to-br from-[#8C3B58] via-[#732E47] to-[#23191E] border border-[#D48C9E]/30'
+              ? 'bg-gradient-to-br from-[#8C3B58] via-[#732E47] to-[#23191E] border border-vara-tint-line/30'
               : selectedTheme === 'gold'
               ? 'bg-gradient-to-br from-[#D48C9E] via-[#B86B80] to-[#8C3B58] border border-white/20'
-              : 'bg-gradient-to-br from-[#23191E] via-[#3A2730] to-[#8C3B58] border border-[#D48C9E]/30'
+              : 'bg-gradient-to-br from-[#23191E] via-[#3A2730] to-[#8C3B58] border border-vara-tint-line/30'
           }`}>
             <div className="flex justify-between items-start mb-6">
               <div>
@@ -144,34 +144,34 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
 
           {/* Theme Selector */}
           <div>
-            <label className="block text-xs font-semibold text-[#23191E] mb-2">طرح و تم کارت هدیه</label>
+            <label className="block text-xs font-semibold text-vara-ink mb-2">طرح و تم کارت هدیه</label>
             <div className="grid grid-cols-3 gap-2.5">
               <button
                 onClick={() => setSelectedTheme('luxury-dark')}
-                className={`py-2 px-3 rounded-xl border text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+                className={`py-2 px-3 rounded-full border text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
                   selectedTheme === 'luxury-dark'
-                    ? 'border-[#8C3B58] bg-[#8C3B58] text-white font-bold shadow-xs'
-                    : 'border-[#F0E1E4] hover:bg-[#F9F1F0] text-[#785E67]'
+                    ? 'border-vara-rose bg-vara-rose text-white font-bold shadow-xs'
+                    : 'border-vara-line hover:bg-vara-surface text-vara-muted'
                 }`}
               >
                 <span>موو سلطنتی</span>
               </button>
               <button
                 onClick={() => setSelectedTheme('gold')}
-                className={`py-2 px-3 rounded-xl border text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+                className={`py-2 px-3 rounded-full border text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
                   selectedTheme === 'gold'
-                    ? 'border-[#D48C9E] bg-[#D48C9E] text-white font-bold shadow-xs'
-                    : 'border-[#F0E1E4] hover:bg-[#F9F1F0] text-[#785E67]'
+                    ? 'border-vara-tint-line bg-vara-tint text-vara-rose-ink font-bold shadow-xs'
+                    : 'border-vara-line hover:bg-vara-surface text-vara-muted'
                 }`}
               >
                 <span>رزگلد ملایم</span>
               </button>
               <button
                 onClick={() => setSelectedTheme('botanical')}
-                className={`py-2 px-3 rounded-xl border text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+                className={`py-2 px-3 rounded-full border text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
                   selectedTheme === 'botanical'
-                    ? 'border-[#23191E] bg-[#23191E] text-white font-bold shadow-xs'
-                    : 'border-[#F0E1E4] hover:bg-[#F9F1F0] text-[#785E67]'
+                    ? 'border-vara-ink bg-vara-ink text-white font-bold shadow-xs'
+                    : 'border-vara-line hover:bg-vara-surface text-vara-muted'
                 }`}
               >
                 <span>پلام تیره لوکس</span>
@@ -181,7 +181,7 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
 
           {/* Amount Selector */}
           <div>
-            <label className="block text-xs font-semibold text-[#23191E] mb-2">انتخاب مبلغ کارت هدیه</label>
+            <label className="block text-xs font-semibold text-vara-ink mb-2">انتخاب مبلغ کارت هدیه</label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
               {presetAmounts.map((preset) => (
                 <button
@@ -191,10 +191,10 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
                     setSelectedAmount(preset.value);
                     setIsCustom(false);
                   }}
-                  className={`py-2.5 px-3 rounded-xl border text-xs font-medium cursor-pointer transition-all text-center ${
+                  className={`py-2.5 px-3 rounded-full border text-xs font-medium cursor-pointer transition-all text-center ${
                     !isCustom && selectedAmount === preset.value
-                      ? 'border-[#8C3B58] bg-[#8C3B58] text-white font-bold shadow-xs'
-                      : 'border-[#F0E1E4] hover:bg-[#F9F1F0] text-[#23191E]'
+                      ? 'border-vara-rose bg-vara-rose text-white font-bold shadow-xs'
+                      : 'border-vara-line hover:bg-vara-surface text-vara-ink'
                   }`}
                 >
                   {preset.label}
@@ -207,8 +207,8 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
               <button
                 type="button"
                 onClick={() => setIsCustom(true)}
-                className={`px-3 py-2 rounded-xl text-xs border cursor-pointer transition-all shrink-0 ${
-                  isCustom ? 'border-[#8C3B58] bg-[#8C3B58] text-white font-bold' : 'border-[#F0E1E4] text-[#785E67]'
+                className={`px-3 py-2 rounded-full text-xs border cursor-pointer transition-all shrink-0 ${
+                  isCustom ? 'border-vara-rose bg-vara-rose text-white font-bold' : 'border-vara-line text-vara-muted'
                 }`}
               >
                 مبلغ دلخواه
@@ -219,7 +219,7 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
                   placeholder="مبلغ به تومان (مثلا: ۴,۵۰۰,۰۰۰)"
                   value={customAmount}
                   onChange={(e) => setCustomAmount(e.target.value)}
-                  className="flex-1 bg-[#FDFBF9] text-[#23191E] text-xs font-vazir px-3.5 py-2 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] text-right"
+                  className="flex-1 bg-vara-canvas text-vara-ink text-xs font-vazir px-3.5 py-2 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose text-right"
                   autoFocus
                 />
               )}
@@ -227,51 +227,51 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
           </div>
 
           {/* Recipient & Sender Form */}
-          <div className="space-y-3 border-t border-[#F0E1E4] pt-4">
-            <h4 className="text-xs font-bold text-[#23191E]">اطلاعات گیرنده و پیام شما</h4>
+          <div className="space-y-3 border-t border-vara-line pt-4">
+            <h4 className="text-xs font-bold text-vara-ink">اطلاعات گیرنده و پیام شما</h4>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] text-[#785E67] mb-1">نام گیرنده</label>
+                <label className="block text-[11px] text-vara-muted mb-1">نام گیرنده</label>
                 <input
                   type="text"
                   value={recipientName}
                   onChange={(e) => setRecipientName(e.target.value)}
                   placeholder="مثلا: سارا رضایی"
-                  className="w-full bg-[#FDFBF9] text-[#23191E] text-xs px-3.5 py-2 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] text-right"
+                  className="w-full bg-vara-canvas text-vara-ink text-xs px-3.5 py-2 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose text-right"
                 />
               </div>
               <div>
-                <label className="block text-[11px] text-[#785E67] mb-1">شماره همراه یا ایمیل گیرنده</label>
+                <label className="block text-[11px] text-vara-muted mb-1">شماره همراه یا ایمیل گیرنده</label>
                 <input
                   type="text"
                   value={recipientEmail}
                   onChange={(e) => setRecipientEmail(e.target.value)}
                   placeholder="۰۹۱۲۰۰۰۰۰۰۰ یا email@example.com"
-                  className="w-full bg-[#FDFBF9] text-[#23191E] text-xs px-3.5 py-2 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] text-right"
+                  className="w-full bg-vara-canvas text-vara-ink text-xs px-3.5 py-2 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose text-right"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] text-[#785E67] mb-1">نام فرستنده</label>
+                <label className="block text-[11px] text-vara-muted mb-1">نام فرستنده</label>
                 <input
                   type="text"
                   value={senderName}
                   onChange={(e) => setSenderName(e.target.value)}
                   placeholder="نام شما"
-                  className="w-full bg-[#FDFBF9] text-[#23191E] text-xs px-3.5 py-2 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] text-right"
+                  className="w-full bg-vara-canvas text-vara-ink text-xs px-3.5 py-2 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose text-right"
                 />
               </div>
               <div>
-                <label className="block text-[11px] text-[#785E67] mb-1">متن تبریک / پیام دلخواه</label>
+                <label className="block text-[11px] text-vara-muted mb-1">متن تبریک / پیام دلخواه</label>
                 <input
                   type="text"
                   value={personalMessage}
                   onChange={(e) => setPersonalMessage(e.target.value)}
                   placeholder="تولدت مبارک عزیز دلم! 🌸"
-                  className="w-full bg-[#FDFBF9] text-[#23191E] text-xs px-3.5 py-2 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] text-right"
+                  className="w-full bg-vara-canvas text-vara-ink text-xs px-3.5 py-2 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose text-right"
                 />
               </div>
             </div>
@@ -279,20 +279,20 @@ export const GiftCardModal: React.FC<GiftCardModalProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-6 border-t border-[#F0E1E4] bg-[#FDFBF9] flex items-center justify-between gap-4">
+        <div className="p-6 border-t border-vara-line bg-vara-canvas flex items-center justify-between gap-4">
           <div>
-            <span className="text-xs text-[#785E67] block">مبلغ نهایی کارت:</span>
-            <span className="text-base font-bold text-[#8C3B58] font-jakarta">
+            <span className="text-xs text-vara-muted block">مبلغ نهایی کارت:</span>
+            <span className="text-base font-bold text-vara-rose-ink font-jakarta">
               {currentPrice.toLocaleString('fa-IR')} تومان
             </span>
           </div>
           <button
             onClick={handleAddGiftCardToCart}
             disabled={addedSuccess}
-            className={`px-6 py-3 rounded-xl font-bold text-xs flex items-center gap-2 cursor-pointer transition-all ${
+            className={`px-6 py-3 rounded-full font-bold text-xs flex items-center gap-2 cursor-pointer transition-all ${
               addedSuccess
                 ? 'bg-[#15803D] text-white'
-                : 'bg-[#8C3B58] hover:bg-[#732E47] text-white shadow-xs'
+                : 'bg-vara-rose hover:bg-vara-rose-hover text-white shadow-xs'
             }`}
           >
             {addedSuccess ? (

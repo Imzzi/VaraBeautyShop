@@ -98,7 +98,7 @@ export const Hero: React.FC<HeroProps> = ({
           onBlur={(event) => {
             if (!event.currentTarget.contains(event.relatedTarget)) setHasFocus(false);
           }}
-          className="w-full relative rounded-2xl overflow-hidden border border-[#F0E1E4] h-[400px] sm:h-[440px] lg:h-[470px] bg-[#F9F1F0] flex flex-col justify-between shadow-shop-card"
+          className="w-full relative rounded-3xl overflow-hidden border border-vara-line h-[400px] sm:h-[440px] lg:h-[470px] bg-vara-surface flex flex-col justify-between shadow-shop-card"
         >
           {/* Slide Content Layout */}
           <div className="relative z-10 w-full flex-1 flex items-center justify-between p-6 sm:p-10 lg:p-14 overflow-hidden">
@@ -117,18 +117,18 @@ export const Hero: React.FC<HeroProps> = ({
             />
 
             {/* Warm Blush Scrim */}
-            <div className="absolute inset-0 bg-gradient-to-l from-[#FDFBF9]/96 via-[#FDFBF9]/88 to-transparent pointer-events-none z-1" />
+            <div className="absolute inset-0 bg-gradient-to-l from-vara-canvas/95 via-vara-surface/75 to-transparent pointer-events-none z-1" />
 
             {/* Editorial Copy Column (Right in RTL) */}
-            <div className="relative z-10 w-full md:max-w-[54%] text-right space-y-4 flex flex-col justify-center">
+            <div className="relative z-10 w-full md:max-w-[54%] text-start space-y-5 flex flex-col justify-center">
 
               {/* Boutique Eyebrow */}
               <div className="flex items-center gap-2.5 justify-start">
-                <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.14em] text-[#8C3B58] uppercase font-jakarta bg-[#F4E4E8] border border-[#D48C9E]/40 px-2.5 py-1 rounded">
+                <span className="text-xs font-semibold text-vara-rose-ink font-jakarta bg-vara-tint border border-vara-tint-line/40 px-2.5 py-1 rounded-full">
                   {currentSlide.eyebrow || 'CLINICAL FORMULATIONS'}
                 </span>
                 {currentSlide.actionType === 'ai_advisor' && (
-                  <span className="text-[10px] font-semibold bg-[#8C3B58] text-white px-2.5 py-1 rounded">
+                  <span className="text-[10px] font-semibold bg-vara-rose text-white px-2.5 py-1 rounded-full">
                     هوش مصنوعی ورا
                   </span>
                 )}
@@ -136,16 +136,16 @@ export const Hero: React.FC<HeroProps> = ({
 
               {/* Balanced Persian Headline */}
               <div className="space-y-1.5">
-                <h1 id="vara-home-title" className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#23191E] leading-[1.25] tracking-tight">
+                <h1 id="vara-home-title" className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-vara-ink leading-[1.28]">
                   {currentSlide.titlePart1}
                 </h1>
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#8C3B58] tracking-tight leading-tight">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-vara-ink leading-[1.28]">
                   {currentSlide.titlePart2}
                 </div>
               </div>
 
               {/* Subtitle Description */}
-              <p className="text-xs sm:text-sm text-[#5E434D] leading-relaxed max-w-md line-clamp-2">
+              <p className="text-sm sm:text-base text-vara-muted leading-relaxed max-w-md line-clamp-2">
                 {currentSlide.subtitle}
               </p>
 
@@ -153,7 +153,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <button
                   type="button"
                   onClick={() => handleSlideCta(currentSlide)}
-                  className="px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-[#8C3B58] hover:bg-[#732E47] text-white shadow-shop-violet transition-all duration-150 flex items-center gap-2.5 cursor-pointer group active:scale-98"
+                  className="px-6 py-3 rounded-full text-xs sm:text-sm font-semibold bg-vara-rose hover:bg-vara-rose-hover text-white shadow-shop-violet transition-all duration-150 flex items-center gap-2.5 cursor-pointer group active:scale-98"
                 >
                   <span>{currentSlide.ctaText}</span>
                   <ArrowLeft className="w-4 h-4 text-white group-hover:-translate-x-1 transition-transform" />
@@ -172,19 +172,19 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="vara-tools grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
           
           {/* Integrated UAE Link Price Calculator (7 cols on desktop) */}
-          <div className="lg:col-span-7 flex flex-col sm:flex-row sm:items-center gap-3 lg:border-l lg:border-[#F0E1E4] lg:pl-5">
+          <div className="lg:col-span-7 flex flex-col sm:flex-row sm:items-center gap-3 lg:border-e lg:border-vara-line lg:pe-5">
             <div className="flex items-center gap-2.5 shrink-0">
-              <div className="w-9 h-9 rounded-xl bg-[#F4E4E8] border border-[#D48C9E]/50 text-[#8C3B58] flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-full bg-vara-tint border border-vara-tint-line/50 text-vara-rose-ink flex items-center justify-center shrink-0">
                 <Calculator className="w-4 h-4" />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <h2 className="text-xs sm:text-sm font-bold text-[#23191E]">
+                  <h2 className="text-xs sm:text-sm font-bold text-vara-ink">
                     محاسبه قیمت خرید خارجی
                   </h2>
 
                 </div>
-                <p className="text-[11px] text-[#785E67]">
+                <p className="text-[11px] text-vara-muted">
                   سفورا، آمازون امارات، لوک‌فنتستیک و ترندیول
                 </p>
               </div>
@@ -206,11 +206,11 @@ export const Hero: React.FC<HeroProps> = ({
                 aria-label="لینک محصول برای محاسبه قیمت"
                 placeholder="https://…"
                 dir="ltr"
-                className="flex-1 min-w-0 bg-white border border-[#F0E1E4] focus:border-[#8C3B58] rounded-xl px-3 py-2 text-xs text-[#23191E] placeholder-[#785E67] outline-none font-mono transition-all"
+                className="flex-1 min-w-0 bg-white border border-vara-line focus:border-vara-rose rounded-full px-3 py-2 text-xs text-vara-ink placeholder-vara-muted outline-none font-mono transition-all"
               />
               <button
                 type="submit"
-                className="px-4 py-2 rounded-xl bg-[#8C3B58] hover:bg-[#732E47] text-white font-semibold text-xs shadow-shop-pill transition-all flex items-center gap-1.5 shrink-0 cursor-pointer active:scale-98"
+                className="px-4 py-2 rounded-full bg-vara-rose hover:bg-vara-rose-hover text-white font-semibold text-xs shadow-shop-pill transition-all flex items-center gap-1.5 shrink-0 cursor-pointer active:scale-98"
               >
                 <span>محاسبه قیمت</span>
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -225,40 +225,40 @@ export const Hero: React.FC<HeroProps> = ({
               onClick={() => {
                 if (onQuizClick) onQuizClick();
               }}
-              className="p-2.5 rounded-xl bg-white hover:bg-[#F4E4E8]/60 border border-[#F0E1E4] hover:border-[#D48C9E] transition-all flex flex-col items-start text-right cursor-pointer group"
+              className="p-3 rounded-2xl bg-white hover:bg-vara-tint/60 border border-vara-line hover:border-vara-tint-line transition-all flex flex-col items-start text-right cursor-pointer group"
             >
               <div className="flex items-center justify-between w-full mb-1">
-                <Sparkles className="w-3.5 h-3.5 text-[#8C3B58]" />
-                <ArrowLeft className="w-3 h-3 text-[#785E67] group-hover:-translate-x-0.5 group-hover:text-[#8C3B58] transition-all" />
+                <Sparkles className="w-3.5 h-3.5 text-vara-rose-ink" />
+                <ArrowLeft className="w-3 h-3 text-vara-muted group-hover:-translate-x-0.5 group-hover:text-vara-rose-ink transition-all" />
               </div>
-              <span className="text-[11px] font-semibold text-[#23191E] line-clamp-1">تست روتین پوست</span>
-              <span className="text-[10px] text-[#785E67] line-clamp-1">راهنمای انتخاب</span>
+              <span className="text-[11px] font-semibold text-vara-ink line-clamp-1">تست روتین پوست</span>
+              <span className="text-[10px] text-vara-muted line-clamp-1">راهنمای انتخاب</span>
             </button>
 
             <button
               type="button"
               onClick={() => setDirectLinkModalOpen(true)}
-              className="p-2.5 rounded-xl bg-white hover:bg-[#F4E4E8]/60 border border-[#F0E1E4] hover:border-[#D48C9E] transition-all flex flex-col items-start text-right cursor-pointer group"
+              className="p-3 rounded-2xl bg-white hover:bg-vara-tint/60 border border-vara-line hover:border-vara-tint-line transition-all flex flex-col items-start text-right cursor-pointer group"
             >
               <div className="flex items-center justify-between w-full mb-1">
-                <Link2 className="w-3.5 h-3.5 text-[#8C3B58]" />
-                <ArrowLeft className="w-3 h-3 text-[#785E67] group-hover:-translate-x-0.5 group-hover:text-[#8C3B58] transition-all" />
+                <Link2 className="w-3.5 h-3.5 text-vara-rose-ink" />
+                <ArrowLeft className="w-3 h-3 text-vara-muted group-hover:-translate-x-0.5 group-hover:text-vara-rose-ink transition-all" />
               </div>
-              <span className="text-[11px] font-semibold text-[#23191E] line-clamp-1">سفارش با لینک</span>
-              <span className="text-[10px] text-[#785E67] line-clamp-1">خرید از سایت‌های جهانی</span>
+              <span className="text-[11px] font-semibold text-vara-ink line-clamp-1">سفارش با لینک</span>
+              <span className="text-[10px] text-vara-muted line-clamp-1">خرید از سایت‌های جهانی</span>
             </button>
 
             <button
               type="button"
               onClick={onOpenAccount}
-              className="p-2.5 rounded-xl bg-white hover:bg-[#F4E4E8]/60 border border-[#F0E1E4] hover:border-[#D48C9E] transition-all flex flex-col items-start text-right cursor-pointer group"
+              className="p-3 rounded-2xl bg-white hover:bg-vara-tint/60 border border-vara-line hover:border-vara-tint-line transition-all flex flex-col items-start text-right cursor-pointer group"
             >
               <div className="flex items-center justify-between w-full mb-1">
-                <User className="w-3.5 h-3.5 text-[#8C3B58]" />
-                <ArrowLeft className="w-3 h-3 text-[#785E67] group-hover:-translate-x-0.5 group-hover:text-[#8C3B58] transition-all" />
+                <User className="w-3.5 h-3.5 text-vara-rose-ink" />
+                <ArrowLeft className="w-3 h-3 text-vara-muted group-hover:-translate-x-0.5 group-hover:text-vara-rose-ink transition-all" />
               </div>
-              <span className="text-[11px] font-semibold text-[#23191E] line-clamp-1">حساب کاربری</span>
-              <span className="text-[10px] text-[#785E67] line-clamp-1">پیگیری سفارش‌ها</span>
+              <span className="text-[11px] font-semibold text-vara-ink line-clamp-1">حساب کاربری</span>
+              <span className="text-[10px] text-vara-muted line-clamp-1">پیگیری سفارش‌ها</span>
             </button>
           </div>
 
@@ -266,16 +266,16 @@ export const Hero: React.FC<HeroProps> = ({
       </div>
 
       {directLinkModalOpen && (
-        <Modal label="سفارش با لینک" onClose={() => setDirectLinkModalOpen(false)} className="fixed inset-0 flex items-center justify-center p-4 bg-[#23191E]/50">
+        <Modal label="سفارش با لینک" onClose={() => setDirectLinkModalOpen(false)} className="fixed inset-0 flex items-center justify-center p-4 bg-vara-ink/50">
           <form onSubmit={handleDirectLinkSubmit} className="w-full max-w-md rounded-xl bg-white p-5 space-y-4">
             <div className="flex justify-between items-center gap-3">
               <h2 className="font-bold text-lg">سفارش با لینک</h2>
               <button type="button" className="vara-button" aria-label="بستن سفارش با لینک" onClick={() => setDirectLinkModalOpen(false)}><X size={18} /></button>
             </div>
-            <p className="text-sm text-[#785E67]">لینک صفحه محصول را وارد کنید تا قیمت و گزینه‌های خرید را ببینید.</p>
+            <p className="text-sm text-vara-muted">لینک صفحه محصول را وارد کنید تا قیمت و گزینه‌های خرید را ببینید.</p>
             <label htmlFor="vara-direct-link" className="block text-sm font-medium">نشانی محصول</label>
             <input id="vara-direct-link" type="url" required dir="ltr" value={productUrl}
-              onChange={(event) => setProductUrl(event.target.value)} placeholder="https://…" className="w-full border rounded-lg px-3" />
+              onChange={(event) => setProductUrl(event.target.value)} placeholder="https://…" className="w-full border rounded-full px-3" />
             <button type="submit" className="vara-button vara-button-primary">محاسبه قیمت</button>
           </form>
         </Modal>

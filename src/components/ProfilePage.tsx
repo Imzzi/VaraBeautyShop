@@ -790,22 +790,22 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center justify-between border-b border-[#F0E1E4] pb-4">
-          <nav className="flex items-center gap-2 text-xs font-vazir text-[#785E67]">
+        <div className="flex items-center justify-between border-b border-vara-line pb-4">
+          <nav className="flex items-center gap-2 text-xs font-vazir text-vara-muted">
             <button 
               onClick={onNavigateToHome} 
-              className="hover:text-[#8C3B58] transition-colors flex items-center gap-1 cursor-pointer"
+              className="hover:text-vara-rose-ink transition-colors flex items-center gap-1 cursor-pointer"
             >
               <Home className="w-3.5 h-3.5" />
               <span>صفحه اصلی</span>
             </button>
-            <span className="text-[#F0E1E4]">/</span>
-            <span className="text-[#8C3B58] font-semibold">حساب کاربری</span>
+            <span className="text-vara-line">/</span>
+            <span className="text-vara-rose-ink font-semibold">حساب کاربری</span>
           </nav>
 
           <button
             onClick={onBackToShop}
-            className="text-xs font-semibold text-[#8C3B58] hover:text-[#732E47] flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="text-xs font-semibold text-vara-rose-ink hover:text-vara-rose-ink flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <span>بازگشت به فروشگاه</span>
             <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -834,7 +834,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           <div className="space-y-6 animate-fadeIn">
             
             {/* User Profile Hero Header */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#F0E1E4] shadow-[0_10px_28px_-8px_rgba(140,59,88,0.06)]">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-vara-line shadow-vara-float">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 
                 {/* Right (RTL): Avatar & Identity Details */}
@@ -848,7 +848,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       className="hidden"
                     />
 
-                    <div className="w-18 h-18 sm:w-20 sm:h-20 bg-[#8C3B58] text-white rounded-full flex items-center justify-center text-2xl sm:text-3xl font-bold font-vazir border border-[#F0E1E4] overflow-hidden relative">
+                    <div className="w-18 h-18 sm:w-20 sm:h-20 bg-vara-rose text-white rounded-full flex items-center justify-center text-2xl sm:text-3xl font-bold font-vazir border border-vara-line overflow-hidden relative">
                       {user.photoURL ? (
                         <img
                           src={user.photoURL}
@@ -864,7 +864,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                         disabled={isUploadingPhoto}
-                        className="absolute inset-0 bg-[#23191E]/75 text-white flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-[10px] font-vazir font-semibold p-1 text-center"
+                        className="absolute inset-0 bg-vara-ink/75 text-white flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-[10px] font-vazir font-semibold p-1 text-center"
                         title="تغییر یا آپلود عکس پروفایل"
                       >
                         {isUploadingPhoto ? (
@@ -882,7 +882,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
                       disabled={isUploadingPhoto}
-                      className="absolute -bottom-1 -left-1 bg-[#8C3B58] hover:bg-[#732E47] text-white p-1.5 rounded-full border-2 border-white transition-colors cursor-pointer"
+                      className="absolute -bottom-1 -left-1 bg-vara-rose hover:bg-vara-rose-hover text-white p-1.5 rounded-full border-2 border-white transition-colors cursor-pointer"
                       title="افزودن یا تغییر عکس پروفایل"
                     >
                       {isUploadingPhoto ? (
@@ -895,24 +895,24 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-jakarta uppercase tracking-[0.14em] text-[#8C3B58] font-bold block w-full">
+                      <span className="text-[10px] font-jakarta uppercase tracking-[0.14em] text-vara-rose-ink font-bold block w-full">
                         VARA BOUTIQUE MEMBER
                       </span>
-                      <h1 className="text-lg sm:text-xl font-bold font-vazir text-[#23191E]">
+                      <h1 className="text-lg sm:text-xl font-bold font-vazir text-vara-ink">
                         {user.displayName || 'کاربر گرامی ورا بیوتی'}
                       </h1>
                     </div>
 
-                    <div className="flex items-center gap-4 text-xs font-vazir text-[#5C444D] flex-wrap">
+                    <div className="flex items-center gap-4 text-xs font-vazir text-vara-muted-strong flex-wrap">
                       {user.phoneNumber && (
                         <span className="flex items-center gap-1.5 dir-ltr font-jakarta tabular-nums">
-                          <Phone className="w-3.5 h-3.5 text-[#8C3B58]" />
+                          <Phone className="w-3.5 h-3.5 text-vara-rose-ink" />
                           <span>{user.phoneNumber}</span>
                         </span>
                       )}
                       {user.email && (
                         <span className="flex items-center gap-1.5 dir-ltr font-jakarta">
-                          <Mail className="w-3.5 h-3.5 text-[#8C3B58]" />
+                          <Mail className="w-3.5 h-3.5 text-vara-rose-ink" />
                           <span>{user.email}</span>
                         </span>
                       )}
@@ -922,22 +922,22 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                 {/* Left (RTL): Quick Stat Badges */}
                 <div className="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">
-                  <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-3.5 rounded-xl text-center min-w-[90px]">
-                    <span className="text-[10px] font-vazir text-[#785E67] block">سفارش‌ها</span>
-                    <strong className="text-sm font-bold font-jakarta tabular-nums text-[#8C3B58] mt-1 block">
+                  <div className="bg-vara-surface border border-vara-line p-3.5 rounded-xl text-center min-w-[90px]">
+                    <span className="text-[10px] font-vazir text-vara-muted block">سفارش‌ها</span>
+                    <strong className="text-sm font-bold font-jakarta tabular-nums text-vara-rose-ink mt-1 block">
                       {userOrders.length.toLocaleString('fa-IR')}
                     </strong>
                   </div>
 
-                  <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-3.5 rounded-xl text-center min-w-[90px]">
-                    <span className="text-[10px] font-vazir text-[#785E67] block">علاقه‌مندی‌ها</span>
-                    <strong className="text-sm font-bold font-jakarta tabular-nums text-[#8C3B58] mt-1 block">
+                  <div className="bg-vara-surface border border-vara-line p-3.5 rounded-xl text-center min-w-[90px]">
+                    <span className="text-[10px] font-vazir text-vara-muted block">علاقه‌مندی‌ها</span>
+                    <strong className="text-sm font-bold font-jakarta tabular-nums text-vara-rose-ink mt-1 block">
                       {wishlistProducts.length.toLocaleString('fa-IR')}
                     </strong>
                   </div>
 
-                  <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-3.5 rounded-xl text-center min-w-[90px]">
-                    <span className="text-[10px] font-vazir text-[#785E67] block">وضعیت حساب</span>
+                  <div className="bg-vara-surface border border-vara-line p-3.5 rounded-xl text-center min-w-[90px]">
+                    <span className="text-[10px] font-vazir text-vara-muted block">وضعیت حساب</span>
                     <strong className="text-xs font-semibold font-vazir text-[#15803D] mt-1 flex items-center justify-center gap-1">
                       <Check className="w-3.5 h-3.5 text-[#15803D]" />
                       <span>فعال</span>
@@ -949,7 +949,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             </div>
 
             {/* Profile Navigation Tabs */}
-            <div className="flex items-center gap-1 overflow-x-auto border-b border-[#F0E1E4] scrollbar-none bg-white px-2 pt-2 rounded-t-2xl border-x border-t">
+            <div className="flex items-center gap-1 overflow-x-auto border-b border-vara-line scrollbar-none bg-white px-2 pt-2 rounded-t-2xl border-x border-t">
               {[
                 { id: 'orders', label: `سفارش‌ها و رهگیری (${userOrders.length.toLocaleString('fa-IR')})` },
                 { id: 'info', label: 'مشخصات و نشانی ارسال' },
@@ -962,8 +962,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`py-3 px-4 text-xs font-vazir transition-all shrink-0 cursor-pointer border-b-2 -mb-[1px] ${
                     activeTab === tab.id
-                      ? 'border-[#8C3B58] text-[#8C3B58] font-bold'
-                      : 'border-transparent text-[#785E67] hover:text-[#23191E] font-medium'
+                      ? 'border-vara-rose text-vara-rose-ink font-bold'
+                      : 'border-transparent text-vara-muted hover:text-vara-ink font-medium'
                   }`}
                 >
                   <span>{tab.label}</span>
@@ -976,9 +976,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <div className="space-y-5">
                 
                 {/* Orders Filter Row */}
-                <div className="flex items-center justify-between gap-4 flex-wrap bg-white p-4 rounded-2xl border border-[#F0E1E4]">
+                <div className="flex items-center justify-between gap-4 flex-wrap bg-white p-4 rounded-2xl border border-vara-line">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-semibold font-vazir text-[#5C444D]">فیلتر وضعیت:</span>
+                    <span className="text-xs font-semibold font-vazir text-vara-muted-strong">فیلتر وضعیت:</span>
                     <div className="flex items-center gap-1.5 flex-wrap">
                       {[
                         { id: 'all', label: 'همه' },
@@ -989,10 +989,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         <button
                           key={st.id}
                           onClick={() => setOrderStatusFilter(st.id as any)}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-vazir transition-colors cursor-pointer ${
+                          className={`px-3 py-1.5 rounded-full text-xs font-vazir transition-colors cursor-pointer ${
                             orderStatusFilter === st.id
-                              ? 'bg-[#8C3B58] text-white font-semibold'
-                              : 'bg-[#F9F1F0] text-[#5C444D] hover:text-[#8C3B58]'
+                              ? 'bg-vara-rose text-white font-semibold'
+                              : 'bg-vara-surface text-vara-muted-strong hover:text-vara-rose-ink'
                           }`}
                         >
                           {st.label}
@@ -1004,7 +1004,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   <button
                     onClick={() => fetchUserOrders(user.email, user.phoneNumber, user.uid)}
                     disabled={isLoadingOrders}
-                    className="text-xs font-vazir font-medium text-[#5C444D] hover:text-[#8C3B58] flex items-center gap-1.5 cursor-pointer"
+                    className="text-xs font-vazir font-medium text-vara-muted-strong hover:text-vara-rose-ink flex items-center gap-1.5 cursor-pointer"
                   >
                     <RefreshCw className={`w-3.5 h-3.5 ${isLoadingOrders ? 'animate-spin' : ''}`} />
                     <span>به‌روزرسانی</span>
@@ -1019,30 +1019,30 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </div>}
                 {/* Orders Content */}
                 {isLoadingOrders ? (
-                  <div className="bg-white rounded-2xl p-12 text-center text-xs font-vazir text-[#785E67] border border-[#F0E1E4] flex flex-col items-center justify-center gap-3">
-                    <RefreshCw className="w-5 h-5 animate-spin text-[#8C3B58]" />
+                  <div className="bg-white rounded-2xl p-12 text-center text-xs font-vazir text-vara-muted border border-vara-line flex flex-col items-center justify-center gap-3">
+                    <RefreshCw className="w-5 h-5 animate-spin text-vara-rose-ink" />
                     <span>در حال دریافت فهرست سفارش‌ها...</span>
                   </div>
                 ) : currentOrders.length === 0 ? ordersError ? null : (
-                  <div className="bg-white rounded-2xl p-12 text-center space-y-4 border border-[#F0E1E4]">
-                    <div className="w-14 h-14 rounded-2xl bg-[#F9F1F0] border border-[#F0E1E4] text-[#8C3B58] flex items-center justify-center mx-auto">
+                  <div className="bg-white rounded-2xl p-12 text-center space-y-4 border border-vara-line">
+                    <div className="w-14 h-14 rounded-2xl bg-vara-surface border border-vara-line text-vara-rose-ink flex items-center justify-center mx-auto">
                       <Package className="w-6 h-6 stroke-[1.5]" />
                     </div>
                     <div className="space-y-1">
-                      <h3 className="text-sm font-bold font-vazir text-[#23191E]">هنوز سفارشی ثبت نکرده‌اید</h3>
-                      <p className="text-xs font-vazir text-[#785E67] max-w-md mx-auto leading-relaxed">
+                      <h3 className="text-sm font-bold font-vazir text-vara-ink">هنوز سفارشی ثبت نکرده‌اید</h3>
+                      <p className="text-xs font-vazir text-vara-muted max-w-md mx-auto leading-relaxed">
                         سفارش‌های شما به همراه کد رهگیری پستی و جزئیات اقلام در این بخش نمایش داده می‌شوند.
                       </p>
                     </div>
                     <button
                       onClick={onBackToShop}
-                      className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-6 py-3 rounded-xl text-xs font-vazir font-semibold transition-colors inline-flex items-center cursor-pointer shadow-[0_6px_16px_-4px_rgba(140,59,88,0.28)]"
+                      className="bg-vara-rose hover:bg-vara-rose-hover text-white px-6 py-3 rounded-full text-xs font-vazir font-semibold transition-colors inline-flex items-center cursor-pointer shadow-vara-float"
                     >
                       <span>مشاهده محصولات فروشگاه</span>
                     </button>
                   </div>
                 ) : filteredOrders.length === 0 ? (
-                  <div className="bg-white rounded-2xl p-8 text-center text-xs font-vazir text-[#785E67] border border-[#F0E1E4]">
+                  <div className="bg-white rounded-2xl p-8 text-center text-xs font-vazir text-vara-muted border border-vara-line">
                     سفارشی با این فیلتر وضعیت یافت نشد.
                   </div>
                 ) : (
@@ -1050,27 +1050,27 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     {filteredOrders.map((order) => (
                       <div 
                         key={order.id}
-                        className="bg-white rounded-2xl p-5 sm:p-6 border border-[#F0E1E4] space-y-4 transition-colors hover:border-[#D48C9E]"
+                        className="bg-white rounded-2xl p-5 sm:p-6 border border-vara-line space-y-4 transition-colors hover:border-vara-tint-line"
                       >
                         {/* Order Header Summary */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#F0E1E4]">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-vara-line">
                           <div className="flex items-center gap-3">
-                            <span className="font-jakarta font-bold tabular-nums text-xs text-[#8C3B58] bg-[#F9F1F0] px-3 py-1.5 rounded-lg border border-[#F0E1E4] dir-ltr">
+                            <span className="font-jakarta font-bold tabular-nums text-xs text-vara-rose-ink bg-vara-surface px-3 py-1.5 rounded-full border border-vara-line dir-ltr">
                               {order.orderNumber}
                             </span>
-                            <span className="text-xs font-vazir text-[#785E67] flex items-center gap-1">
-                              <Calendar className="w-3.5 h-3.5 text-[#8C3B58]" />
+                            <span className="text-xs font-vazir text-vara-muted flex items-center gap-1">
+                              <Calendar className="w-3.5 h-3.5 text-vara-rose-ink" />
                               <span>{new Date(order.createdAt).toLocaleDateString('fa-IR')}</span>
                             </span>
                           </div>
 
                           <div className="flex items-center gap-2">
-                            <span className={`text-[11px] font-semibold px-3 py-1 rounded-md font-vazir flex items-center gap-1.5 border ${
+                            <span className={`text-[11px] font-semibold px-3 py-1 rounded-full font-vazir flex items-center gap-1.5 border ${
                               order.status === 'delivered' ? 'bg-emerald-50 text-[#15803D] border-emerald-200' :
-                              order.status === 'shipped' ? 'bg-[#8C3B58] text-white border-[#8C3B58]' :
+                              order.status === 'shipped' ? 'bg-vara-rose text-white border-vara-rose' :
                               order.status === 'processing' ? 'bg-amber-50 text-[#B45309] border-amber-200' :
                               order.status === 'cancelled' ? 'bg-red-50 text-red-700 border-red-200' :
-                              'bg-[#F9F1F0] text-[#5C444D] border-[#F0E1E4]'
+                              'bg-vara-surface text-vara-muted-strong border-vara-line'
                             }`}>
                               <span className="w-1.5 h-1.5 rounded-full bg-current"></span>
                               <span>
@@ -1085,26 +1085,26 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                         {/* Iran Post Postal Tracking Code Box */}
                         {order.postalTrackingCode && (
-                          <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="bg-vara-surface border border-vara-line p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 rounded-lg bg-[#8C3B58] text-white flex items-center justify-center shrink-0">
+                              <div className="w-9 h-9 rounded-lg bg-vara-rose text-white flex items-center justify-center shrink-0">
                                 <Truck className="w-4 h-4" />
                               </div>
                               <div>
-                                <h4 className="text-xs font-bold font-vazir text-[#23191E]">کد رهگیری مرسوله پستی</h4>
-                                <p className="text-[11px] font-vazir text-[#785E67]">
+                                <h4 className="text-xs font-bold font-vazir text-vara-ink">کد رهگیری مرسوله پستی</h4>
+                                <p className="text-[11px] font-vazir text-vara-muted">
                                   قابل پیگیری در سامانه رهگیری مرسولات پستی (tracking.post.ir)
                                 </p>
                               </div>
                             </div>
 
                             <div className="flex items-center gap-2">
-                              <span className="font-jakarta font-bold tabular-nums text-xs text-[#23191E] bg-white px-3.5 py-2 rounded-lg border border-[#F0E1E4] dir-ltr select-all">
+                              <span className="font-jakarta font-bold tabular-nums text-xs text-vara-ink bg-white px-3.5 py-2 rounded-full border border-vara-line dir-ltr select-all">
                                 {order.postalTrackingCode}
                               </span>
                               <button
                                 onClick={() => handleCopyTrackingCode(order.postalTrackingCode || '')}
-                                className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-3 py-2 rounded-lg text-xs font-vazir font-medium transition-colors flex items-center gap-1.5 cursor-pointer"
+                                className="bg-vara-rose hover:bg-vara-rose-hover text-white px-3 py-2 rounded-full text-xs font-vazir font-medium transition-colors flex items-center gap-1.5 cursor-pointer"
                                 title="کپی کد رهگیری"
                               >
                                 {copiedTrackingId === order.postalTrackingCode ? (
@@ -1125,14 +1125,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                         {/* Order Items List */}
                         <div className="space-y-2.5">
-                          <h5 className="text-xs font-semibold font-vazir text-[#5C444D]">اقلام سفارش ({order.items.length.toLocaleString('fa-IR')} مورد):</h5>
+                          <h5 className="text-xs font-semibold font-vazir text-vara-muted-strong">اقلام سفارش ({order.items.length.toLocaleString('fa-IR')} مورد):</h5>
                           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                             {order.items.map((item, idx) => (
                               <div 
                                 key={idx} 
-                                className="flex items-center gap-3 bg-[#FDFBF9] border border-[#F0E1E4] p-2.5 rounded-xl"
+                                className="flex items-center gap-3 bg-vara-canvas border border-vara-line p-2.5 rounded-xl"
                               >
-                                <div className="w-12 h-12 rounded-lg bg-[#F9F1F0] border border-[#F0E1E4] p-1 shrink-0 overflow-hidden">
+                                <div className="w-12 h-12 rounded-lg bg-vara-surface border border-vara-line p-1 shrink-0 overflow-hidden">
                                   <img 
                                     src={item.image || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=100&auto=format&fit=crop&q=80'} 
                                     alt={item.nameFa}
@@ -1140,10 +1140,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                                   />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <h6 className="font-semibold text-xs font-vazir text-[#23191E] truncate">{item.nameFa}</h6>
-                                  <div className="flex items-center justify-between text-[11px] font-vazir text-[#785E67] mt-1">
+                                  <h6 className="font-semibold text-xs font-vazir text-vara-ink truncate">{item.nameFa}</h6>
+                                  <div className="flex items-center justify-between text-[11px] font-vazir text-vara-muted mt-1">
                                     <span>{item.sizeLabel}</span>
-                                    <span className="font-semibold text-[#8C3B58] tabular-nums">{item.quantity.toLocaleString('fa-IR')} عدد</span>
+                                    <span className="font-semibold text-vara-rose-ink tabular-nums">{item.quantity.toLocaleString('fa-IR')} عدد</span>
                                   </div>
                                 </div>
                               </div>
@@ -1152,16 +1152,16 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         </div>
 
                         {/* Order Delivery & Payment Footer */}
-                        <div className="pt-3 border-t border-[#F0E1E4] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-vazir">
-                          <div className="text-[#5C444D] flex items-center gap-1.5">
-                            <MapPin className="w-3.5 h-3.5 text-[#8C3B58]" />
+                        <div className="pt-3 border-t border-vara-line flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-vazir">
+                          <div className="text-vara-muted-strong flex items-center gap-1.5">
+                            <MapPin className="w-3.5 h-3.5 text-vara-rose-ink" />
                             <span>مقصد: {order.customer.province}، {order.customer.city}</span>
                           </div>
 
                           <div className="flex items-center gap-4 justify-between sm:justify-end">
                             <div className="text-right">
-                              <span className="text-[10px] text-[#785E67] block">مبلغ کل:</span>
-                              <strong className="text-sm font-bold font-vazir tabular-nums text-[#8C3B58]">
+                              <span className="text-[10px] text-vara-muted block">مبلغ کل:</span>
+                              <strong className="text-sm font-bold font-vazir tabular-nums text-vara-rose-ink">
                                 {order.totalAmount.toLocaleString('fa-IR')} تومان
                               </strong>
                             </div>
@@ -1171,9 +1171,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                                 setSelectedOrderForInvoice(order);
                                 setTimeout(() => window.print(), 300);
                               }}
-                              className="bg-white hover:bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] hover:border-[#D48C9E] px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
+                              className="bg-white hover:bg-vara-surface text-vara-ink border border-vara-line hover:border-vara-tint-line px-3.5 py-2 rounded-full text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
                             >
-                              <Printer className="w-3.5 h-3.5 text-[#8C3B58]" />
+                              <Printer className="w-3.5 h-3.5 text-vara-rose-ink" />
                               <span>چاپ فاکتور</span>
                             </button>
                           </div>
@@ -1192,17 +1192,17 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
                 {/* Editable Information */}
-                <div className="lg:col-span-2 bg-white rounded-2xl p-6 sm:p-8 border border-[#F0E1E4] space-y-6">
-                  <div className="flex items-center justify-between border-b border-[#F0E1E4] pb-4">
+                <div className="lg:col-span-2 bg-white rounded-2xl p-6 sm:p-8 border border-vara-line space-y-6">
+                  <div className="flex items-center justify-between border-b border-vara-line pb-4">
                     <div>
-                      <h3 className="text-sm font-bold font-vazir text-[#23191E]">مشخصات فردی و نشانی ارسال</h3>
-                      <p className="text-xs font-vazir text-[#785E67] mt-0.5">اطلاعات گیرنده و آدرس پستی پیش‌فرض جهت تحویل مرسولات</p>
+                      <h3 className="text-sm font-bold font-vazir text-vara-ink">مشخصات فردی و نشانی ارسال</h3>
+                      <p className="text-xs font-vazir text-vara-muted mt-0.5">اطلاعات گیرنده و آدرس پستی پیش‌فرض جهت تحویل مرسولات</p>
                     </div>
 
                     {!isEditingInfo ? (
                       <button
                         onClick={() => setIsEditingInfo(true)}
-                        className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-4 py-2 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
+                        className="bg-vara-rose hover:bg-vara-rose-hover text-white px-4 py-2 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
                         <span>ویرایش اطلاعات</span>
@@ -1210,7 +1210,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     ) : (
                       <button
                         onClick={() => setIsEditingInfo(false)}
-                        className="text-xs font-vazir text-[#785E67] hover:text-[#23191E] cursor-pointer"
+                        className="text-xs font-vazir text-vara-muted hover:text-vara-ink cursor-pointer"
                       >
                         انصراف
                       </button>
@@ -1218,9 +1218,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   </div>
 
                   {/* Profile Picture Upload */}
-                  <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="bg-vara-surface border border-vara-line p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3.5">
-                      <div className="relative w-14 h-14 rounded-full bg-[#8C3B58] text-white flex items-center justify-center text-lg font-bold font-vazir overflow-hidden border border-[#F0E1E4] shrink-0">
+                      <div className="relative w-14 h-14 rounded-full bg-vara-rose text-white flex items-center justify-center text-lg font-bold font-vazir overflow-hidden border border-vara-line shrink-0">
                         {user.photoURL ? (
                           <img
                             src={user.photoURL}
@@ -1233,8 +1233,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         )}
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold font-vazir text-[#23191E]">تصویر نمایه کاربری</h4>
-                        <p className="text-[11px] font-vazir text-[#785E67] mt-0.5">
+                        <h4 className="text-xs font-bold font-vazir text-vara-ink">تصویر نمایه کاربری</h4>
+                        <p className="text-[11px] font-vazir text-vara-muted mt-0.5">
                           فرمت‌های مجاز: JPG, PNG, WebP
                         </p>
                       </div>
@@ -1245,12 +1245,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                         disabled={isUploadingPhoto}
-                        className="bg-white hover:bg-[#FDFBF9] text-[#23191E] border border-[#F0E1E4] px-3.5 py-2 rounded-lg text-xs font-vazir font-semibold transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                        className="bg-white hover:bg-vara-canvas text-vara-ink border border-vara-line px-3.5 py-2 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                       >
                         {isUploadingPhoto ? (
-                          <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#8C3B58]" />
+                          <RefreshCw className="w-3.5 h-3.5 animate-spin text-vara-rose-ink" />
                         ) : (
-                          <Upload className="w-3.5 h-3.5 text-[#8C3B58]" />
+                          <Upload className="w-3.5 h-3.5 text-vara-rose-ink" />
                         )}
                         <span>{user.photoURL ? 'تغییر تصویر' : 'آپلود تصویر'}</span>
                       </button>
@@ -1260,7 +1260,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                           type="button"
                           onClick={handleRemoveProfilePhoto}
                           disabled={isUploadingPhoto}
-                          className="bg-white hover:bg-red-50 text-red-600 border border-[#F0E1E4] px-3 py-2 rounded-lg text-xs font-vazir font-medium transition-colors flex items-center gap-1 cursor-pointer"
+                          className="bg-white hover:bg-red-50 text-red-600 border border-vara-line px-3 py-2 rounded-full text-xs font-vazir font-medium transition-colors flex items-center gap-1 cursor-pointer"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                           <span>حذف</span>
@@ -1272,7 +1272,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   <form onSubmit={(e) => { e.preventDefault(); handleSaveProfileInfo(); }} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1.5 block">
+                        <label className="text-xs font-semibold font-vazir text-vara-ink mb-1.5 block">
                           نام و نام خانوادگی
                         </label>
                         <div className="relative">
@@ -1283,14 +1283,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="نام و نام خانوادگی"
-                            className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-vazir pl-10 pr-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white disabled:opacity-75 transition-colors"
+                            className="w-full bg-vara-canvas text-vara-ink text-xs font-vazir pl-10 pr-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white disabled:opacity-75 transition-colors"
                           />
-                          <User className="w-4 h-4 text-[#785E67] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <User className="w-4 h-4 text-vara-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                         </div>
                       </div>
 
                       <div>
-                        <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1.5 block">
+                        <label className="text-xs font-semibold font-vazir text-vara-ink mb-1.5 block">
                           شماره موبایل
                         </label>
                         <div className="relative">
@@ -1300,15 +1300,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                             placeholder="۰۹۱۲۳۴۵۶۷۸۹"
-                            className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-jakarta tabular-nums pl-10 pr-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr disabled:opacity-75 transition-colors"
+                            className="w-full bg-vara-canvas text-vara-ink text-xs font-jakarta tabular-nums pl-10 pr-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr disabled:opacity-75 transition-colors"
                           />
-                          <Phone className="w-4 h-4 text-[#785E67] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <Phone className="w-4 h-4 text-vara-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                         </div>
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1.5 block">
+                      <label className="text-xs font-semibold font-vazir text-vara-ink mb-1.5 block">
                         آدرس ایمیل
                       </label>
                       <div className="relative">
@@ -1318,66 +1318,66 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="user@example.com"
-                          className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-jakarta pl-10 pr-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr disabled:opacity-75 transition-colors"
+                          className="w-full bg-vara-canvas text-vara-ink text-xs font-jakarta pl-10 pr-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr disabled:opacity-75 transition-colors"
                         />
-                        <Mail className="w-4 h-4 text-[#785E67] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <Mail className="w-4 h-4 text-vara-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                       </div>
                     </div>
 
                     {/* Shipping Address Inputs */}
-                    <div className="pt-4 border-t border-[#F0E1E4] space-y-4">
-                      <h4 className="text-xs font-bold font-vazir text-[#23191E] flex items-center gap-1.5">
-                        <MapPin className="w-4 h-4 text-[#8C3B58]" />
+                    <div className="pt-4 border-t border-vara-line space-y-4">
+                      <h4 className="text-xs font-bold font-vazir text-vara-ink flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 text-vara-rose-ink" />
                         <span>نشانی پیش‌فرض ارسال مرسولات</span>
                       </h4>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-xs font-vazir text-[#5C444D] mb-1 block">استان</label>
+                          <label className="text-xs font-vazir text-vara-muted-strong mb-1 block">استان</label>
                           <input
                             type="text"
                             disabled={!isEditingInfo}
                             value={province}
                             onChange={(e) => setProvince(e.target.value)}
                             placeholder="مثلاً: تهران"
-                            className="w-full bg-[#FDFBF9] text-xs font-vazir px-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white disabled:opacity-75 transition-colors"
+                            className="w-full bg-vara-canvas text-xs font-vazir px-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white disabled:opacity-75 transition-colors"
                           />
                         </div>
                         <div>
-                          <label className="text-xs font-vazir text-[#5C444D] mb-1 block">شهر</label>
+                          <label className="text-xs font-vazir text-vara-muted-strong mb-1 block">شهر</label>
                           <input
                             type="text"
                             disabled={!isEditingInfo}
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                             placeholder="مثلاً: تهران"
-                            className="w-full bg-[#FDFBF9] text-xs font-vazir px-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white disabled:opacity-75 transition-colors"
+                            className="w-full bg-vara-canvas text-xs font-vazir px-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white disabled:opacity-75 transition-colors"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="text-xs font-vazir text-[#5C444D] mb-1 block">نشانی دقیق پستی (خیابان، کوچه، پلاک، واحد)</label>
+                        <label className="text-xs font-vazir text-vara-muted-strong mb-1 block">نشانی دقیق پستی (خیابان، کوچه، پلاک، واحد)</label>
                         <textarea
                           disabled={!isEditingInfo}
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
                           placeholder="نشانی کامل پستی جهت تحویل مرسوله..."
                           rows={3}
-                          className="w-full bg-[#FDFBF9] text-xs font-vazir px-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white disabled:opacity-75 transition-colors"
+                          className="w-full bg-vara-canvas text-xs font-vazir px-3.5 py-2.5 rounded-xl border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white disabled:opacity-75 transition-colors"
                         />
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-xs font-vazir text-[#5C444D] mb-1 block">کد پستی ۱۰ رقمی</label>
+                          <label className="text-xs font-vazir text-vara-muted-strong mb-1 block">کد پستی ۱۰ رقمی</label>
                           <input
                             type="text"
                             disabled={!isEditingInfo}
                             value={postalCode}
                             onChange={(e) => setPostalCode(e.target.value)}
                             placeholder="۱۲۳۴۵۶۷۸۹۰"
-                            className="w-full bg-[#FDFBF9] text-xs font-jakarta tabular-nums px-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr disabled:opacity-75 transition-colors"
+                            className="w-full bg-vara-canvas text-xs font-jakarta tabular-nums px-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr disabled:opacity-75 transition-colors"
                           />
                         </div>
                       </div>
@@ -1388,14 +1388,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         <button
                           type="button"
                           onClick={() => setIsEditingInfo(false)}
-                          className="px-4 py-2.5 rounded-xl border border-[#F0E1E4] text-xs font-vazir font-medium text-[#5C444D] hover:text-[#23191E] hover:bg-[#F9F1F0] transition-colors cursor-pointer"
+                          className="px-4 py-2.5 rounded-full border border-vara-line text-xs font-vazir font-medium text-vara-muted-strong hover:text-vara-ink hover:bg-vara-surface transition-colors cursor-pointer"
                         >
                           انصراف
                         </button>
                         <button
                           type="submit"
                           disabled={isSavingProfile}
-                          className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-6 py-2.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center gap-2 cursor-pointer"
+                          className="bg-vara-rose hover:bg-vara-rose-hover text-white px-6 py-2.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center gap-2 cursor-pointer"
                         >
                           {isSavingProfile ? (
                             <span>در حال ذخیره...</span>
@@ -1413,15 +1413,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                 {/* Support & Authenticity Info */}
                 <div className="space-y-4">
-                  <div className="bg-white rounded-2xl p-6 border border-[#F0E1E4] space-y-3">
-                    <span className="text-[10px] font-jakarta uppercase tracking-[0.14em] text-[#8C3B58] font-bold block">
+                  <div className="bg-white rounded-2xl p-6 border border-vara-line space-y-3">
+                    <span className="text-[10px] font-jakarta uppercase tracking-[0.14em] text-vara-rose-ink font-bold block">
                       CLIENT CONCIERGE
                     </span>
-                    <h4 className="text-xs font-bold font-vazir text-[#23191E]">پشتیبانی سفارش‌ها</h4>
-                    <p className="text-xs font-vazir text-[#5C444D] leading-relaxed">
+                    <h4 className="text-xs font-bold font-vazir text-vara-ink">پشتیبانی سفارش‌ها</h4>
+                    <p className="text-xs font-vazir text-vara-muted-strong leading-relaxed">
                       برای پیگیری وضعیت تامین از امارات یا هماهنگی ارسال پستی، تیم پشتیبانی ورا بیوتی پاسخگوی شماست.
                     </p>
-                    <div className="pt-2 border-t border-[#F0E1E4] text-xs font-vazir font-semibold text-[#23191E]">
+                    <div className="pt-2 border-t border-vara-line text-xs font-vazir font-semibold text-vara-ink">
                       ساعات پاسخگویی: شنبه تا پنج‌شنبه، ۹ الی ۲۱
                     </div>
                   </div>
@@ -1433,23 +1433,23 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             {/* TAB 3: SKIN PROFILE & ROUTINE */}
             {activeTab === 'skin' && (
               <div className="space-y-6">
-                <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#F0E1E4] space-y-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#F0E1E4] pb-4">
+                <div className="bg-white rounded-2xl p-6 sm:p-8 border border-vara-line space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-vara-line pb-4">
                     <div>
-                      <span className="text-[10px] font-jakarta uppercase tracking-[0.14em] text-[#8C3B58] font-bold block mb-1">
+                      <span className="text-[10px] font-jakarta uppercase tracking-[0.14em] text-vara-rose-ink font-bold block mb-1">
                         DERMATOLOGICAL PROFILE
                       </span>
-                      <h3 className="text-sm font-bold font-vazir text-[#23191E]">
+                      <h3 className="text-sm font-bold font-vazir text-vara-ink">
                         پروفایل و پروتکل مراقبت پوست شما
                       </h3>
-                      <p className="text-xs font-vazir text-[#785E67] mt-0.5">
+                      <p className="text-xs font-vazir text-vara-muted mt-0.5">
                         تنظیم شده بر اساس تیپ پوستی و دغدغه اصلی درمانی شما
                       </p>
                     </div>
 
                     <button
                       onClick={onOpenQuiz}
-                      className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-4 py-2.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
+                      className="bg-vara-rose hover:bg-vara-rose-hover text-white px-4 py-2.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
                     >
                       <SlidersHorizontal className="w-3.5 h-3.5" />
                       <span>مشاوره مجدد روتین</span>
@@ -1458,8 +1458,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                   {/* Skin Characteristics Selector */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="bg-[#FDFBF9] border border-[#F0E1E4] p-5 rounded-xl space-y-3">
-                      <label className="text-xs font-bold font-vazir text-[#23191E] block">تیپ پوست:</label>
+                    <div className="bg-vara-canvas border border-vara-line p-5 rounded-xl space-y-3">
+                      <label className="text-xs font-bold font-vazir text-vara-ink block">تیپ پوست:</label>
                       <div className="grid grid-cols-3 gap-2">
                         {[
                           { id: 'dry', label: 'خشک' },
@@ -1472,10 +1472,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             key={t.id}
                             type="button"
                             onClick={() => setUserSkinType(t.id as SkinType)}
-                            className={`py-2 px-3 rounded-lg text-xs font-vazir transition-colors cursor-pointer border ${
+                            className={`py-2 px-3 rounded-full text-xs font-vazir transition-colors cursor-pointer border ${
                               userSkinType === t.id
-                                ? 'bg-[#8C3B58] text-white border-[#8C3B58] font-semibold'
-                                : 'bg-white text-[#5C444D] border-[#F0E1E4] hover:border-[#D48C9E]'
+                                ? 'bg-vara-rose text-white border-vara-rose font-semibold'
+                                : 'bg-white text-vara-muted-strong border-vara-line hover:border-vara-tint-line'
                             }`}
                           >
                             {t.label}
@@ -1484,8 +1484,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       </div>
                     </div>
 
-                    <div className="bg-[#FDFBF9] border border-[#F0E1E4] p-5 rounded-xl space-y-3">
-                      <label className="text-xs font-bold font-vazir text-[#23191E] block">هدف اصلی مراقبت:</label>
+                    <div className="bg-vara-canvas border border-vara-line p-5 rounded-xl space-y-3">
+                      <label className="text-xs font-bold font-vazir text-vara-ink block">هدف اصلی مراقبت:</label>
                       <div className="grid grid-cols-2 gap-2">
                         {[
                           { id: 'hydration', label: 'آبرسانی و سد دفاعی' },
@@ -1497,10 +1497,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             key={c.id}
                             type="button"
                             onClick={() => setUserPrimaryConcern(c.id as SkinConcern)}
-                            className={`py-2 px-3 rounded-lg text-xs font-vazir transition-colors cursor-pointer border ${
+                            className={`py-2 px-3 rounded-full text-xs font-vazir transition-colors cursor-pointer border ${
                               userPrimaryConcern === c.id
-                                ? 'bg-[#8C3B58] text-white border-[#8C3B58] font-semibold'
-                                : 'bg-white text-[#5C444D] border-[#F0E1E4] hover:border-[#D48C9E]'
+                                ? 'bg-vara-rose text-white border-vara-rose font-semibold'
+                                : 'bg-white text-vara-muted-strong border-vara-line hover:border-vara-tint-line'
                             }`}
                           >
                             {c.label}
@@ -1512,52 +1512,52 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                   {/* Recommended Daily Routine */}
                   <div className="space-y-4 pt-2">
-                    <h4 className="text-xs font-bold font-vazir text-[#23191E]">پروتکل روزانه پیشنهادی:</h4>
+                    <h4 className="text-xs font-bold font-vazir text-vara-ink">پروتکل روزانه پیشنهادی:</h4>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Morning Routine */}
-                      <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-5 rounded-xl space-y-3">
-                        <div className="flex items-center justify-between text-xs font-bold font-vazir text-[#23191E] border-b border-[#F0E1E4] pb-2.5">
+                      <div className="bg-vara-surface border border-vara-line p-5 rounded-xl space-y-3">
+                        <div className="flex items-center justify-between text-xs font-bold font-vazir text-vara-ink border-b border-vara-line pb-2.5">
                           <span>نوبت صبح</span>
-                          <span className="font-jakarta text-[10px] tracking-widest uppercase text-[#8C3B58]">AM PROTOCOL</span>
+                          <span className="font-jakarta text-[10px] tracking-widest uppercase text-vara-rose-ink">AM PROTOCOL</span>
                         </div>
-                        <ul className="text-xs font-vazir text-[#5C444D] space-y-2.5 pt-1">
+                        <ul className="text-xs font-vazir text-vara-muted-strong space-y-2.5 pt-1">
                           <li className="flex items-center gap-2.5">
-                            <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] font-jakarta font-bold text-[10px] flex items-center justify-center text-[#8C3B58]">01</span>
+                            <span className="w-5 h-5 rounded-full bg-white border border-vara-line font-jakarta font-bold text-[10px] flex items-center justify-center text-vara-rose-ink">01</span>
                             <span>شوینده ملایم و تنظیم‌کننده pH</span>
                           </li>
                           <li className="flex items-center gap-2.5">
-                            <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] font-jakarta font-bold text-[10px] flex items-center justify-center text-[#8C3B58]">02</span>
+                            <span className="w-5 h-5 rounded-full bg-white border border-vara-line font-jakarta font-bold text-[10px] flex items-center justify-center text-vara-rose-ink">02</span>
                             <span>سرم آنتی‌اکسیدان ویتامین C یا هیالورونیک اسید</span>
                           </li>
                           <li className="flex items-center gap-2.5">
-                            <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] font-jakarta font-bold text-[10px] flex items-center justify-center text-[#8C3B58]">03</span>
+                            <span className="w-5 h-5 rounded-full bg-white border border-vara-line font-jakarta font-bold text-[10px] flex items-center justify-center text-vara-rose-ink">03</span>
                             <span>مرطوب‌کننده تقویت‌کننده سد دفاعی پوست</span>
                           </li>
                           <li className="flex items-center gap-2.5">
-                            <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] font-jakarta font-bold text-[10px] flex items-center justify-center text-[#8C3B58]">04</span>
+                            <span className="w-5 h-5 rounded-full bg-white border border-vara-line font-jakarta font-bold text-[10px] flex items-center justify-center text-vara-rose-ink">04</span>
                             <span>ضد آفتاب طیف گسترده SPF 50+</span>
                           </li>
                         </ul>
                       </div>
 
                       {/* Night Routine */}
-                      <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-5 rounded-xl space-y-3">
-                        <div className="flex items-center justify-between text-xs font-bold font-vazir text-[#23191E] border-b border-[#F0E1E4] pb-2.5">
+                      <div className="bg-vara-surface border border-vara-line p-5 rounded-xl space-y-3">
+                        <div className="flex items-center justify-between text-xs font-bold font-vazir text-vara-ink border-b border-vara-line pb-2.5">
                           <span>نوبت شب</span>
-                          <span className="font-jakarta text-[10px] tracking-widest uppercase text-[#8C3B58]">PM PROTOCOL</span>
+                          <span className="font-jakarta text-[10px] tracking-widest uppercase text-vara-rose-ink">PM PROTOCOL</span>
                         </div>
-                        <ul className="text-xs font-vazir text-[#5C444D] space-y-2.5 pt-1">
+                        <ul className="text-xs font-vazir text-vara-muted-strong space-y-2.5 pt-1">
                           <li className="flex items-center gap-2.5">
-                            <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] font-jakarta font-bold text-[10px] flex items-center justify-center text-[#8C3B58]">01</span>
+                            <span className="w-5 h-5 rounded-full bg-white border border-vara-line font-jakarta font-bold text-[10px] flex items-center justify-center text-vara-rose-ink">01</span>
                             <span>پاکسازی دو مرحله‌ای (میسلار واتر / بالم + شوینده)</span>
                           </li>
                           <li className="flex items-center gap-2.5">
-                            <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] font-jakarta font-bold text-[10px] flex items-center justify-center text-[#8C3B58]">02</span>
+                            <span className="w-5 h-5 rounded-full bg-white border border-vara-line font-jakarta font-bold text-[10px] flex items-center justify-center text-vara-rose-ink">02</span>
                             <span>سرم درمانی شب (رتینول / نیاسینامید / پپتاید)</span>
                           </li>
                           <li className="flex items-center gap-2.5">
-                            <span className="w-5 h-5 rounded-md bg-white border border-[#F0E1E4] font-jakarta font-bold text-[10px] flex items-center justify-center text-[#8C3B58]">03</span>
+                            <span className="w-5 h-5 rounded-full bg-white border border-vara-line font-jakarta font-bold text-[10px] flex items-center justify-center text-vara-rose-ink">03</span>
                             <span>کرم بازسازی‌کننده شب و مراقبت دور چشم</span>
                           </li>
                         </ul>
@@ -1568,7 +1568,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       <button
                         onClick={handleSaveProfileInfo}
                         disabled={isSavingProfile}
-                        className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-6 py-2.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center gap-2 cursor-pointer"
+                        className="bg-vara-rose hover:bg-vara-rose-hover text-white px-6 py-2.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center gap-2 cursor-pointer"
                       >
                         {isSavingProfile ? <span>در حال ذخیره...</span> : <span>ذخیره پروفایل پوستی</span>}
                       </button>
@@ -1582,19 +1582,19 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             {activeTab === 'wishlist' && (
               <div className="space-y-6">
                 {wishlistProducts.length === 0 ? (
-                  <div className="bg-white rounded-2xl p-12 text-center space-y-4 border border-[#F0E1E4]">
-                    <div className="w-14 h-14 rounded-2xl bg-[#F9F1F0] border border-[#F0E1E4] text-[#8C3B58] flex items-center justify-center mx-auto">
+                  <div className="bg-white rounded-2xl p-12 text-center space-y-4 border border-vara-line">
+                    <div className="w-14 h-14 rounded-2xl bg-vara-surface border border-vara-line text-vara-rose-ink flex items-center justify-center mx-auto">
                       <Heart className="w-6 h-6 stroke-[1.5]" />
                     </div>
                     <div className="space-y-1">
-                      <h3 className="text-sm font-bold font-vazir text-[#23191E]">لیست علاقه‌مندی‌های شما خالی است</h3>
-                      <p className="text-xs font-vazir text-[#785E67] max-w-md mx-auto leading-relaxed">
+                      <h3 className="text-sm font-bold font-vazir text-vara-ink">لیست علاقه‌مندی‌های شما خالی است</h3>
+                      <p className="text-xs font-vazir text-vara-muted max-w-md mx-auto leading-relaxed">
                         محصولات مورد نظر خود را با لمس نشانگر قلب ذخیره کنید تا در مراجعات بعدی سریع‌تر به آن‌ها دسترسی داشته باشید.
                       </p>
                     </div>
                     <button
                       onClick={onBackToShop}
-                      className="bg-[#8C3B58] hover:bg-[#732E47] text-white px-6 py-3 rounded-xl text-xs font-vazir font-semibold transition-colors inline-flex items-center cursor-pointer shadow-[0_6px_16px_-4px_rgba(140,59,88,0.28)]"
+                      className="bg-vara-rose hover:bg-vara-rose-hover text-white px-6 py-3 rounded-full text-xs font-vazir font-semibold transition-colors inline-flex items-center cursor-pointer shadow-vara-float"
                     >
                       <span>مشاهده فروشگاه</span>
                     </button>
@@ -1606,10 +1606,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       return (
                         <div 
                           key={product.id}
-                          className="bg-white rounded-2xl p-4 border border-[#F0E1E4] flex flex-col justify-between group transition-colors hover:border-[#D48C9E]"
+                          className="bg-white rounded-2xl p-4 border border-vara-line flex flex-col justify-between group transition-colors hover:border-vara-tint-line"
                         >
                           <div className="space-y-3">
-                            <div className="relative aspect-square rounded-xl overflow-hidden bg-[#F9F1F0] p-4">
+                            <div className="relative aspect-square rounded-xl overflow-hidden bg-vara-surface p-4">
                               <img 
                                 src={product.images[0]} 
                                 alt={product.nameFa}
@@ -1618,37 +1618,37 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                               {onRemoveFromWishlist && (
                                 <button
                                   onClick={() => onRemoveFromWishlist(product.id)}
-                                  className="absolute top-2.5 left-2.5 w-8 h-8 rounded-lg bg-white/95 hover:bg-white text-[#8C3B58] flex items-center justify-center border border-[#F0E1E4] transition-colors cursor-pointer"
+                                  className="absolute top-2.5 left-2.5 w-8 h-8 rounded-full bg-white/95 hover:bg-white text-vara-rose-ink flex items-center justify-center border border-vara-line transition-colors cursor-pointer"
                                   title="حذف از علاقه‌مندی‌ها"
                                 >
-                                  <Heart className="w-4 h-4 fill-[#8C3B58]" />
+                                  <Heart className="w-4 h-4 fill-vara-rose" />
                                 </button>
                               )}
                             </div>
 
                             <div>
-                              <span className="text-[10px] font-jakarta uppercase tracking-wider text-[#8C3B58] font-bold block truncate">
+                              <span className="text-[10px] font-jakarta uppercase tracking-wider text-vara-rose-ink font-bold block truncate">
                                 {product.brand || product.nameEn}
                               </span>
-                              <h4 className="font-semibold text-xs font-vazir text-[#23191E] line-clamp-2 mt-1 min-h-[2.25rem]">
+                              <h4 className="font-semibold text-xs font-vazir text-vara-ink line-clamp-2 mt-1 min-h-[2.25rem]">
                                 {product.nameFa}
                               </h4>
-                              <div className="font-bold font-vazir tabular-nums text-xs text-[#8C3B58] mt-1.5">
+                              <div className="font-bold font-vazir tabular-nums text-xs text-vara-rose-ink mt-1.5">
                                 {defaultSz.price.toLocaleString('fa-IR')} تومان
                               </div>
                             </div>
                           </div>
 
-                          <div className="pt-3 border-t border-[#F0E1E4] grid grid-cols-2 gap-2 mt-3">
+                          <div className="pt-3 border-t border-vara-line grid grid-cols-2 gap-2 mt-3">
                             <button
                               onClick={() => onViewProduct(product)}
-                              className="py-2 px-2 bg-[#FDFBF9] hover:bg-[#F9F1F0] text-[#23191E] border border-[#F0E1E4] rounded-lg text-xs font-vazir font-medium transition-colors text-center cursor-pointer"
+                              className="py-2 px-2 bg-vara-canvas hover:bg-vara-surface text-vara-ink border border-vara-line rounded-full text-xs font-vazir font-medium transition-colors text-center cursor-pointer"
                             >
                               مشاهده
                             </button>
                             <button
                               onClick={() => onAddToCart(product, defaultSz)}
-                              className="py-2 px-2 bg-[#8C3B58] hover:bg-[#732E47] text-white rounded-lg text-xs font-vazir font-semibold transition-colors text-center cursor-pointer"
+                              className="py-2 px-2 bg-vara-rose hover:bg-vara-rose-hover text-white rounded-full text-xs font-vazir font-semibold transition-colors text-center cursor-pointer"
                             >
                               + افزودن
                             </button>
@@ -1663,30 +1663,30 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
             {/* TAB 5: SECURITY & LOGOUT */}
             {activeTab === 'security' && (
-              <div className="max-w-xl mx-auto bg-white rounded-2xl p-6 sm:p-8 border border-[#F0E1E4] space-y-6">
-                <div className="space-y-1 border-b border-[#F0E1E4] pb-4">
-                  <h3 className="text-sm font-bold font-vazir text-[#23191E]">امنیت و نشست کاربری</h3>
-                  <p className="text-xs font-vazir text-[#785E67]">مدیریت تایید حساب و خروج امن از سامانه</p>
+              <div className="max-w-xl mx-auto bg-white rounded-2xl p-6 sm:p-8 border border-vara-line space-y-6">
+                <div className="space-y-1 border-b border-vara-line pb-4">
+                  <h3 className="text-sm font-bold font-vazir text-vara-ink">امنیت و نشست کاربری</h3>
+                  <p className="text-xs font-vazir text-vara-muted">مدیریت تایید حساب و خروج امن از سامانه</p>
                 </div>
 
                 {user.email && (
-                  <div className="bg-[#FDFBF9] border border-[#F0E1E4] p-4 rounded-xl">
+                  <div className="bg-vara-canvas border border-vara-line p-4 rounded-xl">
                     <div className="flex items-center justify-between gap-4">
                       <div>
-                        <h4 className="text-xs font-bold font-vazir text-[#23191E]">وضعیت تایید ایمیل</h4>
-                        <p className="text-[11px] font-vazir text-[#785E67] mt-0.5">
+                        <h4 className="text-xs font-bold font-vazir text-vara-ink">وضعیت تایید ایمیل</h4>
+                        <p className="text-[11px] font-vazir text-vara-muted mt-0.5">
                           {user.emailVerified ? 'آدرس ایمیل شما تایید شده است' : 'آدرس ایمیل در انتظار تایید است'}
                         </p>
                       </div>
                       {user.emailVerified ? (
-                        <span className="text-[11px] font-semibold text-[#15803D] bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-md font-vazir">
+                        <span className="text-[11px] font-semibold text-[#15803D] bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full font-vazir">
                           تایید شده
                         </span>
                       ) : (
                         <button
                           onClick={handleResendVerification}
                           disabled={isSendingVerification}
-                          className="text-xs font-vazir font-semibold text-[#8C3B58] underline cursor-pointer"
+                          className="text-xs font-vazir font-semibold text-vara-rose-ink underline cursor-pointer"
                         >
                           {isSendingVerification ? 'در حال ارسال...' : 'ارسال کد تایید'}
                         </button>
@@ -1699,7 +1699,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   <button
                     onClick={handleLogout}
                     disabled={isLoading}
-                    className="w-full bg-white hover:bg-red-50 text-red-600 border border-[#F0E1E4] hover:border-red-200 py-3 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full bg-white hover:bg-red-50 text-red-600 border border-vara-line hover:border-red-200 py-3 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>{isLoading ? 'در حال خروج...' : 'خروج از حساب کاربری'}</span>
@@ -1715,18 +1715,18 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           /* ------------------------------------------------------------- */
           <div className="max-w-md mx-auto animate-fadeIn py-4">
             
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#F0E1E4] shadow-[0_14px_34px_-10px_rgba(140,59,88,0.08)] space-y-6">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-vara-line shadow-vara-float space-y-6">
               
               {/* Header Title */}
-              <div className="text-center space-y-1.5 border-b border-[#F0E1E4] pb-5">
+              <div className="text-center space-y-1.5 border-b border-vara-line pb-5">
                 <h1 className="text-2xl font-bold">حساب کاربری ورا</h1>
-                <p className="text-xs font-vazir text-[#785E67] leading-relaxed">
+                <p className="text-xs font-vazir text-vara-muted leading-relaxed">
                   برای پیگیری سفارش‌ها، مدیریت نشانی و دسترسی به پروفایل پوستی وارد شوید.
                 </p>
               </div>
 
               {/* Method Switcher: OTP SMS vs Email */}
-              <div className="grid grid-cols-2 gap-1.5 bg-[#F9F1F0] p-1 rounded-xl border border-[#F0E1E4]">
+              <div className="grid grid-cols-2 gap-1.5 bg-vara-surface p-1 rounded-xl border border-vara-line">
                 <button
                   type="button"
                   onClick={() => {
@@ -1734,10 +1734,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     setError('');
                     setSuccessMessage('');
                   }}
-                  className={`py-2.5 rounded-lg text-xs font-vazir transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`py-2.5 rounded-full text-xs font-vazir transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     authMethod === 'otp'
-                      ? 'bg-[#8C3B58] text-white font-semibold shadow-xs'
-                      : 'text-[#5C444D] hover:text-[#8C3B58] font-medium'
+                      ? 'bg-vara-rose text-white font-semibold shadow-xs'
+                      : 'text-vara-muted-strong hover:text-vara-rose-ink font-medium'
                   }`}
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
@@ -1751,10 +1751,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     setError('');
                     setSuccessMessage('');
                   }}
-                  className={`py-2.5 rounded-lg text-xs font-vazir transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`py-2.5 rounded-full text-xs font-vazir transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     authMethod === 'email'
-                      ? 'bg-[#8C3B58] text-white font-semibold shadow-xs'
-                      : 'text-[#5C444D] hover:text-[#8C3B58] font-medium'
+                      ? 'bg-vara-rose text-white font-semibold shadow-xs'
+                      : 'text-vara-muted-strong hover:text-vara-rose-ink font-medium'
                   }`}
                 >
                   <Mail className="w-3.5 h-3.5" />
@@ -1767,7 +1767,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 otpStep === 'phone' ? (
                   <form onSubmit={handleSendOtp} className="space-y-4 text-right">
                     <div>
-                      <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1.5 block">
+                      <label className="text-xs font-semibold font-vazir text-vara-ink mb-1.5 block">
                         شماره موبایل
                       </label>
                       <div className="relative">
@@ -1778,16 +1778,16 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                           placeholder="09123456789"
                           value={otpPhone}
                           onChange={(e) => setOtpPhone(e.target.value)}
-                          className="w-full bg-[#FDFBF9] text-[#23191E] text-sm font-jakarta tabular-nums pl-10 pr-4 py-3 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr transition-colors"
+                          className="w-full bg-vara-canvas text-vara-ink text-sm font-jakarta tabular-nums pl-10 pr-4 py-3 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr transition-colors"
                         />
-                        <Phone className="w-4 h-4 text-[#8C3B58] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <Phone className="w-4 h-4 text-vara-rose-ink absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                       </div>
                     </div>
 
                     <button
                       type="submit"
                       disabled={isLoading || !otpPhone.trim()}
-                      className="w-full bg-[#8C3B58] hover:bg-[#732E47] text-white py-3.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-[0_8px_20px_-4px_rgba(140,59,88,0.28)]"
+                      className="w-full bg-vara-rose hover:bg-vara-rose-hover text-white py-3.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-vara-float"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-2">
@@ -1804,10 +1804,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   </form>
                 ) : (
                   <form onSubmit={handleVerifyOtp} className="space-y-4 text-right">
-                    <div className="bg-[#F9F1F0] border border-[#F0E1E4] p-3.5 rounded-xl flex items-center justify-between">
+                    <div className="bg-vara-surface border border-vara-line p-3.5 rounded-xl flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <span className="text-[10px] font-vazir text-[#785E67] block">ارسال شده به شماره:</span>
-                        <div className="font-bold font-jakarta tabular-nums text-xs text-[#23191E] dir-ltr">{otpPhone}</div>
+                        <span className="text-[10px] font-vazir text-vara-muted block">ارسال شده به شماره:</span>
+                        <div className="font-bold font-jakarta tabular-nums text-xs text-vara-ink dir-ltr">{otpPhone}</div>
                       </div>
                       <button
                         type="button"
@@ -1816,14 +1816,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                           setOtpCode('');
                           setError('');
                         }}
-                        className="text-xs text-[#8C3B58] font-semibold font-vazir underline cursor-pointer"
+                        className="text-xs text-vara-rose-ink font-semibold font-vazir underline cursor-pointer"
                       >
                         ویرایش شماره
                       </button>
                     </div>
 
                     <div>
-                      <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1.5 block">
+                      <label className="text-xs font-semibold font-vazir text-vara-ink mb-1.5 block">
                         کد تایید ۵ رقمی
                       </label>
                       <input
@@ -1837,14 +1837,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                           const val = e.target.value.replace(/\D/g, '').slice(0, 5);
                           setOtpCode(val);
                         }}
-                        className="w-full bg-[#FDFBF9] text-[#23191E] text-xl font-bold font-jakarta tabular-nums tracking-[0.4em] text-center py-3 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white dir-ltr"
+                        className="w-full bg-vara-canvas text-vara-ink text-xl font-bold font-jakarta tabular-nums tracking-[0.4em] text-center py-3 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white dir-ltr"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={isLoading || otpCode.length < 4}
-                      className="w-full bg-[#8C3B58] hover:bg-[#732E47] text-white py-3.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-[0_8px_20px_-4px_rgba(140,59,88,0.28)]"
+                      className="w-full bg-vara-rose hover:bg-vara-rose-hover text-white py-3.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-vara-float"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-2">
@@ -1861,9 +1861,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                     <div className="text-center pt-1">
                       {otpTimerActive ? (
-                        <p className="text-xs font-vazir text-[#785E67]">
+                        <p className="text-xs font-vazir text-vara-muted">
                           ارسال مجدد کد تا{' '}
-                          <span className="font-bold font-jakarta tabular-nums text-[#8C3B58] dir-ltr inline-block">
+                          <span className="font-bold font-jakarta tabular-nums text-vara-rose-ink dir-ltr inline-block">
                             {Math.floor(otpCountdown / 60)}:{(otpCountdown % 60).toString().padStart(2, '0')}
                           </span>{' '}
                           دیگر
@@ -1873,7 +1873,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                           type="button"
                           onClick={() => handleSendOtp()}
                           disabled={isLoading}
-                          className="text-xs text-[#8C3B58] font-semibold font-vazir underline cursor-pointer flex items-center justify-center gap-1 mx-auto"
+                          className="text-xs text-vara-rose-ink font-semibold font-vazir underline cursor-pointer flex items-center justify-center gap-1 mx-auto"
                         >
                           <RefreshCw className="w-3.5 h-3.5" />
                           <span>ارسال مجدد کد پیامکی</span>
@@ -1888,20 +1888,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   {viewMode === 'verify-email' ? (
                     <form onSubmit={handleVerifyEmail} className="space-y-4 text-right">
                       <div className="text-center space-y-1.5">
-                        <div className="w-11 h-11 rounded-xl bg-[#F9F1F0] border border-[#F0E1E4] text-[#8C3B58] flex items-center justify-center mx-auto mb-1">
+                        <div className="w-11 h-11 rounded-xl bg-vara-surface border border-vara-line text-vara-rose-ink flex items-center justify-center mx-auto mb-1">
                           <MailCheck className="w-5 h-5" />
                         </div>
-                        <h4 className="font-bold text-xs font-vazir text-[#23191E]">تایید آدرس ایمیل</h4>
-                        <p className="text-[11px] text-[#785E67] font-vazir">
+                        <h4 className="font-bold text-xs font-vazir text-vara-ink">تایید آدرس ایمیل</h4>
+                        <p className="text-[11px] text-vara-muted font-vazir">
                           کد فعال‌سازی ۶ رقمی به آدرس زیر ارسال شد:
                         </p>
-                        <div className="font-semibold font-jakarta text-xs text-[#8C3B58] dir-ltr inline-block bg-[#F9F1F0] px-3 py-1 rounded-lg border border-[#F0E1E4]">
+                        <div className="font-semibold font-jakarta text-xs text-vara-rose-ink dir-ltr inline-block bg-vara-surface px-3 py-1 rounded-lg border border-vara-line">
                           {pendingEmail || email}
                         </div>
                       </div>
 
                       <div>
-                        <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1.5 block text-center">
+                        <label className="text-xs font-semibold font-vazir text-vara-ink mb-1.5 block text-center">
                           کد ۶ رقمی ارسال شده
                         </label>
                         <input
@@ -1915,14 +1915,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             const val = e.target.value.replace(/\D/g, '').slice(0, 6);
                             setEmailVerificationCode(val);
                           }}
-                          className="w-full bg-[#FDFBF9] text-[#23191E] text-xl font-bold font-jakarta tabular-nums tracking-[0.4em] text-center py-3 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white dir-ltr"
+                          className="w-full bg-vara-canvas text-vara-ink text-xl font-bold font-jakarta tabular-nums tracking-[0.4em] text-center py-3 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white dir-ltr"
                         />
                       </div>
 
                       <button
                         type="submit"
                         disabled={isLoading || emailVerificationCode.length < 5}
-                        className="w-full bg-[#8C3B58] hover:bg-[#732E47] text-white py-3.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                        className="w-full bg-vara-rose hover:bg-vara-rose-hover text-white py-3.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                       >
                         {isLoading ? (
                           <div className="flex items-center gap-2">
@@ -1944,7 +1944,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             setViewMode('register');
                             setEmailVerificationCode('');
                           }}
-                          className="text-[#785E67] hover:text-[#23191E] underline cursor-pointer"
+                          className="text-vara-muted hover:text-vara-ink underline cursor-pointer"
                         >
                           ویرایش مشخصات
                         </button>
@@ -1953,7 +1953,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                           type="button"
                           onClick={handleResendEmailCode}
                           disabled={isLoading}
-                          className="text-[#8C3B58] font-semibold underline cursor-pointer flex items-center gap-1 disabled:opacity-50"
+                          className="text-vara-rose-ink font-semibold underline cursor-pointer flex items-center gap-1 disabled:opacity-50"
                         >
                           <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
                           <span>ارسال مجدد کد</span>
@@ -1963,7 +1963,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   ) : viewMode === 'register' ? (
                     <form onSubmit={handleRegister} className="space-y-3.5 text-right">
                       <div>
-                        <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1 block">
+                        <label className="text-xs font-semibold font-vazir text-vara-ink mb-1 block">
                           نام و نام خانوادگی
                         </label>
                         <div className="relative">
@@ -1973,14 +1973,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             placeholder="مثال: سارا محمدی"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-vazir pl-10 pr-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white transition-colors"
+                            className="w-full bg-vara-canvas text-vara-ink text-xs font-vazir pl-10 pr-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white transition-colors"
                           />
-                          <User className="w-4 h-4 text-[#785E67] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <User className="w-4 h-4 text-vara-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                         </div>
                       </div>
 
                       <div>
-                        <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1 block">
+                        <label className="text-xs font-semibold font-vazir text-vara-ink mb-1 block">
                           آدرس ایمیل
                         </label>
                         <div className="relative">
@@ -1990,15 +1990,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             placeholder="example@domain.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-jakarta pl-10 pr-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr transition-colors"
+                            className="w-full bg-vara-canvas text-vara-ink text-xs font-jakarta pl-10 pr-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr transition-colors"
                           />
-                          <Mail className="w-4 h-4 text-[#785E67] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <Mail className="w-4 h-4 text-vara-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <div>
-                          <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1 block">
+                          <label className="text-xs font-semibold font-vazir text-vara-ink mb-1 block">
                             رمز عبور
                           </label>
                           <div className="relative">
@@ -2008,12 +2008,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                               placeholder="حداقل ۶ کاراکتر"
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
-                              className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-vazir pl-9 pr-3 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr transition-colors"
+                              className="w-full bg-vara-canvas text-vara-ink text-xs font-vazir pl-9 pr-3 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr transition-colors"
                             />
                             <button
                               type="button"
                               onClick={() => setShowPassword(!showPassword)}
-                              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#785E67] hover:text-[#23191E] p-0.5 cursor-pointer"
+                              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-vara-muted hover:text-vara-ink p-0.5 cursor-pointer"
                             >
                               {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                             </button>
@@ -2021,7 +2021,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         </div>
 
                         <div>
-                          <label className="text-xs font-semibold font-vazir text-[#23191E] mb-1 block">
+                          <label className="text-xs font-semibold font-vazir text-vara-ink mb-1 block">
                             تکرار رمز عبور
                           </label>
                           <input
@@ -2030,7 +2030,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             placeholder="تکرار رمز"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-vazir px-3 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr transition-colors"
+                            className="w-full bg-vara-canvas text-vara-ink text-xs font-vazir px-3 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr transition-colors"
                           />
                         </div>
                       </div>
@@ -2038,7 +2038,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-[#8C3B58] hover:bg-[#732E47] text-white py-3 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_20px_-4px_rgba(140,59,88,0.28)]"
+                        className="w-full bg-vara-rose hover:bg-vara-rose-hover text-white py-3 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-vara-float"
                       >
                         {isLoading ? <span>در حال ثبت‌نام...</span> : <span>تکمیل ثبت‌نام</span>}
                       </button>
@@ -2047,7 +2047,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         <button
                           type="button"
                           onClick={() => setViewMode('login')}
-                          className="text-xs text-[#8C3B58] font-vazir font-semibold underline cursor-pointer"
+                          className="text-xs text-vara-rose-ink font-vazir font-semibold underline cursor-pointer"
                         >
                           قبلاً حساب دارید؟ ورود به حساب
                         </button>
@@ -2057,8 +2057,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     forgotStep === 'request' ? (
                       <form onSubmit={handleForgotPassword} className="space-y-4 text-right">
                         <div className="space-y-1">
-                          <h4 className="font-bold text-xs font-vazir text-[#23191E]">بازیابی رمز عبور</h4>
-                          <p className="text-[11px] text-[#785E67] font-vazir leading-relaxed">
+                          <h4 className="font-bold text-xs font-vazir text-vara-ink">بازیابی رمز عبور</h4>
+                          <p className="text-[11px] text-vara-muted font-vazir leading-relaxed">
                             ایمیل حساب خود را وارد کنید تا کد تایید ۶ رقمی جهت تنظیم رمز جدید ارسال شود.
                           </p>
                         </div>
@@ -2070,15 +2070,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             placeholder="example@domain.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-jakarta pl-10 pr-4 py-3 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr transition-colors"
+                            className="w-full bg-vara-canvas text-vara-ink text-xs font-jakarta pl-10 pr-4 py-3 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr transition-colors"
                           />
-                          <Mail className="w-4 h-4 text-[#785E67] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <Mail className="w-4 h-4 text-vara-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                         </div>
 
                         <button
                           type="submit"
                           disabled={isLoading}
-                          className="w-full bg-[#8C3B58] hover:bg-[#732E47] text-white py-3.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                          className="w-full bg-vara-rose hover:bg-vara-rose-hover text-white py-3.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
                         >
                           {isLoading ? <span>در حال ارسال...</span> : <span>ارسال کد بازیابی</span>}
                         </button>
@@ -2090,34 +2090,34 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             setViewMode('login');
                             setError('');
                           }}
-                          className="text-xs text-[#785E67] hover:text-[#23191E] font-vazir font-medium underline block mx-auto pt-1 cursor-pointer"
+                          className="text-xs text-vara-muted hover:text-vara-ink font-vazir font-medium underline block mx-auto pt-1 cursor-pointer"
                         >
                           بازگشت به صفحه ورود
                         </button>
                       </form>
                     ) : (
                       <form onSubmit={handleConfirmResetPassword} className="space-y-3.5 text-right">
-                        <div className="space-y-1 bg-[#F9F1F0] border border-[#F0E1E4] p-3 rounded-xl text-right">
+                        <div className="space-y-1 bg-vara-surface border border-vara-line p-3 rounded-xl text-right">
                           <div className="flex items-center justify-between">
-                            <span className="font-bold text-xs font-vazir text-[#23191E]">تایید کد و تغییر رمز</span>
+                            <span className="font-bold text-xs font-vazir text-vara-ink">تایید کد و تغییر رمز</span>
                             <button
                               type="button"
                               onClick={() => {
                                 setForgotStep('request');
                                 setError('');
                               }}
-                              className="text-[10px] text-[#8C3B58] underline font-vazir cursor-pointer font-semibold"
+                              className="text-[10px] text-vara-rose-ink underline font-vazir cursor-pointer font-semibold"
                             >
                               تغییر ایمیل
                             </button>
                           </div>
-                          <p className="text-[11px] text-[#785E67] font-vazir leading-relaxed">
-                            کد ۶ رقمی ارسال‌شده به <span className="font-jakarta dir-ltr inline-block font-semibold text-[#8C3B58]">{email}</span> را وارد نمایید.
+                          <p className="text-[11px] text-vara-muted font-vazir leading-relaxed">
+                            کد ۶ رقمی ارسال‌شده به <span className="font-jakarta dir-ltr inline-block font-semibold text-vara-rose-ink">{email}</span> را وارد نمایید.
                           </p>
                         </div>
 
                         <div>
-                          <label className="text-[11px] font-semibold font-vazir text-[#23191E] mb-1 block">
+                          <label className="text-[11px] font-semibold font-vazir text-vara-ink mb-1 block">
                             کد تایید ۶ رقمی
                           </label>
                           <div className="relative">
@@ -2128,14 +2128,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                               placeholder="123456"
                               value={resetCode}
                               onChange={(e) => setResetCode(e.target.value.replace(/\D/g, ''))}
-                              className="w-full bg-[#FDFBF9] text-[#23191E] text-base tracking-widest font-jakarta tabular-nums font-bold pl-10 pr-4 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-center dir-ltr"
+                              className="w-full bg-vara-canvas text-vara-ink text-base tracking-widest font-jakarta tabular-nums font-bold pl-10 pr-4 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-center dir-ltr"
                             />
-                            <KeyRound className="w-4 h-4 text-[#785E67] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                            <KeyRound className="w-4 h-4 text-vara-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                           </div>
                         </div>
 
                         <div>
-                          <label className="text-[11px] font-semibold font-vazir text-[#23191E] mb-1 block">
+                          <label className="text-[11px] font-semibold font-vazir text-vara-ink mb-1 block">
                             رمز عبور جدید (حداقل ۶ کاراکتر)
                           </label>
                           <div className="relative">
@@ -2145,13 +2145,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                               placeholder="••••••••"
                               value={resetNewPassword}
                               onChange={(e) => setResetNewPassword(e.target.value)}
-                              className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-vazir pl-10 pr-10 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr"
+                              className="w-full bg-vara-canvas text-vara-ink text-xs font-vazir pl-10 pr-10 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr"
                             />
-                            <Lock className="w-4 h-4 text-[#785E67] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                            <Lock className="w-4 h-4 text-vara-muted absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                             <button
                               type="button"
                               onClick={() => setShowResetPassword(!showResetPassword)}
-                              className="absolute left-3 top-1/2 -translate-y-1/2 text-[#785E67] hover:text-[#23191E] cursor-pointer"
+                              className="absolute left-3 top-1/2 -translate-y-1/2 text-vara-muted hover:text-vara-ink cursor-pointer"
                             >
                               {showResetPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                             </button>
@@ -2159,7 +2159,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         </div>
 
                         <div>
-                          <label className="text-[11px] font-semibold font-vazir text-[#23191E] mb-1 block">
+                          <label className="text-[11px] font-semibold font-vazir text-vara-ink mb-1 block">
                             تکرار رمز عبور جدید
                           </label>
                           <div className="relative">
@@ -2169,23 +2169,23 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                               placeholder="••••••••"
                               value={resetConfirmPassword}
                               onChange={(e) => setResetConfirmPassword(e.target.value)}
-                              className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-vazir pl-10 pr-10 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr"
+                              className="w-full bg-vara-canvas text-vara-ink text-xs font-vazir pl-10 pr-10 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr"
                             />
-                            <Lock className="w-4 h-4 text-[#785E67] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                            <Lock className="w-4 h-4 text-vara-muted absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                           </div>
                         </div>
 
                         <button
                           type="submit"
                           disabled={isLoading}
-                          className="w-full bg-[#8C3B58] hover:bg-[#732E47] text-white py-3.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                          className="w-full bg-vara-rose hover:bg-vara-rose-hover text-white py-3.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
                         >
                           {isLoading ? <span>در حال ذخیره...</span> : <span>تایید و ثبت رمز جدید</span>}
                         </button>
 
                         <div className="flex items-center justify-between pt-1 text-[11px] font-vazir">
                           {forgotTimerActive ? (
-                            <span className="text-[#785E67] flex items-center gap-1 tabular-nums">
+                            <span className="text-vara-muted flex items-center gap-1 tabular-nums">
                               <Clock className="w-3.5 h-3.5" />
                               ارسال مجدد ({forgotCountdown} ثانیه)
                             </span>
@@ -2194,7 +2194,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                               type="button"
                               onClick={handleResendResetCode}
                               disabled={isLoading}
-                              className="text-[#8C3B58] underline font-semibold flex items-center gap-1 cursor-pointer"
+                              className="text-vara-rose-ink underline font-semibold flex items-center gap-1 cursor-pointer"
                             >
                               <RefreshCw className="w-3 h-3" />
                               ارسال مجدد کد
@@ -2208,7 +2208,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                               setViewMode('login');
                               setError('');
                             }}
-                            className="text-[#785E67] hover:text-[#23191E] font-medium underline cursor-pointer"
+                            className="text-vara-muted hover:text-vara-ink font-medium underline cursor-pointer"
                           >
                             انصراف
                           </button>
@@ -2218,7 +2218,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   ) : (
                     <form onSubmit={handleLogin} className="space-y-3.5 text-right">
                       <div>
-                        <label htmlFor="vara-login-email" className="text-xs font-semibold font-vazir text-[#23191E] mb-1 block">
+                        <label htmlFor="vara-login-email" className="text-xs font-semibold font-vazir text-vara-ink mb-1 block">
                           آدرس ایمیل
                         </label>
                         <div className="relative">
@@ -2228,19 +2228,19 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             placeholder="example@domain.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-jakarta pl-10 pr-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr transition-colors"
+                            className="w-full bg-vara-canvas text-vara-ink text-xs font-jakarta pl-10 pr-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr transition-colors"
                           />
-                          <Mail className="w-4 h-4 text-[#785E67] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <Mail className="w-4 h-4 text-vara-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                         </div>
                       </div>
 
                       <div>
                         <div className="flex items-center justify-between mb-1">
-                          <label htmlFor="vara-login-password" className="text-xs font-semibold font-vazir text-[#23191E]">رمز عبور</label>
+                          <label htmlFor="vara-login-password" className="text-xs font-semibold font-vazir text-vara-ink">رمز عبور</label>
                           <button
                             type="button"
                             onClick={() => setViewMode('forgot-password')}
-                            className="text-[11px] text-[#785E67] hover:text-[#8C3B58] font-vazir underline cursor-pointer"
+                            className="text-[11px] text-vara-muted hover:text-vara-rose-ink font-vazir underline cursor-pointer"
                           >
                             فراموشی رمز عبور؟
                           </button>
@@ -2252,12 +2252,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                             placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full bg-[#FDFBF9] text-[#23191E] text-xs font-vazir pl-9 pr-3.5 py-2.5 rounded-xl border border-[#F0E1E4] focus:outline-none focus:border-[#8C3B58] focus:bg-white text-left dir-ltr transition-colors"
+                            className="w-full bg-vara-canvas text-vara-ink text-xs font-vazir pl-9 pr-3.5 py-2.5 rounded-full border border-vara-line focus:outline-none focus:border-vara-rose focus:bg-white text-left dir-ltr transition-colors"
                           />
                           <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'پنهان کردن رمز' : 'نمایش رمز'}
-                            className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#785E67] hover:text-[#23191E] p-0.5 cursor-pointer"
+                            className="absolute left-2.5 top-1/2 -translate-y-1/2 text-vara-muted hover:text-vara-ink p-0.5 cursor-pointer"
                           >
                             {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                           </button>
@@ -2267,7 +2267,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       <button
                         type="submit"
                         disabled={isLoading || lockoutRemaining > 0}
-                        className="w-full bg-[#8C3B58] hover:bg-[#732E47] text-white py-3.5 rounded-xl text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_8px_20px_-4px_rgba(140,59,88,0.28)]"
+                        className="w-full bg-vara-rose hover:bg-vara-rose-hover text-white py-3.5 rounded-full text-xs font-vazir font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-vara-float"
                       >
                         {lockoutRemaining > 0 ? (
                           <span className="flex items-center gap-1.5 text-red-200 tabular-nums">
@@ -2285,7 +2285,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         <button
                           type="button"
                           onClick={() => setViewMode('register')}
-                          className="text-xs text-[#8C3B58] font-vazir font-semibold underline cursor-pointer"
+                          className="text-xs text-vara-rose-ink font-vazir font-semibold underline cursor-pointer"
                         >
                           حساب کاربری ندارید؟ ثبت‌نام کنید
                         </button>
@@ -2298,10 +2298,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               {/* Google Social Sign In */}
               <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-[#F0E1E4]"></div>
+                  <div className="w-full border-t border-vara-line"></div>
                 </div>
                 <div className="relative flex justify-center text-xs">
-                  <span className="bg-white px-3 font-vazir text-[#785E67]">یا ادامه با</span>
+                  <span className="bg-white px-3 font-vazir text-vara-muted">یا ادامه با</span>
                 </div>
               </div>
 

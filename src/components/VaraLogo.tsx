@@ -71,15 +71,15 @@ export const VaraLogo: React.FC<VaraLogoProps> = ({
       {logoImage}
       
       {showSubtitle && (
-        <div className="vara-logo-caption flex flex-col justify-center border-s border-[#F0E1E4] ps-2.5 ms-0.5 text-right select-none">
+        <div className="vara-logo-caption flex flex-col justify-center border-s border-vara-line ps-2.5 ms-0.5 text-right select-none">
           <div className="flex items-center gap-1.5">
-            <span className={`font-vazir font-semibold tracking-tight text-[#23191E] leading-tight ${currentSize.titleSize}`}>
+            <span className={`font-vazir font-semibold tracking-tight text-vara-ink leading-tight ${currentSize.titleSize}`}>
               {subtitleFa}
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8C3B58] shrink-0" />
+            <span className="w-1.5 h-1.5 rounded-full bg-vara-rose shrink-0" />
           </div>
           {subtitleEn && (
-            <span className={`font-jakarta tracking-[0.12em] text-[#785E67] font-medium uppercase ${currentSize.subSize}`}>
+            <span className={`font-jakarta tracking-[0.12em] text-vara-muted font-medium uppercase ${currentSize.subSize}`}>
               {subtitleEn}
             </span>
           )}

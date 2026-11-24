@@ -87,9 +87,9 @@ function ModalLoading({ label, onClose, onRetry }: { label: string; onClose: () 
   return (
     <Modal label={label} onClose={onClose} className="fixed inset-0 z-[65] bg-black/25 flex items-end sm:items-center justify-center">
       <div className="w-full sm:w-96 bg-white p-5 rounded-t-xl sm:rounded-xl flex items-center justify-between gap-4" onClick={(event) => event.stopPropagation()}>
-        <span className="text-sm text-[#785E67]" role="status">{label}</span>
-        {onRetry && <button type="button" className="text-sm font-bold text-[#8C3B58]" onClick={onRetry}>تلاش دوباره</button>}
-        <button type="button" className="text-sm font-bold text-[#8C3B58]" onClick={onClose}>بستن</button>
+        <span className="text-sm text-vara-muted" role="status">{label}</span>
+        {onRetry && <button type="button" className="text-sm font-bold text-vara-rose-ink" onClick={onRetry}>تلاش دوباره</button>}
+        <button type="button" className="text-sm font-bold text-vara-rose-ink" onClick={onClose}>بستن</button>
       </div>
     </Modal>
   );
@@ -881,7 +881,7 @@ export default function App() {
         )}
       </Helmet>
 
-      <div className="vara-shell min-h-screen max-w-full overflow-x-hidden flex flex-col font-vazir antialiased selection:bg-[#111111] selection:text-white">
+      <div className="vara-shell min-h-screen max-w-full overflow-x-hidden flex flex-col font-vazir antialiased selection:bg-vara-tint selection:text-vara-ink">
       
       {/* Header Navigation (Hidden on dedicated Admin CMS route for full-screen admin workspace, or visible with clean state) */}
       {activeSection !== 'admin' && (
@@ -912,8 +912,8 @@ export default function App() {
             {activeSection === 'admin' ? (
               <Suspense
                 fallback={
-                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-[#71717A]">
-                    <div className="w-7 h-7 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-vara-muted">
+                    <div className="w-7 h-7 border-2 border-vara-ink border-t-transparent rounded-full animate-spin" />
                     <span className="text-xs font-medium font-vazir">در حال بارگذاری پنل مدیریت...</span>
                   </div>
                 }
@@ -928,8 +928,8 @@ export default function App() {
             ) : activeSection === 'profile' ? (
               <Suspense
                 fallback={
-                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-[#71717A]">
-                    <div className="w-7 h-7 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-vara-muted">
+                    <div className="w-7 h-7 border-2 border-vara-ink border-t-transparent rounded-full animate-spin" />
                     <span className="text-xs font-medium font-vazir">در حال بارگذاری حساب کاربری...</span>
                   </div>
                 }
@@ -958,7 +958,7 @@ export default function App() {
               productLoadError && !selectedProduct ? (
                 <div className="min-h-[60vh] p-8 text-center" role="status">
                   <p>{productLoadError}</p>
-                  <button type="button" className="mt-4 text-[#8C3B58] font-bold" onClick={() => {
+                  <button type="button" className="mt-4 text-vara-rose-ink font-bold" onClick={() => {
                     setProductLoadError('');
                     setProductRetry((attempt) => attempt + 1);
                   }}>تلاش دوباره</button>
@@ -981,8 +981,8 @@ export default function App() {
             ) : activeSection === 'shop' ? (
               <Suspense
                 fallback={
-                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-[#71717A]">
-                    <div className="w-7 h-7 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-vara-muted">
+                    <div className="w-7 h-7 border-2 border-vara-ink border-t-transparent rounded-full animate-spin" />
                     <span className="text-xs font-medium font-vazir">در حال بارگذاری فروشگاه...</span>
                   </div>
                 }
@@ -1001,8 +1001,8 @@ export default function App() {
             ) : activeSection === 'order-detail' ? (
               <Suspense
                 fallback={
-                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-[#71717A]">
-                    <div className="w-7 h-7 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-vara-muted">
+                    <div className="w-7 h-7 border-2 border-vara-ink border-t-transparent rounded-full animate-spin" />
                     <span className="text-xs font-medium font-vazir">در حال بارگذاری جزئیات سفارش...</span>
                   </div>
                 }
@@ -1016,8 +1016,8 @@ export default function App() {
             ) : activeSection === 'calculator' ? (
               <Suspense
                 fallback={
-                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-[#71717A]">
-                    <div className="w-7 h-7 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-vara-muted">
+                    <div className="w-7 h-7 border-2 border-vara-ink border-t-transparent rounded-full animate-spin" />
                     <span className="text-xs font-medium font-vazir">در حال بارگذاری محاسبه‌گر...</span>
                   </div>
                 }
@@ -1033,8 +1033,8 @@ export default function App() {
             ) : activeSection === 'contact' ? (
               <Suspense
                 fallback={
-                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-[#71717A]">
-                    <div className="w-7 h-7 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-vara-muted">
+                    <div className="w-7 h-7 border-2 border-vara-ink border-t-transparent rounded-full animate-spin" />
                     <span className="text-xs font-medium font-vazir">در حال بارگذاری صفحه تماس با ما...</span>
                   </div>
                 }
@@ -1048,8 +1048,8 @@ export default function App() {
             ) : activeSection === 'return-policy' || activeSection === 'terms' ? (
               <Suspense
                 fallback={
-                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-[#71717A]">
-                    <div className="w-7 h-7 border-2 border-[#8C3B58] border-t-transparent rounded-full animate-spin" />
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-vara-muted">
+                    <div className="w-7 h-7 border-2 border-vara-rose border-t-transparent rounded-full animate-spin" />
                     <span className="text-xs font-medium font-vazir">در حال بارگذاری قوانین و شرایط...</span>
                   </div>
                 }
@@ -1221,7 +1221,7 @@ export default function App() {
             onClick={() => window.dispatchEvent(new CustomEvent('vara-open-ai-advisor'))}
             aria-label="مشاور هوشمند پوست"
             title="مشاور هوشمند پوست"
-            className="group relative flex items-center h-12 max-w-[48px] hover:max-w-[210px] px-3.5 hover:px-4 bg-[#8C3B58] hover:bg-[#732E47] text-white rounded-full shadow-[0_10px_28px_-6px_rgba(140,59,88,0.4)] transition-all duration-[750ms] hover:scale-[1.02] active:scale-95 cursor-pointer overflow-hidden border border-[#732E47]"
+            className="group relative flex items-center h-12 max-w-[48px] hover:max-w-[210px] px-3.5 hover:px-4 bg-vara-rose hover:bg-vara-rose-hover text-white rounded-full shadow-vara-float transition-all duration-[750ms] hover:scale-[1.02] active:scale-95 cursor-pointer overflow-hidden border border-vara-rose"
           >
             <MessageSquareHeart className="w-5 h-5 text-white shrink-0" />
             <span className="whitespace-nowrap text-xs font-semibold text-white opacity-0 max-w-0 group-hover:opacity-100 group-hover:max-w-[150px] mr-0 group-hover:mr-2.5 transition-all duration-[750ms] overflow-hidden">
