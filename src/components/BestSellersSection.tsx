@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Product, ProductSize, ProductVariant } from '../types';
 import { DEFAULT_PRODUCT_IMAGE, getProductCover } from '../lib/productImages';
@@ -12,20 +12,46 @@ interface BestSellersSectionProps {
 }
 
 const tabs = [
-  { id: 'all', label: 'همه', test: () => true },
   { id: 'skincare', label: 'آبرسان و مرطوب‌کننده', test: (p: Product) => p.category === 'hydration' || p.productType === 'moisturizer' },
   { id: 'serum', label: 'سرم‌ و اسنس', test: (p: Product) => p.productType === 'serum' || p.productType === 'toner' },
-  { id: 'sunscreen', label: 'ضدآفتاب', test: (p: Product) => p.category === 'sunscreen' },
+  { id: 'sunscreen', label: 'ضدآفتاب', test: (p: Product) => p.category === 'sunscreen' || p.productType === 'sunscreen' || (p.concerns || []).includes('sunscreen') },
 ];
+
+function pickRandomProducts(items: Product[], count: number): Product[] {
+  const pool = [...items];
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, count);
+}
 
 export function BestSellersSection({ products, onViewProduct, onAddToCart, onViewAllBestSellers }: BestSellersSectionProps) {
   const list = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState(tabs[0]);
-  const best = products.filter((product) => product.isBestSeller || product.rating >= 4.7);
-  const shown = (best.length > 0 ? best : products)
-    .filter(activeTab.test)
-    .sort((a, b) => Number(getProductCover(b) !== DEFAULT_PRODUCT_IMAGE) - Number(getProductCover(a) !== DEFAULT_PRODUCT_IMAGE))
-    .slice(0, 12);
+
+  const featuredByTab = useMemo(() => {
+    const result: Record<string, Product[]> = {};
+    for (const tab of tabs) {
+      const matching = products.filter(tab.test);
+      const preferred = matching.filter(
+        (p) => p.inStock && (p.stockCount ?? 1) > 0 && getProductCover(p) !== DEFAULT_PRODUCT_IMAGE,
+      );
+      if (preferred.length >= 4) {
+        result[tab.id] = pickRandomProducts(preferred, 4);
+      } else {
+        const preferredIds = new Set(preferred.map((p) => p.id));
+        const fallback = pickRandomProducts(
+          matching.filter((p) => !preferredIds.has(p.id)),
+          4 - preferred.length,
+        );
+        result[tab.id] = [...pickRandomProducts(preferred, preferred.length), ...fallback];
+      }
+    }
+    return result;
+  }, [products]);
+
+  const shown = featuredByTab[activeTab.id] || [];
 
   if (!products.length) return null;
 
