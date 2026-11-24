@@ -897,7 +897,15 @@ export default function App() {
           searchQuery={searchQuery}
           setSearchQuery={(q) => {
             setSearchQuery(q);
-            if (q) navigateToSection('shop');
+            if (q) {
+              setShopFilterPreset({ timestamp: Date.now() });
+              navigateToSection('shop');
+            }
+          }}
+          onNavigateToShopWithFilter={(preset) => {
+            setShopFilterPreset({ ...preset, timestamp: Date.now() });
+            setSearchQuery(preset.searchQuery || '');
+            navigateToSection('shop');
           }}
           activeSection={activeSection}
           setActiveSection={(sec) => navigateToSection(sec as any)}

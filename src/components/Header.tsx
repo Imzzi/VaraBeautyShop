@@ -10,7 +10,7 @@ import {
   X,
   ChevronLeft
 } from 'lucide-react';
-import { UserProfile } from '../types';
+import { UserProfile, ShopFilterPreset } from '../types';
 import { VaraLogo } from './VaraLogo';
 import { BRANDS_DATA, BrandItem } from '../data/brands';
 import { subscribeToBrands, getLocalBrands } from '../lib/brandsManager';
@@ -26,6 +26,7 @@ interface HeaderProps {
   user: UserProfile | null;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  onNavigateToShopWithFilter?: (preset: ShopFilterPreset) => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
 }
@@ -41,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
   user,
   searchQuery,
   setSearchQuery,
+  onNavigateToShopWithFilter,
   activeSection,
   setActiveSection,
 }) => {
@@ -115,6 +117,22 @@ export const Header: React.FC<HeaderProps> = ({
     desktop.addEventListener('change', closeAtDesktop);
     return () => desktop.removeEventListener('change', closeAtDesktop);
   }, []);
+
+  const handleFilterClick = (preset: ShopFilterPreset) => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+    }
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+    if (onNavigateToShopWithFilter) {
+      onNavigateToShopWithFilter({ ...preset, timestamp: Date.now() });
+    } else {
+      if (preset.searchQuery !== undefined) {
+        setSearchQuery(preset.searchQuery);
+      }
+      setActiveSection('shop');
+    }
+  };
 
   const handleNavClick = (sectionId: string, filterTerm?: string) => {
     if (dropdownTimeoutRef.current) {
@@ -312,7 +330,15 @@ export const Header: React.FC<HeaderProps> = ({
                     
                     {/* مراقبت از پوست */}
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-[13px] text-vara-rose-ink pb-1.5 border-b border-vara-line">مراقبت از پوست</h4>
+                      <h4>
+                        <button
+                          type="button"
+                          onClick={() => handleFilterClick({ department: 'skincare' })}
+                          className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
+                        >
+                          مراقبت از پوست
+                        </button>
+                      </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
                         <li><button onClick={() => handleNavClick('shop', 'پاک کننده')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شوینده و پاک‌کننده صورت</button></li>
                         <li><button onClick={() => handleNavClick('shop', 'تونر')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">تونر و اسنس</button></li>
@@ -326,7 +352,15 @@ export const Header: React.FC<HeaderProps> = ({
 
                     {/* مراقبت از بدن */}
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-[13px] text-vara-rose-ink pb-1.5 border-b border-vara-line">مراقبت از بدن</h4>
+                      <h4>
+                        <button
+                          type="button"
+                          onClick={() => handleFilterClick({ department: 'body' })}
+                          className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
+                        >
+                          مراقبت از بدن
+                        </button>
+                      </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
                         <li><button onClick={() => handleNavClick('shop', 'شوینده بدن')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شوینده و ژل بدن</button></li>
                         <li><button onClick={() => handleNavClick('shop', 'لوسیون')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">لوسیون و کره بدن</button></li>
@@ -337,7 +371,15 @@ export const Header: React.FC<HeaderProps> = ({
 
                     {/* مراقبت از لب */}
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-[13px] text-vara-rose-ink pb-1.5 border-b border-vara-line">مراقبت از لب</h4>
+                      <h4>
+                        <button
+                          type="button"
+                          onClick={() => handleFilterClick({ department: 'lip' })}
+                          className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
+                        >
+                          مراقبت از لب
+                        </button>
+                      </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
                         <li><button onClick={() => handleNavClick('shop', 'بالم لب')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">بالم لب</button></li>
                         <li><button onClick={() => handleNavClick('shop', 'اسکراب لب')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">اسکراب لب</button></li>
@@ -348,7 +390,15 @@ export const Header: React.FC<HeaderProps> = ({
 
                     {/* مراقبت از مو */}
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-[13px] text-vara-rose-ink pb-1.5 border-b border-vara-line">مراقبت از مو</h4>
+                      <h4>
+                        <button
+                          type="button"
+                          onClick={() => handleFilterClick({ department: 'hair' })}
+                          className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
+                        >
+                          مراقبت از مو
+                        </button>
+                      </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
                         <li><button onClick={() => handleNavClick('shop', 'شامپو')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شامپو</button></li>
                         <li><button onClick={() => handleNavClick('shop', 'نرم کننده')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">نرم‌کننده</button></li>
@@ -360,7 +410,15 @@ export const Header: React.FC<HeaderProps> = ({
 
                     {/* آرایشی */}
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-[13px] text-vara-rose-ink pb-1.5 border-b border-vara-line">آرایشی</h4>
+                      <h4>
+                        <button
+                          type="button"
+                          onClick={() => handleFilterClick({ category: 'makeup' })}
+                          className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
+                        >
+                          آرایشی
+                        </button>
+                      </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
                         <li><button onClick={() => handleNavClick('shop', 'آرایش صورت')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">آرایش صورت</button></li>
                         <li><button onClick={() => handleNavClick('shop', 'آرایش چشم')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">آرایش چشم</button></li>
@@ -373,10 +431,18 @@ export const Header: React.FC<HeaderProps> = ({
                     {/* دستگاه‌های زیبایی */}
                     <div className="bg-vara-surface p-4 rounded-xl border border-vara-line flex flex-col justify-between">
                       <div>
-                        <h4 className="font-semibold text-[13px] text-vara-ink mb-1">ابزارهای زیبایی</h4>
+                        <h4 className="mb-1">
+                          <button
+                            type="button"
+                            onClick={() => handleFilterClick({ productType: 'device' })}
+                            className="font-semibold text-[13px] text-vara-ink hover:text-vara-rose-ink transition-colors cursor-pointer text-right"
+                          >
+                            ابزارهای زیبایی
+                          </button>
+                        </h4>
                         <p className="text-[11.5px] text-vara-muted mb-3.5 leading-relaxed">تجهیزات مراقبت خانگی و ماساژورهای تخصصی</p>
                         <button 
-                          onClick={() => handleNavClick('shop', 'دستگاه زیبایی')}
+                          onClick={() => handleFilterClick({ productType: 'device' })}
                           className="w-full text-center py-2 px-3 bg-vara-rose hover:bg-vara-rose-hover text-white text-xs rounded-full font-medium cursor-pointer transition-all mt-1 shadow-shop-pill"
                         >
                           مشاهده کالکشن
@@ -734,8 +800,14 @@ export const Header: React.FC<HeaderProps> = ({
                   {mobileExpandedCat === 'shop' && (
                     <div className="p-3 bg-white space-y-3 border-t border-vara-line">
                       <div>
-                        <p className="font-semibold text-vara-rose-ink text-[11px] mb-1.5">
-                          <span>مراقبت از صورت</span>
+                        <p className="mb-1.5">
+                          <button
+                            type="button"
+                            onClick={() => handleFilterClick({ department: 'skincare' })}
+                            className="font-semibold text-vara-rose-ink hover:text-vara-rose text-[11px] cursor-pointer underline-offset-4 hover:underline"
+                          >
+                            مراقبت از صورت
+                          </button>
                         </p>
                         <div className="flex flex-wrap gap-1.5">
                           {['شوینده', 'میسلار واتر', 'تونر', 'اسنس', 'سرم', 'مرطوب کننده', 'کرم شب', 'دور چشم', 'ماسک', 'ضد آفتاب', 'روغن صورت'].map(t => (
@@ -746,11 +818,35 @@ export const Header: React.FC<HeaderProps> = ({
                         </div>
                       </div>
                       <div>
-                        <p className="font-semibold text-vara-rose-ink text-[11px] mb-1.5">
-                          <span>بدن، لب و مو</span>
+                        <p className="mb-1.5">
+                          <button
+                            type="button"
+                            onClick={() => handleFilterClick({ category: 'hair-body' })}
+                            className="font-semibold text-vara-rose-ink hover:text-vara-rose text-[11px] cursor-pointer underline-offset-4 hover:underline"
+                          >
+                            بدن، لب و مو
+                          </button>
                         </p>
                         <div className="flex flex-wrap gap-1.5">
                           {['شوینده بدن', 'لوسیون بدن', 'بالم لب', 'کرم دست', 'شامپو', 'اسکراب', 'ماسک مو', 'سرم مو'].map(t => (
+                            <button key={t} onClick={() => handleNavClick('shop', t)} className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="mb-1.5">
+                          <button
+                            type="button"
+                            onClick={() => handleFilterClick({ category: 'makeup' })}
+                            className="font-semibold text-vara-rose-ink hover:text-vara-rose text-[11px] cursor-pointer underline-offset-4 hover:underline"
+                          >
+                            آرایشی
+                          </button>
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {['رژ لب', 'رژگونه', 'ریمل', 'کانسیلر', 'کرم پودر', 'سایه چشم', 'پرایمر', 'اسپری فیکس'].map(t => (
                             <button key={t} onClick={() => handleNavClick('shop', t)} className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
                               {t}
                             </button>

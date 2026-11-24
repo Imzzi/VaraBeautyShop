@@ -37,10 +37,13 @@ export type RoutineType =
   | 'soothing'
   | 'minimal';
 
+export type ShopDepartment = 'skincare' | 'body' | 'lip' | 'hair';
+
 export interface ShopFilterPreset {
   productType?: SkincareProductType | 'all';
   routine?: RoutineType | 'all';
   category?: CategoryId;
+  department?: ShopDepartment | 'all';
   onlyNew?: boolean;
   sortBy?: 'bestseller' | 'newest' | 'price-low' | 'price-high' | 'rating';
   searchQuery?: string;

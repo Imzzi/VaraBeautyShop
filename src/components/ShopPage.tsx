@@ -12,10 +12,17 @@ import {
   ChevronDown,
   Check
 } from 'lucide-react';
-import { Product, CategoryId, SkinType, SkincareProductType, RoutineType, ProductSize, ProductVariant, ShopFilterPreset } from '../types';
+import { Product, CategoryId, SkinType, SkincareProductType, RoutineType, ProductSize, ProductVariant, ShopFilterPreset, ShopDepartment } from '../types';
 import { ProductCard } from './ProductCard';
 import { BRANDS_DATA, BrandItem } from '../data/brands';
 import { subscribeToBrands, getLocalBrands } from '../lib/brandsManager';
+
+const departmentLabels: Record<ShopDepartment, string> = {
+  skincare: 'مراقبت از پوست',
+  body: 'مراقبت از بدن',
+  lip: 'مراقبت از لب',
+  hair: 'مراقبت از مو',
+};
 
 const categoryLabels: Record<CategoryId, string> = {
   all: 'همه دسته‌ها', cleanser: 'پاک‌کننده', 'anti-aging': 'ضدچروک', hydration: 'آبرسانی',
@@ -52,6 +59,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
   const [selectedIngredient, setSelectedIngredient] = useState<string>('all');
   const [selectedRoutine, setSelectedRoutine] = useState<RoutineType | 'all'>(initialFilterPreset?.routine || 'all');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>(initialFilterPreset?.category || 'all');
+  const [selectedDepartment, setSelectedDepartment] = useState<ShopDepartment | 'all'>(initialFilterPreset?.department || 'all');
   
   // Secondary Filters
   const [priceRange, setPriceRange] = useState<'all' | 'under1m' | '1m-1.5m' | 'over1.5m'>('all');
@@ -132,6 +140,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     setSelectedProductType(initialFilterPreset.productType || 'all');
     setSelectedRoutine(initialFilterPreset.routine || 'all');
     setSelectedCategory(initialFilterPreset.category || 'all');
+    setSelectedDepartment(initialFilterPreset.department || 'all');
     setOnlyNew(Boolean(initialFilterPreset.onlyNew));
     setSortBy(initialFilterPreset.sortBy || 'bestseller');
   }, [initialFilterPreset]);
@@ -370,6 +379,21 @@ export const ShopPage: React.FC<ShopPageProps> = ({
           return false;
         }
 
+        // Department Filter (Header mega-menu sections)
+        if (selectedDepartment !== 'all') {
+          const text = `${p.nameFa || ''} ${p.routineStep || ''}`.toLowerCase();
+          const isHair = (p.category === 'hair-body' || p.productType === 'device') &&
+            /(مو|شامپو|پوست سر|سشوار|فرکننده|برس حرارتی|بیگودی|رزماری|فیتو|نووفن|آرگان)/.test(text);
+          const isBody = /(بدن|دست|پا|لوسیون|نواحی حساس)/.test(text) &&
+            !/(سشوار|شامپو|فرکننده|برس حرارتی|بیگودی)/.test(text);
+          const isLip = p.productType === 'lip-care' ||
+            /(بالم لب|اسکراب لب|روغن لب|لیپ|رژ لب|خط لب|برق لب|مربا لب|ماسک لب|پلامپر)/.test(text);
+          if (selectedDepartment === 'skincare' && (p.category === 'makeup' || isHair || p.productType === 'device')) return false;
+          if (selectedDepartment === 'body' && !isBody) return false;
+          if (selectedDepartment === 'lip' && !isLip) return false;
+          if (selectedDepartment === 'hair' && !isHair) return false;
+        }
+
         // Price Filter
         const pPrice = p.price || 0;
         if (priceRange === 'under1m' && pPrice >= 1000000) return false;
@@ -417,6 +441,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     selectedIngredient,
     selectedRoutine,
     selectedCategory,
+    selectedDepartment,
     priceRange, 
     onlyInStock,
     onlyBestSellers, 
@@ -430,6 +455,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
   const activeFilters = [
     selectedBrand !== 'all' && { key: 'brand', label: `برند: ${brandsList.find((brand) => brand.id === selectedBrand)?.labelFa || selectedBrand}`, clear: () => setSelectedBrand('all') },
     selectedCategory !== 'all' && { key: 'category', label: `دسته: ${categoryLabels[selectedCategory]}`, clear: () => setSelectedCategory('all') },
+    selectedDepartment !== 'all' && { key: 'department', label: departmentLabels[selectedDepartment], clear: () => setSelectedDepartment('all') },
     selectedSkinType !== 'all' && { key: 'skin', label: `نوع پوست: ${skinTypesList.find((item) => item.id === selectedSkinType)?.labelFa}`, clear: () => setSelectedSkinType('all') },
     selectedProductType !== 'all' && { key: 'type', label: `نوع محصول: ${productTypesList.find((item) => item.id === selectedProductType)?.labelFa}`, clear: () => setSelectedProductType('all') },
     selectedIngredient !== 'all' && { key: 'ingredient', label: `ترکیب: ${ingredientsList.find((item) => item.id === selectedIngredient)?.labelFa}`, clear: () => setSelectedIngredient('all') },
@@ -450,6 +476,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     setSelectedIngredient('all');
     setSelectedRoutine('all');
     setSelectedCategory('all');
+    setSelectedDepartment('all');
     setPriceRange('all');
     setOnlyInStock(false);
     setOnlyBestSellers(false);
