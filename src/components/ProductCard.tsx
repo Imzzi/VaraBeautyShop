@@ -185,19 +185,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="vara-card-actions pt-3 border-t border-vara-line">
           
           {/* Price Container */}
-          <div className="flex flex-col text-right">
-            {(selectedVariant?.originalPrice || selectedSize?.originalPrice) && (
-              <span className="line-through text-[10px] text-vara-muted font-vazir">
-                {formatPrice(selectedVariant?.originalPrice || selectedSize?.originalPrice)}
-              </span>
-            )}
-            <div className="flex flex-wrap items-baseline gap-1">
-              <span className="font-bold font-jakarta text-sm sm:text-[15px] text-vara-ink tracking-tight">
-                {hasVariants && selectedVariant ? formatPrice(selectedVariant.price) : formatPrice(selectedSize?.price || product.price)}
-              </span>
-              <span className="text-[10px] font-vazir text-vara-muted">تومان</span>
-            </div>
-          </div>
+          {(() => {
+            const activePrice = hasVariants && selectedVariant
+              ? selectedVariant.price
+              : (selectedSize?.price || product.price || 0);
+            const activeOrig = selectedVariant?.originalPrice || selectedSize?.originalPrice || 0;
+            return (
+              <div className="flex flex-col text-right">
+                {activeOrig > activePrice && (
+                  <span className="line-through text-[10px] text-vara-muted font-vazir">
+                    {formatPrice(activeOrig)}
+                  </span>
+                )}
+                <div className="flex flex-wrap items-baseline gap-1">
+                  <span className="font-bold font-jakarta text-sm sm:text-[15px] text-vara-ink tracking-tight">
+                    {formatPrice(activePrice)}
+                  </span>
+                  <span className="text-[10px] font-vazir text-vara-muted">تومان</span>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Quick Add Button */}
           {isOutOfStock ? (

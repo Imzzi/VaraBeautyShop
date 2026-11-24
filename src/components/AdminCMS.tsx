@@ -1194,7 +1194,8 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
             { id: 'acne-blemishes', label: 'ضدجوش و لک' },
             { id: 'sunscreen', label: 'ضدآفتاب و محافظت' },
             { id: 'brightening', label: 'روشن‌کننده' },
-            { id: 'hair-body', label: 'مراقبت مو و بدن' }
+            { id: 'hair-body', label: 'مراقبت مو و بدن' },
+            { id: 'makeup', label: 'لوازم آرایشی' }
           ].map((cat) => (
             <button
               key={cat.id}
@@ -1284,7 +1285,8 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
                           {p.category === 'sunscreen' && 'ضدآفتاب'}
                           {p.category === 'brightening' && 'روشن‌کننده'}
                           {p.category === 'hair-body' && 'مراقبت مو و بدن'}
-                          {!['cleanser', 'anti-aging', 'hydration', 'sensitive-skin', 'acne-blemishes', 'sunscreen', 'brightening', 'hair-body'].includes(p.category) && p.category}
+                          {p.category === 'makeup' && 'لوازم آرایشی'}
+                          {!['cleanser', 'anti-aging', 'hydration', 'sensitive-skin', 'acne-blemishes', 'sunscreen', 'brightening', 'hair-body', 'makeup'].includes(p.category) && p.category}
                         </span>
                         {p.productType && (
                           <span className="text-[10px] text-vara-muted font-vazir">
@@ -1295,6 +1297,10 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
                             {p.productType === 'sunscreen' && 'ضدآفتاب'}
                             {p.productType === 'mask' && 'ماسک صورت'}
                             {p.productType === 'eye-cream' && 'کرم دور چشم'}
+                            {p.productType === 'eye-care' && 'مراقبت دور چشم'}
+                            {p.productType === 'lip-care' && 'مراقبت لب'}
+                            {p.productType === 'hair-body' && 'مراقبت مو و بدن'}
+                            {p.productType === 'makeup' && 'لوازم آرایشی'}
                             {p.productType === 'oil' && 'روغن گیاهی'}
                             {p.productType === 'exfoliator' && 'لایه‌بردار'}
                             {p.productType === 'device' && 'ابزار زیبایی'}
@@ -1703,7 +1709,10 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
                     <option value="eye-cream">کرم دور چشم (Eye Cream)</option>
                     <option value="oil">روغن صورت و گیاهی (Facial Oil)</option>
                     <option value="exfoliator">لایه‌بردار و اسکراب (Exfoliator / Peeling)</option>
-                    <option value="device">ابزار زیبایی و ماساژور (Beauty Device)</option>
+                    <option value="lip-care">مراقبت لب (Lip Care)</option>
+                    <option value="hair-body">مراقبت مو و بدن (Hair & Body)</option>
+                    <option value="makeup">لوازم آرایشی (Makeup)</option>
+                    <option value="device">ابزار زیبایی و حالت‌دهنده (Beauty Device)</option>
                   </select>
                 </div>
               </div>
@@ -1727,6 +1736,7 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
                     <option value="sunscreen">ضدآفتاب و محافظتی (Sunscreen)</option>
                     <option value="brightening">روشن‌کننده و ضدلک (Brightening)</option>
                     <option value="hair-body">مراقبت مو و بدن (Hair & Body)</option>
+                    <option value="makeup">لوازم آرایشی (Makeup)</option>
                   </select>
                 </div>
 

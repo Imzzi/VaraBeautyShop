@@ -20,7 +20,7 @@ import { subscribeToBrands, getLocalBrands } from '../lib/brandsManager';
 const categoryLabels: Record<CategoryId, string> = {
   all: 'همه دسته‌ها', cleanser: 'پاک‌کننده', 'anti-aging': 'ضدچروک', hydration: 'آبرسانی',
   'sensitive-skin': 'پوست حساس', 'acne-blemishes': 'جوش و لک', sunscreen: 'ضدآفتاب',
-  brightening: 'روشن‌کننده', 'hair-body': 'مو و بدن',
+  brightening: 'روشن‌کننده', 'hair-body': 'مو و بدن', makeup: 'لوازم آرایشی',
 };
 
 interface ShopPageProps {
@@ -194,7 +194,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     { id: 'mask', labelFa: 'ماسک و لایه‌بردار' },
     { id: 'lip-care', labelFa: 'مراقبت لب' },
     { id: 'hair-body', labelFa: 'مراقبت مو و بدن' },
-    { id: 'device', labelFa: 'دستگاه‌ها و ابزار ماساژ' },
+    { id: 'makeup', labelFa: 'لوازم آرایشی' },
+    { id: 'device', labelFa: 'دستگاه‌ها و ابزار زیبایی' },
   ];
 
   // 4. ترکیبات و مواد مؤثره (Ingredients & Actives)
@@ -324,6 +325,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
             // Also check category fallback for backward compatibility
             if (selectedProductType === 'sunscreen' && p.category !== 'sunscreen') return false;
             if (selectedProductType === 'hair-body' && p.category !== 'hair-body') return false;
+            if (selectedProductType === 'makeup' && p.category !== 'makeup') return false;
+            if (selectedProductType === 'exfoliator' && !p.nameFa.includes('لایه')) return false;
             if (selectedProductType === 'cleanser' && !p.nameFa.includes('شوینده') && !p.nameFa.includes('پاک‌کننده')) return false;
             if (selectedProductType === 'toner' && !p.nameFa.includes('تونر') && !p.nameFa.includes('اسنس')) return false;
             if (selectedProductType === 'moisturizer' && !p.nameFa.includes('کرم') && !p.nameFa.includes('بالم') && p.category !== 'hydration') return false;

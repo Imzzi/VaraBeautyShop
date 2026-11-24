@@ -59,10 +59,11 @@ test('catalog and checkout persist through the real SQLite transaction driver', 
   await assert.rejects(ProductsDb.update(product.id, { isBestSeller: false }));
 });
 
-test('v1 catalog upgrades safely with imported skincare products without touching existing records', async (ctx) => {
+test('v1/v2 catalog upgrades safely with Bioderma price fix and imported skincare + makeup/hair catalogs', async (ctx) => {
   const directory = await mkdtemp(join(tmpdir(), 'vara-db-migrate-'));
   const client = createClient({ url: `file:${join(directory, 'migrate.db')}` });
   const { IMPORTED_SKINCARE_PRODUCTS } = await import('../src/data/importedSkincareCatalog.ts');
+  const { IMPORTED_MAKEUP_HAIR_PRODUCTS } = await import('../src/data/importedMakeupHairCatalog.ts');
 
   await client.batch([
     `CREATE TABLE products (
@@ -134,55 +135,93 @@ test('v1 catalog upgrades safely with imported skincare products without touchin
     price: 4450000,
     stockCount: 10,
   };
-  await client.execute({
-    sql: `INSERT INTO products (id, nameFa, nameEn, brand, price, originalPrice, stockCount, inStock, data, updatedAt)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    args: [
-      existingCustomProduct.id,
-      existingCustomProduct.nameFa,
-      existingCustomProduct.nameEn,
-      existingCustomProduct.brand,
-      existingCustomProduct.price,
-      0,
-      10,
-      1,
-      JSON.stringify(existingCustomProduct),
-      new Date().toISOString(),
-    ],
-  });
+  const zeroPriceBioderma = {
+    ...IMPORTED_SKINCARE_PRODUCTS[0],
+    id: 'product-49785efd-140a-4478-9d96-d49c8adaf95c',
+    nameFa: 'فوم شوینده ضد لک روشن کننده بایودرما',
+    brand: 'Bioderma',
+    price: 0,
+    originalPrice: 0,
+    variants: [{ id: 'var-zero', name: '200 ml', price: 0, stockCount: 10 }],
+    sizes: [{ label: '200 ml', labelEn: '200 ml', price: 0 }],
+    stockCount: 10,
+  };
+  const badOrigBioderma = {
+    ...IMPORTED_SKINCARE_PRODUCTS[0],
+    id: 'product-26f7f786-0992-4351-ad12-212fa89fedc3',
+    nameFa: 'ژل لایه‌بردار شبانه و ضدجوش بایودرما سبیوم نایت پیل',
+    brand: 'Bioderma',
+    price: 3570000,
+    originalPrice: 2530000,
+    variants: [{ id: 'var-bad-orig', name: '40 ml', price: 3570000, originalPrice: 2530000, stockCount: 10 }],
+    sizes: [{ label: '40 ml', labelEn: '40 ml', price: 3570000, originalPrice: 2530000 }],
+    stockCount: 10,
+  };
+  for (const row of [existingCustomProduct, zeroPriceBioderma, badOrigBioderma]) {
+    await client.execute({
+      sql: `INSERT INTO products (id, nameFa, nameEn, brand, price, originalPrice, stockCount, inStock, data, updatedAt)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        row.id,
+        row.nameFa,
+        row.nameEn,
+        row.brand,
+        row.price,
+        row.originalPrice || 0,
+        10,
+        1,
+        JSON.stringify(row),
+        new Date().toISOString(),
+      ],
+    });
+  }
   await client.execute({
     sql: 'INSERT INTO settings (key, value, updatedAt) VALUES (?, ?, ?)',
     args: ['brands', JSON.stringify([{ id: 'Bioderma', labelFa: 'بایودرما', labelEn: 'Bioderma' }]), new Date().toISOString()],
   });
   await client.execute({
     sql: 'INSERT INTO settings (key, value, updatedAt) VALUES (?, ?, ?)',
-    args: ['__vara_schema_version', '1', new Date().toISOString()],
+    args: ['__vara_schema_version', '2', new Date().toISOString()],
   });
 
   ctx.mock.module('@libsql/client/web', { namedExports: { createClient: () => client } });
   const { ProductsDb, SettingsDb } = await import(new URL('../serverDb.ts?v1-upgrade', import.meta.url).href);
 
   const allProducts = await ProductsDb.getAllFresh();
-  assert.equal(allProducts.length, 1 + IMPORTED_SKINCARE_PRODUCTS.length);
+  const expectedTotal = 3 + IMPORTED_SKINCARE_PRODUCTS.length + IMPORTED_MAKEUP_HAIR_PRODUCTS.length;
+  assert.equal(allProducts.length, expectedTotal);
+
   const preserved = allProducts.find((p) => p.id === existingCustomProduct.id);
   assert.equal(preserved?.nameFa, existingCustomProduct.nameFa);
   assert.equal(preserved?.price, 4450000);
 
+  const fixedZero = allProducts.find((p) => p.id === zeroPriceBioderma.id);
+  assert.equal(fixedZero?.price, 3216000);
+  assert.equal(fixedZero?.variants?.[0]?.price, 3216000);
+  assert.equal(fixedZero?.sizes?.[0]?.price, 3216000);
+
+  const fixedOrig = allProducts.find((p) => p.id === badOrigBioderma.id);
+  assert.equal(fixedOrig?.price, 3570000);
+  assert.equal(fixedOrig?.originalPrice, 0);
+  assert.equal(fixedOrig?.variants?.[0]?.originalPrice, undefined);
+
   const brands = (await SettingsDb.get('brands')) as Array<{ id: string }>;
   assert.ok(brands.some((b) => b.id === 'Bioderma'));
   assert.ok(brands.some((b) => b.id === 'Caudalie'));
-  assert.ok(brands.some((b) => b.id === 'SUNGBOON EDITOR'));
+  assert.ok(brands.some((b) => b.id === 'Maybelline'));
+  assert.ok(brands.some((b) => b.id === 'Phyto'));
+  assert.ok(brands.some((b) => b.id === 'ENZO'));
 
   // Deleting an imported product and resetting schema version must NOT re-import it
-  await ProductsDb.delete(IMPORTED_SKINCARE_PRODUCTS[0].id);
+  await ProductsDb.delete(IMPORTED_MAKEUP_HAIR_PRODUCTS[0].id);
   await client.execute({
     sql: 'DELETE FROM settings WHERE key = ?',
     args: ['__vara_schema_version'],
   });
   const nextWorker = await import(new URL('../serverDb.ts?v1-upgrade-repeat', import.meta.url).href);
   const afterDelete = await nextWorker.ProductsDb.getAllFresh();
-  assert.equal(afterDelete.length, IMPORTED_SKINCARE_PRODUCTS.length);
-  assert.equal(afterDelete.some((p) => p.id === IMPORTED_SKINCARE_PRODUCTS[0].id), false);
+  assert.equal(afterDelete.length, expectedTotal - 1);
+  assert.equal(afterDelete.some((p) => p.id === IMPORTED_MAKEUP_HAIR_PRODUCTS[0].id), false);
 
   client.close();
 });

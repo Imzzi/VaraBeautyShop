@@ -1120,11 +1120,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 <div className="space-y-0.5 font-vazir">
                   <span className="text-[11px] text-vara-muted font-vazir block">قیمت مصرف‌کننده:</span>
                   <div className="flex items-baseline gap-2 font-vazir tabular-nums">
-                    {activeOriginalPrice && (
+                    {activeOriginalPrice && activeOriginalPrice > activePrice ? (
                       <span className="line-through text-xs text-vara-muted font-vazir">
                         {formatPrice(activeOriginalPrice)} تومان
                       </span>
-                    )}
+                    ) : null}
                     <span className="text-2xl sm:text-3xl font-bold font-vazir text-vara-ink">
                       {formatPrice(activePrice * (isOutOfStock ? 1 : quantity))}
                     </span>

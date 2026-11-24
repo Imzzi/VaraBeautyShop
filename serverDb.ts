@@ -2,6 +2,7 @@ import { createClient as createWebClient, type Client, type Transaction } from '
 import crypto from 'crypto';
 import { PRODUCTS as initialProducts } from './src/data/products';
 import { IMPORTED_SKINCARE_PRODUCTS } from './src/data/importedSkincareCatalog';
+import { IMPORTED_MAKEUP_HAIR_PRODUCTS } from './src/data/importedMakeupHairCatalog';
 import { BRANDS_DATA } from './src/data/brands';
 import { Product, Order, UserProfile, OrderStatus, OrderStats } from './src/types';
 
@@ -452,10 +453,46 @@ export function generateSalt(length = 16): string {
 // -------------------------------------------------------------
 let isInitialized = false;
 let initPromise: Promise<void> | null = null;
-const schemaVersion = '2';
+const schemaVersion = '3';
 const schemaVersionKey = '__vara_schema_version';
 const skincareImportKey = '__vara_pori_skincare_import_v1';
+const biodermaPriceFixKey = '__vara_bioderma_price_fix_v1';
+const makeupHairImportKey = '__vara_pori_makeup_hair_import_v1';
 const schemaVersionQuery = { sql: 'SELECT value FROM settings WHERE key = ?', args: [schemaVersionKey] };
+
+async function mergeMissingBrands(tx: Transaction): Promise<void> {
+  const existingBrandsRow = await tx.execute({
+    sql: 'SELECT value FROM settings WHERE key = ?',
+    args: ['brands'],
+  });
+  if (!existingBrandsRow.rows.length) return;
+  try {
+    const parsedBrands = JSON.parse(String(existingBrandsRow.rows[0].value));
+    if (!Array.isArray(parsedBrands)) return;
+    const existingBrandIds = new Set(
+      parsedBrands
+        .map((b: any) => (typeof b?.id === 'string' ? b.id.trim().toLowerCase() : ''))
+        .filter(Boolean),
+    );
+    const missingBrands = BRANDS_DATA.filter(
+      (b) => !existingBrandIds.has(b.id.trim().toLowerCase()),
+    );
+    if (missingBrands.length) {
+      await tx.execute({
+        sql: 'UPDATE settings SET value = ?, updatedAt = ? WHERE key = ?',
+        args: [JSON.stringify([...parsedBrands, ...missingBrands]), new Date().toISOString(), 'brands'],
+      });
+    }
+  } catch {}
+}
+
+async function batchInsertCatalogIfMissing(tx: Transaction, products: Product[]): Promise<void> {
+  if (!products.length) return;
+  await tx.batch(products.map((product) => ({
+    sql: `${productInsert} ON CONFLICT(id) DO NOTHING`,
+    args: [product.id, ...productFields(product)],
+  })));
+}
 
 export async function ensureDbInitialized(): Promise<void> {
   if (isInitialized) return;
@@ -586,42 +623,103 @@ export async function ensureDbInitialized(): Promise<void> {
             args: [skincareImportKey],
           });
           if (!skincareImported.rows.length) {
-            if (IMPORTED_SKINCARE_PRODUCTS.length) {
-              await tx.batch(IMPORTED_SKINCARE_PRODUCTS.map((product) => ({
-                sql: `${productInsert} ON CONFLICT(id) DO NOTHING`,
-                args: [product.id, ...productFields(product)],
-              })));
+            await batchInsertCatalogIfMissing(tx, IMPORTED_SKINCARE_PRODUCTS);
+            await mergeMissingBrands(tx);
+            await tx.execute({
+              sql: 'INSERT INTO settings (key, value, updatedAt) VALUES (?, ?, ?) ON CONFLICT(key) DO NOTHING',
+              args: [skincareImportKey, '1', new Date().toISOString()],
+            });
+          }
+
+          const biodermaFixed = await tx.execute({
+            sql: 'SELECT value FROM settings WHERE key = ?',
+            args: [biodermaPriceFixKey],
+          });
+          if (!biodermaFixed.rows.length) {
+            const zeroRow = await tx.execute({
+              sql: 'SELECT data FROM products WHERE id = ?',
+              args: ['product-49785efd-140a-4478-9d96-d49c8adaf95c'],
+            });
+            if (zeroRow.rows.length) {
+              try {
+                const p = JSON.parse(String(zeroRow.rows[0].data)) as Product;
+                if (!p.price || p.price <= 0) {
+                  const fixedPrice = 3216000;
+                  const updated: Product = {
+                    ...p,
+                    price: fixedPrice,
+                    originalPrice: 0,
+                    variants: (p.variants || []).map((v) => ({
+                      ...v,
+                      price: v.price && v.price > 0 ? v.price : fixedPrice,
+                      ...(v.originalPrice && v.originalPrice <= (v.price || fixedPrice) ? { originalPrice: undefined } : {}),
+                    })),
+                    sizes: (p.sizes || []).map((s) => ({
+                      ...s,
+                      price: s.price && s.price > 0 ? s.price : fixedPrice,
+                      ...(s.originalPrice && s.originalPrice <= (s.price || fixedPrice) ? { originalPrice: undefined } : {}),
+                    })),
+                  };
+                  await tx.execute({
+                    sql: `UPDATE products SET nameFa = ?, nameEn = ?, brand = ?, price = ?, originalPrice = ?,
+                      stockCount = ?, inStock = ?, data = ?, updatedAt = ? WHERE id = ?`,
+                    args: [...productFields(updated), updated.id],
+                  });
+                }
+              } catch {}
             }
 
-            const existingBrandsRow = await tx.execute({
-              sql: 'SELECT value FROM settings WHERE key = ?',
-              args: ['brands'],
+            const badOrigRow = await tx.execute({
+              sql: 'SELECT data FROM products WHERE id = ?',
+              args: ['product-26f7f786-0992-4351-ad12-212fa89fedc3'],
             });
-            if (existingBrandsRow.rows.length) {
+            if (badOrigRow.rows.length) {
               try {
-                const parsedBrands = JSON.parse(String(existingBrandsRow.rows[0].value));
-                if (Array.isArray(parsedBrands)) {
-                  const existingBrandIds = new Set(
-                    parsedBrands
-                      .map((b: any) => (typeof b?.id === 'string' ? b.id.trim().toLowerCase() : ''))
-                      .filter(Boolean),
-                  );
-                  const missingBrands = BRANDS_DATA.filter(
-                    (b) => !existingBrandIds.has(b.id.trim().toLowerCase()),
-                  );
-                  if (missingBrands.length) {
-                    await tx.execute({
-                      sql: 'UPDATE settings SET value = ?, updatedAt = ? WHERE key = ?',
-                      args: [JSON.stringify([...parsedBrands, ...missingBrands]), new Date().toISOString(), 'brands'],
-                    });
-                  }
+                const p = JSON.parse(String(badOrigRow.rows[0].data)) as Product;
+                if (p.originalPrice && p.originalPrice <= p.price) {
+                  const updated: Product = {
+                    ...p,
+                    originalPrice: 0,
+                    variants: (p.variants || []).map((v) => {
+                      if (v.originalPrice !== undefined && v.originalPrice <= v.price) {
+                        const { originalPrice: _drop, ...rest } = v;
+                        return rest;
+                      }
+                      return v;
+                    }),
+                    sizes: (p.sizes || []).map((s) => {
+                      if (s.originalPrice !== undefined && s.originalPrice <= s.price) {
+                        const { originalPrice: _drop, ...rest } = s;
+                        return rest;
+                      }
+                      return s;
+                    }),
+                  };
+                  await tx.execute({
+                    sql: `UPDATE products SET nameFa = ?, nameEn = ?, brand = ?, price = ?, originalPrice = ?,
+                      stockCount = ?, inStock = ?, data = ?, updatedAt = ? WHERE id = ?`,
+                    args: [...productFields(updated), updated.id],
+                  });
                 }
               } catch {}
             }
 
             await tx.execute({
               sql: 'INSERT INTO settings (key, value, updatedAt) VALUES (?, ?, ?) ON CONFLICT(key) DO NOTHING',
-              args: [skincareImportKey, '1', new Date().toISOString()],
+              args: [biodermaPriceFixKey, '1', new Date().toISOString()],
+            });
+          }
+
+          const makeupHairImported = await tx.execute({
+            sql: 'SELECT value FROM settings WHERE key = ?',
+            args: [makeupHairImportKey],
+          });
+          if (!makeupHairImported.rows.length) {
+            await batchInsertCatalogIfMissing(tx, IMPORTED_MAKEUP_HAIR_PRODUCTS);
+            await mergeMissingBrands(tx);
+            await tx.execute({
+              sql: 'INSERT INTO settings (key, value, updatedAt) VALUES (?, ?, ?) ON CONFLICT(key) DO NOTHING',
+              args: [makeupHairImportKey, '1', new Date().toISOString()],
             });
           }
 

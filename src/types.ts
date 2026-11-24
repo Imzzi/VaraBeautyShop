@@ -6,8 +6,9 @@ export type CategoryId =
   | 'sensitive-skin' 
   | 'acne-blemishes' 
   | 'sunscreen' 
-  | 'brightening' 
-  | 'hair-body';
+  | 'brightening'
+  | 'hair-body'
+  | 'makeup';
 
 export type SkinType = 'dry' | 'oily' | 'combination' | 'sensitive' | 'normal';
 
@@ -20,8 +21,9 @@ export type SkincareProductType =
   | 'eye-care' 
   | 'sunscreen' 
   | 'mask' 
-  | 'lip-care' 
-  | 'hair-body' 
+  | 'lip-care'
+  | 'hair-body'
+  | 'makeup'
   | 'device';
 
 export type RoutineType = 
@@ -88,6 +90,7 @@ export type SkinConcern =
   | 'sunscreen' 
   | 'brightening' 
   | 'hair-body' 
+  | 'makeup'
   | 'soothing' 
   | 'barrier-repair';
 
