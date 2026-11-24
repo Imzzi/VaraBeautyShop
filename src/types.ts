@@ -16,6 +16,7 @@ export type SkincareProductType =
   | 'toner' 
   | 'serum' 
   | 'moisturizer' 
+  | 'exfoliator'
   | 'eye-care' 
   | 'sunscreen' 
   | 'mask' 

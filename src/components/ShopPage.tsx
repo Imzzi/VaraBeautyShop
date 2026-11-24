@@ -188,6 +188,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     { id: 'toner', labelFa: 'تونر و اسنس' },
     { id: 'serum', labelFa: 'سرم‌های تخصصی و درمانی' },
     { id: 'moisturizer', labelFa: 'کرم مرطوب‌کننده و آبرسان' },
+    { id: 'exfoliator', labelFa: 'لایه‌بردار و اسکراب' },
     { id: 'eye-care', labelFa: 'مراقبت دور چشم' },
     { id: 'sunscreen', labelFa: 'ضدآفتاب و محافظت پوست' },
     { id: 'mask', labelFa: 'ماسک و لایه‌بردار' },

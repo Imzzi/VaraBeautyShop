@@ -1,6 +1,7 @@
 import { createClient as createWebClient, type Client, type Transaction } from '@libsql/client/web';
 import crypto from 'crypto';
 import { PRODUCTS as initialProducts } from './src/data/products';
+import { IMPORTED_SKINCARE_PRODUCTS } from './src/data/importedSkincareCatalog';
 import { BRANDS_DATA } from './src/data/brands';
 import { Product, Order, UserProfile, OrderStatus, OrderStats } from './src/types';
 
@@ -451,8 +452,9 @@ export function generateSalt(length = 16): string {
 // -------------------------------------------------------------
 let isInitialized = false;
 let initPromise: Promise<void> | null = null;
-const schemaVersion = '1';
+const schemaVersion = '2';
 const schemaVersionKey = '__vara_schema_version';
+const skincareImportKey = '__vara_pori_skincare_import_v1';
 const schemaVersionQuery = { sql: 'SELECT value FROM settings WHERE key = ?', args: [schemaVersionKey] };
 
 export async function ensureDbInitialized(): Promise<void> {
@@ -578,6 +580,51 @@ export async function ensureDbInitialized(): Promise<void> {
             sql: 'INSERT INTO settings (key, value, updatedAt) VALUES (?, ?, ?) ON CONFLICT(key) DO NOTHING',
             args: ['brands', JSON.stringify(BRANDS_DATA), new Date().toISOString()],
           });
+
+          const skincareImported = await tx.execute({
+            sql: 'SELECT value FROM settings WHERE key = ?',
+            args: [skincareImportKey],
+          });
+          if (!skincareImported.rows.length) {
+            if (IMPORTED_SKINCARE_PRODUCTS.length) {
+              await tx.batch(IMPORTED_SKINCARE_PRODUCTS.map((product) => ({
+                sql: `${productInsert} ON CONFLICT(id) DO NOTHING`,
+                args: [product.id, ...productFields(product)],
+              })));
+            }
+
+            const existingBrandsRow = await tx.execute({
+              sql: 'SELECT value FROM settings WHERE key = ?',
+              args: ['brands'],
+            });
+            if (existingBrandsRow.rows.length) {
+              try {
+                const parsedBrands = JSON.parse(String(existingBrandsRow.rows[0].value));
+                if (Array.isArray(parsedBrands)) {
+                  const existingBrandIds = new Set(
+                    parsedBrands
+                      .map((b: any) => (typeof b?.id === 'string' ? b.id.trim().toLowerCase() : ''))
+                      .filter(Boolean),
+                  );
+                  const missingBrands = BRANDS_DATA.filter(
+                    (b) => !existingBrandIds.has(b.id.trim().toLowerCase()),
+                  );
+                  if (missingBrands.length) {
+                    await tx.execute({
+                      sql: 'UPDATE settings SET value = ?, updatedAt = ? WHERE key = ?',
+                      args: [JSON.stringify([...parsedBrands, ...missingBrands]), new Date().toISOString(), 'brands'],
+                    });
+                  }
+                }
+              } catch {}
+            }
+
+            await tx.execute({
+              sql: 'INSERT INTO settings (key, value, updatedAt) VALUES (?, ?, ?) ON CONFLICT(key) DO NOTHING',
+              args: [skincareImportKey, '1', new Date().toISOString()],
+            });
+          }
+
           await tx.execute({
             sql: `INSERT INTO settings (key, value, updatedAt) VALUES (?, ?, ?)
               ON CONFLICT(key) DO UPDATE SET value = excluded.value, updatedAt = excluded.updatedAt`,
