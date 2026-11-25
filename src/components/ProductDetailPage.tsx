@@ -9,7 +9,8 @@ import {
   ChevronLeft, ChevronRight, ZoomIn, ZoomOut, X, Sparkles, Check,
   Droplets, FlaskConical, Layers, ChevronDown, ChevronUp, Info, Zap, Award
 } from 'lucide-react';
-import { Product, ProductSize, ProductVariant, Review, UserSkinProfile, SHOP_ROUTINES } from '../types';
+import { Product, ProductSize, ProductVariant, Review, UserSkinProfile, SHOP_ROUTINES, ShopFilterPreset } from '../types';
+import { buildShopUrl } from '../lib/seoMetadata';
 import { ProductCard } from './ProductCard';
 import { getSavedSkinProfile } from '../data/quizData';
 import {
@@ -25,6 +26,7 @@ interface ProductDetailPageProps {
   onSelectProduct: (product: Product) => void;
   onAddToCart: (product: Product, selectedSize: ProductSize, quantity?: number, selectedVariant?: ProductVariant) => void;
   onOpenQuiz?: () => void;
+  onNavigateShopPreset?: (preset: ShopFilterPreset) => void;
   isWishlisted?: boolean;
   onToggleWishlist?: (productId: string) => void;
 }
@@ -143,6 +145,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   onSelectProduct,
   onAddToCart,
   onOpenQuiz,
+  onNavigateShopPreset,
   isWishlisted: externalIsWishlisted,
   onToggleWishlist
 }) => {
@@ -955,9 +958,19 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* Brand Eyebrow & Rating */}
             <div className="flex items-center justify-between border-b border-vara-line pb-3">
               {product.brand ? (
-                <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-vara-rose-ink font-jakarta">
+                <a
+                  href={buildShopUrl({ brand: product.brand })}
+                  onClick={(event) => {
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                    if (onNavigateShopPreset) {
+                      event.preventDefault();
+                      onNavigateShopPreset({ brand: product.brand });
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-vara-rose-ink hover:underline font-jakarta"
+                >
                   <bdi>{product.brand}</bdi>
-                </div>
+                </a>
               ) : (
                 <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-vara-rose-ink font-jakarta">
                   <span>ورا</span>
@@ -1713,12 +1726,21 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             <h2 className="text-lg sm:text-xl font-bold font-vazir text-vara-ink">
               محصولات مکمل و مشابه برای روتین پوستی شما
             </h2>
-            <button
-              onClick={onBack}
+            <a
+              href={product.category && product.category !== 'all' ? buildShopUrl({ category: product.category }) : '/shop'}
+              onClick={(event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                event.preventDefault();
+                if (product.category && product.category !== 'all' && onNavigateShopPreset) {
+                  onNavigateShopPreset({ category: product.category });
+                } else {
+                  onBack();
+                }
+              }}
               className="text-xs font-vazir font-bold text-vara-rose-ink hover:underline cursor-pointer"
             >
               مشاهده همه محصولات
-            </button>
+            </a>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

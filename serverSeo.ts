@@ -11,6 +11,7 @@ import {
   buildCalculatorSeo,
   buildOrganizationSchema,
   buildProductSeo,
+  buildShopUrl,
   parseShopFilterFromSearch,
   resolveShopSeo,
 } from './src/lib/seoMetadata';
@@ -224,11 +225,13 @@ export function registerSeoRoutes(app: Express) {
         ],
       };
 
+      const brandHref = product.brand ? buildShopUrl({ brand: product.brand }) : '';
+      const categoryHref = product.category && product.category !== 'all' ? buildShopUrl({ category: product.category }) : '';
       const noscriptHtml = `<main dir="rtl"><h1>${escapeHtml(product.nameFa)}</h1>${
-        product.brand ? `<p>برند: ${escapeHtml(product.brand)}</p>` : ''
+        product.brand ? `<p>برند: <a href="${escapeHtml(brandHref)}">${escapeHtml(product.brand)}</a></p>` : ''
       }<p>قیمت: ${escapeHtml((product.price || 0).toLocaleString('fa-IR'))} تومان</p><p>${escapeHtml(
         product.descriptionFa || productSeo.description
-      )}</p></main>`;
+      )}</p>${categoryHref ? `<p><a href="${escapeHtml(categoryHref)}">مشاهده همه محصولات این دسته‌بندی</a></p>` : ''}</main>`;
 
       const html = injectSeoIntoHtml(template, {
         title: productSeo.title,
@@ -277,15 +280,26 @@ export function registerSeoRoutes(app: Express) {
             description: shopSeo.description,
             url: shopSeo.canonical,
           },
+          shopSeo.faqSchema,
         ],
       };
+
+      const guideHtml = shopSeo.guideParagraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('');
+      const faqHtml = shopSeo.faqs
+        .map((f) => `<section><h3>${escapeHtml(f.question)}</h3><p>${escapeHtml(f.answer)}</p></section>`)
+        .join('');
+      const linksHtml = shopSeo.relatedLinks
+        .map((l) => `<a href="${escapeHtml(l.href)}">${escapeHtml(l.label)}</a>`)
+        .join(' | ');
 
       const html = injectSeoIntoHtml(template, {
         title: shopSeo.title,
         description: shopSeo.description,
         canonical: shopSeo.canonical,
         schemaJson,
-        noscriptHtml: `<main dir="rtl"><h1>${escapeHtml(shopSeo.h1)}</h1><p>${escapeHtml(shopSeo.subtitle)}</p></main>`,
+        noscriptHtml: `<main dir="rtl"><h1>${escapeHtml(shopSeo.h1)}</h1><p>${escapeHtml(
+          shopSeo.subtitle
+        )}</p><h2>${escapeHtml(shopSeo.guideHeading)}</h2>${guideHtml}${faqHtml}<nav>${linksHtml}</nav></main>`,
       });
       return sendHtml(res, 200, html, 'public, s-maxage=60, stale-while-revalidate=300');
     } catch {

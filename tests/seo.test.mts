@@ -58,6 +58,8 @@ test('SSR SEO routes inject buyer-intent Persian metadata, JSON-LD, IRR currency
     assert.ok(prodNode, 'Missing Product JSON-LD node');
     assert.equal(prodNode.offers.priceCurrency, 'IRR');
     assert.equal(prodNode.offers.price, Math.round(sampleProduct.price * 10));
+    assert.equal(prodNode.offers.hasMerchantReturnPolicy?.applicableCountry, 'IR');
+    assert.equal(prodNode.offers.shippingDetails?.shippingDestination?.addressCountry, 'IR');
 
     // 2. Non-existent product returns real HTTP 404 + noindex (prevents Soft 404)
     const missingRes = await fetch(`${baseUrl}/product/non-existent-product-999`);
@@ -66,18 +68,26 @@ test('SSR SEO routes inject buyer-intent Persian metadata, JSON-LD, IRR currency
     assert.ok(missingHtml.includes('noindex'));
     assert.equal(/<link\s+rel="canonical"/i.test(missingHtml), false);
 
-    // 3. Category & Brand shop pages have self-referencing canonical URLs and distinct titles
+    // 3. Category & Brand shop pages have self-referencing canonical URLs, distinct titles, and FAQPage JSON-LD
     const sunscreenRes = await fetch(`${baseUrl}/shop?category=sunscreen`);
     assert.equal(sunscreenRes.status, 200);
     const sunscreenHtml = await sunscreenRes.text();
     assert.ok(sunscreenHtml.includes('<link rel="canonical" href="https://varabeauty.ir/shop?category=sunscreen" />'));
     assert.ok(sunscreenHtml.includes('ضدآفتاب'));
+    const sunSchemaMatch = sunscreenHtml.match(/<script id="vara-ssr-jsonld" type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    assert.ok(sunSchemaMatch);
+    const sunFaq = JSON.parse(sunSchemaMatch[1])['@graph'].find((n: any) => n['@type'] === 'FAQPage');
+    assert.ok(sunFaq && Array.isArray(sunFaq.mainEntity) && sunFaq.mainEntity.length >= 3);
 
     const brandRes = await fetch(`${baseUrl}/shop?brand=${encodeURIComponent('The Ordinary')}`);
     assert.equal(brandRes.status, 200);
     const brandHtml = await brandRes.text();
     assert.ok(brandHtml.includes('<link rel="canonical" href="https://varabeauty.ir/shop?brand=The%20Ordinary" />'));
     assert.ok(brandHtml.includes('The Ordinary'));
+    const brandSchemaMatch = brandHtml.match(/<script id="vara-ssr-jsonld" type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    assert.ok(brandSchemaMatch);
+    const brandFaq = JSON.parse(brandSchemaMatch[1])['@graph'].find((n: any) => n['@type'] === 'FAQPage');
+    assert.ok(brandFaq && Array.isArray(brandFaq.mainEntity) && brandFaq.mainEntity.length >= 3);
 
     // Free-text ?q= search canonicalizes back to /shop
     const queryRes = await fetch(`${baseUrl}/shop?q=niacinamide`);

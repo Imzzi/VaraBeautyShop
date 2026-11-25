@@ -761,12 +761,15 @@ export default function App() {
       if (shopSeo.canonical !== `${origin}/shop`) {
         breadcrumbs.push({ name: shopSeo.breadcrumbLabel, url: shopSeo.canonical });
       }
-      extraSchemas.push({
-        '@type': 'CollectionPage',
-        name: shopSeo.h1,
-        description: shopSeo.description,
-        url: shopSeo.canonical,
-      });
+      extraSchemas.push(
+        {
+          '@type': 'CollectionPage',
+          name: shopSeo.h1,
+          description: shopSeo.description,
+          url: shopSeo.canonical,
+        },
+        shopSeo.faqSchema
+      );
     } else if (activeSection === 'product-detail' && selectedProduct) {
       const productSeo = buildProductSeo(selectedProduct, origin);
       title = productSeo.title;
@@ -981,6 +984,7 @@ export default function App() {
                   onSelectProduct={handleViewProductDetails}
                   onAddToCart={handleAddToCart}
                   onOpenQuiz={() => setQuizModalOpen(true)}
+                  onNavigateShopPreset={navigateToShopWithPreset}
                   isWishlisted={wishlistProductIds.includes(selectedProduct.id)}
                   onToggleWishlist={handleToggleWishlist}
                 />
@@ -1004,6 +1008,8 @@ export default function App() {
                   initialSearchQuery={searchQuery}
                   onSearchChange={setSearchQuery}
                   initialFilterPreset={shopFilterPreset}
+                  onNavigatePreset={navigateToShopWithPreset}
+                  onNavigateCalculator={() => navigateToSection('calculator')}
                 />
               </Suspense>
             ) : activeSection === 'order-detail' ? (

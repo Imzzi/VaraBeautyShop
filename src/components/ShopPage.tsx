@@ -16,7 +16,7 @@ import { Product, CategoryId, SkinType, SkincareProductType, RoutineType, Produc
 import { ProductCard } from './ProductCard';
 import { BRANDS_DATA, BrandItem } from '../data/brands';
 import { subscribeToBrands, getLocalBrands } from '../lib/brandsManager';
-import { resolveShopSeo } from '../lib/seoMetadata';
+import { resolveShopSeo, parseShopFilterFromSearch } from '../lib/seoMetadata';
 
 const departmentLabels: Record<ShopDepartment, string> = {
   skincare: 'مراقبت از پوست',
@@ -40,6 +40,8 @@ interface ShopPageProps {
   initialSearchQuery?: string;
   onSearchChange: (query: string) => void;
   initialFilterPreset?: ShopFilterPreset | null;
+  onNavigatePreset?: (preset: ShopFilterPreset) => void;
+  onNavigateCalculator?: () => void;
 }
 
 export const ShopPage: React.FC<ShopPageProps> = ({
@@ -51,6 +53,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({
   initialSearchQuery = '',
   onSearchChange,
   initialFilterPreset = null,
+  onNavigatePreset,
+  onNavigateCalculator,
 }) => {
   const reducedMotion = useReducedMotion();
   // Filter States
@@ -1023,6 +1027,73 @@ export const ShopPage: React.FC<ShopPageProps> = ({
                 <span>طراحی روتین پوست</span>
               </button>
             </div>
+
+            {/* Editorial SEO Buyer Guide, Related Internal Links & FAQ Accordion */}
+            <section
+              aria-labelledby="shop-seo-guide-heading"
+              className="mt-8 bg-white border border-vara-line rounded-2xl p-6 sm:p-8 space-y-6 shadow-shop-card text-right"
+            >
+              <div className="space-y-3">
+                <h2 id="shop-seo-guide-heading" className="text-base sm:text-lg font-bold text-vara-ink">
+                  {shopSeo.guideHeading}
+                </h2>
+                <div className="space-y-2.5 text-xs sm:text-sm text-vara-muted-strong leading-7 sm:leading-8">
+                  {shopSeo.guideParagraphs.map((paragraph, idx) => (
+                    <p key={idx}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+
+              {shopSeo.relatedLinks.length > 0 && (
+                <div className="pt-4 border-t border-vara-line space-y-2.5">
+                  <h3 className="text-xs font-bold text-vara-ink">مسیرهای مرتبط و پرطرفدار</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {shopSeo.relatedLinks.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        onClick={(event) => {
+                          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                          if (link.href === '/calculator' && onNavigateCalculator) {
+                            event.preventDefault();
+                            onNavigateCalculator();
+                            return;
+                          }
+                          if (link.href.startsWith('/shop') && onNavigatePreset) {
+                            event.preventDefault();
+                            const queryIdx = link.href.indexOf('?');
+                            const parsed = queryIdx >= 0 ? parseShopFilterFromSearch(link.href.slice(queryIdx)) : null;
+                            onNavigatePreset(parsed || {});
+                          }
+                        }}
+                        className="text-xs font-medium text-vara-ink bg-vara-surface hover:bg-vara-tint hover:text-vara-rose-ink border border-vara-line px-3.5 py-1.5 rounded-full transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {shopSeo.faqs.length > 0 && (
+                <div className="pt-4 border-t border-vara-line space-y-3">
+                  <h3 className="text-xs sm:text-sm font-bold text-vara-ink">سوالات متداول</h3>
+                  <div className="divide-y divide-vara-line rounded-xl border border-vara-line bg-vara-canvas/60">
+                    {shopSeo.faqs.map((faq, idx) => (
+                      <details key={idx} className="group px-4 py-3">
+                        <summary className="flex items-center justify-between gap-3 cursor-pointer list-none text-xs sm:text-sm font-semibold text-vara-ink">
+                          <span>{faq.question}</span>
+                          <ChevronDown className="w-4 h-4 text-vara-muted shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:text-vara-rose-ink" />
+                        </summary>
+                        <p className="mt-2.5 text-xs sm:text-sm text-vara-muted-strong leading-7">
+                          {faq.answer}
+                        </p>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
 
           </section>
 
