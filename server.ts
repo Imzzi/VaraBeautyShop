@@ -1756,7 +1756,13 @@ app.get(['/32472732.txt', `/${encodeURIComponent('۳۲۴۷۲۷۳۲.txt')}`, '/۳
 });
 
 // Server-Side SEO HTML & JSON-LD Injection for public crawlable routes
-if (process.env.NODE_ENV === 'production' || process.env.VERCEL || process.env.NODE_ENV === 'test') {
+if (
+  process.env.NODE_ENV === 'production' ||
+  process.env.VERCEL ||
+  process.env.VERCEL_ENV ||
+  process.env.AWS_LAMBDA_FUNCTION_NAME ||
+  process.env.NODE_ENV === 'test'
+) {
   registerSeoRoutes(app);
 }
 

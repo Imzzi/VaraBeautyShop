@@ -5,6 +5,7 @@ import { ProductsDb, SettingsDb } from './serverDb';
 import { escapeHtml } from './serverSecurity';
 import { BRANDS_DATA } from './src/data/brands';
 import { POLICY_DOCUMENTS } from './src/data/policies';
+import { BUILT_INDEX_HTML } from './src/generated/indexHtmlTemplate';
 import {
   CANONICAL_ORIGIN,
   buildCalculatorSeo,
@@ -17,18 +18,54 @@ import type { Product } from './src/types';
 
 let cachedTemplateHtml: string | null = null;
 
+function isServerlessOrProd(): boolean {
+  return Boolean(
+    process.env.NODE_ENV === 'production' ||
+      process.env.VERCEL ||
+      process.env.VERCEL_ENV ||
+      process.env.AWS_LAMBDA_FUNCTION_NAME
+  );
+}
+
 function getTemplateHtml(): string | null {
   if (cachedTemplateHtml) return cachedTemplateHtml;
   const distHtml = path.join(process.cwd(), 'dist', 'index.html');
   const rootHtml = path.join(process.cwd(), 'index.html');
-  const target = fs.existsSync(distHtml) ? distHtml : (fs.existsSync(rootHtml) ? rootHtml : null);
-  if (!target) return null;
-  const html = fs.readFileSync(target, 'utf8');
-  // Cache built HTML in production; in dev/test allow fresh reads if rebuilt
-  if (fs.existsSync(distHtml) && (process.env.NODE_ENV === 'production' || process.env.VERCEL)) {
+
+  let html: string | null = null;
+  if (fs.existsSync(distHtml)) {
+    html = fs.readFileSync(distHtml, 'utf8');
+  } else if (BUILT_INDEX_HTML && BUILT_INDEX_HTML.trim().length > 0) {
+    html = BUILT_INDEX_HTML;
+  } else if (fs.existsSync(rootHtml)) {
+    html = fs.readFileSync(rootHtml, 'utf8');
+  }
+
+  if (!html) return null;
+  if (isServerlessOrProd() && (fs.existsSync(distHtml) || Boolean(BUILT_INDEX_HTML))) {
     cachedTemplateHtml = html;
   }
   return html;
+}
+
+function extractSearchString(req: Request): string {
+  const rawUrl = req.originalUrl || req.url || '';
+  const queryIdx = rawUrl.indexOf('?');
+  if (queryIdx >= 0) {
+    return rawUrl.slice(queryIdx);
+  }
+  const params = new URLSearchParams();
+  for (const [key, val] of Object.entries(req.query || {})) {
+    if (Array.isArray(val)) {
+      for (const item of val) {
+        if (typeof item === 'string') params.append(key, item);
+      }
+    } else if (typeof val === 'string') {
+      params.set(key, val);
+    }
+  }
+  const qs = params.toString();
+  return qs ? `?${qs}` : '';
 }
 
 function safeJsonScript(value: unknown): string {
@@ -216,8 +253,7 @@ export function registerSeoRoutes(app: Express) {
 
     try {
       const origin = getOrigin(req);
-      const queryIdx = req.originalUrl.indexOf('?');
-      const search = queryIdx >= 0 ? req.originalUrl.slice(queryIdx) : '';
+      const search = extractSearchString(req);
       const preset = parseShopFilterFromSearch(search);
       const brands = await SettingsDb.get('brands', BRANDS_DATA).catch(() => BRANDS_DATA);
       const shopSeo = resolveShopSeo(preset, Array.isArray(brands) ? brands : BRANDS_DATA, origin);

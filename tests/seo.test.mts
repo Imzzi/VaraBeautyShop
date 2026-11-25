@@ -19,12 +19,18 @@ const load = (name: string) => import(pathToFileURL(path.join(root, name)).href)
 const { app, ProductsDb } = await load('server.ts');
 const { detectSafeRasterImage } = await load('serverBlob.ts');
 const { CALCULATOR_FAQS } = await load('src/lib/seoMetadata.ts');
+const { BUILT_INDEX_HTML } = await load('src/generated/indexHtmlTemplate.ts');
 
 test('public/og-image.jpg exists and is a valid JPEG raster image', () => {
   const ogPath = path.join(root, 'public', 'og-image.jpg');
   assert.equal(fs.existsSync(ogPath), true);
   const buf = fs.readFileSync(ogPath);
   assert.deepEqual(detectSafeRasterImage(buf), { valid: true, mime: 'image/jpeg', ext: 'jpg' });
+});
+
+test('BUILT_INDEX_HTML includes root mount and external preload script for serverless SSR', () => {
+  assert.ok(BUILT_INDEX_HTML.includes('<div id="root"></div>'));
+  assert.ok(BUILT_INDEX_HTML.includes('/assets/vara-critical-preload.js'));
 });
 
 test('SSR SEO routes inject buyer-intent Persian metadata, JSON-LD, IRR currency, and real 404s', async () => {
@@ -89,6 +95,30 @@ test('SSR SEO routes inject buyer-intent Persian metadata, JSON-LD, IRR currency
     const faqNode = calcSchema['@graph'].find((n: any) => n['@type'] === 'FAQPage');
     assert.ok(faqNode);
     assert.equal(faqNode.mainEntity.length, CALCULATOR_FAQS.length);
+
+    // 5. Static SEO routes (/contact, /return-policy, /terms) return 200 with canonicals
+    for (const staticPath of ['/contact', '/return-policy', '/terms']) {
+      const staticRes = await fetch(`${baseUrl}${staticPath}`);
+      assert.equal(staticRes.status, 200, `Expected 200 for ${staticPath}`);
+      const staticHtml = await staticRes.text();
+      assert.ok(
+        staticHtml.includes(`<link rel="canonical" href="https://varabeauty.ir${staticPath}" />`),
+        `Missing canonical on ${staticPath}`
+      );
+    }
+
+    // 6. Serverless cwd simulation (no dist/index.html or index.html in cwd) falls back to BUILT_INDEX_HTML
+    const prevCwd = process.cwd();
+    try {
+      process.chdir('/tmp');
+      const tmpCalcRes = await fetch(`${baseUrl}/calculator`);
+      assert.equal(tmpCalcRes.status, 200);
+      const tmpCalcHtml = await tmpCalcRes.text();
+      assert.ok(tmpCalcHtml.includes('FAQPage'));
+      assert.ok(tmpCalcHtml.includes('<link rel="canonical" href="https://varabeauty.ir/calculator" />'));
+    } finally {
+      process.chdir(prevCwd);
+    }
   } finally {
     server.close();
   }
