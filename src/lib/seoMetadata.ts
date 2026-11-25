@@ -1,3 +1,4 @@
+import type { BuyingGuide } from '../data/guides';
 import type {
   CategoryId,
   Product,
@@ -1115,5 +1116,69 @@ export function buildCalculatorSeo(origin = CANONICAL_ORIGIN) {
       'محاسبه آنی و شفاف قیمت تمام‌شده خرید مستقیم از سفورا دبی (sephora.ae)، آمازون امارات (amazon.ae)، ترندیول ترکیه و لوک‌فنتستیک با نرخ لحظه‌ای ارز در ورا بیوتی.',
     canonical,
     faqSchema,
+  };
+}
+
+export function buildGuidesIndexSeo(guides: BuyingGuide[], origin = CANONICAL_ORIGIN) {
+  const cleanOrigin = origin.replace(/\/+$/, '');
+  const canonical = `${cleanOrigin}/guides`;
+  const collectionSchema = {
+    '@type': 'CollectionPage',
+    '@id': `${canonical}#collection`,
+    name: 'مجله مراقبت پوست و راهنمای خرید اورجینال | ورا بیوتی',
+    description:
+      'مجموعه مقالات تخصصی راهنمای خرید از سفورا دبی، تشخیص اصالت برندهای پوستی و طراحی روتین علمی پوست در ورا بیوتی.',
+    url: canonical,
+    hasPart: guides.map((g) => ({
+      '@type': 'Article',
+      headline: g.title,
+      url: `${cleanOrigin}/guides/${encodeURIComponent(g.slug)}`,
+      datePublished: g.publishedAt,
+      dateModified: g.updatedAt,
+    })),
+  };
+
+  return {
+    title: 'مجله مراقبت پوست و راهنمای خرید اورجینال | ورا بیوتی',
+    description:
+      'راهنمای خرید مستقیم از سفورا دبی و آمازون امارات، روش تشخیص اصالت برندهای خارجی با بچ‌کد و انتخاب روتین علمی پوست در مجله ورا بیوتی.',
+    canonical,
+    collectionSchema,
+  };
+}
+
+export function buildGuideDetailSeo(guide: BuyingGuide, origin = CANONICAL_ORIGIN) {
+  const cleanOrigin = origin.replace(/\/+$/, '');
+  const canonical = `${cleanOrigin}/guides/${encodeURIComponent(guide.slug)}`;
+  const ogImage = resolveAbsoluteUrl(guide.heroImage, cleanOrigin);
+
+  const articleSchema = {
+    '@type': 'Article',
+    '@id': `${canonical}#article`,
+    headline: guide.title,
+    description: guide.metaDescription,
+    image: [ogImage],
+    inLanguage: 'fa-IR',
+    datePublished: guide.publishedAt,
+    dateModified: guide.updatedAt,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonical,
+    },
+    author: {
+      '@id': `${cleanOrigin}/#organization`,
+    },
+    publisher: {
+      '@id': `${cleanOrigin}/#organization`,
+    },
+  };
+
+  return {
+    title: guide.metaTitle,
+    description: guide.metaDescription,
+    canonical,
+    ogImage,
+    articleSchema,
+    faqSchema: buildFaqSchema(guide.faqs),
   };
 }

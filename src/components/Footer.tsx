@@ -11,6 +11,7 @@ interface FooterProps {
   onNavigateToAdmin?: () => void;
   onNavigateToProfile?: () => void;
   onNavigateToCalculator?: () => void;
+  onNavigateToGuides?: () => void;
   onNavigateToContact?: () => void;
   onNavigateToReturnPolicy?: () => void;
   onNavigateToTerms?: () => void;
@@ -20,6 +21,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({
   onNavigateToProfile,
   onNavigateToCalculator,
+  onNavigateToGuides,
   onNavigateToContact,
   onNavigateToReturnPolicy,
   onNavigateToTerms,
@@ -201,6 +203,21 @@ export const Footer: React.FC<FooterProps> = ({
                   className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer inline-block"
                 >
                   استعلام قیمت از امارات
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/guides"
+                  onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    if (onNavigateToGuides) {
+                      e.preventDefault();
+                      onNavigateToGuides();
+                    }
+                  }}
+                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer inline-block"
+                >
+                  مجله و راهنمای خرید
                 </a>
               </li>
               <li>

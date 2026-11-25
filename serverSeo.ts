@@ -4,11 +4,14 @@ import type { Express, Request, Response } from 'express';
 import { ProductsDb, SettingsDb } from './serverDb';
 import { escapeHtml } from './serverSecurity';
 import { BRANDS_DATA } from './src/data/brands';
+import { BUYING_GUIDES, getGuideBySlug } from './src/data/guides';
 import { POLICY_DOCUMENTS } from './src/data/policies';
 import { BUILT_INDEX_HTML } from './src/generated/indexHtmlTemplate';
 import {
   CANONICAL_ORIGIN,
   buildCalculatorSeo,
+  buildGuideDetailSeo,
+  buildGuidesIndexSeo,
   buildOrganizationSchema,
   buildProductSeo,
   buildShopUrl,
@@ -391,4 +394,106 @@ export function registerSeoRoutes(app: Express) {
       return sendHtml(res, 200, html, 'public, s-maxage=3600, stale-while-revalidate=86400');
     });
   }
+
+  // 5. Buying Guides Index (/guides) & Article Detail (/guides/:slug)
+  app.get('/guides', (req, res, next) => {
+    const template = getTemplateHtml();
+    if (!template) return next();
+
+    const origin = getOrigin(req);
+    const indexSeo = buildGuidesIndexSeo(BUYING_GUIDES, origin);
+    const schemaJson = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        buildOrganizationSchema(origin),
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'صفحه اصلی', item: `${origin}/` },
+            { '@type': 'ListItem', position: 2, name: 'مجله و راهنمای خرید', item: indexSeo.canonical },
+          ],
+        },
+        indexSeo.collectionSchema,
+      ],
+    };
+
+    const linksListHtml = BUYING_GUIDES.map(
+      (g) =>
+        `<li><a href="/guides/${escapeHtml(encodeURIComponent(g.slug))}">${escapeHtml(g.title)}</a><p>${escapeHtml(
+          g.excerpt
+        )}</p></li>`
+    ).join('');
+
+    const html = injectSeoIntoHtml(template, {
+      title: indexSeo.title,
+      description: indexSeo.description,
+      canonical: indexSeo.canonical,
+      schemaJson,
+      noscriptHtml: `<main dir="rtl"><h1>مجله مراقبت پوست و راهنمای خرید اورجینال</h1><ul>${linksListHtml}</ul></main>`,
+    });
+    return sendHtml(res, 200, html, 'public, s-maxage=3600, stale-while-revalidate=86400');
+  });
+
+  app.get('/guides/:slug', (req, res, next) => {
+    const template = getTemplateHtml();
+    if (!template) return next();
+
+    const origin = getOrigin(req);
+    const rawSlug = String(req.params.slug || '').trim();
+    const guide = getGuideBySlug(rawSlug);
+    if (!guide) {
+      const notFoundHtml = injectSeoIntoHtml(template, {
+        title: 'راهنمای مورد نظر یافت نشد | ورا بیوتی',
+        description: 'مقاله یا راهنمای خرید مورد نظر در ورا بیوتی یافت نشد.',
+        canonical: null,
+        noIndex: true,
+      });
+      return sendHtml(res, 404, notFoundHtml, 'public, s-maxage=30, stale-while-revalidate=60');
+    }
+
+    const detailSeo = buildGuideDetailSeo(guide, origin);
+    const schemaJson = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        buildOrganizationSchema(origin),
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'صفحه اصلی', item: `${origin}/` },
+            { '@type': 'ListItem', position: 2, name: 'مجله و راهنمای خرید', item: `${origin}/guides` },
+            { '@type': 'ListItem', position: 3, name: guide.title, item: detailSeo.canonical },
+          ],
+        },
+        detailSeo.articleSchema,
+        ...(guide.faqs.length > 0 ? [detailSeo.faqSchema] : []),
+      ],
+    };
+
+    const bodyHtml = guide.sections
+      .map(
+        (s) =>
+          `<section><h2>${escapeHtml(s.heading)}</h2>${s.paragraphs
+            .map((p) => `<p>${escapeHtml(p)}</p>`)
+            .join('')}${
+            s.bullets ? `<ul>${s.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join('')}</ul>` : ''
+          }</section>`
+      )
+      .join('');
+    const ctaHtml = guide.ctaLinks
+      .map((c) => `<a href="${escapeHtml(c.href)}">${escapeHtml(c.label)}</a>`)
+      .join(' | ');
+
+    const html = injectSeoIntoHtml(template, {
+      title: detailSeo.title,
+      description: detailSeo.description,
+      canonical: detailSeo.canonical,
+      ogType: 'article',
+      ogImage: detailSeo.ogImage,
+      schemaJson,
+      noscriptHtml: `<article dir="rtl"><h1>${escapeHtml(guide.title)}</h1><p>${escapeHtml(
+        guide.excerpt
+      )}</p>${bodyHtml}<nav>${ctaHtml}</nav></article>`,
+    });
+    return sendHtml(res, 200, html, 'public, s-maxage=3600, stale-while-revalidate=86400');
+  });
 }

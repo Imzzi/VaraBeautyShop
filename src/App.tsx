@@ -35,12 +35,16 @@ const AIBeautyAdvisor = lazy(() => loadAIBeautyAdvisor().then(m => ({ default: m
 const OrderDetailPage = lazy(() => import('./components/OrderDetailPage').then(m => ({ default: m.OrderDetailPage })));
 const ContactPage = lazy(() => import('./components/ContactPage').then(m => ({ default: m.ContactPage })));
 const LegalPoliciesPage = lazy(() => import('./components/LegalPoliciesPage').then(m => ({ default: m.LegalPoliciesPage })));
+const GuidesPage = lazy(() => import('./components/GuidesPage').then(m => ({ default: m.GuidesPage })));
 import { POLICY_DOCUMENTS } from './data/policies';
+import { BUYING_GUIDES, getGuideBySlug } from './data/guides';
 
 import { PRODUCTS as defaultProducts } from './data/products';
 import { getLocalBrands } from './lib/brandsManager';
 import {
   buildCalculatorSeo,
+  buildGuideDetailSeo,
+  buildGuidesIndexSeo,
   buildOrganizationSchema,
   buildProductSeo,
   buildShopUrl,
@@ -80,6 +84,18 @@ type PaymentReturn =
   | { state: 'loading' }
   | { state: 'ready'; order: Order }
   | { state: 'error'; message: string };
+
+function getGuideRouteSlug() {
+  if (typeof window === 'undefined') return '';
+  const match = /^\/guides\/([^/?#]+)/i.exec(window.location.pathname)
+    || /^#\/guides\/([^/?#]+)/i.exec(window.location.hash);
+  if (!match) return '';
+  try {
+    return decodeURIComponent(match[1]);
+  } catch {
+    return '';
+  }
+}
 
 function getProductRouteId() {
   if (typeof window === 'undefined') return '';
@@ -174,7 +190,7 @@ export default function App() {
     return '';
   };
 
-  const getInitialSection = (): 'home' | 'shop' | 'botanical' | 'about' | 'social' | 'product-detail' | 'admin' | 'profile' | 'calculator' | 'order-detail' | 'contact' | 'return-policy' | 'terms' => {
+  const getInitialSection = (): 'home' | 'shop' | 'botanical' | 'about' | 'social' | 'product-detail' | 'admin' | 'profile' | 'calculator' | 'order-detail' | 'contact' | 'return-policy' | 'terms' | 'guides' => {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
@@ -189,6 +205,9 @@ export default function App() {
       }
       if (path === '/calculator' || hash === '#/calculator' || hash === '#calculator') {
         return 'calculator';
+      }
+      if (path === '/guides' || path.startsWith('/guides/') || hash === '#/guides' || hash.startsWith('#/guides/')) {
+        return 'guides';
       }
       if (path === '/contact' || hash === '#/contact' || hash === '#contact') {
         return 'contact';
@@ -209,7 +228,8 @@ export default function App() {
     return 'home';
   };
 
-  const [activeSection, setActiveSection] = useState<'home' | 'shop' | 'botanical' | 'about' | 'social' | 'product-detail' | 'admin' | 'profile' | 'calculator' | 'order-detail' | 'contact' | 'return-policy' | 'terms'>(getInitialSection);
+  const [activeSection, setActiveSection] = useState<'home' | 'shop' | 'botanical' | 'about' | 'social' | 'product-detail' | 'admin' | 'profile' | 'calculator' | 'order-detail' | 'contact' | 'return-policy' | 'terms' | 'guides'>(getInitialSection);
+  const [guideRouteSlug, setGuideRouteSlug] = useState<string>(getGuideRouteSlug);
   const [selectedOrderIdentifier, setSelectedOrderIdentifier] = useState<string>(getInitialOrderIdentifier);
   const initialShopFilter = useMemo(
     () => (typeof window !== 'undefined' ? parseShopFilterFromSearch(window.location.search) : null),
@@ -255,6 +275,9 @@ export default function App() {
         setActiveSection('profile');
       } else if (path === '/calculator' || hash === '#/calculator' || hash === '#calculator') {
         setActiveSection('calculator');
+      } else if (path === '/guides' || path.startsWith('/guides/') || hash === '#/guides' || hash.startsWith('#/guides/')) {
+        setGuideRouteSlug(getGuideRouteSlug());
+        setActiveSection('guides');
       } else if (path === '/contact' || hash === '#/contact' || hash === '#contact') {
         setActiveSection('contact');
       } else if (path === '/return-policy' || hash === '#/return-policy' || hash === '#return-policy') {
@@ -315,7 +338,7 @@ export default function App() {
     if (product && catalog.status === 'current') setSelectedProduct(product);
   }, [activeSection, productRouteId, productsList, catalog.status]);
 
-  const navigateToSection = (section: 'home' | 'shop' | 'botanical' | 'about' | 'social' | 'product-detail' | 'admin' | 'profile' | 'calculator' | 'order-detail' | 'contact' | 'return-policy' | 'terms', orderId?: string) => {
+  const navigateToSection = (section: 'home' | 'shop' | 'botanical' | 'about' | 'social' | 'product-detail' | 'admin' | 'profile' | 'calculator' | 'order-detail' | 'contact' | 'return-policy' | 'terms' | 'guides', orderId?: string) => {
     if (section === 'shop') loadShopPage().catch(() => {});
     setActiveSection(section);
     if (typeof window !== 'undefined') {
@@ -331,6 +354,9 @@ export default function App() {
         window.history.pushState(null, '', '/profile');
       } else if (section === 'calculator') {
         window.history.pushState(null, '', '/calculator');
+      } else if (section === 'guides') {
+        setGuideRouteSlug('');
+        window.history.pushState(null, '', '/guides');
       } else if (section === 'contact') {
         window.history.pushState(null, '', '/contact');
       } else if (section === 'return-policy') {
@@ -342,6 +368,16 @@ export default function App() {
       } else if (section === 'shop') {
         window.history.pushState(null, '', buildShopUrl(shopFilterPreset));
       }
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const navigateToGuide = (slug?: string) => {
+    const cleanSlug = (slug || '').trim();
+    setGuideRouteSlug(cleanSlug);
+    setActiveSection('guides');
+    if (typeof window !== 'undefined') {
+      window.history.pushState(null, '', cleanSlug ? `/guides/${encodeURIComponent(cleanSlug)}` : '/guides');
     }
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
@@ -807,6 +843,32 @@ export default function App() {
       description = POLICY_DOCUMENTS.terms.metaDescription;
       canonical = `${origin}/terms`;
       breadcrumbs.push({ name: 'قوانین و مقررات خرید', url: `${origin}/terms` });
+    } else if (activeSection === 'guides') {
+      const guide = guideRouteSlug ? getGuideBySlug(guideRouteSlug) : undefined;
+      if (guideRouteSlug && !guide) {
+        title = 'راهنمای مورد نظر یافت نشد | ورا بیوتی';
+        description = 'مقاله یا راهنمای خرید مورد نظر در ورا بیوتی یافت نشد.';
+        canonical = null;
+        noIndex = true;
+      } else if (guide) {
+        const detailSeo = buildGuideDetailSeo(guide, origin);
+        title = detailSeo.title;
+        description = detailSeo.description;
+        canonical = detailSeo.canonical;
+        ogType = 'article';
+        ogImage = detailSeo.ogImage;
+        breadcrumbs.push({ name: 'مجله و راهنمای خرید', url: `${origin}/guides` });
+        breadcrumbs.push({ name: guide.title, url: detailSeo.canonical });
+        extraSchemas.push(detailSeo.articleSchema);
+        if (guide.faqs.length > 0) extraSchemas.push(detailSeo.faqSchema);
+      } else {
+        const indexSeo = buildGuidesIndexSeo(BUYING_GUIDES, origin);
+        title = indexSeo.title;
+        description = indexSeo.description;
+        canonical = indexSeo.canonical;
+        breadcrumbs.push({ name: 'مجله و راهنمای خرید', url: indexSeo.canonical });
+        extraSchemas.push(indexSeo.collectionSchema);
+      }
     } else if (activeSection === 'order-detail') {
       title = selectedOrderIdentifier
         ? `Vara Beauty - جزئیات سفارش ${selectedOrderIdentifier} | ورا بیوتی`
@@ -841,7 +903,7 @@ export default function App() {
     }
 
     return { title, description, canonical, ogType, ogImage, schemaJson, noIndex };
-  }, [activeSection, selectedProduct, shopFilterPreset, selectedOrderIdentifier]);
+  }, [activeSection, selectedProduct, shopFilterPreset, selectedOrderIdentifier, guideRouteSlug]);
 
   return (
     <HelmetProvider>
@@ -1076,6 +1138,25 @@ export default function App() {
                   onNavigateToProfile={() => navigateToSection('profile')}
                 />
               </Suspense>
+            ) : activeSection === 'guides' ? (
+              <Suspense
+                fallback={
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-vara-muted">
+                    <div className="w-7 h-7 border-2 border-vara-rose border-t-transparent rounded-full animate-spin" />
+                    <span className="text-xs font-medium font-vazir">در حال بارگذاری راهنمای خرید...</span>
+                  </div>
+                }
+              >
+                <GuidesPage
+                  activeSlug={guideRouteSlug}
+                  products={productsList}
+                  onSelectGuide={navigateToGuide}
+                  onSelectProduct={handleViewProductDetails}
+                  onAddToCart={handleAddToCart}
+                  onNavigateShopPreset={navigateToShopWithPreset}
+                  onNavigateCalculator={() => navigateToSection('calculator')}
+                />
+              </Suspense>
             ) : (
               <>
                 {/* 1. Hero Section */}
@@ -1122,6 +1203,7 @@ export default function App() {
           onNavigateToAdmin={() => navigateToSection('admin')} 
           onNavigateToProfile={() => navigateToSection('profile')}
           onNavigateToCalculator={() => navigateToSection('calculator')}
+          onNavigateToGuides={() => navigateToGuide()}
           onNavigateToContact={() => navigateToSection('contact')}
           onNavigateToReturnPolicy={() => navigateToSection('return-policy')}
           onNavigateToTerms={() => navigateToSection('terms')}

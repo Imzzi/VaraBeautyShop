@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { PRODUCTS } from '../src/data/products';
 import { BRANDS_DATA } from '../src/data/brands';
+import { BUYING_GUIDES } from '../src/data/guides';
 import { Product } from '../src/types';
 import { createClient } from '@libsql/client/web';
 
@@ -19,6 +20,7 @@ const STATIC_PAGES: StaticPage[] = [
   { path: '/', priority: '1.0', changefreq: 'daily' },
   { path: '/shop', priority: '0.9', changefreq: 'daily' },
   { path: '/calculator', priority: '0.9', changefreq: 'weekly' },
+  { path: '/guides', priority: '0.8', changefreq: 'weekly' },
   { path: '/contact', priority: '0.7', changefreq: 'monthly' },
   { path: '/return-policy', priority: '0.6', changefreq: 'monthly' },
   { path: '/terms', priority: '0.6', changefreq: 'monthly' },
@@ -117,6 +119,16 @@ export function generateSitemapXml(
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>`);
+  }
+
+  // 5. Buying Guides & Educational Articles
+  for (const guide of BUYING_GUIDES) {
+    urls.push(`  <url>
+    <loc>${baseUrl}/guides/${encodeURIComponent(guide.slug)}</loc>
+    <lastmod>${guide.updatedAt || today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>`);
   }
 

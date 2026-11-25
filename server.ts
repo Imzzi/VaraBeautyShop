@@ -12,6 +12,7 @@ import { ProductsDb, UsersDb, getDbDiagnostics, pingTursoDatabase } from './serv
 import { getResendApiKeyInfo, ResendEmailService } from './serverEmail';
 import { issueChallenge, useChallenge } from './serverChallenges';
 import { registerOrderPaymentRoutes } from './serverOrderPayments';
+import { registerTorobRoutes } from './serverTorob';
 import { NextPayService } from './serverNextPay';
 import { ZarinpalService } from './serverZarinpal';
 import { registerSeoRoutes } from './serverSeo';
@@ -1008,6 +1009,9 @@ app.post('/api/auth/tech-admin/logout', (req, res) => {
 
   // Check Zarinpal Gateway configuration status
   registerOrderPaymentRoutes(app);
+
+  // Standard Torob Product Synchronization API (/api/torob/products)
+  registerTorobRoutes(app);
 
   // -------------------------------------------------------------
   // AI SKINCARE ADVISOR & VISION ANALYSIS (GEMINI 3.7 FLASH)

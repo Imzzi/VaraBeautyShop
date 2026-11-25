@@ -153,6 +153,8 @@ export const Header: React.FC<HeaderProps> = ({
       }
     } else if (sectionId === 'profile') {
       setActiveSection('profile');
+    } else if (sectionId === 'guides') {
+      setActiveSection('guides');
     } else if (sectionId === 'home') {
       setActiveSection('home');
     } else {
@@ -742,6 +744,19 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
+            {/* 7. مجله و راهنمای خرید */}
+            <a
+              href="/guides"
+              onClick={(e) => onNavLinkClick(e, 'guides')}
+              className={`py-1.5 px-3 rounded-full text-xs sm:text-[13px] whitespace-nowrap transition-all duration-150 cursor-pointer ${
+                activeSection === 'guides'
+                  ? 'bg-vara-rose text-white font-semibold shadow-shop-pill'
+                  : 'text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-surface'
+              }`}
+            >
+              مجله و راهنما
+            </a>
+
           </nav>
         </div>
       </div>
@@ -1006,7 +1021,17 @@ export const Header: React.FC<HeaderProps> = ({
                   )}
                 </div>
 
-                {/* ۷. کارت هدیه ورا */}
+                {/* ۷. مجله و راهنمای خرید */}
+                <a
+                  href="/guides"
+                  onClick={(e) => onNavLinkClick(e, 'guides')}
+                  className="w-full p-3 rounded-full border border-vara-line flex items-center justify-between font-semibold text-vara-ink bg-white hover:bg-vara-surface transition-colors cursor-pointer"
+                >
+                  <span>مجله و راهنمای خرید</span>
+                  <ChevronLeft className="w-4 h-4 text-vara-rose-ink" />
+                </a>
+
+                {/* ۸. کارت هدیه ورا */}
                 <button
                   type="button"
                   onClick={() => handleNavClick('gift-card')}

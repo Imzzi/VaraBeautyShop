@@ -117,7 +117,34 @@ test('SSR SEO routes inject buyer-intent Persian metadata, JSON-LD, IRR currency
       );
     }
 
-    // 6. Serverless cwd simulation (no dist/index.html or index.html in cwd) falls back to BUILT_INDEX_HTML
+    // 6. Guides index, detail Article+FAQPage, and 404 on unknown guide slug
+    const guidesRes = await fetch(`${baseUrl}/guides`);
+    assert.equal(guidesRes.status, 200);
+    const guidesHtml = await guidesRes.text();
+    assert.ok(guidesHtml.includes('<link rel="canonical" href="https://varabeauty.ir/guides" />'));
+    assert.ok(guidesHtml.includes('sephora-dubai-shopping-guide'));
+
+    const guideDetailRes = await fetch(`${baseUrl}/guides/sephora-dubai-shopping-guide`);
+    assert.equal(guideDetailRes.status, 200);
+    const guideDetailHtml = await guideDetailRes.text();
+    assert.ok(
+      guideDetailHtml.includes('<link rel="canonical" href="https://varabeauty.ir/guides/sephora-dubai-shopping-guide" />')
+    );
+    const guideSchemaMatch = guideDetailHtml.match(
+      /<script id="vara-ssr-jsonld" type="application\/ld\+json">([\s\S]*?)<\/script>/
+    );
+    assert.ok(guideSchemaMatch);
+    const guideGraph = JSON.parse(guideSchemaMatch[1])['@graph'];
+    assert.ok(guideGraph.some((n: any) => n['@type'] === 'Article'));
+    assert.ok(guideGraph.some((n: any) => n['@type'] === 'FAQPage'));
+    assert.ok(guideGraph.some((n: any) => n['@type'] === 'BreadcrumbList'));
+
+    const guideMissingRes = await fetch(`${baseUrl}/guides/non-existent-guide-xyz`);
+    assert.equal(guideMissingRes.status, 404);
+    const guideMissingHtml = await guideMissingRes.text();
+    assert.ok(guideMissingHtml.includes('noindex'));
+
+    // 7. Serverless cwd simulation (no dist/index.html or index.html in cwd) falls back to BUILT_INDEX_HTML
     const prevCwd = process.cwd();
     try {
       process.chdir('/tmp');
