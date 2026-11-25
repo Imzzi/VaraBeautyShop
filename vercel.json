@@ -74,7 +74,23 @@
       "destination": "/api"
     },
     {
-      "source": "/(shop|calculator|contact|return-policy|terms)",
+      "source": "/shop",
+      "destination": "/api"
+    },
+    {
+      "source": "/calculator",
+      "destination": "/api"
+    },
+    {
+      "source": "/contact",
+      "destination": "/api"
+    },
+    {
+      "source": "/return-policy",
+      "destination": "/api"
+    },
+    {
+      "source": "/terms",
       "destination": "/api"
     },
     {
