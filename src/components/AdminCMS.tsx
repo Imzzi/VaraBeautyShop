@@ -45,7 +45,7 @@ import {
 import { BrandItem } from '../data/brands';
 import { subscribeToBrands, getLocalBrands } from '../lib/brandsManager';
 import { getLocalHeroSlides } from '../data/heroSlides';
-import { getLocalFormulaConfig, FormulaConfig } from './FormulaSettingsTab';
+import { getLocalFormulaConfig, subscribeToFormulaConfig, FormulaConfig } from '../lib/formulaSettings';
 import { uploadImageFile, checkVercelBlobStatus, formatBytes } from '../lib/blobUpload';
 
 const AdminOrdersList = lazy(() => import('./AdminOrdersList').then(m => ({ default: m.AdminOrdersList })));
@@ -82,17 +82,12 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
     checkVercelBlobStatus().then(setBlobStatus).catch(() => {});
   }, []);
 
-  // Realtime formula synchronization
+  // Realtime formula synchronization (DB-backed)
   useEffect(() => {
-    const handleFormulaChange = (e: any) => {
-      if (e.detail) {
-        setFormulaConfig(e.detail);
-      } else {
-        setFormulaConfig(getLocalFormulaConfig());
-      }
-    };
-    window.addEventListener('vara-formula-change', handleFormulaChange);
-    return () => window.removeEventListener('vara-formula-change', handleFormulaChange);
+    const unsub = subscribeToFormulaConfig((updated) => {
+      setFormulaConfig(updated);
+    });
+    return () => unsub();
   }, []);
 
   // Realtime hero slides synchronization

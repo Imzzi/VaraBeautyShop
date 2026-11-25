@@ -1,4 +1,21 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/schedules/sync-fx-rates.ts": {
+      "experimentalTriggers": [
+        {
+          "type": "schedule/v1beta"
+        }
+      ]
+    }
+  },
+  "schedules": {
+    "sync-fx-rates": {
+      "schedule": "0 */4 * * *",
+      "timezone": "Asia/Tehran",
+      "function": "api/schedules/sync-fx-rates"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",
@@ -41,11 +58,11 @@
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/((?!schedules/).*)",
       "destination": "/api"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!api/schedules/).*)",
       "destination": "/index.html"
     }
   ]

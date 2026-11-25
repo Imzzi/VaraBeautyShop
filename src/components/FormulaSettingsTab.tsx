@@ -4,76 +4,34 @@ import {
   RotateCcw, 
   Check, 
   Info,
-  Truck
+  Truck,
+  RefreshCw,
+  Clock,
+  ShieldCheck
 } from 'lucide-react';
 import {
   getLocalShippingSettings,
   subscribeToShippingSettings,
   saveShippingSettings,
 } from '../lib/shippingSettings';
+import {
+  FormulaConfig,
+  DEFAULT_FORMULA_CONFIG,
+  FORMULA_STORAGE_KEY,
+  getLocalFormulaConfig,
+  saveLocalFormulaConfig,
+  saveFormulaConfig,
+  refreshFxRatesNow,
+  subscribeToFormulaConfig,
+} from '../lib/formulaSettings';
 
-export interface FormulaConfig {
-  aedRate: number; // نرخ درهم امارات به تومان (AED)
-  tryRate?: number; // نرخ لیر ترکیه به تومان (TRY) - ترندیول
-  gbpRate?: number; // نرخ پوند انگلیس به تومان (GBP) - لوک‌فنتستیک
-  eurRate?: number; // نرخ یورو به تومان (EUR)
-  usdRate?: number; // نرخ دلار آمریکا به تومان (USD)
-  shippingPer100g: number;
-  customsRatePercent: number;
-  varaFeePercent: number;
-  discountPercent: number;
-  maxDiscountToman: number;
-  deliveryDaysMin: number;
-  deliveryDaysMax: number;
-}
-
-export const DEFAULT_FORMULA_CONFIG: FormulaConfig = {
-  aedRate: 25500, // نرخ درهم دبی / امارات
-  tryRate: 2650, // نرخ لیر ترکیه
-  gbpRate: 118000, // نرخ پوند انگلیس
-  eurRate: 101000, // نرخ یورو
-  usdRate: 92500, // نرخ دلار آمریکا
-  shippingPer100g: 85000,
-  customsRatePercent: 5,
-  varaFeePercent: 4,
-  discountPercent: 2,
-  maxDiscountToman: 80000,
-  deliveryDaysMin: 5,
-  deliveryDaysMax: 8,
-};
-
-export const FORMULA_STORAGE_KEY = 'vara_pricing_formula';
-
-export const getLocalFormulaConfig = (): FormulaConfig => {
-  try {
-    const saved = localStorage.getItem(FORMULA_STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      const aedRate = parsed.aedRate || (parsed.usdRate ? Math.round(parsed.usdRate / 3.67) : 25500);
-      return {
-        ...DEFAULT_FORMULA_CONFIG,
-        ...parsed,
-        aedRate,
-        tryRate: parsed.tryRate || DEFAULT_FORMULA_CONFIG.tryRate,
-        gbpRate: parsed.gbpRate || DEFAULT_FORMULA_CONFIG.gbpRate,
-        eurRate: parsed.eurRate || DEFAULT_FORMULA_CONFIG.eurRate,
-        usdRate: parsed.usdRate || DEFAULT_FORMULA_CONFIG.usdRate,
-      };
-    }
-  } catch (err) {
-    console.warn('Error reading local formula config:', err);
-  }
-  return DEFAULT_FORMULA_CONFIG;
-};
-
-export const saveLocalFormulaConfig = (config: FormulaConfig): void => {
-  try {
-    localStorage.setItem(FORMULA_STORAGE_KEY, JSON.stringify(config));
-    window.dispatchEvent(new CustomEvent('vara-formula-change', { detail: config }));
-  } catch (err) {
-    console.error('Error saving local formula config:', err);
-  }
-};
+export type { FormulaConfig } from '../lib/formulaSettings';
+export {
+  DEFAULT_FORMULA_CONFIG,
+  FORMULA_STORAGE_KEY,
+  getLocalFormulaConfig,
+  saveLocalFormulaConfig,
+} from '../lib/formulaSettings';
 
 interface FormulaSettingsTabProps {
   config?: FormulaConfig;
@@ -89,7 +47,23 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
   onSwitchToCalculator
 }) => {
   const [formState, setFormState] = useState<FormulaConfig>(() => config || getLocalFormulaConfig());
+  const isDirtyFormulaRef = useRef(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [savingFormula, setSavingFormula] = useState(false);
+  const [formulaSaveError, setFormulaSaveError] = useState<string | null>(null);
+  const [refreshingFx, setRefreshingFx] = useState(false);
+  const [fxStatusMsg, setFxStatusMsg] = useState<string | null>(null);
+  const [fxErrorMsg, setFxErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (config) return;
+    const unsub = subscribeToFormulaConfig((remoteConfig) => {
+      if (!isDirtyFormulaRef.current) {
+        setFormState(remoteConfig);
+      }
+    });
+    return () => unsub();
+  }, [config]);
 
   // Domestic Post Express Fee state
   const [postExpressFee, setPostExpressFee] = useState<number | ''>(() => getLocalShippingSettings().postExpressFee);
@@ -154,17 +128,73 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
   };
 
   const handleFieldChange = (field: keyof FormulaConfig, value: number) => {
+    isDirtyFormulaRef.current = true;
     setFormState(prev => ({
       ...prev,
       [field]: isNaN(value) ? 0 : value
     }));
   };
 
+  const handleToggleAutoUpdate = () => {
+    isDirtyFormulaRef.current = true;
+    setFormState(prev => ({
+      ...prev,
+      autoUpdateRates: prev.autoUpdateRates === false,
+    }));
+  };
+
+  const handleRefreshFxNow = async () => {
+    setRefreshingFx(true);
+    setFxErrorMsg(null);
+    setFxStatusMsg(null);
+    try {
+      const margin = formState.rateMarginPercent ?? 4;
+      const result = await refreshFxRatesNow(margin);
+      const mergedUpdated: FormulaConfig = {
+        ...formState,
+        usdRate: result.config.usdRate,
+        aedRate: result.config.aedRate,
+        tryRate: result.config.tryRate,
+        gbpRate: result.config.gbpRate,
+        eurRate: result.config.eurRate,
+        rateMarginPercent: result.config.rateMarginPercent,
+        ratesUpdatedAt: result.config.ratesUpdatedAt,
+        ratesSource: result.config.ratesSource,
+        baseUsdtToman: result.config.baseUsdtToman,
+        usdCrossRates: result.config.usdCrossRates,
+      };
+      isDirtyFormulaRef.current = false;
+      setFormState(mergedUpdated);
+      if (onSave) {
+        onSave(mergedUpdated);
+      }
+      setFxStatusMsg(`نرخ‌ها با موفقیت از ${result.source} استعلام و ذخیره شدند.`);
+      setTimeout(() => setFxStatusMsg(null), 4500);
+    } catch (err: any) {
+      setFxErrorMsg(err?.message || 'خطا در استعلام لحظه‌ای نرخ ارز.');
+      setTimeout(() => setFxErrorMsg(null), 5000);
+    } finally {
+      setRefreshingFx(false);
+    }
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    saveLocalFormulaConfig(formState);
-    if (onSave) {
-      onSave(formState);
+    setSavingFormula(true);
+    setFormulaSaveError(null);
+    isDirtyFormulaRef.current = false;
+    try {
+      const saved = await saveFormulaConfig(formState);
+      setFormState(saved);
+      if (onSave) {
+        onSave(saved);
+      }
+    } catch (err: any) {
+      saveLocalFormulaConfig(formState);
+      setFormulaSaveError(err?.message || 'ذخیره در دیتابیس انجام نشد (تغییرات فقط محلی ذخیره شد).');
+      setTimeout(() => setFormulaSaveError(null), 5000);
+    } finally {
+      setSavingFormula(false);
     }
     const rawVal = postExpressFee !== '' ? Number(postExpressFee) : postExpressFeeRef.current;
     const cleanFee = Math.max(0, Math.floor(Number.isFinite(rawVal) ? rawVal : 0));
@@ -180,11 +210,17 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
     setTimeout(() => setSavedSuccess(false), 2500);
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (window.confirm('آیا از بازنشانی فرمول به مقادیر پیش‌فرض اطمینان دارید؟')) {
       const fresh = { ...DEFAULT_FORMULA_CONFIG };
+      isDirtyFormulaRef.current = false;
       setFormState(fresh);
-      saveLocalFormulaConfig(fresh);
+      try {
+        const saved = await saveFormulaConfig(fresh);
+        setFormState(saved);
+      } catch {
+        saveLocalFormulaConfig(fresh);
+      }
       if (onReset) {
         onReset();
       }
@@ -192,6 +228,19 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
       setTimeout(() => setSavedSuccess(false), 2000);
     }
   };
+
+  const formattedRatesUpdatedAt = (() => {
+    if (!formState.ratesUpdatedAt) return 'هنوز انجام نشده';
+    const dt = new Date(formState.ratesUpdatedAt);
+    if (Number.isNaN(dt.getTime())) return 'نامشخص';
+    return dt.toLocaleString('fa-IR', {
+      timeZone: 'Asia/Tehran',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  })();
 
   // Simulator calculations using current form state
   const currentAedRate = formState.aedRate || 25500;
@@ -335,9 +384,108 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
         
         {/* Form Inputs (7 cols) */}
         <form onSubmit={handleSave} className="lg:col-span-7 bg-white p-5 sm:p-6 rounded-2xl shadow-2xs space-y-5">
-          <h3 className="text-sm font-bold text-vara-muted-strong pb-3 border-b border-vara-line">
-            <span>ضرایب و متغیرهای فرمول محاسبه قیمت</span>
-          </h3>
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-vara-line">
+            <h3 className="text-sm font-bold text-vara-muted-strong">
+              <span>ضرایب و متغیرهای فرمول محاسبه قیمت</span>
+            </h3>
+            <button
+              type="button"
+              onClick={handleRefreshFxNow}
+              disabled={refreshingFx}
+              className="px-3.5 py-1.5 rounded-full bg-vara-surface hover:bg-vara-line text-vara-rose-ink border border-vara-line text-[11px] font-bold flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${refreshingFx ? 'animate-spin' : ''}`} />
+              <span>{refreshingFx ? 'در حال استعلام...' : 'استعلام و بروزرسانی الان'}</span>
+            </button>
+          </div>
+
+          {/* Automatic 4-Hour FX Sync Controls & Status */}
+          <div className="bg-vara-surface border border-vara-line rounded-2xl p-3.5 sm:p-4 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-start gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-white border border-vara-line text-vara-rose-ink flex items-center justify-center shrink-0 mt-0.5">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-vara-muted-strong">
+                      بروزرسانی خودکار هر ۴ ساعت (تتر + نرخ جهانی)
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-vara-muted leading-relaxed mt-0.5">
+                    قیمت دلار از تتر (USDT) استعلام شده و نرخ درهم، لیر، پوند و یورو بر اساس تبدیل دلاری جهانی محاسبه و گرد می‌شوند.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                role="switch"
+                aria-checked={formState.autoUpdateRates !== false}
+                onClick={handleToggleAutoUpdate}
+                className={`px-3 py-1.5 rounded-full text-[11px] font-bold transition-all shrink-0 cursor-pointer border ${
+                  formState.autoUpdateRates !== false
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                    : 'bg-white text-vara-muted border-vara-line'
+                }`}
+              >
+                {formState.autoUpdateRates !== false ? 'خودکار: روشن' : 'خودکار: خاموش'}
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-vara-line/80 items-center">
+              <div>
+                <label className="block text-[11px] font-semibold text-vara-muted-strong mb-1">
+                  حاشیه اطمینان نرخ ارز (٪):
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    value={(Number(formState.rateMarginPercent ?? 4)).toLocaleString('fa-IR')}
+                    onChange={(e) => handleFieldChange('rateMarginPercent', Math.min(50, Math.max(0, parseNumericInput(e.target.value))))}
+                    className="w-full bg-white border border-vara-line focus:border-vara-ink rounded-full px-3 py-1.5 text-xs font-vazir font-bold outline-none"
+                  />
+                  <span className="absolute left-3 top-1.5 text-[11px] text-vara-muted pointer-events-none">
+                    درصد
+                  </span>
+                </div>
+              </div>
+
+              <div className="text-[11px] text-vara-muted space-y-1">
+                <div className="flex items-center gap-1.5 text-vara-muted-strong font-medium">
+                  <Clock className="w-3.5 h-3.5 text-vara-rose-ink shrink-0" />
+                  <span>آخرین استعلام: {formattedRatesUpdatedAt}</span>
+                </div>
+                {formState.ratesSource && (
+                  <div className="truncate">
+                    منبع: <span className="font-semibold text-vara-muted-strong">{formState.ratesSource}</span>
+                  </div>
+                )}
+                {formState.baseUsdtToman ? (
+                  <div>
+                    تتر خام: <span className="font-bold text-vara-muted-strong">{formState.baseUsdtToman.toLocaleString('fa-IR')} تومان</span>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+
+            {fxStatusMsg && (
+              <div className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
+                {fxStatusMsg}
+              </div>
+            )}
+            {fxErrorMsg && (
+              <div className="text-[11px] font-bold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2">
+                {fxErrorMsg}
+              </div>
+            )}
+            {formulaSaveError && (
+              <div className="text-[11px] font-bold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2">
+                {formulaSaveError}
+              </div>
+            )}
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* AED Rate */}
@@ -560,7 +708,8 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
 
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-full bg-vara-rose hover:bg-vara-rose-hover text-white text-xs font-bold flex items-center gap-2 shadow-xs transition-all cursor-pointer"
+              disabled={savingFormula}
+              className="px-5 py-2.5 rounded-full bg-vara-rose hover:bg-vara-rose-hover text-white text-xs font-bold flex items-center gap-2 shadow-xs transition-all cursor-pointer disabled:opacity-50"
             >
               {savedSuccess ? (
                 <>
@@ -570,7 +719,7 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
               ) : (
                 <>
                   <Save className="w-4 h-4 text-vara-muted" />
-                  <span>ذخیره فرمول</span>
+                  <span>{savingFormula ? 'در حال ذخیره...' : 'ذخیره فرمول'}</span>
                 </>
               )}
             </button>

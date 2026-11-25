@@ -12,7 +12,7 @@ import {
   CheckCircle2,
   Loader2
 } from 'lucide-react';
-import { FormulaConfig, getLocalFormulaConfig } from './FormulaSettingsTab';
+import { FormulaConfig, getLocalFormulaConfig, subscribeToFormulaConfig } from '../lib/formulaSettings';
 import { validateUaeStoreUrl, UrlCheckResult } from '../utils/urlValidator';
 import { addOrderToDb, getLocalUserSession } from '../lib/db';
 import { UserProfile } from '../types';
@@ -129,15 +129,10 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
   const [orderErrorMessage, setOrderErrorMessage] = useState<string>('');
 
   useEffect(() => {
-    const handleFormulaChange = () => {
-      setFormulaConfig(getLocalFormulaConfig());
-    };
-    window.addEventListener('vara-formula-change', handleFormulaChange);
-    window.addEventListener('storage', handleFormulaChange);
-    return () => {
-      window.removeEventListener('vara-formula-change', handleFormulaChange);
-      window.removeEventListener('storage', handleFormulaChange);
-    };
+    const unsub = subscribeToFormulaConfig((updated) => {
+      setFormulaConfig(updated);
+    });
+    return () => unsub();
   }, []);
 
   const [inputUrl, setInputUrl] = useState(initialUrl);

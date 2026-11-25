@@ -29,6 +29,8 @@ import { blobPath, detectSafeRasterImage, getPrivateBlobStream } from './serverB
 import { ResendEmailService } from './serverEmail';
 import { Product, Order, UserProfile, OrderStatus } from './src/types';
 import { BRANDS_DATA } from './src/data/brands';
+import { getFormulaConfigWithAutoRefresh, syncFxRatesToDb } from './serverFxSync';
+import { FORMULA_SETTING_KEY, normalizeFormulaConfig } from './src/lib/formulaTypes';
 
 export const dbRouter = express.Router();
 
@@ -1327,6 +1329,66 @@ dbRouter.post('/settings/brands', requireAdminAuth, async (req, res) => {
     return res.json({ success: true, brands });
   } catch (error) {
     return catalogWriteFailure(res, error);
+  }
+});
+
+// GET formula config & live FX rates (Public - auto-refreshes if stale > 4h and autoUpdateRates is enabled)
+dbRouter.get('/settings/formula_config', async (_req, res) => {
+  try {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('CDN-Cache-Control', 'no-store');
+    res.setHeader('Vercel-CDN-Cache-Control', 'no-store');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    const value = await getFormulaConfigWithAutoRefresh();
+    return res.json({ success: true, value });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// POST update formula config (Admin only)
+dbRouter.post('/settings/formula_config', requireAdminAuth, async (req, res) => {
+  try {
+    const rawValue = req.body?.value !== undefined ? req.body.value : req.body;
+    if (!rawValue || typeof rawValue !== 'object' || Array.isArray(rawValue)) {
+      return res.status(400).json({ success: false, error: 'فرمت تنظیمات فرمول نامعتبر است.' });
+    }
+    const normalized = normalizeFormulaConfig(rawValue);
+    await SettingsDb.set(FORMULA_SETTING_KEY, normalized);
+    broadcastDbEvent('setting_updated', { key: FORMULA_SETTING_KEY, value: normalized });
+    return res.json({ success: true, value: normalized });
+  } catch (error) {
+    return catalogWriteFailure(res, error);
+  }
+});
+
+// POST force refresh live FX rates from Tether + USD cross-rates (Admin only)
+dbRouter.post('/fx-rates/refresh', requireAdminAuth, async (req, res) => {
+  try {
+    const rawMargin = req.body?.rateMarginPercent;
+    const overrideMarginPercent =
+      rawMargin !== undefined && rawMargin !== null && rawMargin !== '' && Number.isFinite(Number(rawMargin))
+        ? Number(rawMargin)
+        : undefined;
+    const result = await syncFxRatesToDb({
+      trigger: 'manual',
+      force: true,
+      overrideMarginPercent,
+    });
+    broadcastDbEvent('setting_updated', { key: FORMULA_SETTING_KEY, value: result.config });
+    return res.json({
+      success: true,
+      value: result.config,
+      source: result.source,
+      baseUsdtToman: result.baseUsdtToman,
+    });
+  } catch (err: any) {
+    console.error('[FX manual refresh failed]', err?.message || err);
+    return res.status(502).json({
+      success: false,
+      error: 'استعلام لحظه‌ای نرخ ارز از سرویس‌های تتر یا نرخ جهانی موقتاً ناموفق بود.',
+    });
   }
 });
 
