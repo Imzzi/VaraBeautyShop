@@ -4,6 +4,7 @@
  * Fully compatible with Node.js & Vercel Serverless runtimes.
  */
 import { Resend } from 'resend';
+import { escapeHtml } from './serverSecurity';
 
 interface SendEmailParams {
   toEmail: string;
@@ -314,15 +315,17 @@ export const ResendEmailService = {
    * Send Email Verification Code to user
    */
   async sendVerificationCode(toEmail: string, code: string, displayName?: string) {
-    const name = displayName || 'همراه گرامی';
+    const safeName = escapeHtml(displayName || 'همراه گرامی');
+    const safeCode = escapeHtml(code);
     const subject = 'کد تایید حساب کاربری ورا بیوتی شاپ (Vara Beauty Shop)';
+    const safeSubject = escapeHtml(subject);
     const htmlContent = `
 <!DOCTYPE html>
 <html dir="rtl" lang="fa">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${subject}</title>
+  <title>${safeSubject}</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f7f8f9; font-family: Tahoma, 'Segoe UI', Arial, sans-serif; color: #2B2927; direction: rtl; text-align: right;">
   <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f7f8f9; padding: 30px 10px;">
@@ -339,7 +342,7 @@ export const ResendEmailService = {
           <!-- Body -->
           <tr>
             <td style="padding: 30px;">
-              <h2 style="margin: 0 0 15px; font-size: 16px; color: #2B2927;">سلام ${name}،</h2>
+              <h2 style="margin: 0 0 15px; font-size: 16px; color: #2B2927;">سلام ${safeName}،</h2>
               <p style="margin: 0 0 20px; font-size: 13px; line-height: 1.7; color: #5a5f65;">
                 از عضویت شما در ورا بیوتی شاپ (Vara Beauty Shop) سپاسگزاریم. جهت تایید و فعال‌سازی حساب کاربری خود، لطفاً کد تایید زیر را در سامانه وارد نمایید:
               </p>
@@ -347,7 +350,7 @@ export const ResendEmailService = {
               <!-- Verification Code Box -->
               <div style="background-color: #eff2f4; border: 1px dashed #b8b8b9; border-radius: 14px; padding: 18px; text-align: center; margin: 25px 0;">
                 <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2B2927; font-family: monospace, Courier, sans-serif; display: inline-block; direction: ltr;">
-                  ${code}
+                  ${safeCode}
                 </span>
                 <p style="margin: 8px 0 0; font-size: 11px; color: #788089;">این کد تا ۱۰ دقیقه دیگر معتبر است.</p>
               </div>
@@ -385,15 +388,21 @@ export const ResendEmailService = {
    * Send Password Reset Link & Code to user
    */
   async sendPasswordResetEmail(toEmail: string, tempCode: string, resetLink?: string, displayName?: string) {
-    const name = displayName || 'کاربر گرامی';
+    const safeName = escapeHtml(displayName || 'کاربر گرامی');
+    const safeTempCode = escapeHtml(tempCode);
+    const safeResetLink =
+      typeof resetLink === 'string' && /^https?:\/\//i.test(resetLink.trim())
+        ? escapeHtml(resetLink.trim())
+        : '';
     const subject = 'درخواست بازیابی رمز عبور در ورا بیوتی شاپ (Vara Beauty Shop)';
+    const safeSubject = escapeHtml(subject);
     const htmlContent = `
 <!DOCTYPE html>
 <html dir="rtl" lang="fa">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${subject}</title>
+  <title>${safeSubject}</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f7f8f9; font-family: Tahoma, 'Segoe UI', Arial, sans-serif; color: #2B2927; direction: rtl; text-align: right;">
   <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f7f8f9; padding: 30px 10px;">
@@ -411,7 +420,7 @@ export const ResendEmailService = {
           <!-- Body -->
           <tr>
             <td style="padding: 30px;">
-              <h2 style="margin: 0 0 15px; font-size: 16px; color: #2B2927;">سلام ${name}،</h2>
+              <h2 style="margin: 0 0 15px; font-size: 16px; color: #2B2927;">سلام ${safeName}،</h2>
               <p style="margin: 0 0 20px; font-size: 13px; line-height: 1.7; color: #5a5f65;">
                 درخواستی برای بازنشانی رمز عبور حساب کاربری شما در ورا بیوتی شاپ (Vara Beauty Shop) دریافت شده است. با استفاده از کد زیر می‌توانید نسبت به تنظیم رمز عبور جدید اقدام فرمایید:
               </p>
@@ -419,15 +428,15 @@ export const ResendEmailService = {
               <!-- Code Box -->
               <div style="background-color: #eff2f4; border: 1px dashed #b8b8b9; border-radius: 14px; padding: 18px; text-align: center; margin: 25px 0;">
                 <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2B2927; font-family: monospace, Courier, sans-serif; display: inline-block; direction: ltr;">
-                  ${tempCode}
+                  ${safeTempCode}
                 </span>
                 <p style="margin: 8px 0 0; font-size: 11px; color: #788089;">این کد موقت به مدت ۱۵ دقیقه معتبر خواهد بود.</p>
               </div>
 
               ${
-                resetLink
+                safeResetLink
                   ? `<div style="text-align: center; margin: 25px 0;">
-                      <a href="${resetLink}" style="background-color: #454a4f; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 12px; font-size: 13px; font-weight: bold; display: inline-block;">
+                      <a href="${safeResetLink}" style="background-color: #454a4f; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 12px; font-size: 13px; font-weight: bold; display: inline-block;">
                         ورود به سامانه و تغییر رمز
                       </a>
                     </div>`
@@ -476,22 +485,24 @@ export const ResendEmailService = {
     const toEmail = order.customer?.email;
     if (!toEmail) return { success: false, error: 'Customer email not provided' };
 
-    const customerName = order.customer?.name || 'همراه گرامی';
+    const customerName = escapeHtml(order.customer?.name || 'همراه گرامی');
+    const safeOrderNumber = escapeHtml(order.orderNumber);
     const totalToman = (order.totalAmount || 0).toLocaleString('fa-IR');
     const subject = `تایید ثبت سفارش ${order.orderNumber} در فروشگاه ورا بیوتی`;
+    const safeSubject = escapeHtml(subject);
 
     const itemsHtml = (order.items || [])
       .map(
         (it) => `
         <tr style="border-bottom: 1px solid #f0f2f4;">
           <td style="padding: 10px 0; font-size: 13px; color: #2B2927;">
-            ${it.nameFa || 'محصول'} ${it.sizeLabel ? `(${it.sizeLabel})` : ''}
+            ${escapeHtml(it.nameFa || 'محصول')} ${it.sizeLabel ? `(${escapeHtml(it.sizeLabel)})` : ''}
           </td>
           <td style="padding: 10px 0; font-size: 13px; text-align: center; color: #788089;">
-            ${it.quantity || 1} عدد
+            ${Number(it.quantity) || 1} عدد
           </td>
           <td style="padding: 10px 0; font-size: 13px; text-align: left; color: #2B2927; font-weight: bold;">
-            ${((it.price || 0) * (it.quantity || 1)).toLocaleString('fa-IR')} تومان
+            ${(((Number(it.price) || 0) * (Number(it.quantity) || 1))).toLocaleString('fa-IR')} تومان
           </td>
         </tr>
       `
@@ -503,7 +514,7 @@ export const ResendEmailService = {
 <html dir="rtl" lang="fa">
 <head>
   <meta charset="utf-8">
-  <title>${subject}</title>
+  <title>${safeSubject}</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f7f8f9; font-family: Tahoma, 'Segoe UI', Arial, sans-serif; direction: rtl; text-align: right;">
   <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 30px 10px;">
@@ -520,7 +531,7 @@ export const ResendEmailService = {
             <td style="padding: 25px;">
               <h2 style="margin: 0 0 10px; font-size: 15px; color: #2B2927;">سلام ${customerName}،</h2>
               <p style="margin: 0 0 20px; font-size: 13px; line-height: 1.7; color: #5a5f65;">
-                سفارش شما با شماره <strong>${order.orderNumber}</strong> با موفقیت ثبت شد و در صف پردازش و بسته‌بندی قرار گرفت.
+                سفارش شما با شماره <strong>${safeOrderNumber}</strong> با موفقیت ثبت شد و در صف پردازش و بسته‌بندی قرار گرفت.
               </p>
 
               <table width="100%" style="border-collapse: collapse; margin-bottom: 20px;">

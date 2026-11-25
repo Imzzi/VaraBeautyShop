@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Calculator, Link2, Sparkles, User, X } from 'lucide-react';
 import type { CarouselSlide } from '../types';
 import { getLocalHeroSlides, HERO_SLIDES_STORAGE_KEY } from '../data/heroSlides';
+import { sanitizeNavigationUrl } from '../utils/safeUrl';
 
 interface HeroProps {
   onOpenAccount: () => void;
@@ -57,12 +58,14 @@ export const Hero: React.FC<HeroProps> = ({
 
   const handleSlideCta = (slide: CarouselSlide) => {
     if (slide.actionType === 'custom_url' && slide.linkUrl) {
-      if (slide.linkUrl.startsWith('http://') || slide.linkUrl.startsWith('https://')) {
-        window.open(slide.linkUrl, '_blank', 'noopener,noreferrer');
-      } else if (slide.linkUrl.startsWith('/#') || slide.linkUrl.startsWith('#')) {
-        window.location.hash = slide.linkUrl.replace('/#', '#');
+      const safeUrl = sanitizeNavigationUrl(slide.linkUrl);
+      if (!safeUrl) return;
+      if (safeUrl.startsWith('http://') || safeUrl.startsWith('https://')) {
+        window.open(safeUrl, '_blank', 'noopener,noreferrer');
+      } else if (safeUrl.startsWith('/#') || safeUrl.startsWith('#')) {
+        window.location.hash = safeUrl.replace('/#', '#');
       } else {
-        window.location.href = slide.linkUrl;
+        window.location.href = safeUrl;
       }
       return;
     }

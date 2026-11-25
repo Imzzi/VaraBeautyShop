@@ -82,90 +82,125 @@ function matchesAnyDomain(hostname: string, domains: string[]): boolean {
   return domains.some((d) => hostname === d || hostname.endsWith(`.${d}`));
 }
 
+function isPrivateOrReservedIpv4(octet1: number, octet2: number, octet3: number, octet4: number): boolean {
+  if (
+    !Number.isInteger(octet1) || !Number.isInteger(octet2) ||
+    !Number.isInteger(octet3) || !Number.isInteger(octet4) ||
+    octet1 < 0 || octet2 < 0 || octet3 < 0 || octet4 < 0 ||
+    octet1 > 255 || octet2 > 255 || octet3 > 255 || octet4 > 255
+  ) {
+    return true;
+  }
+
+  // Loopback: 127.0.0.0/8
+  if (octet1 === 127) return true;
+  // Current network ("this host"): 0.0.0.0/8
+  if (octet1 === 0) return true;
+  // Private Class A: 10.0.0.0/8
+  if (octet1 === 10) return true;
+  // Carrier-Grade NAT: 100.64.0.0/10
+  if (octet1 === 100 && octet2 >= 64 && octet2 <= 127) return true;
+  // Private Class B: 172.16.0.0/12
+  if (octet1 === 172 && octet2 >= 16 && octet2 <= 31) return true;
+  // Link-Local / Cloud Instance Metadata (AWS, GCP, Azure IMDS): 169.254.0.0/16
+  if (octet1 === 169 && octet2 === 254) return true;
+  // IETF Protocol Assignments / TEST-NET: 192.0.0.0/24, 192.0.2.0/24
+  if (octet1 === 192 && octet2 === 0 && (octet3 === 0 || octet3 === 2)) return true;
+  // Private Class C: 192.168.0.0/16
+  if (octet1 === 192 && octet2 === 168) return true;
+  // Benchmarking & TEST-NET: 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24
+  if (octet1 === 198 && (octet2 === 18 || octet2 === 19)) return true;
+  if (octet1 === 198 && octet2 === 51 && octet3 === 100) return true;
+  if (octet1 === 203 && octet2 === 0 && octet3 === 113) return true;
+  // Multicast & Broadcast: 224.0.0.0/4, 255.255.255.255
+  if (octet1 >= 224) return true;
+
+  return false;
+}
+
 /**
  * Checks whether an IP or hostname is loopback, internal, or private.
  * Protects against Server-Side Request Forgery (SSRF) and LAN exploitation.
  */
 export function isInternalOrLoopbackHost(hostname: string): boolean {
   if (!hostname || typeof hostname !== 'string') return true;
-  const cleanHost = hostname.trim().toLowerCase().replace(/^\[|\]$/g, '');
+  if (/[\s\x00-\x1f\x7f]/.test(hostname)) return true;
+  const cleanHost = hostname.trim().toLowerCase().replace(/^\[|\]$/g, '').replace(/\.+$/, '');
+  if (!cleanHost) return true;
 
-  // 1. Localhost names
+  // 1. Localhost, internal, and cloud metadata hostnames
   if (
     cleanHost === 'localhost' ||
     cleanHost.endsWith('.localhost') ||
     cleanHost === 'local' ||
     cleanHost.endsWith('.local') ||
     cleanHost === 'router' ||
-    cleanHost.endsWith('.internal')
+    cleanHost === 'metadata' ||
+    cleanHost.endsWith('.internal') ||
+    cleanHost.endsWith('.home.arpa')
   ) {
     return true;
   }
 
-  // 2. IPv6 loopback, unspecified, and private/link-local/mapped
-  if (
-    cleanHost === '::1' ||
-    cleanHost === '::' ||
-    cleanHost.startsWith('fe80:') || // Link-local
-    cleanHost.startsWith('fc00:') || // Unique local (ULA)
-    cleanHost.startsWith('fd00:') || // Unique local (ULA)
-    cleanHost.startsWith('::ffff:127.') || // IPv4-mapped loopback
-    cleanHost.startsWith('::ffff:10.') ||
-    cleanHost.startsWith('::ffff:192.168.') ||
-    cleanHost.startsWith('::ffff:172.') ||
-    cleanHost.startsWith('::ffff:169.254.') ||
-    cleanHost.startsWith('::ffff:0.')
-  ) {
+  // 2. Hex / Octal / Decimal single-integer or shorthand IPv4 bypasses (e.g. 2130706433, 0x7f000001, 127.1)
+  if (/^(0x[0-9a-f]+|0[0-7]+|\d+)$/i.test(cleanHost) || /^\d+(?:\.\d+){1,2}$/.test(cleanHost)) {
     return true;
   }
 
-  // 3. Hex / Octal / Decimal single-integer IP bypasses (e.g. 2130706433 = 127.0.0.1, 0x7f000001, 0)
-  if (/^(0x[0-9a-f]+|0[0-7]+|\d+)$/i.test(cleanHost)) {
-    return true;
-  }
-
-  // 4. Standard dotted-decimal IPv4 checks
+  // 3. Standard dotted-decimal IPv4 checks
   const ipv4Regex = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
   const match = cleanHost.match(ipv4Regex);
   if (match) {
-    const octet1 = parseInt(match[1], 10);
-    const octet2 = parseInt(match[2], 10);
-    const octet3 = parseInt(match[3], 10);
-    const octet4 = parseInt(match[4], 10);
+    return isPrivateOrReservedIpv4(
+      parseInt(match[1], 10),
+      parseInt(match[2], 10),
+      parseInt(match[3], 10),
+      parseInt(match[4], 10)
+    );
+  }
+  if (/^[0-9.]+$/.test(cleanHost)) {
+    return true;
+  }
 
-    if (octet1 > 255 || octet2 > 255 || octet3 > 255 || octet4 > 255) {
-      return true; // Malformed / overflow IP
+  // 4. IPv6 loopback, unspecified, private/ULA, link-local, multicast, and IPv4-mapped/compatible forms
+  if (cleanHost.includes(':')) {
+    if (cleanHost.includes('%')) return true; // Zone index (e.g. fe80::1%eth0)
+
+    if (
+      cleanHost === '::1' ||
+      cleanHost === '::' ||
+      cleanHost === '0:0:0:0:0:0:0:1' ||
+      cleanHost === '0:0:0:0:0:0:0:0' ||
+      /^f[cd][0-9a-f]{0,2}:/.test(cleanHost) || // Unique local fc00::/7
+      /^fe[89ab][0-9a-f]:/.test(cleanHost) || // Link-local fe80::/10
+      /^ff[0-9a-f]{0,2}:/.test(cleanHost) || // Multicast ff00::/8
+      /^2001:0?db8:/.test(cleanHost) || // Documentation 2001:db8::/32
+      /^0?100::/.test(cleanHost) // Discard 100::/64
+    ) {
+      return true;
     }
 
-    // Loopback: 127.0.0.0/8
-    if (octet1 === 127) return true;
+    // Dotted IPv4-mapped/compatible IPv6 (e.g. ::ffff:127.0.0.1, ::127.0.0.1)
+    const mappedDotted = cleanHost.match(/^(?:0+:){0,5}(?:ffff:)?(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$|^::(?:ffff:)?(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+    if (mappedDotted) {
+      const o1 = parseInt(mappedDotted[1] ?? mappedDotted[5], 10);
+      const o2 = parseInt(mappedDotted[2] ?? mappedDotted[6], 10);
+      const o3 = parseInt(mappedDotted[3] ?? mappedDotted[7], 10);
+      const o4 = parseInt(mappedDotted[4] ?? mappedDotted[8], 10);
+      if (isPrivateOrReservedIpv4(o1, o2, o3, o4)) return true;
+    }
 
-    // Current network ("this host"): 0.0.0.0/8
-    if (octet1 === 0) return true;
-
-    // Private Class A: 10.0.0.0/8
-    if (octet1 === 10) return true;
-
-    // Carrier-Grade NAT: 100.64.0.0/10 (100.64.0.0 - 100.127.255.255)
-    if (octet1 === 100 && octet2 >= 64 && octet2 <= 127) return true;
-
-    // Private Class B: 172.16.0.0/12 (172.16.0.0 - 172.31.255.255)
-    if (octet1 === 172 && octet2 >= 16 && octet2 <= 31) return true;
-
-    // Link-Local / Cloud Instance Metadata (AWS, GCP, Azure IMDS): 169.254.0.0/16
-    if (octet1 === 169 && octet2 === 254) return true;
-
-    // Private Class C: 192.168.0.0/16
-    if (octet1 === 192 && octet2 === 168) return true;
-
-    // Documentation / TEST-NET: 192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24, 198.18.0.0/15
-    if (octet1 === 192 && octet2 === 0 && octet3 === 2) return true;
-    if (octet1 === 198 && octet2 === 51 && octet3 === 100) return true;
-    if (octet1 === 203 && octet2 === 0 && octet3 === 113) return true;
-    if (octet1 === 198 && (octet2 === 18 || octet2 === 19)) return true;
-
-    // Multicast & Broadcast: 224.0.0.0/4, 255.255.255.255
-    if (octet1 >= 224) return true;
+    // Hex-normalized IPv4-mapped/compatible IPv6 (WHATWG URL normalizes [::ffff:127.0.0.1] to ::ffff:7f00:1)
+    const mappedHex = cleanHost.match(/^(?:::|(?:0+:){5,6})(?:ffff:)?([0-9a-f]{1,4}):([0-9a-f]{1,4})$/);
+    if (mappedHex) {
+      const hi = parseInt(mappedHex[1], 16);
+      const lo = parseInt(mappedHex[2], 16);
+      const o1 = (hi >> 8) & 0xff;
+      const o2 = hi & 0xff;
+      const o3 = (lo >> 8) & 0xff;
+      const o4 = lo & 0xff;
+      if (isPrivateOrReservedIpv4(o1, o2, o3, o4)) return true;
+    }
   }
 
   return false;
@@ -211,14 +246,14 @@ export function validateScraperUrl(rawUrl: string): {
     };
   }
 
-  // 1. Protocol check: strictly http or https
-  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+  // 1. Protocol check: strictly http or https, no embedded credentials
+  if ((parsed.protocol !== 'http:' && parsed.protocol !== 'https:') || parsed.username || parsed.password) {
     return {
       isValid: false,
       cleanUrl: '',
       hostname: '',
       store: 'other',
-      error: 'تنها پیوندهای وب با پروتکل امن (HTTPS) پشتیبانی می‌شوند.',
+      error: 'تنها پیوندهای وب معتبر با پروتکل HTTPS بدون اطلاعات کاربری پشتیبانی می‌شوند.',
     };
   }
 
@@ -907,7 +942,7 @@ export async function scrapeSephoraLive(
       'Cache-Control': 'no-cache',
     };
 
-    let fetchRes = await fetch(targetSephoraUrl, { 
+    let fetchRes = await safeScraperFetch(targetSephoraUrl, { 
       headers: sephoraHeaders,
       signal: AbortSignal.timeout(7000)
     });
@@ -920,7 +955,7 @@ export async function scrapeSephoraLive(
       const searchQuery = cleanKeyword || slug.replace(/[-_]/g, ' ');
       if (searchQuery) {
         const searchUrl = `https://www.sephora.me/ae-en/search?q=${encodeURIComponent(searchQuery)}`;
-        const searchRes = await fetch(searchUrl, { 
+        const searchRes = await safeScraperFetch(searchUrl, { 
           headers: sephoraHeaders,
           signal: AbortSignal.timeout(7000)
         });
@@ -936,7 +971,7 @@ export async function scrapeSephoraLive(
 
           if (bestLink) {
             const resolvedProductUrl = `https://www.sephora.me${bestLink}`;
-            const resolvedRes = await fetch(resolvedProductUrl, { 
+            const resolvedRes = await safeScraperFetch(resolvedProductUrl, { 
               headers: sephoraHeaders,
               signal: AbortSignal.timeout(7000)
             });
@@ -1148,7 +1183,7 @@ export async function scrapeAmazonLive(
 
   for (const ep of endpointsToTry) {
     try {
-      const fetchRes = await fetch(ep.url, { 
+      const fetchRes = await safeScraperFetch(ep.url, { 
         headers: ep.headers,
         signal: AbortSignal.timeout(7000)
       });

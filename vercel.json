@@ -39,6 +39,14 @@
         {
           "key": "Strict-Transport-Security",
           "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' https://accounts.google.com https://vercel.live; style-src 'self' 'unsafe-inline' https://accounts.google.com https://vercel.live; img-src 'self' data: blob: https:; font-src 'self' data: https://assets.vercel.com https://vercel.live; connect-src 'self' https://accounts.google.com https://vercel.live wss://ws-us3.pusher.com; frame-src https://accounts.google.com https://maps.google.com https://www.google.com https://vercel.live; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://*.zarinpal.com https://*.shaparak.ir https://*.nextpay.org"
         }
       ]
     },

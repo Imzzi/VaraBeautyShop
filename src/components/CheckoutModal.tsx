@@ -12,6 +12,7 @@ import { getLocalShippingSettings, subscribeToShippingSettings, ShippingSettings
 import { PolicyReaderModal } from './LegalPoliciesPage';
 import { PolicyDocumentType } from '../data/policies';
 import { checkoutPaymentPath } from '../utils/checkoutReturn';
+import { isSafeHttpsUrl } from '../utils/safeUrl';
 
 export type CheckoutDeliveryDraft = Partial<
   Pick<OrderCustomer, 'name' | 'phone' | 'province' | 'city' | 'address' | 'postalCode' | 'notes'> & {
@@ -349,6 +350,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             return;
           }
           if (payRes.ok && payData.success && payData.paymentUrl) {
+            if (!isSafeHttpsUrl(payData.paymentUrl)) {
+              setSubmissionError('آدرس درگاه پرداخت نامعتبر تشخیص داده شد.');
+              setIsSubmitting(false);
+              return;
+            }
             onGatewayDeparture(savedOrder.id);
             // Redirect to Online Payment Gateway (keep isSubmitting true while browser navigates)
             try {

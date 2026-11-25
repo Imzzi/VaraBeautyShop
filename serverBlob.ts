@@ -122,6 +122,34 @@ export function detectSafeRasterImage(buffer: Buffer): { valid: boolean; mime: s
 }
 
 /**
+ * Validates binary magic bytes for proxied external images.
+ * Permits only safe raster formats (JPEG, PNG, WebP, GIF, AVIF) and rejects SVG/HTML/XML/scripts.
+ */
+export function detectSafeProxyImage(buffer: Buffer): { valid: boolean; mime: string } {
+  const raster = detectSafeRasterImage(buffer);
+  if (raster.valid) {
+    return { valid: true, mime: raster.mime };
+  }
+  if (!buffer || buffer.length < 6) return { valid: false, mime: '' };
+
+  // GIF87a / GIF89a
+  const head6 = buffer.subarray(0, 6).toString('ascii');
+  if (head6 === 'GIF87a' || head6 === 'GIF89a') {
+    return { valid: true, mime: 'image/gif' };
+  }
+
+  // AVIF ISO BMFF container (ftypavif / ftypavis)
+  if (buffer.length >= 12) {
+    const boxType = buffer.subarray(4, 12).toString('ascii');
+    if (boxType === 'ftypavif' || boxType === 'ftypavis') {
+      return { valid: true, mime: 'image/avif' };
+    }
+  }
+
+  return { valid: false, mime: '' };
+}
+
+/**
  * Upload an image buffer or base64 to Vercel Blob
  */
 export async function uploadImageToVercelBlob(params: {

@@ -18,6 +18,7 @@ import { addOrderToDb, getLocalUserSession } from '../lib/db';
 import { UserProfile } from '../types';
 import { PolicyReaderModal } from './LegalPoliciesPage';
 import { PolicyDocumentType } from '../data/policies';
+import { sanitizeNavigationUrl } from '../utils/safeUrl';
 
 interface PriceCalculatorPageProps {
   initialUrl?: string;
@@ -588,7 +589,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
               <div className="flex flex-wrap items-center gap-2 pt-1">
                 {nonUaeNotice.extractedKeywords && nonUaeNotice.suggestedUaeSearchUrl && (
                   <a
-                    href={nonUaeNotice.suggestedUaeSearchUrl}
+                    href={sanitizeNavigationUrl(nonUaeNotice.suggestedUaeSearchUrl) || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-vara-rose hover:bg-vara-rose-hover text-white text-xs font-bold transition-all cursor-pointer"
@@ -661,7 +662,7 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
                   </span>
 
                   <a 
-                    href={productData.storeUrl}
+                    href={sanitizeNavigationUrl(productData.storeUrl) || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[11px] text-vara-muted hover:text-vara-rose-ink flex items-center gap-1 font-medium"

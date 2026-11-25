@@ -19,6 +19,7 @@ import {
 } from './serverDb';
 import { 
   authRateLimiter, 
+  escapeHtml,
   getClientIp, 
   getAdminSigningSecret, 
   getTechSigningSecret, 
@@ -1151,8 +1152,8 @@ dbRouter.post('/users/sync-google', async (req, res) => {
 // ADMIN CREDENTIALS ENDPOINTS
 // -------------------------------------------------------------
 
-// GET admin info (safe)
-dbRouter.get('/admin/credentials', async (_req, res) => {
+// GET admin info (Admin only: prevents admin username enumeration)
+dbRouter.get('/admin/credentials', requireAdminAuth, async (_req, res) => {
   try {
     const creds = await AdminDb.getCredentials();
     const envUser = (process.env.ADMIN_USERNAME || process.env.ADMIN_USER || '').trim();
@@ -1392,9 +1393,15 @@ dbRouter.post('/fx-rates/refresh', requireAdminAuth, async (req, res) => {
   }
 });
 
+const FORBIDDEN_SETTING_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
+function isValidSettingKey(key: string): boolean {
+  return Boolean(key && !key.startsWith('__vara_') && !FORBIDDEN_SETTING_KEYS.has(key) && /^[a-z0-9_-]{1,64}$/.test(key));
+}
+
 // GET generic setting (Public)
 dbRouter.get('/settings/:key', async (req, res) => {
-  if (req.params.key.startsWith('__vara_')) return res.sendStatus(404);
+  if (!isValidSettingKey(req.params.key)) return res.sendStatus(404);
   try {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
     res.setHeader('CDN-Cache-Control', 'no-store');
@@ -1421,7 +1428,7 @@ dbRouter.get('/diagnostics', requireAdminAuth, async (_req, res) => {
 
 // POST update generic setting (Admin only)
 dbRouter.post('/settings/:key', requireAdminAuth, async (req, res) => {
-  if (req.params.key.startsWith('__vara_')) return res.sendStatus(404);
+  if (!isValidSettingKey(req.params.key)) return res.sendStatus(404);
   try {
     const valueToSave = req.body?.value !== undefined ? req.body.value : req.body;
     if (valueToSave === undefined || valueToSave === null) {
@@ -1483,8 +1490,8 @@ dbRouter.post('/email/test', requireAdminAuth, async (req, res) => {
             این یک ایمیل آزمایشی از سامانه <strong>ورا بیوتی شاپ (Vara Beauty Shop)</strong> با کلید <strong>vara</strong> است که برای بررسی کارکرد صحیح اتصال به سرورهای Resend ارسال گردیده است.
           </p>
           <div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-size: 11px; color: #788089; line-height: 1.8;">
-            <div><strong>فرستنده:</strong> ${sender.formatted}</div>
-            <div><strong>تاریخ و زمان ارسال:</strong> ${new Date().toLocaleString('fa-IR')}</div>
+            <div><strong>فرستنده:</strong> ${escapeHtml(sender.formatted)}</div>
+            <div><strong>تاریخ و زمان ارسال:</strong> ${escapeHtml(new Date().toLocaleString('fa-IR'))}</div>
           </div>
         </div>
       `,

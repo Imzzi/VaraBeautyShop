@@ -10,14 +10,7 @@ const productPreloads = Object.fromEntries(PRODUCTS
   .filter(([, image]) => image !== DEFAULT_PRODUCT_IMAGE));
 const preloadData = JSON.stringify(productPreloads).replace(/</g, '\\u003c');
 
-export default defineConfig(() => {
-  return {
-    plugins: [
-      {
-        name: 'vara-critical-image',
-        transformIndexHtml: {
-          order: 'pre',
-          handler: (html) => html.replace('<!-- vara:critical-image -->', `<script>(() => {
+const criticalPreloadCode = `(() => {
   const route = location.hash.startsWith('#/product/') && location.pathname === '/'
     ? location.hash.slice(1) : location.pathname;
   const match = /^\\/product\\/([a-z0-9_-]+)(?:[/?]|$)/i.exec(route);
@@ -31,7 +24,32 @@ export default defineConfig(() => {
   preload.referrerPolicy = 'no-referrer';
   preload.href = src;
   document.head.append(preload);
-})();</script>`),
+})();`;
+
+export default defineConfig(() => {
+  return {
+    plugins: [
+      {
+        name: 'vara-critical-image',
+        transformIndexHtml: {
+          order: 'pre',
+          handler: (html, ctx) => {
+            // In production builds (!ctx.server), serve as an external asset to enforce strict CSP without 'unsafe-inline'.
+            if (!ctx.server) {
+              return html.replace(
+                '<!-- vara:critical-image -->',
+                '<script src="/assets/vara-critical-preload.js"></script>'
+              );
+            }
+            return html.replace('<!-- vara:critical-image -->', `<script>${criticalPreloadCode}</script>`);
+          },
+        },
+        generateBundle() {
+          this.emitFile({
+            type: 'asset',
+            fileName: 'assets/vara-critical-preload.js',
+            source: criticalPreloadCode,
+          });
         },
       },
       react(),

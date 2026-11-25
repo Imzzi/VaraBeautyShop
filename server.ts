@@ -22,6 +22,7 @@ import {
   getBlobDiagnostics,
   getPrivateBlobStream,
   blobPath,
+  detectSafeProxyImage,
 } from './serverBlob';
 import { 
   authRateLimiter, 
@@ -81,6 +82,21 @@ export const app = express();
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
+// Baseline security headers for standalone Node & serverless responses
+app.use((_req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+    res.setHeader(
+      'Content-Security-Policy',
+      "default-src 'self'; script-src 'self' https://accounts.google.com https://vercel.live; style-src 'self' 'unsafe-inline' https://accounts.google.com https://vercel.live; img-src 'self' data: blob: https:; font-src 'self' data: https://assets.vercel.com https://vercel.live; connect-src 'self' https://accounts.google.com https://vercel.live wss://ws-us3.pusher.com; frame-src https://accounts.google.com https://maps.google.com https://www.google.com https://vercel.live; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://*.zarinpal.com https://*.shaparak.ir https://*.nextpay.org"
+    );
+  }
+  next();
+});
+
 // -------------------------------------------------------------
 // BOT DECOY & CONCEALMENT: Block common scanner probes (/admin, /wp-admin, /cms, etc.)
 // When an automated scanner looks for default admin paths, send an immediate 404 or redirect.
@@ -107,18 +123,15 @@ app.use((req, res, next) => {
 });
 
 // Health check endpoint (supports both /api/health and /health for Vercel rewrites)
-app.get(['/api/health', '/health'], (req, res) => {
-  const kavenegarApiKey = (process.env.KAVENEGAR_API_KEY || '').trim();
-  res.json({ 
-    status: 'ok', 
+app.get(['/api/health', '/health'], (_req, res) => {
+  res.json({
+    status: 'ok',
     db: 'sqlite',
-    kavenegarConfigured: !!(kavenegarApiKey !== ''),
-    template: process.env.KAVENEGAR_TEMPLATE || 'temp1'
   });
 });
 
-// Simple endpoint to inspect the current outbound IPv4 address (and VPS Hub IPv4 if configured)
-app.get(['/api/outbound-ip', '/outbound-ip'], async (_req, res) => {
+// Simple endpoint to inspect the current outbound IPv4 address (Requires authenticated tech session to protect origin/WAF IPs)
+app.get(['/api/outbound-ip', '/outbound-ip'], requireTechAuth, async (_req, res) => {
   res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
   try {
     let ipv4: string | null = null;
@@ -797,9 +810,15 @@ app.post('/api/auth/tech-admin/logout', (req, res) => {
         return res.status(304).end();
       }
 
-      // Set headers from blob metadata
-      const contentType = result.blob.contentType || 'image/jpeg';
-      res.setHeader('Content-Type', contentType);
+      // Set strictly allowlisted raster headers from blob metadata (blocks SVG/HTML XSS)
+      const allowedBlobMimes = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif']);
+      const rawType = (result.blob.contentType || '').split(';')[0].trim().toLowerCase();
+      if (!allowedBlobMimes.has(rawType)) {
+        return res.status(415).send('Unsupported media type');
+      }
+      res.setHeader('Content-Type', rawType);
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      res.setHeader('Content-Security-Policy', "default-src 'none'; sandbox");
       res.setHeader('Content-Length', result.blob.size);
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       if (result.blob.etag) {
@@ -815,7 +834,7 @@ app.post('/api/auth/tech-admin/logout', (req, res) => {
       }
     } catch (err: any) {
       console.error('[Blob Stream Error]:', err);
-      return res.status(500).send(err?.message || 'Error streaming private blob');
+      return res.status(500).send('Error streaming media');
     }
   });
 
@@ -1515,27 +1534,76 @@ ${missingForAi.map((n, i) => `${i + 1}. ${n}`).join('\n')}`;
     }
   });
 
-  // Safe Image Proxy for external CDN assets with anti-hotlinking & Cloudflare/Akamai bypass
-  app.get('/api/proxy-image', async (req, res) => {
+  function validateExternalImageUrl(rawUrl: string): { ok: true; url: URL } | { ok: false; status: number; reason: string } {
+    const trimmed = (rawUrl || '').trim();
+    if (!trimmed || trimmed.length > 2048 || !/^https?:\/\//i.test(trimmed)) {
+      return { ok: false, status: 400, reason: 'Missing or invalid image url' };
+    }
+    let parsed: URL;
     try {
-      const rawUrl = req.query.url as string;
-      if (!rawUrl || typeof rawUrl !== 'string' || !rawUrl.startsWith('http')) {
-        return res.status(400).send('Missing or invalid image url');
+      parsed = new URL(trimmed);
+    } catch {
+      return { ok: false, status: 400, reason: 'Malformed image url' };
+    }
+    if ((parsed.protocol !== 'http:' && parsed.protocol !== 'https:') || parsed.username || parsed.password) {
+      return { ok: false, status: 400, reason: 'Invalid image url protocol' };
+    }
+    if (isInternalOrLoopbackHost(parsed.hostname)) {
+      return { ok: false, status: 403, reason: 'Forbidden: Internal and loopback addresses are blocked' };
+    }
+    return { ok: true, url: parsed };
+  }
+
+  async function fetchValidatedRasterImage(
+    targetUrl: string,
+    headers: Record<string, string>,
+    maxBytes = 5 * 1024 * 1024,
+    maxRedirects = 3
+  ): Promise<{ buffer: Buffer; mime: string } | null> {
+    let currentUrl = targetUrl;
+    for (let hop = 0; hop <= maxRedirects; hop++) {
+      const check = validateExternalImageUrl(currentUrl);
+      if (!('url' in check)) return null;
+
+      const response = await fetch(check.url.toString(), {
+        headers,
+        redirect: 'manual',
+        signal: AbortSignal.timeout(6000),
+      });
+
+      if (response.status >= 300 && response.status < 400) {
+        const location = response.headers.get('location');
+        if (!location) return null;
+        currentUrl = new URL(location, check.url.toString()).toString();
+        continue;
       }
 
-      // SSRF Protection: Reject internal, loopback, and private IP addresses
-      try {
-        const parsed = new URL(rawUrl.trim());
-        const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
-        if (isInternalOrLoopbackHost(host)) {
-          return res.status(403).send('Forbidden: Internal and loopback addresses are blocked');
-        }
-      } catch {
-        return res.status(400).send('Malformed image url');
+      if (!response.ok) return null;
+      const contentLength = Number(response.headers.get('content-length') || '0');
+      if (Number.isFinite(contentLength) && contentLength > maxBytes) return null;
+
+      const arrayBuffer = await response.arrayBuffer();
+      if (arrayBuffer.byteLength <= 600 || arrayBuffer.byteLength > maxBytes) return null;
+
+      const buffer = Buffer.from(arrayBuffer);
+      const magic = detectSafeProxyImage(buffer);
+      if (!magic.valid) return null;
+      return { buffer, mime: magic.mime };
+    }
+    return null;
+  }
+
+  // Safe Image Proxy for external CDN assets with anti-hotlinking & strict SSRF/XSS defense
+  app.get('/api/proxy-image', async (req, res) => {
+    try {
+      const rawUrl = typeof req.query.url === 'string' ? req.query.url : '';
+      const check = validateExternalImageUrl(rawUrl);
+      if (!('url' in check)) {
+        return res.status(check.status).send(check.reason);
       }
 
       // Normalize Sephora / CommerceCloud URLs to public CDN host
-      let cleanUrl = rawUrl.trim().replace(/&amp;/g, '&');
+      let cleanUrl = check.url.toString().replace(/&amp;/g, '&');
       if (cleanUrl.includes('commercecloud.salesforce.com/on/demandware.static/')) {
         cleanUrl = cleanUrl.replace(
           /https?:\/\/[^\/]+\.commercecloud\.salesforce\.com\/on\/demandware\.static\//,
@@ -1545,32 +1613,26 @@ ${missingForAi.map((n, i) => `${i + 1}. ${n}`).join('\n')}`;
         cleanUrl = cleanUrl.replace('www.sephora.ae', 'img-product.sephora.me').replace('sephora.ae', 'img-product.sephora.me');
       }
 
-      // 1. High-speed global CDN bypass (WordPress Photon) for Akamai, Cloudflare, and Sephora hotlinking bypass
-      const photonHosts = ['i0.wp.com', 'i1.wp.com', 'i2.wp.com'];
-      for (const host of photonHosts) {
+      const sendSafeProxiedImage = (img: { buffer: Buffer; mime: string }) => {
+        res.setHeader('Content-Type', img.mime);
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.setHeader('Content-Security-Policy', "default-src 'none'; sandbox");
+        res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        return res.send(img.buffer);
+      };
+
+      const browserHeaders = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'image/avif,image/webp,image/png,image/jpeg,image/gif,*/*;q=0.8',
+      };
+
+      // 1. High-speed global CDN bypass (WordPress Photon)
+      for (const host of ['i0.wp.com', 'i1.wp.com', 'i2.wp.com']) {
         try {
           const stripped = cleanUrl.replace(/^https?:\/\//, '');
-          const photonUrl = `https://${host}/${stripped}`;
-          const pRes = await fetch(photonUrl, {
-            headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-              'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-            },
-            signal: AbortSignal.timeout(6000),
-          });
-
-          if (pRes.ok) {
-            const contentType = pRes.headers.get('content-type') || 'image/jpeg';
-            if (contentType.startsWith('image/')) {
-              const arrayBuffer = await pRes.arrayBuffer();
-              if (arrayBuffer.byteLength > 600) {
-                res.setHeader('Content-Type', contentType);
-                res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
-                res.setHeader('Access-Control-Allow-Origin', '*');
-                return res.send(Buffer.from(arrayBuffer));
-              }
-            }
-          }
+          const img = await fetchValidatedRasterImage(`https://${host}/${stripped}`, browserHeaders);
+          if (img) return sendSafeProxiedImage(img);
         } catch {
           // continue to next fallback
         }
@@ -1579,92 +1641,36 @@ ${missingForAi.map((n, i) => `${i + 1}. ${n}`).join('\n')}`;
       // 1.5. Cloudflare-backed Global Image Proxy (wsrv.nl)
       try {
         const wsrvUrl = `https://wsrv.nl/?url=${encodeURIComponent(cleanUrl)}`;
-        const wRes = await fetch(wsrvUrl, {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-          },
-          signal: AbortSignal.timeout(6000),
-        });
-        if (wRes.ok) {
-          const contentType = wRes.headers.get('content-type') || 'image/jpeg';
-          if (contentType.startsWith('image/')) {
-            const arrayBuffer = await wRes.arrayBuffer();
-            if (arrayBuffer.byteLength > 600) {
-              res.setHeader('Content-Type', contentType);
-              res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
-              res.setHeader('Access-Control-Allow-Origin', '*');
-              return res.send(Buffer.from(arrayBuffer));
-            }
-          }
-        }
+        const img = await fetchValidatedRasterImage(wsrvUrl, browserHeaders);
+        if (img) return sendSafeProxiedImage(img);
       } catch {
         // continue to next fallback
       }
 
-      // 2. Direct fetch with browser headers
+      // 2. Direct fetch with browser headers and validated redirects
       try {
-        const fetchRes = await fetch(cleanUrl, {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-            'Referer': cleanUrl.includes('sephora')
-              ? 'https://www.sephora.me/'
-              : cleanUrl.includes('amazon')
-                ? 'https://www.amazon.ae/'
-                : cleanUrl.includes('thcdn.com') || cleanUrl.includes('lookfantastic')
-                  ? 'https://www.lookfantastic.com/'
-                  : cleanUrl.includes('dsmcdn.com') || cleanUrl.includes('trendyol')
-                    ? 'https://www.trendyol.com/'
-                    : '',
-          },
-          signal: AbortSignal.timeout(6000),
-        });
+        const directHeaders: Record<string, string> = { ...browserHeaders };
+        if (cleanUrl.includes('sephora')) directHeaders['Referer'] = 'https://www.sephora.me/';
+        else if (cleanUrl.includes('amazon')) directHeaders['Referer'] = 'https://www.amazon.ae/';
+        else if (cleanUrl.includes('thcdn.com') || cleanUrl.includes('lookfantastic')) directHeaders['Referer'] = 'https://www.lookfantastic.com/';
+        else if (cleanUrl.includes('dsmcdn.com') || cleanUrl.includes('trendyol')) directHeaders['Referer'] = 'https://www.trendyol.com/';
 
-        if (fetchRes.ok) {
-          const contentType = fetchRes.headers.get('content-type') || 'image/jpeg';
-          if (contentType.startsWith('image/')) {
-            const arrayBuffer = await fetchRes.arrayBuffer();
-            if (arrayBuffer.byteLength > 600) {
-              res.setHeader('Content-Type', contentType);
-              res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
-              res.setHeader('Access-Control-Allow-Origin', '*');
-              return res.send(Buffer.from(arrayBuffer));
-            }
-          }
-        }
-      } catch (directErr) {
-        console.log('[Image Proxy] Direct fetch failed, attempting DuckDuckGo bypass...');
+        const img = await fetchValidatedRasterImage(cleanUrl, directHeaders);
+        if (img) return sendSafeProxiedImage(img);
+      } catch {
+        // continue to DuckDuckGo fallback
       }
 
       // 3. DuckDuckGo unblocked image proxy bypass
       try {
         const ddgUrl = `https://external-content.duckduckgo.com/iu/?u=${encodeURIComponent(cleanUrl)}&f=1&nofb=1`;
-        const ddgRes = await fetch(ddgUrl, {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-            'Accept': 'image/*,*/*',
-          },
-          signal: AbortSignal.timeout(6000),
-        });
-
-        if (ddgRes.ok) {
-          const contentType = ddgRes.headers.get('content-type') || 'image/jpeg';
-          if (contentType.startsWith('image/')) {
-            const arrayBuffer = await ddgRes.arrayBuffer();
-            if (arrayBuffer.byteLength > 600) {
-              res.setHeader('Content-Type', contentType);
-              res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
-              res.setHeader('Access-Control-Allow-Origin', '*');
-              return res.send(Buffer.from(arrayBuffer));
-            }
-          }
-        }
-      } catch (ddgErr) {
-        console.log('[Image Proxy] DDG bypass failed:', ddgErr);
+        const img = await fetchValidatedRasterImage(ddgUrl, browserHeaders);
+        if (img) return sendSafeProxiedImage(img);
+      } catch {
+        // fallback exhausted
       }
 
-      // 4. Return 404 if image could not be loaded
+      // 4. Return 404 if image could not be loaded safely
       return res.status(404).send('Image could not be retrieved');
     } catch {
       return res.status(404).send('Image proxy error');
@@ -1748,13 +1754,14 @@ app.get(['/32472732.txt', `/${encodeURIComponent('۳۲۴۷۲۷۳۲.txt')}`, '/۳
   return res.status(200).send('');
 });
 
-// Global Error Handler to guarantee clean 500 JSON responses instead of crashing the process
+// Global Error Handler to guarantee clean 500 JSON responses without crashing or leaking internal details
 app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error('[Global Server Error]:', err);
   if (!res.headersSent) {
+    const isProd = process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
     res.status(500).json({
       success: false,
-      error: err?.message || 'Internal Server Error',
+      error: isProd ? 'خطای داخلی سرور.' : (err?.message || 'Internal Server Error'),
     });
   }
 });
@@ -1794,8 +1801,8 @@ async function startServer() {
   }
 }
 
-// Start server if not running inside a serverless environment (e.g. Vercel)
-if (!process.env.VERCEL && !process.env.VERCEL_ENV && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+// Start server if not running inside a serverless environment (e.g. Vercel) or test runner
+if (!process.env.VERCEL && !process.env.VERCEL_ENV && !process.env.AWS_LAMBDA_FUNCTION_NAME && process.env.NODE_ENV !== 'test') {
   startServer();
 }
 
