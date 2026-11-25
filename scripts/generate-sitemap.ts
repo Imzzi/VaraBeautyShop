@@ -18,10 +18,20 @@ interface StaticPage {
 const STATIC_PAGES: StaticPage[] = [
   { path: '/', priority: '1.0', changefreq: 'daily' },
   { path: '/shop', priority: '0.9', changefreq: 'daily' },
-  { path: '/calculator', priority: '0.8', changefreq: 'weekly' },
+  { path: '/calculator', priority: '0.9', changefreq: 'weekly' },
+  { path: '/contact', priority: '0.7', changefreq: 'monthly' },
+  { path: '/return-policy', priority: '0.6', changefreq: 'monthly' },
+  { path: '/terms', priority: '0.6', changefreq: 'monthly' },
 ];
 
-// Available skincare categories
+const DEPARTMENTS: { id: string; nameFa: string }[] = [
+  { id: 'skincare', nameFa: 'مراقبت از پوست' },
+  { id: 'body', nameFa: 'مراقبت از بدن' },
+  { id: 'lip', nameFa: 'مراقبت از لب' },
+  { id: 'hair', nameFa: 'مراقبت از مو' },
+];
+
+// Available skincare, hair & makeup categories
 const CATEGORIES: { id: string; nameFa: string; nameEn: string }[] = [
   { id: 'cleanser', nameFa: 'شوینده و پاک‌کننده', nameEn: 'Cleansers' },
   { id: 'anti-aging', nameFa: 'ضد پیری و جوانساز', nameEn: 'Anti-Aging' },
@@ -31,6 +41,7 @@ const CATEGORIES: { id: string; nameFa: string; nameEn: string }[] = [
   { id: 'sunscreen', nameFa: 'ضد آفتاب و محافظت پوست', nameEn: 'Sunscreen' },
   { id: 'brightening', nameFa: 'روشن‌کننده و ضد لک', nameEn: 'Brightening' },
   { id: 'hair-body', nameFa: 'مراقبت مو و بدن', nameEn: 'Hair & Body' },
+  { id: 'makeup', nameFa: 'لوازم آرایشی', nameEn: 'Makeup' },
 ];
 
 // Explicitly excluded private / internal admin paths
@@ -60,7 +71,11 @@ function escapeXml(unsafe: string): string {
 /**
  * Generate full sitemap XML string
  */
-export function generateSitemapXml(products: Pick<Product, 'id' | 'images' | 'nameFa' | 'nameEn' | 'brand'>[] = PRODUCTS, baseUrl: string = BASE_URL): string {
+export function generateSitemapXml(
+  products: Pick<Product, 'id' | 'images' | 'nameFa' | 'nameEn' | 'brand'>[] = PRODUCTS,
+  baseUrl: string = BASE_URL,
+  brands: Array<{ id: string }> = BRANDS_DATA
+): string {
   const today = new Date().toISOString().split('T')[0];
   const urls: string[] = [];
 
@@ -74,7 +89,17 @@ export function generateSitemapXml(products: Pick<Product, 'id' | 'images' | 'na
   </url>`);
   }
 
-  // 2. Product Category Pages
+  // 2. Department Landing Pages
+  for (const dept of DEPARTMENTS) {
+    urls.push(`  <url>
+    <loc>${baseUrl}/shop?department=${encodeURIComponent(dept.id)}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`);
+  }
+
+  // 3. Product Category Pages
   for (const cat of CATEGORIES) {
     urls.push(`  <url>
     <loc>${baseUrl}/shop?category=${encodeURIComponent(cat.id)}</loc>
@@ -84,8 +109,8 @@ export function generateSitemapXml(products: Pick<Product, 'id' | 'images' | 'na
   </url>`);
   }
 
-  // 3. Featured Brand Catalog Pages (from verified brands catalog)
-  const activeBrands = BRANDS_DATA.slice(0, 30);
+  // 4. Featured Brand Catalog Pages
+  const activeBrands = brands.slice(0, 60);
   for (const brand of activeBrands) {
     urls.push(`  <url>
     <loc>${baseUrl}/shop?brand=${encodeURIComponent(brand.id)}</loc>
@@ -144,6 +169,7 @@ export async function runSitemapGenerator() {
   console.log('🔒 Security Rule: Admin CMS dashboard (/admin, /cms) is EXCLUDED.');
 
   let productsToUse: Parameters<typeof generateSitemapXml>[0] = PRODUCTS;
+  let brandsToUse: Array<{ id: string }> = BRANDS_DATA;
   const url = (process.env.TURSO_DATABASE_URL || process.env.TURSO_URL || '').trim();
   if (url) {
     let client: ReturnType<typeof createClient> | undefined;
@@ -156,6 +182,13 @@ export async function runSitemapGenerator() {
         nameEn: String(row.nameEn ?? ''), brand: String(row.brand ?? ''),
         images: row.images ? JSON.parse(String(row.images)) : [],
       }));
+      const brandsRow = await client.execute({ sql: 'SELECT value FROM settings WHERE key = ?', args: ['brands'] });
+      if (brandsRow.rows.length && brandsRow.rows[0].value) {
+        const parsedBrands = JSON.parse(String(brandsRow.rows[0].value));
+        if (Array.isArray(parsedBrands) && parsedBrands.length > 0) {
+          brandsToUse = parsedBrands;
+        }
+      }
     } catch {
       console.warn('Sitemap catalog read failed. Using the bundled catalog.');
     } finally {
@@ -163,7 +196,7 @@ export async function runSitemapGenerator() {
     }
   }
 
-  const xml = generateSitemapXml(productsToUse, BASE_URL);
+  const xml = generateSitemapXml(productsToUse, BASE_URL, brandsToUse);
 
   // Write to public/sitemap.xml
   const publicDir = path.resolve(process.cwd(), 'public');

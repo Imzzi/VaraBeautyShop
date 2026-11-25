@@ -38,6 +38,16 @@ const LegalPoliciesPage = lazy(() => import('./components/LegalPoliciesPage').th
 import { POLICY_DOCUMENTS } from './data/policies';
 
 import { PRODUCTS as defaultProducts } from './data/products';
+import { getLocalBrands } from './lib/brandsManager';
+import {
+  buildCalculatorSeo,
+  buildOrganizationSchema,
+  buildProductSeo,
+  buildShopUrl,
+  buildWebSiteSchema,
+  parseShopFilterFromSearch,
+  resolveShopSeo,
+} from './lib/seoMetadata';
 import { Product, ProductSize, ProductVariant, CartItem, Order, UserProfile, ShopFilterPreset } from './types';
 import { getAdminPath, isAdminRoute } from './utils/adminRouteConfig';
 import {
@@ -80,6 +90,18 @@ function getProductRouteId() {
     return decodeURIComponent(match[1]);
   } catch {
     return '';
+  }
+}
+
+function readSsrInitialProduct(routeId: string): Product | null {
+  if (typeof document === 'undefined' || !routeId) return null;
+  try {
+    const el = document.getElementById('vara-initial-product');
+    if (!el?.textContent) return null;
+    const parsed = JSON.parse(el.textContent) as Product;
+    return parsed && parsed.id === routeId ? parsed : null;
+  } catch {
+    return null;
   }
 }
 
@@ -189,14 +211,26 @@ export default function App() {
 
   const [activeSection, setActiveSection] = useState<'home' | 'shop' | 'botanical' | 'about' | 'social' | 'product-detail' | 'admin' | 'profile' | 'calculator' | 'order-detail' | 'contact' | 'return-policy' | 'terms'>(getInitialSection);
   const [selectedOrderIdentifier, setSelectedOrderIdentifier] = useState<string>(getInitialOrderIdentifier);
-  const [searchQuery, setSearchQuery] = useState('');
+  const initialShopFilter = useMemo(
+    () => (typeof window !== 'undefined' ? parseShopFilterFromSearch(window.location.search) : null),
+    []
+  );
+  const [searchQuery, setSearchQuery] = useState(() => initialShopFilter?.searchQuery || '');
   const isAdminCatalog = activeSection === 'admin';
   useEffect(() => subscribeToProducts(setCatalog, isAdminCatalog), [isAdminCatalog]);
 
-  const [shopFilterPreset, setShopFilterPreset] = useState<ShopFilterPreset | null>(null);
+  // Remove SSR JSON-LD once client Helmet manages structured data to avoid duplicate graphs
+  useEffect(() => {
+    const ssrSchema = document.getElementById('vara-ssr-jsonld');
+    if (ssrSchema) ssrSchema.remove();
+  }, []);
+
+  const [shopFilterPreset, setShopFilterPreset] = useState<ShopFilterPreset | null>(initialShopFilter);
   const [productRouteId, setProductRouteId] = useState(getProductRouteId);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(() =>
-    defaultProducts.find((product) => product.id === productRouteId) ?? null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(() => {
+    const routeId = getProductRouteId();
+    return readSsrInitialProduct(routeId) ?? defaultProducts.find((product) => product.id === routeId) ?? null;
+  });
   const [productLoadError, setProductLoadError] = useState('');
   const [productRetry, setProductRetry] = useState(0);
   const [calculatorUrl, setCalculatorUrl] = useState('');
@@ -235,6 +269,9 @@ export default function App() {
         setProductLoadError('');
         setActiveSection('product-detail');
       } else if (path === CHECKOUT_PAYMENT_PATH || path === '/shop' || hash === '#/shop' || hash === '#shop') {
+        const parsedPreset = parseShopFilterFromSearch(window.location.search);
+        setShopFilterPreset(parsedPreset ? { ...parsedPreset, timestamp: Date.now() } : null);
+        setSearchQuery(parsedPreset?.searchQuery || '');
         setActiveSection('shop');
       } else if (path === '/' && !hash) {
         setActiveSection('home');
@@ -303,8 +340,20 @@ export default function App() {
       } else if (section === 'home') {
         window.history.pushState(null, '', '/');
       } else if (section === 'shop') {
-        window.history.pushState(null, '', '/shop');
+        window.history.pushState(null, '', buildShopUrl(shopFilterPreset));
       }
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const navigateToShopWithPreset = (preset: ShopFilterPreset) => {
+    loadShopPage().catch(() => {});
+    const nextPreset = { ...preset, timestamp: Date.now() };
+    setShopFilterPreset(nextPreset);
+    setSearchQuery(preset.searchQuery || '');
+    setActiveSection('shop');
+    if (typeof window !== 'undefined') {
+      window.history.pushState(null, '', buildShopUrl(nextPreset));
     }
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
@@ -685,100 +734,63 @@ export default function App() {
   // Dynamic SEO Page Title, Meta Tags & Structured Data per activeSection
   const seoData = useMemo(() => {
     const origin = typeof window !== 'undefined' ? window.location.origin : 'https://varabeauty.ir';
-    let title = 'Vara Beauty - ورا بیوتی | فروشگاه تخصصی مراقبت پوست و زیبایی لوکس';
-    let description = 'فروشگاه تخصصی محصولات مراقبت از پوست، سرم‌های درمانی، ضدآفتاب و روتین‌های زیبایی با اصالت تضمین‌شده و مشاوره هوشمند زیبایی.';
+    let title = 'ورا بیوتی | خرید محصولات مراقبت پوست، آرایشی و مو اورجینال (Vara Beauty)';
+    let description = 'فروشگاه تخصصی محصولات مراقبت از پوست، سرم‌های درمانی، ضدآفتاب، لوازم آرایشی و مراقبت مو اورجینال با ضمانت اصالت ۱۰۰٪، قیمت روز و مشاوره هوشمند در ورا بیوتی.';
     let canonical: string | null = `${origin}/`;
     let ogType = 'website';
     let ogImage = `${origin}/og-image.jpg`;
     let schemaJson: any = null;
     let noIndex = false;
 
-    // Common Organization Schema
-    const organizationSchema = {
-      '@type': 'Organization',
-      '@id': `${origin}/#organization`,
-      name: 'Vara Beauty - ورا بیوتی',
-      alternateName: 'Vara Luxury Skincare',
-      url: origin,
-      logo: `${origin}/vara-logo.svg`,
-      description: 'فروشگاه تخصصی مراقبت پوست و زیبایی لوکس ورا بیوتی با محصولات اصل و مشاوره تخصصی',
-      contactPoint: {
-        '@type': 'ContactPoint',
-        telephone: '+98-903-794-3125',
-        contactType: 'customer service',
-        availableLanguage: ['Persian', 'English'],
-      },
-    };
+    const organizationSchema = buildOrganizationSchema(origin);
 
     let breadcrumbs: Array<{ name: string; url: string }> = [
       { name: 'صفحه اصلی', url: `${origin}/` },
     ];
 
-    let productSchema: any = null;
+    let extraSchemas: any[] = [];
 
-    if (activeSection === 'shop') {
-      title = 'Vara Beauty - Shop | فروشگاه و کاتالوگ محصولات تخصصی پوستی';
-      description = 'مشاهده و خرید آنلاین انواع محصولات مراقبت از پوست، شوینده‌ها، سرم‌ها، ضدآفتاب و کرم‌های آبرسان معتبر در فروشگاه ورا بیوتی.';
-      canonical = `${origin}/shop`;
+    if (activeSection === 'home') {
+      extraSchemas.push(buildWebSiteSchema(origin));
+    } else if (activeSection === 'shop') {
+      const shopSeo = resolveShopSeo(shopFilterPreset, getLocalBrands(), origin);
+      title = shopSeo.title;
+      description = shopSeo.description;
+      canonical = shopSeo.canonical;
       breadcrumbs.push({ name: 'فروشگاه محصولات', url: `${origin}/shop` });
-    } else if (activeSection === 'product-detail' && selectedProduct) {
-      title = `Vara Beauty - Product Detail | ${selectedProduct.nameFa} (${selectedProduct.brand || 'VARA'})`;
-      description = selectedProduct.descriptionFa 
-        ? `${selectedProduct.descriptionFa.slice(0, 150)}...`
-        : `خرید آنلاین ${selectedProduct.nameFa} از برند ${selectedProduct.brand} با ضمانت کیفیت و اصالت ۱۰۰٪ در ورا بیوتی.`;
-      canonical = `${origin}/product/${selectedProduct.id}`;
-      ogType = 'product';
-      if (selectedProduct.images?.[0]) {
-        ogImage = selectedProduct.images[0];
+      if (shopSeo.canonical !== `${origin}/shop`) {
+        breadcrumbs.push({ name: shopSeo.breadcrumbLabel, url: shopSeo.canonical });
       }
-      const price = selectedProduct.price || 0;
+      extraSchemas.push({
+        '@type': 'CollectionPage',
+        name: shopSeo.h1,
+        description: shopSeo.description,
+        url: shopSeo.canonical,
+      });
+    } else if (activeSection === 'product-detail' && selectedProduct) {
+      const productSeo = buildProductSeo(selectedProduct, origin);
+      title = productSeo.title;
+      description = productSeo.description;
+      canonical = productSeo.canonical;
+      ogType = 'product';
+      ogImage = productSeo.ogImage;
       breadcrumbs.push({ name: 'فروشگاه', url: `${origin}/shop` });
       breadcrumbs.push({ name: selectedProduct.nameFa, url: canonical });
-
-      productSchema = {
-        '@type': 'Product',
-        '@id': `${canonical}#product`,
-        name: selectedProduct.nameFa,
-        alternateName: selectedProduct.nameEn,
-        image: selectedProduct.images || [ogImage],
-        description: selectedProduct.descriptionFa || description,
-        sku: selectedProduct.id,
-        brand: {
-          '@type': 'Brand',
-          name: selectedProduct.brand || 'Vara Beauty',
-        },
-        offers: {
-          '@type': 'Offer',
-          url: canonical,
-          priceCurrency: 'IRT',
-          price: price,
-          priceValidUntil: '2027-12-31',
-          availability: selectedProduct.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-          seller: {
-            '@id': `${origin}/#organization`,
-          },
-        },
-        ...(selectedProduct.rating
-          ? {
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: selectedProduct.rating,
-                reviewCount: selectedProduct.reviewsCount || 15,
-              },
-            }
-          : {}),
-      };
+      extraSchemas.push(productSeo.productSchema);
     } else if (activeSection === 'profile') {
-      title = 'Vara Beauty - Profile | حساب کاربری و پیگیری سفارش‌ها';
-      description = 'داشبورد کاربری ورا بیوتی، پیگیری وضعیت سفارش‌ها، مدیریت اطلاعات شخصی و مشاهده لیست علاقه‌مندی‌ها.';
-      canonical = `${origin}/profile`;
-      breadcrumbs.push({ name: 'حساب کاربری', url: `${origin}/profile` });
+      title = 'Vara Beauty - حساب کاربری و پیگیری سفارش‌ها';
+      description = 'داشبورد کاربری ورا بیوتی، پیگیری وضعیت سفارش‌ها و مشاهده لیست علاقه‌مندی‌ها.';
+      canonical = null;
+      noIndex = true;
     } else if (activeSection === 'calculator') {
-      title = 'Vara Beauty - Price Calculator | محاسبه‌گر قیمت خرید خارجی';
-      description = 'محاسبه آنی قیمت تمام‌شده محصولات زیبایی و آرایشی از سفورا، آمازون امارات، لوک‌فنتستیک (Lookfantastic) و ترندیول (Trendyol) با نرخ لحظه‌ای ارز.';
-      canonical = `${origin}/calculator`;
+      const calcSeo = buildCalculatorSeo(origin);
+      title = calcSeo.title;
+      description = calcSeo.description;
+      canonical = calcSeo.canonical;
+      breadcrumbs.push({ name: 'محاسبه‌گر قیمت خرید خارجی', url: calcSeo.canonical });
+      extraSchemas.push(calcSeo.faqSchema);
     } else if (activeSection === 'contact') {
-      title = 'Vara Beauty - تماس با ما | پشتیبانی و مشاوره تخصصی ورا بیوتی';
+      title = 'تماس با ما | پشتیبانی و مشاوره تخصصی ورا بیوتی';
       description = 'ارتباط مستقیم با پشتیبانی ورا بیوتی، مشاوره تخصصی خرید محصولات مراقبت از پوست از امارات و پیگیری سفارشات.';
       canonical = `${origin}/contact`;
       breadcrumbs.push({ name: 'تماس با ما', url: `${origin}/contact` });
@@ -801,8 +813,6 @@ export default function App() {
       noIndex = true;
       schemaJson = null;
     } else if (activeSection === 'admin') {
-      // SECURITY: Admin panel must remain strictly hidden from search engines and casual crawlers.
-      // Do NOT expose admin titles, descriptions, canonical admin URLs, or schema.org structured data.
       title = 'Vara Beauty - ورا بیوتی';
       description = 'فروشگاه تخصصی محصولات مراقبت از پوست و زیبایی لوکس';
       canonical = null;
@@ -821,19 +831,14 @@ export default function App() {
         })),
       };
 
-      const graph = [organizationSchema, breadcrumbListSchema];
-      if (productSchema) {
-        graph.push(productSchema);
-      }
-
       schemaJson = {
         '@context': 'https://schema.org',
-        '@graph': graph,
+        '@graph': [organizationSchema, breadcrumbListSchema, ...extraSchemas],
       };
     }
 
     return { title, description, canonical, ogType, ogImage, schemaJson, noIndex };
-  }, [activeSection, selectedProduct]);
+  }, [activeSection, selectedProduct, shopFilterPreset, selectedOrderIdentifier]);
 
   return (
     <HelmetProvider>
@@ -898,15 +903,10 @@ export default function App() {
           setSearchQuery={(q) => {
             setSearchQuery(q);
             if (q) {
-              setShopFilterPreset({ timestamp: Date.now() });
-              navigateToSection('shop');
+              navigateToShopWithPreset({ searchQuery: q });
             }
           }}
-          onNavigateToShopWithFilter={(preset) => {
-            setShopFilterPreset({ ...preset, timestamp: Date.now() });
-            setSearchQuery(preset.searchQuery || '');
-            navigateToSection('shop');
-          }}
+          onNavigateToShopWithFilter={navigateToShopWithPreset}
           activeSection={activeSection}
           setActiveSection={(sec) => navigateToSection(sec as any)}
         />
@@ -1119,11 +1119,7 @@ export default function App() {
           onNavigateToContact={() => navigateToSection('contact')}
           onNavigateToReturnPolicy={() => navigateToSection('return-policy')}
           onNavigateToTerms={() => navigateToSection('terms')}
-          onNavigateToShopWithFilter={(preset) => {
-            setShopFilterPreset(preset);
-            setSearchQuery(preset.searchQuery || '');
-            navigateToSection('shop');
-          }}
+          onNavigateToShopWithFilter={navigateToShopWithPreset}
         />
       )}
 

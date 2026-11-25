@@ -14,6 +14,7 @@ import { UserProfile, ShopFilterPreset } from '../types';
 import { VaraLogo } from './VaraLogo';
 import { BRANDS_DATA, BrandItem } from '../data/brands';
 import { subscribeToBrands, getLocalBrands } from '../lib/brandsManager';
+import { buildShopUrl } from '../lib/seoMetadata';
 
 interface HeaderProps {
   cartItemCount: number;
@@ -169,6 +170,21 @@ export const Header: React.FC<HeaderProps> = ({
     setActiveDropdown(prev => (prev === name ? null : name));
   };
 
+  const isPlainLeftClick = (e: React.MouseEvent) =>
+    !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0);
+
+  const onFilterLinkClick = (e: React.MouseEvent, preset: ShopFilterPreset) => {
+    if (!isPlainLeftClick(e)) return;
+    e.preventDefault();
+    handleFilterClick(preset);
+  };
+
+  const onNavLinkClick = (e: React.MouseEvent, sectionId: string, filterTerm?: string) => {
+    if (!isPlainLeftClick(e)) return;
+    e.preventDefault();
+    handleNavClick(sectionId, filterTerm);
+  };
+
   return (
     <header ref={headerRef} className="vara-header sticky top-0 z-50 w-full bg-vara-canvas/95 backdrop-blur-md border-b border-vara-line transition-all">
       {/* Row 1: Top Brand Bar with Actions */}
@@ -186,8 +202,9 @@ export const Header: React.FC<HeaderProps> = ({
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
-          <button 
-            onClick={() => handleNavClick('home')}
+          <a 
+            href="/"
+            onClick={(e) => onNavLinkClick(e, 'home')}
             className="group flex items-center focus:outline-none cursor-pointer hover:opacity-85 transition-opacity"
             title="صفحه اصلی ورا بیوتی شاپ - VARA BEAUTY"
           >
@@ -195,7 +212,7 @@ export const Header: React.FC<HeaderProps> = ({
               size="md"
               subtitleFa="ورا بیوتی شاپ"
             />
-          </button>
+          </a>
         </div>
 
         {/* Center Search Bar with Blush Tinted Input */}
@@ -307,8 +324,9 @@ export const Header: React.FC<HeaderProps> = ({
               onMouseEnter={() => handleDropdownMouseEnter('shop')}
               onMouseLeave={handleDropdownMouseLeave}
             >
-              <button
-                onClick={() => handleNavClick('shop')}
+              <a
+                href="/shop"
+                onClick={(e) => onNavLinkClick(e, 'shop')}
                 className={`flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs sm:text-[13px] whitespace-nowrap transition-all duration-150 cursor-pointer ${
                   activeDropdown === 'shop' || activeSection === 'shop'
                     ? 'bg-vara-rose text-white font-semibold shadow-shop-pill'
@@ -317,7 +335,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <span className="font-semibold">فروشگاه</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === 'shop' || activeSection === 'shop' ? 'rotate-180 text-white' : 'text-vara-muted'}`} />
-              </button>
+              </a>
 
               {/* Mega Menu Overlay */}
               {activeDropdown === 'shop' && (
@@ -331,100 +349,100 @@ export const Header: React.FC<HeaderProps> = ({
                     {/* مراقبت از پوست */}
                     <div className="space-y-2">
                       <h4>
-                        <button
-                          type="button"
-                          onClick={() => handleFilterClick({ department: 'skincare' })}
+                        <a
+                          href={buildShopUrl({ department: 'skincare' })}
+                          onClick={(e) => onFilterLinkClick(e, { department: 'skincare' })}
                           className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
                         >
                           مراقبت از پوست
-                        </button>
+                        </a>
                       </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
-                        <li><button onClick={() => handleNavClick('shop', 'پاک کننده')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شوینده و پاک‌کننده صورت</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'تونر')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">تونر و اسنس</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'سرم')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">سرم و محصولات تخصصی</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'مرطوب کننده')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">مرطوب‌کننده و آبرسان</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'دور چشم')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">مراقبت از دور چشم</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'ماسک')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ماسک و لایه‌بردار</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'ضد آفتاب')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ضدآفتاب کلینیکال</button></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'پاک کننده' })} onClick={(e) => onNavLinkClick(e, 'shop', 'پاک کننده')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شوینده و پاک‌کننده صورت</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'تونر' })} onClick={(e) => onNavLinkClick(e, 'shop', 'تونر')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">تونر و اسنس</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'سرم' })} onClick={(e) => onNavLinkClick(e, 'shop', 'سرم')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">سرم و محصولات تخصصی</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'مرطوب کننده' })} onClick={(e) => onNavLinkClick(e, 'shop', 'مرطوب کننده')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">مرطوب‌کننده و آبرسان</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'دور چشم' })} onClick={(e) => onNavLinkClick(e, 'shop', 'دور چشم')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">مراقبت از دور چشم</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'ماسک' })} onClick={(e) => onNavLinkClick(e, 'shop', 'ماسک')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ماسک و لایه‌بردار</a></li>
+                        <li><a href={buildShopUrl({ category: 'sunscreen' })} onClick={(e) => onFilterLinkClick(e, { category: 'sunscreen' })} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ضدآفتاب کلینیکال</a></li>
                       </ul>
                     </div>
 
                     {/* مراقبت از بدن */}
                     <div className="space-y-2">
                       <h4>
-                        <button
-                          type="button"
-                          onClick={() => handleFilterClick({ department: 'body' })}
+                        <a
+                          href={buildShopUrl({ department: 'body' })}
+                          onClick={(e) => onFilterLinkClick(e, { department: 'body' })}
                           className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
                         >
                           مراقبت از بدن
-                        </button>
+                        </a>
                       </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
-                        <li><button onClick={() => handleNavClick('shop', 'شوینده بدن')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شوینده و ژل بدن</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'لوسیون')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">لوسیون و کره بدن</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'اسکراب بدن')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">اسکراب بدن</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'دست و پا')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">مراقبت دست و پا</button></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'شوینده بدن' })} onClick={(e) => onNavLinkClick(e, 'shop', 'شوینده بدن')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شوینده و ژل بدن</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'لوسیون' })} onClick={(e) => onNavLinkClick(e, 'shop', 'لوسیون')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">لوسیون و کره بدن</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'اسکراب بدن' })} onClick={(e) => onNavLinkClick(e, 'shop', 'اسکراب بدن')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">اسکراب بدن</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'دست و پا' })} onClick={(e) => onNavLinkClick(e, 'shop', 'دست و پا')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">مراقبت دست و پا</a></li>
                       </ul>
                     </div>
 
                     {/* مراقبت از لب */}
                     <div className="space-y-2">
                       <h4>
-                        <button
-                          type="button"
-                          onClick={() => handleFilterClick({ department: 'lip' })}
+                        <a
+                          href={buildShopUrl({ department: 'lip' })}
+                          onClick={(e) => onFilterLinkClick(e, { department: 'lip' })}
                           className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
                         >
                           مراقبت از لب
-                        </button>
+                        </a>
                       </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
-                        <li><button onClick={() => handleNavClick('shop', 'بالم لب')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">بالم لب</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'اسکراب لب')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">اسکراب لب</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'ماسک لب')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ماسک لب</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'روغن لب')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">روغن لب</button></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'بالم لب' })} onClick={(e) => onNavLinkClick(e, 'shop', 'بالم لب')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">بالم لب</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'اسکراب لب' })} onClick={(e) => onNavLinkClick(e, 'shop', 'اسکراب لب')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">اسکراب لب</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'ماسک لب' })} onClick={(e) => onNavLinkClick(e, 'shop', 'ماسک لب')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ماسک لب</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'روغن لب' })} onClick={(e) => onNavLinkClick(e, 'shop', 'روغن لب')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">روغن لب</a></li>
                       </ul>
                     </div>
 
                     {/* مراقبت از مو */}
                     <div className="space-y-2">
                       <h4>
-                        <button
-                          type="button"
-                          onClick={() => handleFilterClick({ department: 'hair' })}
+                        <a
+                          href={buildShopUrl({ department: 'hair' })}
+                          onClick={(e) => onFilterLinkClick(e, { department: 'hair' })}
                           className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
                         >
                           مراقبت از مو
-                        </button>
+                        </a>
                       </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
-                        <li><button onClick={() => handleNavClick('shop', 'شامپو')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شامپو</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'نرم کننده')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">نرم‌کننده</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'ماسک مو')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ماسک مو</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'سرم مو')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">سرم و روغن مو</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'درمان مو')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">محصولات مراقبت و درمان</button></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'شامپو' })} onClick={(e) => onNavLinkClick(e, 'shop', 'شامپو')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">شامپو</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'نرم کننده' })} onClick={(e) => onNavLinkClick(e, 'shop', 'نرم کننده')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">نرم‌کننده</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'ماسک مو' })} onClick={(e) => onNavLinkClick(e, 'shop', 'ماسک مو')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ماسک مو</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'سرم مو' })} onClick={(e) => onNavLinkClick(e, 'shop', 'سرم مو')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">سرم و روغن مو</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'درمان مو' })} onClick={(e) => onNavLinkClick(e, 'shop', 'درمان مو')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">محصولات مراقبت و درمان</a></li>
                       </ul>
                     </div>
 
                     {/* آرایشی */}
                     <div className="space-y-2">
                       <h4>
-                        <button
-                          type="button"
-                          onClick={() => handleFilterClick({ category: 'makeup' })}
+                        <a
+                          href={buildShopUrl({ category: 'makeup' })}
+                          onClick={(e) => onFilterLinkClick(e, { category: 'makeup' })}
                           className="w-full text-right font-semibold text-[13px] text-vara-rose-ink hover:text-vara-rose pb-1.5 border-b border-vara-line hover:border-vara-rose transition-colors cursor-pointer block"
                         >
                           آرایشی
-                        </button>
+                        </a>
                       </h4>
                       <ul className="space-y-0.5 text-[12.5px] text-vara-muted-strong">
-                        <li><button onClick={() => handleNavClick('shop', 'آرایش صورت')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">آرایش صورت</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'آرایش چشم')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">آرایش چشم</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'آرایش لب')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">آرایش لب</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'ابرو')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">محصولات ابرو</button></li>
-                        <li><button onClick={() => handleNavClick('shop', 'ابزار آرایشی')} className="w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ابزار آرایشی</button></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'آرایش صورت' })} onClick={(e) => onNavLinkClick(e, 'shop', 'آرایش صورت')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">آرایش صورت</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'آرایش چشم' })} onClick={(e) => onNavLinkClick(e, 'shop', 'آرایش چشم')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">آرایش چشم</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'آرایش لب' })} onClick={(e) => onNavLinkClick(e, 'shop', 'آرایش لب')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">آرایش لب</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'ابرو' })} onClick={(e) => onNavLinkClick(e, 'shop', 'ابرو')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">محصولات ابرو</a></li>
+                        <li><a href={buildShopUrl({ searchQuery: 'ابزار آرایشی' })} onClick={(e) => onNavLinkClick(e, 'shop', 'ابزار آرایشی')} className="block w-full text-right px-2 py-1.5 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink transition-colors cursor-pointer">ابزار آرایشی</a></li>
                       </ul>
                     </div>
 
@@ -432,21 +450,22 @@ export const Header: React.FC<HeaderProps> = ({
                     <div className="bg-vara-surface p-4 rounded-xl border border-vara-line flex flex-col justify-between">
                       <div>
                         <h4 className="mb-1">
-                          <button
-                            type="button"
-                            onClick={() => handleFilterClick({ productType: 'device' })}
-                            className="font-semibold text-[13px] text-vara-ink hover:text-vara-rose-ink transition-colors cursor-pointer text-right"
+                          <a
+                            href={buildShopUrl({ productType: 'device' })}
+                            onClick={(e) => onFilterLinkClick(e, { productType: 'device' })}
+                            className="font-semibold text-[13px] text-vara-ink hover:text-vara-rose-ink transition-colors cursor-pointer text-right block"
                           >
                             ابزارهای زیبایی
-                          </button>
+                          </a>
                         </h4>
                         <p className="text-[11.5px] text-vara-muted mb-3.5 leading-relaxed">تجهیزات مراقبت خانگی و ماساژورهای تخصصی</p>
-                        <button 
-                          onClick={() => handleFilterClick({ productType: 'device' })}
-                          className="w-full text-center py-2 px-3 bg-vara-rose hover:bg-vara-rose-hover text-white text-xs rounded-full font-medium cursor-pointer transition-all mt-1 shadow-shop-pill"
+                        <a 
+                          href={buildShopUrl({ productType: 'device' })}
+                          onClick={(e) => onFilterLinkClick(e, { productType: 'device' })}
+                          className="block w-full text-center py-2 px-3 bg-vara-rose hover:bg-vara-rose-hover text-white text-xs rounded-full font-medium cursor-pointer transition-all mt-1 shadow-shop-pill"
                         >
                           مشاهده کالکشن
-                        </button>
+                        </a>
                       </div>
                     </div>
 
@@ -481,14 +500,14 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <div className="w-60 bg-white rounded-xl shadow-shop-elevated border border-vara-line p-2.5 text-right">
                     <div className="space-y-0.5">
-                      <button onClick={() => handleNavClick('shop', 'چروک')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">چروک و خطوط ریز</button>
-                      <button onClick={() => handleNavClick('shop', 'لک')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">لک و تیرگی</button>
-                      <button onClick={() => handleNavClick('shop', 'خشکی')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">خشکی و کم‌آبی</button>
-                      <button onClick={() => handleNavClick('shop', 'جوش')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">جوش و جای جوش</button>
-                      <button onClick={() => handleNavClick('shop', 'حساسیت')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">حساسیت و قرمزی</button>
-                      <button onClick={() => handleNavClick('shop', 'کدری')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">کدری و افزایش شفافیت</button>
-                      <button onClick={() => handleNavClick('shop', 'منافذ')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">منافذ و کنترل چربی</button>
-                      <button onClick={() => handleNavClick('shop', 'سرسیاه')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">کمدون سرسیاه و زیرپوستی</button>
+                      <a href={buildShopUrl({ category: 'anti-aging' })} onClick={(e) => onFilterLinkClick(e, { category: 'anti-aging' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">چروک و خطوط ریز</a>
+                      <a href={buildShopUrl({ category: 'brightening' })} onClick={(e) => onFilterLinkClick(e, { category: 'brightening' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">لک و تیرگی</a>
+                      <a href={buildShopUrl({ category: 'hydration' })} onClick={(e) => onFilterLinkClick(e, { category: 'hydration' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">خشکی و کم‌آبی</a>
+                      <a href={buildShopUrl({ category: 'acne-blemishes' })} onClick={(e) => onFilterLinkClick(e, { category: 'acne-blemishes' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">جوش و جای جوش</a>
+                      <a href={buildShopUrl({ category: 'sensitive-skin' })} onClick={(e) => onFilterLinkClick(e, { category: 'sensitive-skin' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">حساسیت و قرمزی</a>
+                      <a href={buildShopUrl({ searchQuery: 'کدری' })} onClick={(e) => onNavLinkClick(e, 'shop', 'کدری')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">کدری و افزایش شفافیت</a>
+                      <a href={buildShopUrl({ searchQuery: 'منافذ' })} onClick={(e) => onNavLinkClick(e, 'shop', 'منافذ')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">منافذ و کنترل چربی</a>
+                      <a href={buildShopUrl({ searchQuery: 'سرسیاه' })} onClick={(e) => onNavLinkClick(e, 'shop', 'سرسیاه')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">کمدون سرسیاه و زیرپوستی</a>
                     </div>
                   </div>
                 </div>
@@ -521,11 +540,11 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <div className="w-56 bg-white rounded-xl shadow-shop-elevated border border-vara-line p-2.5 text-right">
                     <div className="space-y-0.5">
-                      <button onClick={() => handleNavClick('shop', 'پوست خشک')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست خشک</button>
-                      <button onClick={() => handleNavClick('shop', 'پوست چرب')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست چرب</button>
-                      <button onClick={() => handleNavClick('shop', 'پوست مختلط')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست مختلط</button>
-                      <button onClick={() => handleNavClick('shop', 'پوست نرمال')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست نرمال</button>
-                      <button onClick={() => handleNavClick('shop', 'پوست حساس')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست حساس</button>
+                      <a href={buildShopUrl({ searchQuery: 'پوست خشک' })} onClick={(e) => onNavLinkClick(e, 'shop', 'پوست خشک')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست خشک</a>
+                      <a href={buildShopUrl({ searchQuery: 'پوست چرب' })} onClick={(e) => onNavLinkClick(e, 'shop', 'پوست چرب')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست چرب</a>
+                      <a href={buildShopUrl({ searchQuery: 'پوست مختلط' })} onClick={(e) => onNavLinkClick(e, 'shop', 'پوست مختلط')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست مختلط</a>
+                      <a href={buildShopUrl({ searchQuery: 'پوست نرمال' })} onClick={(e) => onNavLinkClick(e, 'shop', 'پوست نرمال')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست نرمال</a>
+                      <a href={buildShopUrl({ searchQuery: 'پوست حساس' })} onClick={(e) => onNavLinkClick(e, 'shop', 'پوست حساس')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پوست حساس</a>
                     </div>
                   </div>
                 </div>
@@ -558,16 +577,16 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <div className="w-60 bg-white rounded-xl shadow-shop-elevated border border-vara-line p-2.5 text-right">
                     <div className="space-y-0.5 max-h-[360px] overflow-y-auto no-scrollbar">
-                      <button onClick={() => handleNavClick('shop', 'رتینول')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">رتینول (Retinol)</button>
-                      <button onClick={() => handleNavClick('shop', 'ویتامین C')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">ویتامین C</button>
-                      <button onClick={() => handleNavClick('shop', 'نیاسینامید')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">نیاسینامید (Niacinamide)</button>
-                      <button onClick={() => handleNavClick('shop', 'هیالورونیک اسید')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">هیالورونیک اسید</button>
-                      <button onClick={() => handleNavClick('shop', 'پپتید')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پپتیدها (Peptides)</button>
-                      <button onClick={() => handleNavClick('shop', 'سرامید')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">سرامیدها (Ceramides)</button>
-                      <button onClick={() => handleNavClick('shop', 'AHA')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">AHA و BHA</button>
-                      <button onClick={() => handleNavClick('shop', 'سالیسیلیک اسید')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">سالیسیلیک اسید</button>
-                      <button onClick={() => handleNavClick('shop', 'آزلائیک اسید')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">آزلائیک اسید</button>
-                      <button onClick={() => handleNavClick('shop', 'ترانگزامیک اسید')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">ترانگزامیک اسید</button>
+                      <a href={buildShopUrl({ searchQuery: 'رتینول' })} onClick={(e) => onNavLinkClick(e, 'shop', 'رتینول')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">رتینول (Retinol)</a>
+                      <a href={buildShopUrl({ searchQuery: 'ویتامین C' })} onClick={(e) => onNavLinkClick(e, 'shop', 'ویتامین C')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">ویتامین C</a>
+                      <a href={buildShopUrl({ searchQuery: 'نیاسینامید' })} onClick={(e) => onNavLinkClick(e, 'shop', 'نیاسینامید')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">نیاسینامید (Niacinamide)</a>
+                      <a href={buildShopUrl({ searchQuery: 'هیالورونیک اسید' })} onClick={(e) => onNavLinkClick(e, 'shop', 'هیالورونیک اسید')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">هیالورونیک اسید</a>
+                      <a href={buildShopUrl({ searchQuery: 'پپتید' })} onClick={(e) => onNavLinkClick(e, 'shop', 'پپتید')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">پپتیدها (Peptides)</a>
+                      <a href={buildShopUrl({ searchQuery: 'سرامید' })} onClick={(e) => onNavLinkClick(e, 'shop', 'سرامید')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">سرامیدها (Ceramides)</a>
+                      <a href={buildShopUrl({ searchQuery: 'AHA' })} onClick={(e) => onNavLinkClick(e, 'shop', 'AHA')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">AHA و BHA</a>
+                      <a href={buildShopUrl({ searchQuery: 'سالیسیلیک اسید' })} onClick={(e) => onNavLinkClick(e, 'shop', 'سالیسیلیک اسید')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">سالیسیلیک اسید</a>
+                      <a href={buildShopUrl({ searchQuery: 'آزلائیک اسید' })} onClick={(e) => onNavLinkClick(e, 'shop', 'آزلائیک اسید')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">آزلائیک اسید</a>
+                      <a href={buildShopUrl({ searchQuery: 'ترانگزامیک اسید' })} onClick={(e) => onNavLinkClick(e, 'shop', 'ترانگزامیک اسید')} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">ترانگزامیک اسید</a>
                     </div>
                   </div>
                 </div>
@@ -600,13 +619,13 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <div className="w-64 bg-white rounded-xl shadow-shop-elevated border border-vara-line p-2.5 text-right">
                     <div className="space-y-0.5">
-                      <button onClick={() => handleNavClick('shop', 'آبرسانی')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین آبرسانی</button>
-                      <button onClick={() => handleNavClick('shop', 'روشن کننده')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین روشن‌کننده</button>
-                      <button onClick={() => handleNavClick('shop', 'ضدپیری')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین ضدپیری و جوانسازی</button>
-                      <button onClick={() => handleNavClick('shop', 'ضدجوش')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین ضدجوش و پاکسازی</button>
-                      <button onClick={() => handleNavClick('shop', 'ترمیم')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین ترمیم سد دفاعی پوست</button>
-                      <button onClick={() => handleNavClick('shop', 'پوست حساس')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین پوست‌های حساس</button>
-                      <button onClick={() => handleNavClick('shop', 'مبتدی')} className="w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین پایه ۴ مرحله‌ای</button>
+                      <a href={buildShopUrl({ routine: 'hydration' })} onClick={(e) => onFilterLinkClick(e, { routine: 'hydration' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین آبرسانی</a>
+                      <a href={buildShopUrl({ routine: 'brightening' })} onClick={(e) => onFilterLinkClick(e, { routine: 'brightening' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین روشن‌کننده</a>
+                      <a href={buildShopUrl({ routine: 'anti-aging' })} onClick={(e) => onFilterLinkClick(e, { routine: 'anti-aging' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین ضدپیری و جوانسازی</a>
+                      <a href={buildShopUrl({ routine: 'acne-blemish' })} onClick={(e) => onFilterLinkClick(e, { routine: 'acne-blemish' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین ضدجوش و پاکسازی</a>
+                      <a href={buildShopUrl({ routine: 'barrier-repair' })} onClick={(e) => onFilterLinkClick(e, { routine: 'barrier-repair' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین ترمیم سد دفاعی پوست</a>
+                      <a href={buildShopUrl({ routine: 'soothing' })} onClick={(e) => onFilterLinkClick(e, { routine: 'soothing' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین پوست‌های حساس</a>
+                      <a href={buildShopUrl({ routine: 'minimal' })} onClick={(e) => onFilterLinkClick(e, { routine: 'minimal' })} className="block w-full text-right px-3 py-2 text-[13px] rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink cursor-pointer transition-colors">روتین پایه ۴ مرحله‌ای</a>
                     </div>
                   </div>
                 </div>
@@ -646,18 +665,18 @@ export const Header: React.FC<HeaderProps> = ({
                     </div>
 
                     <div className="space-y-0.5">
-                      <button onClick={() => handleNavClick('shop')} className="w-full text-right px-3 py-2 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink font-semibold text-[13px] cursor-pointer transition-colors">
+                      <a href="/shop" onClick={(e) => onNavLinkClick(e, 'shop')} className="block w-full text-right px-3 py-2 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink font-semibold text-[13px] cursor-pointer transition-colors">
                         انتخاب‌های تخصصی تیم VARA
-                      </button>
-                      <button onClick={() => handleNavClick('shop', 'لوکس')} className="w-full text-right px-3 py-2 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink text-[13px] cursor-pointer transition-colors">
+                      </a>
+                      <a href={buildShopUrl({ searchQuery: 'لوکس' })} onClick={(e) => onNavLinkClick(e, 'shop', 'لوکس')} className="block w-full text-right px-3 py-2 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink text-[13px] cursor-pointer transition-colors">
                         محصولات پریمیوم و لوکس
-                      </button>
-                      <button onClick={() => handleNavClick('shop')} className="w-full text-right px-3 py-2 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink text-[13px] cursor-pointer transition-colors">
+                      </a>
+                      <a href="/shop" onClick={(e) => onNavLinkClick(e, 'shop')} className="block w-full text-right px-3 py-2 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink text-[13px] cursor-pointer transition-colors">
                         ترندهای مراقبت پوست جهان
-                      </button>
-                      <button onClick={() => handleNavClick('shop')} className="w-full text-right px-3 py-2 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink text-[13px] cursor-pointer transition-colors">
+                      </a>
+                      <a href="/shop" onClick={(e) => onNavLinkClick(e, 'shop')} className="block w-full text-right px-3 py-2 rounded-full hover:bg-vara-surface hover:text-vara-rose-ink text-vara-ink text-[13px] cursor-pointer transition-colors">
                         بهترین فرمولاسیون‌های سال
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -710,12 +729,13 @@ export const Header: React.FC<HeaderProps> = ({
                         <span className="text-[10px] bg-white text-vara-rose-ink px-2 py-0.5 rounded-full border border-vara-line font-medium">ورود</span>
                       </button>
 
-                      <button 
-                        onClick={() => handleNavClick('shop')} 
+                      <a 
+                        href="/shop"
+                        onClick={(e) => onNavLinkClick(e, 'shop')} 
                         className="w-full text-right px-3 py-2 text-[12.5px] rounded-full hover:bg-vara-surface text-vara-muted hover:text-vara-rose-ink font-medium cursor-pointer transition-colors block"
                       >
                         مشاهده تمامی محصولات سازگار با شما
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -801,55 +821,55 @@ export const Header: React.FC<HeaderProps> = ({
                     <div className="p-3 bg-white space-y-3 border-t border-vara-line">
                       <div>
                         <p className="mb-1.5">
-                          <button
-                            type="button"
-                            onClick={() => handleFilterClick({ department: 'skincare' })}
+                          <a
+                            href={buildShopUrl({ department: 'skincare' })}
+                            onClick={(e) => onFilterLinkClick(e, { department: 'skincare' })}
                             className="font-semibold text-vara-rose-ink hover:text-vara-rose text-[11px] cursor-pointer underline-offset-4 hover:underline"
                           >
                             مراقبت از صورت
-                          </button>
+                          </a>
                         </p>
                         <div className="flex flex-wrap gap-1.5">
                           {['شوینده', 'میسلار واتر', 'تونر', 'اسنس', 'سرم', 'مرطوب کننده', 'کرم شب', 'دور چشم', 'ماسک', 'ضد آفتاب', 'روغن صورت'].map(t => (
-                            <button key={t} onClick={() => handleNavClick('shop', t)} className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
+                            <a key={t} href={buildShopUrl({ searchQuery: t })} onClick={(e) => onNavLinkClick(e, 'shop', t)} className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
                               {t}
-                            </button>
+                            </a>
                           ))}
                         </div>
                       </div>
                       <div>
                         <p className="mb-1.5">
-                          <button
-                            type="button"
-                            onClick={() => handleFilterClick({ category: 'hair-body' })}
+                          <a
+                            href={buildShopUrl({ category: 'hair-body' })}
+                            onClick={(e) => onFilterLinkClick(e, { category: 'hair-body' })}
                             className="font-semibold text-vara-rose-ink hover:text-vara-rose text-[11px] cursor-pointer underline-offset-4 hover:underline"
                           >
                             بدن، لب و مو
-                          </button>
+                          </a>
                         </p>
                         <div className="flex flex-wrap gap-1.5">
                           {['شوینده بدن', 'لوسیون بدن', 'بالم لب', 'کرم دست', 'شامپو', 'اسکراب', 'ماسک مو', 'سرم مو'].map(t => (
-                            <button key={t} onClick={() => handleNavClick('shop', t)} className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
+                            <a key={t} href={buildShopUrl({ searchQuery: t })} onClick={(e) => onNavLinkClick(e, 'shop', t)} className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
                               {t}
-                            </button>
+                            </a>
                           ))}
                         </div>
                       </div>
                       <div>
                         <p className="mb-1.5">
-                          <button
-                            type="button"
-                            onClick={() => handleFilterClick({ category: 'makeup' })}
+                          <a
+                            href={buildShopUrl({ category: 'makeup' })}
+                            onClick={(e) => onFilterLinkClick(e, { category: 'makeup' })}
                             className="font-semibold text-vara-rose-ink hover:text-vara-rose text-[11px] cursor-pointer underline-offset-4 hover:underline"
                           >
                             آرایشی
-                          </button>
+                          </a>
                         </p>
                         <div className="flex flex-wrap gap-1.5">
                           {['رژ لب', 'رژگونه', 'ریمل', 'کانسیلر', 'کرم پودر', 'سایه چشم', 'پرایمر', 'اسپری فیکس'].map(t => (
-                            <button key={t} onClick={() => handleNavClick('shop', t)} className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
+                            <a key={t} href={buildShopUrl({ searchQuery: t })} onClick={(e) => onNavLinkClick(e, 'shop', t)} className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
                               {t}
-                            </button>
+                            </a>
                           ))}
                         </div>
                       </div>
@@ -871,13 +891,14 @@ export const Header: React.FC<HeaderProps> = ({
                     <div className="p-3 bg-white border-t border-vara-line">
                       <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto no-scrollbar">
                         {brandsList.slice(0, 24).map(brand => (
-                          <button 
+                          <a 
                             key={brand.id} 
-                            onClick={() => handleNavClick('shop', brand.id)}
+                            href={buildShopUrl({ brand: brand.id })}
+                            onClick={(e) => onFilterLinkClick(e, { brand: brand.id })}
                             className="bg-vara-surface px-2.5 py-1 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint text-[11px] transition-colors cursor-pointer"
                           >
                             {brand.labelFa} ({brand.labelEn})
-                          </button>
+                          </a>
                         ))}
                       </div>
                     </div>
@@ -906,9 +927,9 @@ export const Header: React.FC<HeaderProps> = ({
                         { label: 'کدری و خستگی پوست', q: 'کدری' },
                         { label: 'ترمیم سد دفاعی', q: 'ترمیم' },
                       ].map(c => (
-                        <button key={c.q} onClick={() => handleNavClick('shop', c.q)} className="bg-vara-surface px-2.5 py-1.5 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
+                        <a key={c.q} href={buildShopUrl({ searchQuery: c.q })} onClick={(e) => onNavLinkClick(e, 'shop', c.q)} className="bg-vara-surface px-2.5 py-1.5 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
                           {c.label}
-                        </button>
+                        </a>
                       ))}
                     </div>
                   )}
@@ -933,9 +954,9 @@ export const Header: React.FC<HeaderProps> = ({
                         { label: 'پوست نرمال (Normal)', q: 'پوست نرمال' },
                         { label: 'پوست حساس (Sensitive)', q: 'پوست حساس' },
                       ].map(st => (
-                        <button key={st.q} onClick={() => handleNavClick('shop', st.q)} className="bg-vara-surface px-2.5 py-1.5 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
+                        <a key={st.q} href={buildShopUrl({ searchQuery: st.q })} onClick={(e) => onNavLinkClick(e, 'shop', st.q)} className="bg-vara-surface px-2.5 py-1.5 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
                           {st.label}
-                        </button>
+                        </a>
                       ))}
                     </div>
                   )}
@@ -954,9 +975,9 @@ export const Header: React.FC<HeaderProps> = ({
                   {mobileExpandedCat === 'ingredients' && (
                     <div className="p-3 bg-white flex flex-wrap gap-1.5 border-t border-vara-line">
                       {['رتینول', 'ویتامین C', 'نیاسینامید', 'هیالورونیک اسید', 'پپتید', 'سرامید', 'AHA/BHA', 'سالیسیلیک اسید', 'سنتلا آسیاتیکا', 'عصاره چای سبز', 'حلزون (موسین)'].map(ing => (
-                        <button key={ing} onClick={() => handleNavClick('shop', ing)} className="bg-vara-surface px-2.5 py-1.5 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
+                        <a key={ing} href={buildShopUrl({ searchQuery: ing })} onClick={(e) => onNavLinkClick(e, 'shop', ing)} className="bg-vara-surface px-2.5 py-1.5 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
                           {ing}
-                        </button>
+                        </a>
                       ))}
                     </div>
                   )}
@@ -976,9 +997,9 @@ export const Header: React.FC<HeaderProps> = ({
                     <div className="p-3 bg-white space-y-2 border-t border-vara-line">
                       <div className="flex flex-wrap gap-1.5">
                         {['روتین صبح', 'روتین شب', 'روتین آبرسانی', 'روتین جوانساز', 'روتین روشن‌کننده', 'روتین ضدجوش', 'روتین مینیمال'].map(r => (
-                          <button key={r} onClick={() => handleNavClick('shop', r)} className="bg-vara-surface px-2.5 py-1.5 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
+                          <a key={r} href={buildShopUrl({ searchQuery: r })} onClick={(e) => onNavLinkClick(e, 'shop', r)} className="bg-vara-surface px-2.5 py-1.5 rounded-full text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-tint transition-colors cursor-pointer">
                             {r}
-                          </button>
+                          </a>
                         ))}
                       </div>
                     </div>

@@ -44,6 +44,7 @@ export interface ShopFilterPreset {
   routine?: RoutineType | 'all';
   category?: CategoryId;
   department?: ShopDepartment | 'all';
+  brand?: string;
   onlyNew?: boolean;
   sortBy?: 'bestseller' | 'newest' | 'price-low' | 'price-high' | 'rating';
   searchQuery?: string;

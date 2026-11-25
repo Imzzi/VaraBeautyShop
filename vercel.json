@@ -70,6 +70,14 @@
       "destination": "/api"
     },
     {
+      "source": "/product/:id",
+      "destination": "/api"
+    },
+    {
+      "source": "/(shop|calculator|contact|return-policy|terms)",
+      "destination": "/api"
+    },
+    {
       "source": "/((?!api/schedules/).*)",
       "destination": "/index.html"
     }

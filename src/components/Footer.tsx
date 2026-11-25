@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { VaraLogo } from './VaraLogo';
 import { ShopFilterPreset } from '../types';
+import { buildShopUrl } from '../lib/seoMetadata';
 
 interface FooterProps {
   onNavigateToAdmin?: () => void;
@@ -25,6 +26,7 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigateToShopWithFilter,
 }) => {
   const handleFilterClick = (e: React.MouseEvent, preset: ShopFilterPreset) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
     if (onNavigateToShopWithFilter) {
       onNavigateToShopWithFilter({ ...preset, timestamp: Date.now() });
@@ -80,8 +82,8 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2.5 text-xs text-vara-muted">
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { productType: 'all', routine: 'all', category: 'all' })}
+                  href={buildShopUrl({ department: 'skincare' })}
+                  onClick={(e) => handleFilterClick(e, { department: 'skincare' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   مراقبت از صورت
@@ -89,8 +91,8 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { productType: 'hair-body' })}
+                  href={buildShopUrl({ department: 'hair' })}
+                  onClick={(e) => handleFilterClick(e, { department: 'hair' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   مراقبت از مو
@@ -98,8 +100,8 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { productType: 'hair-body' })}
+                  href={buildShopUrl({ department: 'body' })}
+                  onClick={(e) => handleFilterClick(e, { department: 'body' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   مراقبت از بدن
@@ -107,8 +109,8 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { productType: 'sunscreen' })}
+                  href={buildShopUrl({ category: 'sunscreen' })}
+                  onClick={(e) => handleFilterClick(e, { category: 'sunscreen' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   ضد آفتاب تخصصی
@@ -116,11 +118,11 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { sortBy: 'newest' })}
+                  href={buildShopUrl({ category: 'makeup' })}
+                  onClick={(e) => handleFilterClick(e, { category: 'makeup' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
-                  جدیدترین فرمولاسیون‌ها
+                  لوازم آرایشی اورجینال
                 </a>
               </li>
             </ul>
@@ -134,8 +136,8 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2.5 text-xs text-vara-muted">
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { routine: 'acne-blemish' })}
+                  href={buildShopUrl({ category: 'acne-blemishes' })}
+                  onClick={(e) => handleFilterClick(e, { category: 'acne-blemishes' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   درمان جوش و آکنه
@@ -143,8 +145,8 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { routine: 'anti-aging' })}
+                  href={buildShopUrl({ category: 'anti-aging' })}
+                  onClick={(e) => handleFilterClick(e, { category: 'anti-aging' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   ضد پیری و چروک
@@ -152,8 +154,8 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { routine: 'brightening' })}
+                  href={buildShopUrl({ category: 'brightening' })}
+                  onClick={(e) => handleFilterClick(e, { category: 'brightening' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   ضد لک و روشن‌کننده
@@ -161,8 +163,8 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { routine: 'hydration' })}
+                  href={buildShopUrl({ category: 'hydration' })}
+                  onClick={(e) => handleFilterClick(e, { category: 'hydration' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   آبرسانی و خشکی
@@ -170,8 +172,8 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="/shop"
-                  onClick={(e) => handleFilterClick(e, { routine: 'barrier-repair' })}
+                  href={buildShopUrl({ category: 'sensitive-skin' })}
+                  onClick={(e) => handleFilterClick(e, { category: 'sensitive-skin' })}
                   className="hover:text-vara-rose-ink transition-colors cursor-pointer"
                 >
                   ترمیم سد دفاعی و قرمزی
@@ -187,12 +189,19 @@ export const Footer: React.FC<FooterProps> = ({
             </h4>
             <ul className="space-y-2.5 text-xs text-vara-muted">
               <li>
-                <button
-                  onClick={onNavigateToCalculator}
-                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer"
+                <a
+                  href="/calculator"
+                  onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    if (onNavigateToCalculator) {
+                      e.preventDefault();
+                      onNavigateToCalculator();
+                    }
+                  }}
+                  className="hover:text-vara-rose-ink transition-colors text-right cursor-pointer inline-block"
                 >
                   استعلام قیمت از امارات
-                </button>
+                </a>
               </li>
               <li>
                 <button 

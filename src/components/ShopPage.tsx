@@ -16,6 +16,7 @@ import { Product, CategoryId, SkinType, SkincareProductType, RoutineType, Produc
 import { ProductCard } from './ProductCard';
 import { BRANDS_DATA, BrandItem } from '../data/brands';
 import { subscribeToBrands, getLocalBrands } from '../lib/brandsManager';
+import { resolveShopSeo } from '../lib/seoMetadata';
 
 const departmentLabels: Record<ShopDepartment, string> = {
   skincare: 'مراقبت از پوست',
@@ -53,7 +54,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
 }) => {
   const reducedMotion = useReducedMotion();
   // Filter States
-  const [selectedBrand, setSelectedBrand] = useState<string>('all');
+  const [selectedBrand, setSelectedBrand] = useState<string>(initialFilterPreset?.brand || 'all');
   const [selectedSkinType, setSelectedSkinType] = useState<SkinType | 'all'>('all');
   const [selectedProductType, setSelectedProductType] = useState<SkincareProductType | 'all'>(initialFilterPreset?.productType || 'all');
   const [selectedIngredient, setSelectedIngredient] = useState<string>('all');
@@ -130,7 +131,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
   // Sync filter preset when triggered from Footer or external navigation
   useEffect(() => {
     if (!initialFilterPreset) return;
-    setSelectedBrand('all');
+    setSelectedBrand(initialFilterPreset.brand || 'all');
     setSelectedSkinType('all');
     setSelectedIngredient('all');
     setPriceRange('all');
@@ -486,13 +487,30 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     setSortBy('bestseller');
   };
 
+  const shopSeo = useMemo(
+    () =>
+      resolveShopSeo(
+        {
+          brand: selectedBrand !== 'all' ? selectedBrand : undefined,
+          department: selectedDepartment !== 'all' ? selectedDepartment : undefined,
+          category: selectedCategory !== 'all' ? selectedCategory : undefined,
+          productType: selectedProductType !== 'all' ? selectedProductType : undefined,
+          routine: selectedRoutine !== 'all' ? selectedRoutine : undefined,
+          searchQuery,
+        },
+        rawBrands
+      ),
+    [selectedBrand, selectedDepartment, selectedCategory, selectedProductType, selectedRoutine, searchQuery, rawBrands]
+  );
+
   return (
     <div className="min-h-screen w-full pb-24 font-vazir" dir="rtl">
       {/* Main Shop Container */}
       <div className="vara-container pt-8 sm:pt-12">
         
         <div className="space-y-3 mb-6">
-          <h1 className="vara-shop-title">فروشگاه مراقبت پوست</h1>
+          <h1 className="vara-shop-title">{shopSeo.h1}</h1>
+          <p className="text-xs sm:text-sm text-vara-muted leading-relaxed max-w-3xl">{shopSeo.subtitle}</p>
           <CatalogNotice catalog={catalog} />
         </div>
         {/* Top Control Bar: Search & Sorting */}

@@ -14,6 +14,7 @@ import { issueChallenge, useChallenge } from './serverChallenges';
 import { registerOrderPaymentRoutes } from './serverOrderPayments';
 import { NextPayService } from './serverNextPay';
 import { ZarinpalService } from './serverZarinpal';
+import { registerSeoRoutes } from './serverSeo';
 import {
   isBlobConfigured,
   getBlobConfigStatus,
@@ -1753,6 +1754,11 @@ app.get(['/32472732.txt', `/${encodeURIComponent('۳۲۴۷۲۷۳۲.txt')}`, '/۳
   res.setHeader('Cache-Control', 'public, max-age=86400');
   return res.status(200).send('');
 });
+
+// Server-Side SEO HTML & JSON-LD Injection for public crawlable routes
+if (process.env.NODE_ENV === 'production' || process.env.VERCEL || process.env.NODE_ENV === 'test') {
+  registerSeoRoutes(app);
+}
 
 // Global Error Handler to guarantee clean 500 JSON responses without crashing or leaking internal details
 app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {

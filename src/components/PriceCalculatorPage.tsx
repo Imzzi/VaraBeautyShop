@@ -19,6 +19,7 @@ import { UserProfile } from '../types';
 import { PolicyReaderModal } from './LegalPoliciesPage';
 import { PolicyDocumentType } from '../data/policies';
 import { sanitizeNavigationUrl } from '../utils/safeUrl';
+import { CALCULATOR_FAQS } from '../lib/seoMetadata';
 
 interface PriceCalculatorPageProps {
   initialUrl?: string;
@@ -1169,6 +1170,31 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
             </div>
           </div>
         )}
+
+        {/* Buyer-Intent FAQ Section matching FAQPage JSON-LD */}
+        <section aria-labelledby="calculator-faq-heading" className="bg-white rounded-2xl p-6 sm:p-8 border border-vara-line shadow-vara-float space-y-5 mt-8">
+          <div className="space-y-1.5">
+            <h2 id="calculator-faq-heading" className="text-base sm:text-lg font-bold text-vara-ink">
+              سوالات متداول خرید از سفورا دبی، آمازون امارات و ترندیول
+            </h2>
+            <p className="text-xs text-vara-muted">
+              نحوه استعلام قیمت آنلاین، محاسبه هزینه باربری و ضمانت اصالت سفارش‌های بین‌المللی در ورا بیوتی
+            </p>
+          </div>
+          <div className="divide-y divide-vara-line">
+            {CALCULATOR_FAQS.map((faq, idx) => (
+              <details key={idx} className="py-3.5 group" open={idx === 0}>
+                <summary className="cursor-pointer list-none flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-vara-ink hover:text-vara-rose-ink transition-colors">
+                  <span>{faq.question}</span>
+                  <span className="text-vara-rose-ink text-base font-normal shrink-0 group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <p className="pt-2.5 text-xs text-vara-muted-strong leading-relaxed">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
 
       </div>
 
