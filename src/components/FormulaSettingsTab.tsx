@@ -109,7 +109,7 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
   // Simulator test inputs (supports AED, TRY, GBP, EUR, USD)
   const [testCurrency, setTestCurrency] = useState<'AED' | 'TRY' | 'GBP' | 'EUR' | 'USD'>('AED');
   const [testAedPrice, setTestAedPrice] = useState(115);
-  const [testWeightGrams, setTestWeightGrams] = useState(120);
+  const [testWeightGrams, setTestWeightGrams] = useState<number | ''>(120);
 
   const parseNumericInput = (val: string) => {
     const english = val
@@ -252,8 +252,9 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
     USD: { rate: formState.usdRate || 92500, label: 'دلار' },
   };
   const activeSimCurrency = currencyRatesMap[testCurrency];
+  const effectiveSimWeightGrams = testWeightGrams === '' ? 0 : Math.max(0, Number(testWeightGrams) || 0);
   const simBaseToman = Math.round(testAedPrice * activeSimCurrency.rate);
-  const simShipping = Math.round((testWeightGrams / 100) * formState.shippingPer100g);
+  const simShipping = Math.round((effectiveSimWeightGrams / 100) * formState.shippingPer100g);
   const simCustoms = Math.round(simBaseToman * (formState.customsRatePercent / 100));
   const simVaraFee = Math.round(simBaseToman * (formState.varaFeePercent / 100));
   const simDiscount = Math.min(
@@ -776,8 +777,12 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
                 <input
                   type="text"
                   inputMode="numeric"
-                  value={(Number(testWeightGrams) || 0).toLocaleString('fa-IR')}
-                  onChange={(e) => setTestWeightGrams(Math.max(10, Math.floor(parseNumericInput(e.target.value)) || 0))}
+                  placeholder="۰"
+                  value={testWeightGrams === '' ? '' : (Number(testWeightGrams) || 0).toLocaleString('fa-IR')}
+                  onChange={(e) => {
+                    const parsed = parsePostFeeInput(e.target.value);
+                    setTestWeightGrams(parsed === '' ? '' : Math.max(0, parsed));
+                  }}
                   className="w-full bg-white border border-vara-line rounded-full px-2.5 py-1.5 text-xs font-vazir font-bold"
                 />
               </div>
@@ -790,7 +795,7 @@ export const FormulaSettingsTab: React.FC<FormulaSettingsTabProps> = ({
                 <span className="font-vazir font-bold">{simBaseToman.toLocaleString('fa-IR')} تومان</span>
               </div>
               <div className="flex items-center justify-between text-vara-muted-strong">
-                <span>هزینه حمل هوایی از دبی ({testWeightGrams.toLocaleString('fa-IR')} گرم):</span>
+                <span>هزینه حمل هوایی از دبی ({effectiveSimWeightGrams.toLocaleString('fa-IR')} گرم):</span>
                 <span className="font-vazir font-bold">{simShipping.toLocaleString('fa-IR')} تومان</span>
               </div>
               <div className="flex items-center justify-between text-vara-muted-strong">
