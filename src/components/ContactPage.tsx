@@ -11,7 +11,6 @@ import {
   ArrowRight,
   MessageSquare,
   ShieldCheck,
-  Sparkles,
   ExternalLink,
   Navigation
 } from 'lucide-react';

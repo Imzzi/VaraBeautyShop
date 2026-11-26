@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Home, 
   ShoppingBag, 
-  Sparkles, 
+  ClipboardCheck, 
   Heart, 
   User 
 } from 'lucide-react';
@@ -76,7 +76,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
           className="flex flex-col items-center justify-center py-1 px-1 text-vara-rose-ink transition-colors cursor-pointer group"
         >
           <div className="w-9 h-9 -mt-3.5 bg-vara-rose text-white rounded-xl flex items-center justify-center border border-vara-rose shadow-shop-violet group-hover:bg-vara-rose-hover active:scale-95 transition-all">
-            <Sparkles className="w-4 h-4 text-white stroke-[1.75]" />
+            <ClipboardCheck className="w-4 h-4 text-white stroke-[1.75]" />
           </div>
           <span className="text-[10px] font-medium text-vara-rose-ink mt-0.5">روتین پوست</span>
         </button>

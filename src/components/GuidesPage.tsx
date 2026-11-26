@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ArrowRight, BookOpen, Calculator, ChevronDown, Clock, ShoppingBag, Sparkles } from 'lucide-react';
+import { ArrowRight, BookOpen, Calculator, ChevronDown, Clock, ShoppingBag } from 'lucide-react';
 import { BUYING_GUIDES, BuyingGuide, getGuideBySlug } from '../data/guides';
 import { parseShopFilterFromSearch } from '../lib/seoMetadata';
 import { Product, ProductSize, ProductVariant, ShopFilterPreset } from '../types';
@@ -320,7 +320,6 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({
               >
                 مطالعه راهنما ←
               </a>
-              <Sparkles className="w-3.5 h-3.5 text-vara-rose-ink/70" />
             </div>
           </article>
         ))}

@@ -1,7 +1,7 @@
 import { Modal } from './Modal';
 import { HERO_IMAGE_SIZES, HERO_IMAGE_WIDTHS, responsiveImageSrcSet } from '../lib/productImages';
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Calculator, Link2, Sparkles, User, X } from 'lucide-react';
+import { ArrowLeft, Calculator, Link2, User, X } from 'lucide-react';
 import type { CarouselSlide } from '../types';
 import { getLocalHeroSlides, HERO_SLIDES_STORAGE_KEY } from '../data/heroSlides';
 import { sanitizeNavigationUrl } from '../utils/safeUrl';
@@ -230,8 +230,7 @@ export const Hero: React.FC<HeroProps> = ({
               }}
               className="p-3 rounded-2xl bg-white hover:bg-vara-tint/60 border border-vara-line hover:border-vara-tint-line transition-all flex flex-col items-start text-right cursor-pointer group"
             >
-              <div className="flex items-center justify-between w-full mb-1">
-                <Sparkles className="w-3.5 h-3.5 text-vara-rose-ink" />
+              <div className="flex items-center justify-end w-full mb-1">
                 <ArrowLeft className="w-3 h-3 text-vara-muted group-hover:-translate-x-0.5 group-hover:text-vara-rose-ink transition-all" />
               </div>
               <span className="text-[11px] font-semibold text-vara-ink line-clamp-1">تست روتین پوست</span>

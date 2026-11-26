@@ -2,7 +2,6 @@ import { Modal } from './Modal';
 import React, { useState, useEffect } from 'react';
 import { 
   X, 
-  Sparkles, 
   ClipboardCheck, 
   CheckCircle2, 
   ArrowRight, 
@@ -304,7 +303,7 @@ export const SkincareQuizModal: React.FC<SkincareQuizModalProps> = ({
       case 'Award': return <Award className="w-4 h-4 text-vara-rose-ink" />;
       case 'Layers': return <Layers className="w-4 h-4 text-vara-rose-ink" />;
       case 'Feather': return <Feather className="w-4 h-4 text-vara-rose-ink" />;
-      default: return <Sparkles className="w-4 h-4 text-vara-rose-ink" />;
+      default: return <CheckCircle2 className="w-4 h-4 text-vara-rose-ink" />;
     }
   };
 

@@ -6,7 +6,7 @@ import {
   CheckCircle2, Heart,
   AlertTriangle, CheckCheck, Bot,
   Calendar, Shield, ShieldCheck, MapPin, UserCheck, Clock,
-  ChevronLeft, ChevronRight, ZoomIn, ZoomOut, X, Sparkles, Check,
+  ChevronLeft, ChevronRight, ZoomIn, ZoomOut, X, Check,
   Droplets, FlaskConical, Layers, ChevronDown, ChevronUp, Info, Zap, Award
 } from 'lucide-react';
 import { Product, ProductSize, ProductVariant, Review, UserSkinProfile, SHOP_ROUTINES, ShopFilterPreset } from '../types';
@@ -1300,7 +1300,6 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 : 'border-transparent text-vara-muted hover:text-vara-ink'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
             <span>ویژگی‌های محصول</span>
             {product.badges && product.badges.length > 0 && (
               <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold tabular-nums ${

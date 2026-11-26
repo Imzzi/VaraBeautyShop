@@ -3,7 +3,6 @@ import {
   Server,
   Database,
   Cloud,
-  Sparkles,
   MessageSquare,
   Mail,
   Activity,
@@ -692,7 +691,6 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
               : 'text-vara-muted-strong/70 hover:text-vara-muted-strong hover:bg-white/50'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-600" />
           <span>هوش مصنوعی Gemini</span>
           {data?.integrations.gemini.configured && (
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
@@ -904,7 +902,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                      <Sparkles className="w-5 h-5" />
+                      <Zap className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="text-sm font-black text-vara-muted-strong">Google Gemini AI</h4>
@@ -1300,7 +1298,7 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                  <Sparkles className="w-6 h-6" />
+                  <Zap className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-base font-black text-vara-muted-strong">موتور هوش مصنوعی Google Gemini</h3>
@@ -1347,7 +1345,6 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
                   <div className="font-bold text-xs text-vara-muted-strong flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
                     <span>مشاور تخصصی پوست</span>
                   </div>
                   <p className="text-[11px] text-vara-muted-strong/70 mt-1 leading-relaxed">
@@ -1357,7 +1354,6 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
                 <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
                   <div className="font-bold text-xs text-vara-muted-strong flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
                     <span>تحلیل بینایی و تصویر (Vision)</span>
                   </div>
                   <p className="text-[11px] text-vara-muted-strong/70 mt-1 leading-relaxed">
@@ -1367,7 +1363,6 @@ export const AdminIntegrationsDashboard: React.FC<AdminIntegrationsDashboardProp
 
                 <div className="bg-vara-surface/60 p-4 rounded-2xl border border-vara-line/30">
                   <div className="font-bold text-xs text-vara-muted-strong flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
                     <span>استخراج خودکار محصول از لینک</span>
                   </div>
                   <p className="text-[11px] text-vara-muted-strong/70 mt-1 leading-relaxed">

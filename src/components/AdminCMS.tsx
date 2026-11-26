@@ -11,7 +11,7 @@ import {
   UploadCloud, X, ShoppingBag,
   Minus, Box, Award, SlidersHorizontal,
   Globe, AlertTriangle, Star, Clock, Cloud, HardDrive,
-  Server, Activity, Sparkles
+  Server, Activity
 } from 'lucide-react';
 import { 
   Product, 
@@ -2093,7 +2093,6 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
                 <div className="pt-3 border-t border-vara-line/60 space-y-3">
                   <div className="flex items-center justify-between">
                     <label className="block text-xs font-bold font-vazir text-vara-muted-strong flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-vara-muted-strong" />
                       <span>۲. جایگاه در روتین (دسته‌بندی‌های روتین در فروشگاه):</span>
                     </label>
                     <span className="text-[10px] font-vazir bg-white border border-vara-line px-2 py-0.5 rounded-full text-vara-muted-strong font-bold">
@@ -2401,7 +2400,6 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
                     ترکیبات اصلی و اکتیو (جداشده با ویرگول یا کاما):
                   </label>
                   <span className="inline-flex items-center gap-1 text-[10px] font-vazir font-bold text-vara-muted-strong bg-vara-surface border border-vara-line px-2 py-0.5 rounded-full">
-                    <Sparkles className="w-3 h-3 text-vara-muted" />
                     <span>توضیحات علمی هر ترکیب خودکار توسط هوش مصنوعی نوشته می‌شود</span>
                   </span>
                 </div>
@@ -2448,7 +2446,6 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
               <div className="bg-vara-surface p-4 rounded-2xl space-y-3">
                 <div className="flex items-center justify-between pb-1 border-b border-vara-line">
                   <div className="flex items-center gap-2 text-xs font-bold text-vara-muted-strong font-vazir">
-                    <Sparkles className="w-4 h-4 text-vara-muted" />
                     <span>روش استفاده (دستورالعمل نحوه مصرف محصول):</span>
                   </div>
                   <span className="text-[10px] font-vazir text-vara-muted">

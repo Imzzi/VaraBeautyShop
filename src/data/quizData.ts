@@ -29,7 +29,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         labelFa: 'مختلط (ناحیه T چرب، گونه‌ها خشک یا معمولی)',
         subtitleFa: 'نیازمند روتین متعادل‌کننده برای کنترل چربی و آبرسانی همزمان',
         value: 'combination',
-        iconName: 'Sparkles',
+        iconName: 'CheckCircle2',
       },
       {
         labelFa: 'چرب و براق با منافذ قابل مشاهده',
@@ -103,7 +103,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         labelFa: 'روتین استاندارد و متمرکز (۴ مرحله‌ای هدفمند)',
         subtitleFa: 'شوینده + سرم/درمان هدفمند + مرطوب‌کننده + محافظ روزانه یا تونر شب',
         value: 'balanced',
-        iconName: 'Sparkles',
+        iconName: 'CheckCircle2',
       },
       {
         labelFa: 'روتین کامل و حرفه‌ای شب و روز (۶ مرحله‌ای تخصصی)',
