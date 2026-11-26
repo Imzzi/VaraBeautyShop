@@ -754,7 +754,7 @@ export const Header: React.FC<HeaderProps> = ({
                   : 'text-vara-muted-strong hover:text-vara-rose-ink hover:bg-vara-surface'
               }`}
             >
-              مجله و راهنما
+              مجله ورا
             </a>
 
           </nav>

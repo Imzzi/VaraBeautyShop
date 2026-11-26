@@ -256,10 +256,6 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({
   return (
     <div className="vara-container py-8 sm:py-12 pb-24 space-y-8 font-vazir text-right" dir="rtl">
       <header className="bg-white border border-vara-line rounded-3xl p-6 sm:p-10 space-y-4 shadow-shop-card">
-        <div className="inline-flex items-center gap-2 text-xs font-semibold text-vara-rose-ink bg-vara-tint/60 px-3 py-1 rounded-full border border-vara-tint-line/40">
-          <BookOpen className="w-3.5 h-3.5" />
-          <span>دانشنامه و راهنمای خرید تخصصی ورا بیوتی</span>
-        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-vara-ink">مجله مراقبت پوست و راهنمای خرید اورجینال</h1>
         <p className="text-sm text-vara-muted-strong max-w-3xl leading-8">
           مجموعه راهنماهای کاربردی برای تشخیص اصالت محصولات خارجی، انتخاب روتین علمی بر اساس تیپ پوستی و نحوه سفارش مستقیم از سفورا دبی، آمازون امارات و ترندیول.
