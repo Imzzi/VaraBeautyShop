@@ -40,13 +40,14 @@ function createInMemoryClient(): Client {
   tables.set('settings', new Map([['brands', JSON.stringify(BRANDS_DATA)]]));
   tables.set('admins', new Map());
   tables.set('security_store', new Map());
+  tables.set('analytics_events', new Map());
 
   const execute = async (stmt: any) => {
       const sql = typeof stmt === 'string' ? stmt : stmt.sql;
       const args = typeof stmt === 'string' ? [] : stmt.args || [];
       const sqlLower = sql.trim().toLowerCase();
 
-      if (sqlLower.startsWith('create table') || sqlLower.startsWith('pragma')) {
+      if (sqlLower.startsWith('create table') || sqlLower.startsWith('create index') || sqlLower.startsWith('pragma')) {
         return { columns: [], columnTypes: [], rows: [], rowsAffected: 0 };
       }
 
@@ -286,6 +287,79 @@ function createInMemoryClient(): Client {
           secMap.clear();
         }
         return { columns: [], columnTypes: [], rows: [], rowsAffected: 1 };
+      }
+
+      if (sqlLower.includes('into analytics_events')) {
+        const aeMap = tables.get('analytics_events')!;
+        const [
+          id,
+          eventName,
+          sessionId,
+          visitorId,
+          pagePath,
+          pageTitle,
+          source,
+          searchTerm,
+          itemId,
+          itemName,
+          valueToman,
+          createdAt,
+        ] = args;
+        aeMap.set(id, {
+          id,
+          eventName,
+          sessionId,
+          visitorId,
+          pagePath,
+          pageTitle,
+          source,
+          searchTerm,
+          itemId,
+          itemName,
+          valueToman: Number(valueToman || 0),
+          createdAt,
+        });
+        return { columns: [], columnTypes: [], rows: [], rowsAffected: 1 };
+      }
+
+      if (sqlLower.startsWith('select') && sqlLower.includes('from analytics_events')) {
+        const aeMap = tables.get('analytics_events')!;
+        const sinceIso = String(args[0] || '');
+        const rows = Array.from(aeMap.values())
+          .filter((r: any) => !sinceIso || String(r.createdAt || '') >= sinceIso)
+          .sort((a: any, b: any) => String(a.createdAt || '').localeCompare(String(b.createdAt || '')));
+        return {
+          columns: [
+            'id',
+            'eventName',
+            'sessionId',
+            'visitorId',
+            'pagePath',
+            'pageTitle',
+            'source',
+            'searchTerm',
+            'itemId',
+            'itemName',
+            'valueToman',
+            'createdAt',
+          ],
+          columnTypes: Array(12).fill('TEXT'),
+          rows,
+          rowsAffected: 0,
+        };
+      }
+
+      if (sqlLower.includes('delete from analytics_events')) {
+        const aeMap = tables.get('analytics_events')!;
+        const cutoff = String(args[0] || '');
+        let deleted = 0;
+        for (const [k, v] of aeMap.entries()) {
+          if (!cutoff || String((v as any).createdAt || '') < cutoff) {
+            aeMap.delete(k);
+            deleted++;
+          }
+        }
+        return { columns: [], columnTypes: [], rows: [], rowsAffected: deleted };
       }
 
       return { columns: [], columnTypes: [], rows: [], rowsAffected: 0 };
@@ -1707,5 +1781,117 @@ export const SecurityDb = {
     const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
     const rec = await this.get(`revoked:${tokenHash}`);
     return Boolean(rec);
+  },
+};
+
+export interface AnalyticsEventRecord {
+  id?: string;
+  eventName: string;
+  sessionId: string;
+  visitorId: string;
+  pagePath?: string;
+  pageTitle?: string;
+  source?: string;
+  searchTerm?: string;
+  itemId?: string;
+  itemName?: string;
+  valueToman?: number;
+  createdAt?: string;
+}
+
+let analyticsTableReady = false;
+let analyticsTablePromise: Promise<void> | null = null;
+let analyticsWriteCount = 0;
+
+export const AnalyticsDb = {
+  async ensureTable(): Promise<void> {
+    await ensureDbInitialized();
+    if (analyticsTableReady) return;
+    if (analyticsTablePromise) return analyticsTablePromise;
+
+    analyticsTablePromise = (async () => {
+      await client.batch([
+        `CREATE TABLE IF NOT EXISTS analytics_events (
+          id TEXT PRIMARY KEY,
+          eventName TEXT NOT NULL,
+          sessionId TEXT NOT NULL,
+          visitorId TEXT NOT NULL,
+          pagePath TEXT,
+          pageTitle TEXT,
+          source TEXT,
+          searchTerm TEXT,
+          itemId TEXT,
+          itemName TEXT,
+          valueToman INTEGER DEFAULT 0,
+          createdAt TEXT NOT NULL
+        );`,
+        `CREATE INDEX IF NOT EXISTS idx_analytics_events_created_at ON analytics_events(createdAt);`,
+      ]);
+      analyticsTableReady = true;
+    })().finally(() => {
+      analyticsTablePromise = null;
+    });
+
+    return analyticsTablePromise;
+  },
+
+  async recordEvent(event: AnalyticsEventRecord): Promise<void> {
+    await this.ensureTable();
+    const id = event.id || `ae-${Date.now()}-${crypto.randomBytes(6).toString('hex')}`;
+    const createdAt = event.createdAt || new Date().toISOString();
+    await client.execute({
+      sql: `INSERT INTO analytics_events (
+        id, eventName, sessionId, visitorId, pagePath, pageTitle, source, searchTerm, itemId, itemName, valueToman, createdAt
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        id,
+        event.eventName,
+        event.sessionId,
+        event.visitorId,
+        event.pagePath || '',
+        event.pageTitle || '',
+        event.source || '',
+        event.searchTerm || '',
+        event.itemId || '',
+        event.itemName || '',
+        Math.max(0, Math.round(Number(event.valueToman) || 0)),
+        createdAt,
+      ],
+    });
+
+    analyticsWriteCount++;
+    if (analyticsWriteCount % 50 === 0) {
+      const cutoff = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString();
+      await client.execute({
+        sql: 'DELETE FROM analytics_events WHERE createdAt < ?',
+        args: [cutoff],
+      }).catch(() => {});
+    }
+  },
+
+  async getEventsSince(sinceIso: string): Promise<AnalyticsEventRecord[]> {
+    await this.ensureTable();
+    const res = await client.execute({
+      sql: `SELECT id, eventName, sessionId, visitorId, pagePath, pageTitle, source, searchTerm, itemId, itemName, valueToman, createdAt
+            FROM analytics_events
+            WHERE createdAt >= ?
+            ORDER BY createdAt ASC
+            LIMIT 50000`,
+      args: [sinceIso],
+    });
+    return res.rows.map((r: any) => ({
+      id: String(r.id || ''),
+      eventName: String(r.eventName || ''),
+      sessionId: String(r.sessionId || ''),
+      visitorId: String(r.visitorId || ''),
+      pagePath: String(r.pagePath || ''),
+      pageTitle: String(r.pageTitle || ''),
+      source: String(r.source || ''),
+      searchTerm: String(r.searchTerm || ''),
+      itemId: String(r.itemId || ''),
+      itemName: String(r.itemName || ''),
+      valueToman: Number(r.valueToman || 0),
+      createdAt: String(r.createdAt || ''),
+    }));
   },
 };

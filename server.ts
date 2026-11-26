@@ -19,6 +19,7 @@ import { getResendApiKeyInfo, ResendEmailService } from './serverEmail';
 import { issueChallenge, useChallenge } from './serverChallenges';
 import { registerOrderPaymentRoutes } from './serverOrderPayments';
 import { registerTorobRoutes } from './serverTorob';
+import { registerAnalyticsRoutes } from './serverAnalytics';
 import { NextPayService } from './serverNextPay';
 import { ZarinpalService } from './serverZarinpal';
 import { registerSeoRoutes } from './serverSeo';
@@ -1018,6 +1019,9 @@ app.post('/api/auth/tech-admin/logout', (req, res) => {
 
   // Standard Torob Product Synchronization API (/api/torob/products)
   registerTorobRoutes(app);
+
+  // First-Party + GA4 Data API Analytics Dashboard & Collector
+  registerAnalyticsRoutes(app);
 
   // -------------------------------------------------------------
   // AI SKINCARE ADVISOR & VISION ANALYSIS

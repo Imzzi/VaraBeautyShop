@@ -3,7 +3,103 @@ import { isAdminRoute } from '../utils/adminRouteConfig';
 
 export const ANALYTICS_SETTING_KEY = 'analytics_config';
 const TRACKED_ORDERS_STORAGE_KEY = 'vara_ga_tracked_orders';
+const VISITOR_ID_STORAGE_KEY = 'vara_vid';
+const SESSION_STORAGE_KEY = 'vara_sid';
+const SESSION_TIMEOUT_MS = 30 * 60 * 1000;
 const MAX_QUEUED_EVENTS = 25;
+
+let lastMirroredPagePath = '';
+let lastMirroredPageAt = 0;
+
+function randomId(prefix: string): string {
+  try {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return `${prefix}-${crypto.randomUUID()}`;
+    }
+  } catch {}
+  return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function getVisitorId(): string {
+  if (typeof window === 'undefined') return 'server';
+  try {
+    const existing = localStorage.getItem(VISITOR_ID_STORAGE_KEY);
+    if (existing && existing.length >= 6) return existing;
+    const created = randomId('v');
+    localStorage.setItem(VISITOR_ID_STORAGE_KEY, created);
+    return created;
+  } catch {
+    return randomId('v');
+  }
+}
+
+function getSessionId(): string {
+  if (typeof window === 'undefined') return 'server';
+  try {
+    const now = Date.now();
+    const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as { id?: string; lastSeen?: number };
+      if (parsed?.id && parsed.lastSeen && now - parsed.lastSeen < SESSION_TIMEOUT_MS) {
+        sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify({ id: parsed.id, lastSeen: now }));
+        return parsed.id;
+      }
+    }
+    const created = randomId('s');
+    sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify({ id: created, lastSeen: now }));
+    return created;
+  } catch {
+    return randomId('s');
+  }
+}
+
+function sendFirstPartyEvent(name: string, params: Record<string, unknown>): void {
+  if (isClientBlocked() || typeof fetch !== 'function' || typeof window === 'undefined') return;
+
+  const pagePath =
+    (typeof params.page_path === 'string' && params.page_path) ||
+    `${window.location.pathname}${window.location.search || ''}` ||
+    '/';
+
+  if (name === 'page_view') {
+    const now = Date.now();
+    if (lastMirroredPagePath === pagePath && now - lastMirroredPageAt < 1500) {
+      return;
+    }
+    lastMirroredPagePath = pagePath;
+    lastMirroredPageAt = now;
+  }
+
+  const items = Array.isArray(params.items) ? (params.items as Array<Record<string, unknown>>) : [];
+  const primaryItem = items[0] || {};
+  const rawValue = Number(params.value);
+  const valueToman = Number.isFinite(rawValue) && rawValue > 0 ? Math.round(rawValue / 10) : 0;
+
+  const payload = {
+    eventName: name,
+    sessionId: getSessionId(),
+    visitorId: getVisitorId(),
+    pagePath,
+    pageTitle: typeof params.page_title === 'string' ? params.page_title : document.title || '',
+    referrer: typeof document !== 'undefined' ? document.referrer || '' : '',
+    searchTerm: typeof params.search_term === 'string' ? params.search_term : '',
+    itemId: typeof primaryItem.item_id === 'string' ? primaryItem.item_id : '',
+    itemName:
+      (typeof params.item_name === 'string' && params.item_name) ||
+      (typeof primaryItem.item_name === 'string' && primaryItem.item_name) ||
+      '',
+    valueToman,
+  };
+
+  try {
+    void fetch('/api/analytics/collect', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {}
+}
 
 export interface AnalyticsConfig {
   gaMeasurementId?: string;
@@ -86,6 +182,7 @@ function activateMeasurementId(id: string): string {
 
 function emitEvent(name: string, params: Record<string, unknown>): void {
   if (isClientBlocked()) return;
+  sendFirstPartyEvent(name, params);
   if (activeMeasurementId && typeof window.gtag === 'function') {
     window.gtag('event', name, params);
     return;
