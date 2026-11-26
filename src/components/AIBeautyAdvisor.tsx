@@ -17,7 +17,8 @@ import {
   MessageSquareHeart
 } from 'lucide-react';
 import { Product, ProductSize, UserProfile, UserSkinProfile } from '../types';
-import { getSavedSkinProfile } from '../data/quizData';
+import { getSavedSkinProfile, isSkinProfileStaleOrInvalid, buildRoutineStepsByStyle, saveSkinProfile } from '../data/quizData';
+import { isFacialSkincareProduct, matchesStepRole } from '../lib/routineEngine';
 
 interface Message {
   id: string;
@@ -56,22 +57,65 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  // Load and subscribe to saved skin profile
+  // Load and subscribe to saved skin profile, ensuring initial cards reference real in-stock facial products
   useEffect(() => {
-    const profile = getSavedSkinProfile();
+    let profile = getSavedSkinProfile();
+    if (profile && products.length > 0 && isSkinProfileStaleOrInvalid(profile, products)) {
+      const { morningSteps, nightSteps } = buildRoutineStepsByStyle(
+        profile.routineStyle || 'balanced',
+        profile.primaryConcern,
+        profile.skinType,
+        products,
+        {
+          sensitivityLevel: profile.sensitivityLevel,
+          currentRoutine: profile.currentRoutine,
+        }
+      );
+      profile = {
+        ...profile,
+        morningSteps,
+        nightSteps,
+        recommendedProductIds: Array.from(
+          new Set([
+            ...morningSteps.map((s) => s.productId),
+            ...nightSteps.map((s) => s.productId),
+          ])
+        ),
+      };
+      saveSkinProfile(profile);
+    }
     setSavedSkinProfile(profile);
+
+    const validProfileProductIds = (profile?.recommendedProductIds || [])
+      .filter((id) => {
+        const prod = products.find((p) => p.id === id);
+        return prod ? isFacialSkincareProduct(prod, { allowLipCare: true }) : false;
+      })
+      .slice(0, 3);
+
+    const fallbackFacialIds = (() => {
+      if (validProfileProductIds.length > 0) return validProfileProductIds;
+      const picks: string[] = [];
+      for (const role of ['cleanser', 'serum', 'moisturizer'] as const) {
+        const match = products
+          .filter((p) => matchesStepRole(p, role))
+          .sort((a, b) => (b.rating || 0) - (a.rating || 0))[0];
+        if (match && !picks.includes(match.id)) picks.push(match.id);
+      }
+      return picks;
+    })();
 
     const initialBotMessage: Message = {
       id: 'welcome-1',
       sender: 'bot',
       text: profile
-        ? `سلام ${user?.displayName ? user.displayName + ' عزیز' : 'عزیز'}! 🌿 مشاور هوشمند ورا بیوتی (VARA BEAUTY) در خدمت شماست.\n\nمن پروفایل پوست شما (**${profile.summaryLabelFa}**) را ثبت کرده‌ام و آماده‌ام تا درباره روتین پیشنهادی، تداخل ترکیبات، نحوه استفاده یا انتخاب محصولات گیاهی پاسخگوی سوالات شما باشم.`
-        : `سلام ${user?.displayName ? user.displayName + ' عزیز' : 'عزیز'}! 🌿 به مشاور هوشمند درماتولوژی گیاهی ورا بیوتی خوش آمدید.\n\nمن می‌توانم بر اساس **نوع پوست، حساسیت‌ها و اهداف مراقبتی شما**، بهترین روتین و محصولات گیاهی را پیشنهاد دهم.\n\nهمچنین می‌توانید با بخش **«آنالیز عکس چهره»** تصویری از پوست خود ارسال کنید تا بررسی تخصصی انجام شود.`,
+        ? `سلام ${user?.displayName ? user.displayName + ' عزیز' : 'عزیز'}! 🌿 مشاور هوشمند ورا بیوتی (VARA BEAUTY) در خدمت شماست.\n\nمن پروفایل پوست شما (**${profile.summaryLabelFa}**) را ثبت کرده‌ام و آماده‌ام تا درباره روتین پیشنهادی، تداخل ترکیبات، نحوه استفاده یا انتخاب محصولات متناسب با پوست شما راهنمایی کنم.`
+        : `سلام ${user?.displayName ? user.displayName + ' عزیز' : 'عزیز'}! 🌿 به مشاور هوشمند مراقبت از پوست ورا بیوتی خوش آمدید.\n\nمن می‌توانم بر اساس **نوع پوست، حساسیت‌ها و دغدغه‌های پوستی شما**، بهترین محصولات اورجینال موجود در فروشگاه را پیشنهاد دهم.\n\nهمچنین می‌توانید با بخش **«آنالیز عکس چهره»** تصویری از پوست خود ارسال کنید تا بررسی تخصصی انجام شود.`,
       timestamp: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }),
-      suggestedProductIds: profile?.recommendedProductIds?.slice(0, 3) || ['product-1', 'product-2']
+      suggestedProductIds: fallbackFacialIds
     };
 
-    setMessages([initialBotMessage]);
+    setMessages((prev) => (prev.length <= 1 ? [initialBotMessage] : prev));
 
     const handleProfileUpdate = (e: any) => {
       const updated = e.detail || getSavedSkinProfile();
@@ -82,7 +126,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
     return () => {
       window.removeEventListener('vara-skin-profile-updated', handleProfileUpdate);
     };
-  }, [user]);
+  }, [user, products]);
 
   // Skin Photo Analysis State
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -108,12 +152,12 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
   }, [isOpen, requestedTab]);
 
   const quickPrompts = [
-    { label: '✨ محصول مناسب من رو پیدا کن', query: 'بر اساس نوع پوست و دغدغه‌های من، بهترین محصول ورا بیوتی را معرفی کن.' },
-    { label: '🌿 روتین بساز', query: 'یک روتین کامل مراقبت پوست صبح و شب با محصولات ورا بیوتی برای من تدوین کن.' },
-    { label: '⚖️ دو محصول رو مقایسه کن', query: 'تفاوت سرم اکسیر جوانساز و روغن درخشش لادن چیست و کدام برای من مناسب‌تر است؟' },
-    { label: '🛡️ روتین فعلی من رو بررسی کن', query: 'من در حال حاضر از شوینده و مرطوب‌کننده استفاده می‌کنم، چطور روتینم را ارتقا دهم؟' },
-    { label: '🔄 یک محصول جایگزین پیدا کن', query: 'اگر نخواهم از اسیدهای قوی استفاده کنم، چه جایگزین گیاهی و ملایمی در ورا بیوتی دارید؟' },
-    { label: '📖 نحوه استفاده از محصول رو بگو', query: 'طرز استفاده اصولی و ترتیب مراحل استفاده از سرم، تونر و ضدآفتاب چگونه است؟' }
+    { label: '✨ محصول مناسب من رو پیدا کن', query: 'بر اساس نوع پوست و دغدغه‌های من، بهترین محصولات موجود ورا بیوتی را معرفی کن.' },
+    { label: '🧴 روتین صبح و شب بساز', query: 'یک روتین استاندارد صبح و شب برای پوست من با محصولات موجود فروشگاه طراحی کن.' },
+    { label: '🫧 کنترل جوش و منافذ باز', query: 'برای پوست چرب و مستعد جوش چه شوینده و سرم مناسبی موجود دارید؟' },
+    { label: '💧 آبرسانی و ترمیم سد پوستی', query: 'برای پوست خشک یا حساس چه سرم و کرم آبرسان و ترمیم‌کننده‌ای پیشنهاد می‌دهی؟' },
+    { label: '☀️ انتخاب ضدآفتاب مناسب', query: 'کدام ضدآفتاب موجود در فروشگاه برای نوع پوست من بهتر است؟' },
+    { label: '📖 ترتیب صحیح مصرف محصولات', query: 'ترتیب اصولی استفاده از شوینده، تونر، سرم، مرطوب‌کننده و ضدآفتاب در روتین روزانه چیست؟' }
   ];
 
   // Send message to backend API
@@ -134,17 +178,18 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
     setLoading(true);
 
     try {
-      // Prepare compact catalog payload
+      // Compact backup catalog metadata (authoritative catalog is loaded server-side)
       const catalogSummary = products.map((p) => ({
         id: p.id,
         nameFa: p.nameFa,
         nameEn: p.nameEn,
+        brand: p.brand,
+        productType: p.productType,
         category: p.category,
         price: p.price,
         skinTypes: p.skinTypes,
         concerns: p.concerns,
-        keyIngredients: p.keyIngredients,
-        descriptionFa: p.descriptionFa
+        inStock: p.inStock,
       }));
 
       // History formatted for backend
@@ -186,7 +231,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
         {
           id: 'bot-err-' + Date.now(),
           sender: 'bot',
-          text: 'متاسفانه در برقراری ارتباط با مشاور خطایی رخ داد. پیشنهاد می‌کنم محصولات کاتالوگ گیاهی را بررسی بفرمایید یا سوالتان را مجدداً ارسال نمایید.',
+          text: 'متاسفانه در برقراری ارتباط با مشاور خطایی رخ داد. لطفاً لحظاتی دیگر سوالتان را مجدداً ارسال نمایید.',
           timestamp: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
         }
       ]);
@@ -225,8 +270,11 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
         id: p.id,
         nameFa: p.nameFa,
         nameEn: p.nameEn,
-        descriptionFa: p.descriptionFa,
-        price: p.price
+        brand: p.brand,
+        productType: p.productType,
+        category: p.category,
+        price: p.price,
+        inStock: p.inStock,
       }));
 
       const res = await fetch('/api/advisor/analyze-skin', {
@@ -236,6 +284,7 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
           imageBase64: selectedImage,
           mimeType: imageFile?.type || 'image/jpeg',
           userNotes: userNote,
+          skinProfile: savedSkinProfile,
           catalogSummary
         })
       });
@@ -280,7 +329,9 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
   const renderSuggestedProducts = (productIds?: string[]) => {
     if (!productIds || productIds.length === 0) return null;
 
-    const matchedProducts = products.filter((p) => productIds.includes(p.id));
+    const matchedProducts = productIds
+      .map((id) => products.find((p) => p.id === id))
+      .filter((p): p is Product => Boolean(p));
     if (matchedProducts.length === 0) return null;
 
     return (

@@ -32,8 +32,10 @@ import {
   generateSkinProfile, 
   saveSkinProfile, 
   getSavedSkinProfile,
-  buildRoutineStepsByStyle
+  buildRoutineStepsByStyle,
+  isSkinProfileStaleOrInvalid
 } from '../data/quizData';
+import { buildStepReasonFa, RoutineStepRole } from '../lib/routineEngine';
 import { Product, ProductSize, UserSkinProfile, RoutineStepRecommendation } from '../types';
 
 interface SkincareQuizModalProps {
@@ -67,19 +69,45 @@ export const SkincareQuizModal: React.FC<SkincareQuizModalProps> = ({
     setSelectedProductIds(allIds);
   };
 
-  // Load existing profile if available on open
+  // Load existing profile if available on open and auto-heal stale/broken cached steps
   useEffect(() => {
     if (isOpen) {
       const existing = getSavedSkinProfile();
       if (existing) {
-        setSkinProfile(existing);
-        setSelectedRoutineStyle(existing.routineStyle || 'balanced');
-        syncSelectedProducts(existing);
+        let resolvedProfile = existing;
+        if (products.length > 0 && isSkinProfileStaleOrInvalid(existing, products)) {
+          const style = existing.routineStyle || 'balanced';
+          const { morningSteps, nightSteps } = buildRoutineStepsByStyle(
+            style,
+            existing.primaryConcern,
+            existing.skinType,
+            products,
+            {
+              sensitivityLevel: existing.sensitivityLevel,
+              currentRoutine: existing.currentRoutine,
+            }
+          );
+          resolvedProfile = {
+            ...existing,
+            morningSteps,
+            nightSteps,
+            recommendedProductIds: Array.from(
+              new Set([
+                ...morningSteps.map((s) => s.productId),
+                ...nightSteps.map((s) => s.productId),
+              ])
+            ),
+          };
+          saveSkinProfile(resolvedProfile);
+        }
+        setSkinProfile(resolvedProfile);
+        setSelectedRoutineStyle(resolvedProfile.routineStyle || 'balanced');
+        syncSelectedProducts(resolvedProfile);
       }
       setAddedRoutineSuccess(false);
       setShowUsageTips(false);
     }
-  }, [isOpen]);
+  }, [isOpen, products]);
 
   if (!isOpen) return null;
 
@@ -110,7 +138,11 @@ export const SkincareQuizModal: React.FC<SkincareQuizModalProps> = ({
       style,
       skinProfile.primaryConcern,
       skinProfile.skinType,
-      products
+      products,
+      {
+        sensitivityLevel: skinProfile.sensitivityLevel,
+        currentRoutine: skinProfile.currentRoutine,
+      }
     );
 
     const updatedProfile: UserSkinProfile = {
@@ -122,6 +154,68 @@ export const SkincareQuizModal: React.FC<SkincareQuizModalProps> = ({
         ...morningSteps.map(s => s.productId),
         ...nightSteps.map(s => s.productId)
       ]))
+    };
+
+    setSkinProfile(updatedProfile);
+    syncSelectedProducts(updatedProfile);
+    saveSkinProfile(updatedProfile);
+  };
+
+  // Cycle to an alternative product for a given routine step
+  const handleSwapStepAlternative = (
+    e: React.MouseEvent,
+    targetStep: RoutineStepRecommendation
+  ) => {
+    e.stopPropagation();
+    if (!skinProfile || !targetStep.alternativeProductIds || targetStep.alternativeProductIds.length === 0) {
+      return;
+    }
+
+    const candidates = targetStep.alternativeProductIds
+      .map((id) => products.find((p) => p.id === id))
+      .filter((p): p is Product => Boolean(p));
+    if (candidates.length === 0) return;
+
+    const nextProduct = candidates[0];
+    const remainingAlts = [
+      ...targetStep.alternativeProductIds.filter((id) => id !== nextProduct.id),
+      targetStep.productId,
+    ];
+    const stepRole = (targetStep.role || 'serum') as RoutineStepRole;
+    const updatedReasonFa = buildStepReasonFa(
+      nextProduct,
+      stepRole,
+      skinProfile.skinType,
+      skinProfile.primaryConcern
+    );
+
+    const updateList = (list: RoutineStepRecommendation[]) =>
+      list.map((s) => {
+        const isTarget =
+          (s.timeOfDay === targetStep.timeOfDay && s.stepNumber === targetStep.stepNumber) ||
+          (targetStep.role && s.role === targetStep.role);
+        if (!isTarget) return s;
+        return {
+          ...s,
+          productId: nextProduct.id,
+          product: nextProduct,
+          reasonFa: updatedReasonFa,
+          alternativeProductIds: remainingAlts,
+        };
+      });
+
+    const morningSteps = updateList(skinProfile.morningSteps);
+    const nightSteps = updateList(skinProfile.nightSteps);
+    const updatedProfile: UserSkinProfile = {
+      ...skinProfile,
+      morningSteps,
+      nightSteps,
+      recommendedProductIds: Array.from(
+        new Set([
+          ...morningSteps.map((s) => s.productId),
+          ...nightSteps.map((s) => s.productId),
+        ])
+      ),
     };
 
     setSkinProfile(updatedProfile);
@@ -508,9 +602,22 @@ export const SkincareQuizModal: React.FC<SkincareQuizModalProps> = ({
                         </span>
                       </div>
 
-                      <h4 className="text-xs sm:text-sm font-bold text-vara-ink truncate">
-                        {product.nameFa}
-                      </h4>
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="text-xs sm:text-sm font-bold text-vara-ink truncate">
+                          {product.nameFa}
+                        </h4>
+                        {step.alternativeProductIds && step.alternativeProductIds.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={(e) => handleSwapStepAlternative(e, step)}
+                            className="shrink-0 inline-flex items-center gap-1 text-[10px] font-semibold text-vara-rose-ink bg-vara-surface hover:bg-vara-tint px-2 py-0.5 rounded-full border border-vara-line transition-colors cursor-pointer"
+                            title="نمایش محصول جایگزین متناسب با این مرحله"
+                          >
+                            <RefreshCw className="w-2.5 h-2.5" />
+                            <span>پیشنهاد جایگزین</span>
+                          </button>
+                        )}
+                      </div>
 
                       {/* Why this product badge */}
                       <div className="bg-vara-canvas p-2.5 rounded-[14px] border border-vara-line text-[10px] sm:text-[11px] text-vara-muted flex items-start gap-1.5">

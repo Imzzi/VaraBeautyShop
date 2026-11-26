@@ -106,6 +106,8 @@ export interface RoutineStepRecommendation {
   productId: string;
   product?: Product;
   reasonFa: string;
+  role?: string;
+  alternativeProductIds?: string[];
 }
 
 export interface UserSkinProfile {
