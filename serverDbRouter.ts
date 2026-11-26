@@ -1430,9 +1430,25 @@ dbRouter.get('/diagnostics', requireAdminAuth, async (_req, res) => {
 dbRouter.post('/settings/:key', requireAdminAuth, async (req, res) => {
   if (!isValidSettingKey(req.params.key)) return res.sendStatus(404);
   try {
-    const valueToSave = req.body?.value !== undefined ? req.body.value : req.body;
+    let valueToSave = req.body?.value !== undefined ? req.body.value : req.body;
     if (valueToSave === undefined || valueToSave === null) {
       return res.status(400).json({ success: false, error: 'مقدار تنظیمات معتبر نمی‌باشد.' });
+    }
+    if (req.params.key === 'analytics_config') {
+      const rawId =
+        typeof valueToSave === 'object' && valueToSave !== null && 'gaMeasurementId' in valueToSave
+          ? String((valueToSave as Record<string, unknown>).gaMeasurementId || '').trim().toUpperCase()
+          : '';
+      if (rawId && !/^G-[A-Z0-9]{4,20}$/.test(rawId)) {
+        return res.status(400).json({
+          success: false,
+          error: 'شناسه GA4 باید با G- شروع شود (مانند G-XXXXXXXXXX) یا برای غیرفعال‌سازی خالی باشد.',
+        });
+      }
+      valueToSave = {
+        gaMeasurementId: rawId,
+        updatedAt: new Date().toISOString(),
+      };
     }
     await SettingsDb.set(req.params.key, valueToSave);
     broadcastDbEvent('setting_updated', { key: req.params.key, value: valueToSave });

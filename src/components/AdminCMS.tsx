@@ -52,6 +52,7 @@ const AdminOrdersList = lazy(() => import('./AdminOrdersList').then(m => ({ defa
 const AdminBrandsManager = lazy(() => import('./AdminBrandsManager').then(m => ({ default: m.AdminBrandsManager })));
 const AdminHeroBannersManager = lazy(() => import('./AdminHeroBannersManager').then(m => ({ default: m.AdminHeroBannersManager })));
 const AdminIntegrationsDashboard = lazy(() => import('./AdminIntegrationsDashboard').then(m => ({ default: m.AdminIntegrationsDashboard })));
+const AdminAnalyticsPanel = lazy(() => import('./AdminAnalyticsPanel').then(m => ({ default: m.AdminAnalyticsPanel })));
 const FormulaSettingsTab = lazy(() => import('./FormulaSettingsTab').then(m => ({ default: m.FormulaSettingsTab })));
 
 interface AdminCMSProps {
@@ -69,8 +70,8 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
 }) => {
   // Navigation tab state: 'site' | 'orders' | 'formula'
   const [activeTab, setActiveTab] = useState<'site' | 'orders' | 'formula'>('site');
-  // Subtab within 'site': 'products' | 'brands' | 'hero_banners' | 'storage'
-  const [siteSubTab, setSiteSubTab] = useState<'products' | 'brands' | 'hero_banners' | 'storage'>('products');
+  // Subtab within 'site': 'products' | 'brands' | 'hero_banners' | 'storage' | 'analytics'
+  const [siteSubTab, setSiteSubTab] = useState<'products' | 'brands' | 'hero_banners' | 'storage' | 'analytics'>('products');
   const [orderStats, setOrderStats] = useState<OrderStats>();
   const [brandsList, setBrandsList] = useState<BrandItem[]>(() => getLocalBrands());
   const [heroSlides, setHeroSlides] = useState<CarouselSlide[]>(() => getLocalHeroSlides());
@@ -1050,7 +1051,26 @@ export const AdminCMS: React.FC<AdminCMSProps> = ({
               </span>
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="سیستم پایش یکپارچگی‌ها فعال است" />
             </button>
+
+            <button
+              onClick={() => setSiteSubTab('analytics')}
+              className={`shrink-0 sm:flex-1 whitespace-nowrap py-2 sm:py-2.5 px-3 sm:px-4 rounded-full text-xs font-bold font-vazir transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                siteSubTab === 'analytics'
+                  ? 'bg-white text-vara-muted-strong shadow-xs border border-vara-line'
+                  : 'text-vara-muted-strong/70 hover:text-vara-muted-strong hover:bg-white/50'
+              }`}
+            >
+              <Activity className="w-4 h-4 text-vara-muted shrink-0" />
+              <span>آنالیتیکس (GA4)</span>
+            </button>
           </div>
+
+          {/* Subtab: Google Analytics 4 Configuration */}
+          {siteSubTab === 'analytics' && (
+            <Suspense fallback={<div className="py-12 text-center text-xs text-vara-muted font-vazir">در حال بارگذاری تنظیمات آنالیتیکس...</div>}>
+              <AdminAnalyticsPanel />
+            </Suspense>
+          )}
 
           {/* Subtab: Technical Integrations & Services Monitoring */}
           {siteSubTab === 'storage' && (

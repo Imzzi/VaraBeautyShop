@@ -20,6 +20,7 @@ import { PolicyReaderModal } from './LegalPoliciesPage';
 import { PolicyDocumentType } from '../data/policies';
 import { sanitizeNavigationUrl } from '../utils/safeUrl';
 import { CALCULATOR_FAQS } from '../lib/seoMetadata';
+import { trackCalculatorEstimate } from '../lib/analytics';
 
 interface PriceCalculatorPageProps {
   initialUrl?: string;
@@ -221,6 +222,12 @@ export const PriceCalculatorPage: React.FC<PriceCalculatorPageProps> = ({
 
       if (response.ok && data && data.success && data.product && typeof data.product.originalPrice === 'number' && data.product.originalPrice > 0) {
         setProductData(data.product);
+        trackCalculatorEstimate({
+          url: targetUrl,
+          currency: data.product.originalCurrency || 'AED',
+          originalPrice: data.product.originalPrice,
+          title: data.product.title,
+        });
 
         if (data.product.variants && data.product.variants.length > 0) {
           const initialVar =

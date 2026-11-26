@@ -42,6 +42,16 @@ import { BUYING_GUIDES, getGuideBySlug } from './data/guides';
 import { PRODUCTS as defaultProducts } from './data/products';
 import { getLocalBrands } from './lib/brandsManager';
 import {
+  initAnalytics,
+  trackAddToCart,
+  trackBeginCheckout,
+  trackPageView,
+  trackPurchase,
+  trackRemoveFromCart,
+  trackSearch,
+  trackViewItem,
+} from './lib/analytics';
+import {
   buildCalculatorSeo,
   buildGuideDetailSeo,
   buildGuidesIndexSeo,
@@ -536,6 +546,7 @@ export default function App() {
         if (!isCurrent()) return;
 
         if (order.paymentStatus === 'paid') {
+          trackPurchase(order);
           const snapshot = readPaymentCart();
           const storedCart = readStoredCart();
           if (snapshot?.orderId === order.id) {
@@ -675,6 +686,9 @@ export default function App() {
       return [...prev, { product, selectedSize, quantity: Math.min(stock, quantity), selectedVariant }];
     });
 
+    const unitPrice = selectedVariant?.price ?? selectedSize?.price ?? product.price ?? 0;
+    trackAddToCart(product, unitPrice, Math.min(stock, quantity), selectedVariant?.name || selectedSize?.label);
+
     loadCartDrawer().catch(() => {});
     const variantLabel = selectedVariant ? ` (${selectedVariant.name})` : '';
     showToast(`«${product.nameFa || 'محصول'}${variantLabel}» به سبد خرید شما اضافه گردید.`);
@@ -707,6 +721,15 @@ export default function App() {
   };
 
   const handleRemoveCartItem = (productId: string, sizeOrVariantId: string) => {
+    const removedItem = cartItems.find(
+      (item) =>
+        item.product?.id === productId &&
+        ((item.selectedVariant && (item.selectedVariant.id === sizeOrVariantId || item.selectedVariant.name === sizeOrVariantId)) ||
+          (item.selectedSize?.label || '') === sizeOrVariantId)
+    );
+    if (removedItem) {
+      trackRemoveFromCart(removedItem);
+    }
     setCartItems((prev) =>
       prev.filter(
         (item) =>
@@ -755,6 +778,7 @@ export default function App() {
         throw new Error('قیمت بعضی اقلام تغییر کرد. مبلغ تازه سبد را مرور کنید و دوباره ادامه دهید.');
       }
     }
+    trackBeginCheckout(cartItems, discount);
     loadCheckoutModal().catch(() => {});
     setAppliedDiscount(discount);
     setCheckoutModalOpen(true);
@@ -904,6 +928,33 @@ export default function App() {
 
     return { title, description, canonical, ogType, ogImage, schemaJson, noIndex };
   }, [activeSection, selectedProduct, shopFilterPreset, selectedOrderIdentifier, guideRouteSlug]);
+
+  // Google Analytics 4 initialization & funnel event tracking (skipped cleanly on admin routes)
+  useEffect(() => {
+    if (activeSection === 'admin') return;
+    void initAnalytics();
+  }, [activeSection]);
+
+  useEffect(() => {
+    if (activeSection === 'admin' || typeof window === 'undefined') return;
+    const currentPath = `${window.location.pathname}${window.location.search}`;
+    trackPageView(currentPath, seoData.title);
+  }, [activeSection, selectedProduct?.id, shopFilterPreset, guideRouteSlug, seoData.title]);
+
+  useEffect(() => {
+    if (activeSection !== 'product-detail' || !selectedProduct?.id) return;
+    trackViewItem(selectedProduct);
+  }, [activeSection, selectedProduct?.id]);
+
+  useEffect(() => {
+    if (activeSection !== 'shop') return;
+    const clean = searchQuery.trim();
+    if (clean.length < 2) return;
+    const timer = window.setTimeout(() => {
+      trackSearch(clean);
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [activeSection, searchQuery]);
 
   return (
     <HelmetProvider>

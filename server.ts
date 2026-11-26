@@ -93,7 +93,7 @@ app.use((_req, res, next) => {
   if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
     res.setHeader(
       'Content-Security-Policy',
-      "default-src 'self'; script-src 'self' https://accounts.google.com https://vercel.live; style-src 'self' 'unsafe-inline' https://accounts.google.com https://vercel.live; img-src 'self' data: blob: https:; font-src 'self' data: https://assets.vercel.com https://vercel.live; connect-src 'self' https://accounts.google.com https://vercel.live wss://ws-us3.pusher.com; frame-src https://accounts.google.com https://maps.google.com https://www.google.com https://vercel.live; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://*.zarinpal.com https://*.shaparak.ir https://*.nextpay.org"
+      "default-src 'self'; script-src 'self' https://accounts.google.com https://vercel.live https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://accounts.google.com https://vercel.live; img-src 'self' data: blob: https:; font-src 'self' data: https://assets.vercel.com https://vercel.live; connect-src 'self' https://accounts.google.com https://vercel.live https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com wss://ws-us3.pusher.com; frame-src https://accounts.google.com https://maps.google.com https://www.google.com https://vercel.live; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://*.zarinpal.com https://*.shaparak.ir https://*.nextpay.org"
     );
   }
   next();
