@@ -475,20 +475,6 @@ export const AIBeautyAdvisor: React.FC<AIBeautyAdvisorProps> = ({
               </button>
             </div>
 
-            {/* Personalized Skin Profile Banner */}
-            {savedSkinProfile && (
-              <div className="bg-vara-surface border-b border-vara-line px-3.5 py-1.5 flex items-center justify-between text-[11px] font-vazir text-vara-ink">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-bold text-vara-rose-ink">پروفایل متصل:</span>
-                  <span className="font-serif italic font-medium">{savedSkinProfile.summaryLabelEn}</span>
-                </div>
-                <span className="text-[10px] text-vara-muted font-mono">
-                  {savedSkinProfile.skinType} · {savedSkinProfile.primaryConcern}
-                </span>
-              </div>
-            )}
-
             {/* Tab 1: Chat Mode */}
             {activeTab === 'chat' && (
               <div className="flex-1 flex flex-col justify-between overflow-hidden bg-vara-canvas">
