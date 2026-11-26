@@ -99,26 +99,32 @@ export const AdminAnalyticsPanel: React.FC = () => {
   return (
     <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-vara-line shadow-xs space-y-6 text-right font-vazir" dir="rtl">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-vara-line pb-4">
-        <div className="space-y-1">
-          <h2 className="text-base sm:text-lg font-bold text-vara-ink flex items-center gap-2">
-            <Activity className="w-5 h-5 text-vara-rose-ink" />
-            <span>اتصال Google Analytics 4 (GA4)</span>
-          </h2>
-          <p className="text-xs text-vara-muted">
-            شناسه اندازه‌گیری GA4 را وارد کنید تا گزارش بازدیدها و قیف فروش تجارت الکترونیک به‌صورت خودکار ثبت شود.
-          </p>
-        </div>
+        <h2 className="text-base sm:text-lg font-bold text-vara-ink flex items-center gap-2">
+          <Activity className="w-5 h-5 text-vara-rose-ink" />
+          <span>اتصال Google Analytics 4 (GA4)</span>
+        </h2>
 
-        <span
-          className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border ${
-            effectiveId
-              ? 'bg-emerald-50 text-[#15803D] border-emerald-200'
-              : 'bg-vara-surface text-vara-muted border-vara-line'
-          }`}
-        >
-          {effectiveId ? <CheckCircle2 className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
-          <span>{effectiveId ? `فعال: ${effectiveId}` : 'در انتظار ثبت شناسه G-XXXXXXXXXX'}</span>
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <a
+            href="https://analytics.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-vara-rose-ink bg-vara-surface hover:bg-vara-tint px-3 py-1.5 rounded-full border border-vara-line transition-colors"
+          >
+            <span>باز کردن Google Analytics</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+          <span
+            className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border ${
+              effectiveId
+                ? 'bg-emerald-50 text-[#15803D] border-emerald-200'
+                : 'bg-vara-surface text-vara-muted border-vara-line'
+            }`}
+          >
+            {effectiveId ? <CheckCircle2 className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
+            <span>{effectiveId ? `فعال: ${effectiveId}` : 'در انتظار ثبت شناسه G-XXXXXXXXXX'}</span>
+          </span>
+        </div>
       </div>
 
       {envMeasurementId && (
@@ -178,7 +184,7 @@ export const AdminAnalyticsPanel: React.FC = () => {
         {statusMessage && <p className="text-xs text-[#15803D] font-medium">{statusMessage}</p>}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-2">
+      <div className="pt-2">
         <div className="bg-vara-surface/70 border border-vara-line rounded-2xl p-4 sm:p-5 space-y-2.5">
           <h3 className="text-xs sm:text-sm font-bold text-vara-ink">رویدادهای فعال قیف فروش (E-Commerce)</h3>
           <ul className="space-y-2 text-xs text-vara-muted-strong">
@@ -189,24 +195,6 @@ export const AdminAnalyticsPanel: React.FC = () => {
               </li>
             ))}
           </ul>
-        </div>
-
-        <div className="bg-vara-canvas border border-vara-line rounded-2xl p-4 sm:p-5 space-y-2.5">
-          <h3 className="text-xs sm:text-sm font-bold text-vara-ink">راهنمای دریافت Measurement ID</h3>
-          <ol className="space-y-2 text-xs text-vara-muted-strong list-decimal list-inside leading-6">
-            <li>وارد کنسول Google Analytics شوید و یک Property برای <strong>varabeauty.ir</strong> بسازید.</li>
-            <li>در بخش <strong>Admin → Data streams → Web</strong> استریم دامنه را باز کنید و کد <code>G-XXXXXXXXXX</code> را کپی کنید.</li>
-            <li>کد را در کادر بالا قرار دهید و دکمه «ذخیره شناسه» را بزنید (بدون نیاز به تغییر کد یا دیپلوی مجدد).</li>
-          </ol>
-          <a
-            href="https://analytics.google.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-vara-rose-ink hover:underline pt-1"
-          >
-            <span>باز کردن Google Analytics</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
         </div>
       </div>
     </div>
