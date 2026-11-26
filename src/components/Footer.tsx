@@ -49,9 +49,6 @@ export const Footer: React.FC<FooterProps> = ({
                 size="md"
                 subtitleFa="ورا بیوتی شاپ"
               />
-              <span className="text-[12px] text-vara-rose-ink font-semibold font-vazir block pt-1">
-                مرجع تخصصی تامین مستقیم محصولات مراقبت از پوست از امارات
-              </span>
             </div>
             <p className="text-xs text-vara-muted leading-relaxed max-w-sm pt-1">
               ورا بیوتی (VARA BEAUTY) ارائه‌دهنده اصیل‌ترین فرمولاسیون‌های کلینیکال و مراقبت از پوست و مو از نمایندگی‌های رسمی سفورا و آمازون امارات با ضمانت بچ‌کد.
